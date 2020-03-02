@@ -1,0 +1,14 @@
+﻿<?xml version='1.0' encoding='utf-8'?> 
+<Context displayName="JSP Exercise" docBase="jspExercise" path="/jspExercise" reloadable="true">
+  	<!-- MySQL(範例程式會用到的DataSource) -->
+	<Resource name="jdbc/MemberDB" type="javax.sql.DataSource" 
+		username="root" password="ho5866252"
+		driverClassName="com.mysql.cj.jdbc.Driver" 
+		url="jdbc:mysql:///yaoshula"
+		connectionProperties=
+		"useUnicode=yes;characterEncoding=utf8;useSSL=false;serverTimezone=Asia/Taipei"
+		maxTotal="8" 
+		maxIdle="4" 
+		maxWaitMillis="5000"  
+	/>
+</Context>
