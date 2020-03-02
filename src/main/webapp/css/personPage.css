@@ -1,0 +1,43 @@
+div{
+    border: 1px red solid;
+}
+table{
+    width: 100%;
+}
+table tr td{
+    border: 1px red solid;
+}
+
+.personPage{
+    width: 50%;
+    border: 1px black solid;
+    padding: 1%;
+    
+}
+.personalTitle{
+    font: bold 30px Tahoma;
+    width: 35%;
+    height: 50px;
+    line-height: 50px;
+    text-align: right;
+    /* clear: both; */
+}
+.personal{
+    width: 65%;
+    font: 22px Tahoma;
+    height: 50px;
+    line-height: 50px;
+    /* position: absolute;
+    /* float:left;  */
+}
+
+#edit{
+    width: 40px;
+    vertical-align: top;
+}
+#personHead{
+    text-align: center;
+}
+#headPicture{
+    height: 200px;
+}
