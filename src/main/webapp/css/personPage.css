@@ -1,0 +1,54 @@
+div{
+    /* border: 1px solid red */
+}
+table{
+    width: 100%;
+}
+table tr td{
+    /* border: 1px red solid; */
+}
+#personPage{
+    width: 40%;
+    border: 1px black solid;
+    padding: 1%;
+    
+}
+.personalTitle{
+    font: bold 22px Tahoma;
+    width: 35%;
+    height: 50px;
+    line-height: 50px;
+    text-align: right;
+}
+.personal,.personalUpdate{
+    font: 18px Tahoma;
+    height: 50px;
+    line-height: 50px;
+}
+#edit{
+    padding: 5px;
+    width: 40px;
+    vertical-align: top;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: rgb(118, 206, 169);
+}
+#boxHeadPicture{
+    text-align: center;
+    line-height: 220px;
+    height: 220px;
+}
+#headPicture{
+    max-width: 50%;
+    max-height: 200px;
+    border: 1px solid ;
+    padding: 5px;
+}
+#submitUpdatePerson{
+    margin-top: 5px;
+    height: 30px;
+}
+#boxFileSelect{
+    text-align: center;
+    margin-top: 15px;
+}
