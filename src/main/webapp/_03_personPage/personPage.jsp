@@ -5,46 +5,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>要抒拉--個人頁面</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/personPage.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/personPage.css" />
+<script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
 </head>
 <body>
-	<div class="personPage">
-		<div>
-			<img src="${pageContext.request.contextPath}/image/icons8-edit-144.png" id="edit" />
+	<form action="<c:url value='/_03_personPage/UpdatePersonPage.do' />"
+		method="POST" enctype='multipart/form-data' id="person">
+		<div id="personPage">
+			<div>
+				<img
+					src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
+					id="edit" />
+			</div>
+			<div id="boxHeadPicture">
+				<img
+					src="${pageContext.request.contextPath}/_00_init/getMemberImage?id=${LoginOK.id}"
+					id="headPicture" />
+			</div>
+			<div id="boxFileSelect">
+				<input name="memberMultipartFile" type="file"
+					style="visibility: hidden;" id="fileSelect" />
+			</div>
+
+			<table>
+				<tr>
+					<td class="personalTitle">帳號：&nbsp&nbsp</td>
+					<td class="personal">${LoginOK.name}</td>
+				</tr>
+				<tr>
+					<td class="personalTitle">性別：&nbsp&nbsp</td>
+					<td class="personal">${LoginOK.gender}</td>
+				</tr>
+				<tr>
+					<td class="personalTitle">生日：&nbsp&nbsp</td>
+					<td class="personal">${LoginOK.birthday}</td>
+				</tr>
+				<tr>
+					<td class="personalTitle">E-mail：&nbsp&nbsp</td>
+					<td class="personalUpdate">${LoginOK.email}</td>
+				</tr>
+				<tr>
+					<td class="personalTitle">手機：&nbsp&nbsp</td>
+					<td class="personalUpdate">${LoginOK.cellphone}</td>
+				</tr>
+				<tr>
+					<td class="personalTitle">地址：&nbsp&nbsp</td>
+					<td class="personalUpdate">${LoginOK.address}</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div align="center">
+							<input id="btSubmit" type="submit" name="submit" value="儲存"
+								style="visibility: hidden;" />
+						</div>
+					</td>
+				</tr>
+			</table>
 		</div>
-		<div id="personHead">
-			<img 
-				src='${pageContext.request.contextPath}/_00_init/getMemberImage?id=${LoginOK.id}'
-				id="headPicture">
-		</div>
-		<table>
-			<tr>
-				<td class="personalTitle">帳號：</td>
-				<td class="personal">${LoginOK.name}</td>
-			</tr>
-			<tr>
-				<td class="personalTitle">性別：</td>
-				<td class="personal">${LoginOK.gender}</td>
-			</tr>
-			<tr>
-				<td class="personalTitle">生日：</td>
-				<td class="personal">${LoginOK.birthday}</td>
-			</tr>
-			<tr>
-				<td class="personalTitle">E-mail：</td>
-				<td class="personal">${LoginOK.email}</td>
-			</tr>
-			<tr>
-				<td class="personalTitle">手機：</td>
-				<td class="personal">${LoginOK.cellphone}</td>
-			</tr>
-			<tr>
-				<td class="personalTitle">地址：</td>
-				<td class="personal">${LoginOK.address}</td>
-			</tr>
-		</table>
-	</div>
+	</form>
 </body>
 </html>

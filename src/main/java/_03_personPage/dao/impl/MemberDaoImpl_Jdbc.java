@@ -85,11 +85,11 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	// 判斷參數id(會員帳號)是否已經被現有客戶使用，如果是，傳回true，表示此id不能使用，
 	// 否則傳回false，表示此id可使用。
 	@Override
-	public boolean idExists(String id) {
+	public boolean idExists(int id) {
 		boolean exist = false;
 		String sql = "SELECT * FROM Memberinfo WHERE memberID = ?";
 		try (Connection connection = ds.getConnection(); PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setString(1, id);
+			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					exist = true;
@@ -105,11 +105,11 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	// 由參數 id (會員帳號) 到Memberinfo表格中 取得某個會員的所有資料，傳回值為一個MemberBean物件，
 	// 如果找不到對應的會員資料，傳回值為null。
 	@Override
-	public MemberBean queryMember(String id) {
+	public MemberBean queryMember(int id) {
 		MemberBean mb = null;
 		String sql = "SELECT * FROM Memberinfo WHERE user_id = ?";
 		try (Connection connection = ds.getConnection(); PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setString(1, id);
+			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					mb = new MemberBean();

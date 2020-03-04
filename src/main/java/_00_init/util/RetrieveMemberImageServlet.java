@@ -32,7 +32,7 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 			String id = request.getParameter("id");
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
 			MemberService memberService = new MemberServiceImpl();
-			MemberBean bean = memberService.queryMember(id);
+			MemberBean bean = memberService.queryMember(Integer.valueOf(id));
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {
@@ -40,10 +40,10 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 				}
 				fileName = bean.getFileName();
 			}
-			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.png)
+			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.jpg)
 			if (is == null) {
-				fileName = "NoImage.png";
-				is = getServletContext().getResourceAsStream("/images/" + fileName);
+				fileName = "NoImage.jpg";
+				is = getServletContext().getResourceAsStream("/image/" + fileName);
 			}
 
 			// 由圖片檔的檔名來得到檔案的MIME型態
@@ -60,7 +60,8 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("_00_init.util.RetrieveMemberImageServlet#doGet()發生SQLException: " + ex.getMessage());
+			throw new RuntimeException(
+					"_00_init.util.RetrieveMemberImageServlet#doGet()發生SQLException: " + ex.getMessage());
 		} finally {
 			if (is != null)
 				is.close();

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ import _00_init.util.GlobalService;
 import _03_personPage.model.MemberBean;
 import _03_personPage.service.MemberService;
 import _03_personPage.service.impl.MemberServiceImpl;
+
+@MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
+		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 
 @WebServlet("/_03_personPage/UpdatePersonPage.do")
 public class UpdatePersonPageServlet extends HttpServlet {
@@ -58,15 +62,16 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
-
+				System.out.println("fldName:" + fldName);
+				System.out.println("value:" + value);
 				// 1. 讀取使用者輸入資料
 				if (p.getContentType() == null) {
-					if (fldName.equals("memberId")) {
+					if (fldName.equals("email")) {
 						email = value;
-					} else if (fldName.equals("password")) {
-						address = value;
-					} else if (fldName.equals("password1")) {
+					} else if (fldName.equals("phone")) {
 						phone = value;
+					} else if (fldName.equals("address")) {
+						address = value;
 					}
 				} else {
 					// 取出圖片檔的檔名
@@ -79,8 +84,10 @@ public class UpdatePersonPageServlet extends HttpServlet {
 					}
 				}
 			}
+			System.out.println("email:" + email + " phone: " + phone + " address: " + address);
 		} else {
 			errorMsg.put("errTitle", "此表單不是上傳檔案的表單");
+
 		}
 
 		if (!errorMsg.isEmpty()) {
@@ -103,10 +110,14 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			// 呼叫MemberDao的updateMember方法
 			MemberService service = new MemberServiceImpl();
 			int n = service.updateMember(mem);
-			//如果更新列數為1 => 成功
+//			MemberBean mb=service.queryMember(id);
+//			session.setAttribute("LoginOK", mb);
+			// 如果更新列數為1 => 成功
 			if (n == 1) {
 				msgOK.put("UpdateOK", "<Font color='red'>更新成功</Font>");
-				response.sendRedirect("/_03_personPage/personPage.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
+				rd.forward(request, response);
+//				response.sendRedirect("/_03_personPage/personPage.jsp");
 				return;
 			} else {
 				errorMsg.put("UpdateError", "更新此筆資料有誤(UpdatePersonPageServlet)");

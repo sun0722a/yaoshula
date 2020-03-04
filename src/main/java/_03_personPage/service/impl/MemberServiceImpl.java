@@ -18,12 +18,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean idExists(String id) {
+	public boolean idExists(int id) {
 		return dao.idExists(id);
 	}
 
 	@Override
-	public MemberBean queryMember(String id) {
+	public MemberBean queryMember(int id) {
 		return dao.queryMember(id);
 	}
 

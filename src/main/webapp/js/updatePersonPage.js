@@ -40,9 +40,9 @@ function submit() {
   let newEmail = `${email.value}`;
   let newPhone = `${phone.value}`;
   let newAddress = `${address.value}`;
-  for (let i = 0; i < personalUpdates.length; i++) {
-    personalUpdates[i].firstChild.remove();
-  }
+  // for (let i = 0; i < personalUpdates.length; i++) {
+  //   personalUpdates[i].firstChild.remove();
+  // }
   personalUpdates[0].innerHTML = newEmail;
   personalUpdates[1].innerText = newPhone;
   personalUpdates[2].innerText = newAddress;
