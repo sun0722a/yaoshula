@@ -16,13 +16,12 @@ import _03_personPage.model.MemberBean;
 import _03_personPage.service.MemberService;
 import _03_personPage.service.impl.MemberServiceImpl;
 
-
 @WebServlet("/_00_init/getMemberImage")
 public class RetrieveMemberImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		OutputStream os = null;
 		InputStream is = null;
 		String fileName = null;
@@ -36,42 +35,37 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 			MemberBean bean = memberService.queryMember(id);
 			if (bean != null) {
 				blob = bean.getPicture();
-				if (blob != null) { 
+				if (blob != null) {
 					is = blob.getBinaryStream();
 				}
 				fileName = bean.getFileName();
 			}
-			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.png)	
+			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.png)
 			if (is == null) {
-				fileName = "NoImage.png" ; 
-				is = getServletContext().getResourceAsStream(
-						"/images/" + fileName);
+				fileName = "NoImage.png";
+				is = getServletContext().getResourceAsStream("/images/" + fileName);
 			}
-			
+
 			// 由圖片檔的檔名來得到檔案的MIME型態
 			mimeType = getServletContext().getMimeType(fileName);
 			// 設定輸出資料的MIME型態
 			response.setContentType(mimeType);
 			// 取得能寫出非文字資料的OutputStream物件
-			os = response.getOutputStream();	
+			os = response.getOutputStream();
 			// 由InputStream讀取位元組，然後由OutputStream寫出
 			int len = 0;
 			byte[] bytes = new byte[8192];
 			while ((len = is.read(bytes)) != -1) {
 				os.write(bytes, 0, len);
 			}
-		}catch(
-
-	SQLException ex)
-	{
-		ex.printStackTrace();
-		throw new RuntimeException("_00_init.util.RetrieveMemberImageServlet#doGet()發生SQLException: " + ex.getMessage());
-	}finally
-	{
-		if (is != null)
-			is.close();
-		if (os != null)
-			os.close();
-
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException("_00_init.util.RetrieveMemberImageServlet#doGet()發生SQLException: " + ex.getMessage());
+		} finally {
+			if (is != null)
+				is.close();
+			if (os != null)
+				os.close();
+		}
 	}
-}}
+}

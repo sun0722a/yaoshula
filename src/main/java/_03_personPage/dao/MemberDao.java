@@ -11,6 +11,8 @@ public interface MemberDao {
 
 	public int saveMember(MemberBean mb) ;
 	
+	public int updateMember(MemberBean mb);
+	
 	public MemberBean queryMember(String id);
 	
 	public MemberBean checkIdPassword(String userId, String password);	

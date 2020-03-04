@@ -31,4 +31,8 @@ public class MemberServiceImpl implements MemberService {
 		MemberBean mb = dao.checkIdPassword(userId, password);
 		return mb;
 	}
+	
+	public int updateMember(MemberBean mb) {
+		return dao.updateMember(mb);
+	}
 }

@@ -30,11 +30,11 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 		}
 	}
 
-	// 儲存MemberBean物件，將參數mb新增到Member表格內。
+	// 儲存MemberBean物件，將參數mb新增到Memberinfo表格內。
 	public int saveMember(MemberBean mb) {
-		String sql = "insert into Memberinfo " + " (user_id, user_name, user_password, user_gender, user_birthday, "
-				+ " user_email, user_phone, user_address, user_picture, user_create_time,user_status,user_permission"
-				+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO Memberinfo " + " (user_id, user_name, user_password, user_gender, user_birthday, "
+				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time,user_status,user_permission)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setInt(1, mb.getId());
@@ -54,7 +54,30 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 			n = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			//需要再度丟出例外給使用這個程式的Sevlet知道
 			throw new RuntimeException("MemberDaoImpl_Jdbc類別#saveMember()發生例外: " + ex.getMessage());
+		}
+		return n;
+	}
+
+	// 更新MemberBean物件，將參數mb新增到Memberinfo表格內。
+	@Override
+	public int updateMember(MemberBean mb) {
+		String sql = "UPDATE Memberinfo "
+				+ " SET user_email= ?, user_phone= ?, user_address= ?, fileName= ?,user_picture= ?" + " WHERE user_id= ?";
+		int n = 0;
+		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setString(1, mb.getEmail());
+			ps.setString(2, mb.getCellphone());
+			ps.setString(3, mb.getAddress());
+			ps.setString(4, mb.getFileName());
+			ps.setBlob(5, mb.getPicture());
+			ps.setInt(6, mb.getId());
+
+			n = ps.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException("MemberDaoImpl_Jdbc類別#updateMember()發生例外: " + ex.getMessage());
 		}
 		return n;
 	}
@@ -79,7 +102,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 		return exist;
 	}
 
-	// 由參數 id (會員帳號) 到Member表格中 取得某個會員的所有資料，傳回值為一個MemberBean物件，
+	// 由參數 id (會員帳號) 到Memberinfo表格中 取得某個會員的所有資料，傳回值為一個MemberBean物件，
 	// 如果找不到對應的會員資料，傳回值為null。
 	@Override
 	public MemberBean queryMember(String id) {
