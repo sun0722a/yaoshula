@@ -5,6 +5,8 @@ function doFirst() {
   personalUpdates = document.getElementsByClassName("personalUpdate");
   headPicture = document.getElementById("headPicture");
   personPage = document.getElementById("personPage");
+  inputPersonal = document.getElementsByClassName('inputPersonal');
+
 
   edit.addEventListener("click", update);
   edit.addEventListener("mouseover", function() {
@@ -26,11 +28,11 @@ function doFirst() {
       headPicture.style.maxHeight = "200px";
     });
   });
-  btSubmit.addEventListener("click", submit);
+  btSubmit.addEventListener("click", mySubmit);
 }
 
 
-function submit() {
+function mySubmit() {
   edit.style.visibility = "visible";
   fileSelect.style.visibility = "hidden";
   btSubmit.style.visibility = "hidden";
@@ -43,43 +45,60 @@ function submit() {
   // for (let i = 0; i < personalUpdates.length; i++) {
   //   personalUpdates[i].firstChild.remove();
   // }
-  personalUpdates[0].innerHTML = newEmail;
+  personalUpdates[0].innerText = newEmail;
   personalUpdates[1].innerText = newPhone;
   personalUpdates[2].innerText = newAddress;
+
+
+
+
+/**/ 
+  for (let i = 0; i < personalUpdates.length; i++) {
+    personalUpdates[i].style.display='block';
+  }
+  for(let i=0;i<inputPersonal.length;i++){
+    inputPersonal[i].style.display='none';
+  }
+/**/ 
+
+  form = document.getElementById('personForm');
+  document.form.submit();
 }
 
 
 function update() {
-
-  // // personPage = document.getElementById("personPage");
-  // form = document.createElement("form");
-  // form.id='person';
-  // form.method='post';
-  // console.log(form);
-
-  oldemail = personalUpdates[0].firstChild.nodeValue;
-  oldphone = personalUpdates[1].firstChild.nodeValue;
-  oldaddress = personalUpdates[2].firstChild.nodeValue;
   edit.style.visibility = "hidden";
   fileSelect.style.visibility = "visible";
   btSubmit.style.visibility = "visible";
-  for (let i = 0; i < personalUpdates.length; i++) {
-    personalUpdates[i].innerText = "";
-  }
-  let updateEmail = document.createElement("input");
-  let updatePhone = document.createElement("input");
-  let updateAddress = document.createElement("input");
-  updateToInput(0, updateEmail, oldemail, "email");
-  updateToInput(1, updatePhone, oldphone, "phone");
-  updateToInput(2, updateAddress, oldaddress, "address");
 
-//   form.appendChild(personPage);
+  oldemail = personalUpdates[0].innerText;
+  oldphone = personalUpdates[1].innerText;
+  oldaddress = personalUpdates[2].innerText;
+  for (let i = 0; i < personalUpdates.length; i++) {
+    // personalUpdates[i].innerText = "";
+
+/**/
+    personalUpdates[i].style.display='none';
+  }
+  
+  for(let i=0;i<inputPersonal.length;i++){
+    inputPersonal[i].style.display='block';
+  }
+/**/
+
+  // let updateEmail = document.createElement("input");
+  // let updatePhone = document.createElement("input");
+  // let updateAddress = document.createElement("input");
+  // updateToInput(0, updateEmail, oldemail, "email");
+  // updateToInput(1, updatePhone, oldphone, "phone");
+  // updateToInput(2, updateAddress, oldaddress, "address");
+
 //   console.log(form);
 }
 function updateToInput(index, inputTitle, inputValue, inputName) {
   inputTitle.type = "text";
-  inputTitle.name = inputName;
   inputTitle.value = inputValue;
+  inputTitle.name = inputName;
   inputTitle.style.font = "18px Tahoma";
   inputTitle.style.width = "70%";
   inputTitle.style.padding = "5px";

@@ -49,10 +49,12 @@ public class UpdatePersonPageServlet extends HttpServlet {
 		request.setAttribute("MsgError", errorMsg); // 顯示錯誤訊息
 		session.setAttribute("MsgOK", msgOK); // 顯示正常訊息
 
+		MemberBean oldMember = (MemberBean) session.getAttribute("LoginOK");
+		int id = oldMember.getId();
 		String email = "";
 		String address = "";
 		String phone = "";
-		String fileName = "";
+		String fileName = oldMember.getFileName();
 		long sizeInBytes = 0;
 		InputStream is = null;
 		// 取出HTTP request內所有的parts
@@ -74,16 +76,17 @@ public class UpdatePersonPageServlet extends HttpServlet {
 						address = value;
 					}
 				} else {
-					// 取出圖片檔的檔名
-					fileName = p.getSubmittedFileName();
-					// 調整圖片檔檔名的長度，需要檔名中的附檔名，所以調整主檔名以免檔名太長無法寫入表格
-					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
-					if (fileName != null && fileName.trim().length() > 0) {
+					if (p.getSubmittedFileName().trim().length() != 0) {
+						// 取出圖片檔的檔名
+						fileName = p.getSubmittedFileName();
+						// 調整圖片檔檔名的長度，需要檔名中的附檔名，所以調整主檔名以免檔名太長無法寫入表格
+						fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 						sizeInBytes = p.getSize();
 						is = p.getInputStream();
 					}
 				}
 			}
+			System.out.println("fileName= " + fileName);
 			System.out.println("email:" + email + " phone: " + phone + " address: " + address);
 		} else {
 			errorMsg.put("errTitle", "此表單不是上傳檔案的表單");
@@ -98,23 +101,23 @@ public class UpdatePersonPageServlet extends HttpServlet {
 		}
 		try {
 			// 4. 產生MemberDao物件，以便進行Business Logic運算
-			Blob blob = null;
+			Blob blob = oldMember.getPicture();
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean
-			MemberBean oldMember = (MemberBean) session.getAttribute("LoginOK");
-			int id = oldMember.getId();
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, address, fileName, blob, null,
 					null, null);
 			// 呼叫MemberDao的updateMember方法
 			MemberService service = new MemberServiceImpl();
 			int n = service.updateMember(mem);
-//			MemberBean mb=service.queryMember(id);
-//			session.setAttribute("LoginOK", mb);
+			MemberBean mb = service.queryMember(id);
+			session.setAttribute("LoginOK", mb);
 			// 如果更新列數為1 => 成功
 			if (n == 1) {
 				msgOK.put("UpdateOK", "<Font color='red'>更新成功</Font>");
+				MemberBean mb2 = (MemberBean) session.getAttribute("LoginOK");
+				System.out.println("member.email= " + mb2.getEmail());
 				RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
 				rd.forward(request, response);
 //				response.sendRedirect("/_03_personPage/personPage.jsp");
