@@ -1,14 +1,11 @@
 function doFirst() {
   edit = document.getElementById("edit");
   fileSelect = document.getElementById("fileSelect");
-  btSubmit = document.getElementById("btSubmit");
   personalUpdates = document.getElementsByClassName("personalUpdate");
   headPicture = document.getElementById("headPicture");
-  personPage = document.getElementById("personPage");
-  inputPersonal = document.getElementsByClassName('inputPersonal');
-
 
   edit.addEventListener("click", update);
+  
   edit.addEventListener("mouseover", function() {
     edit.style.border = "2px solid rgb(2, 117, 69)";
     edit.style.background = "rgb(26, 202, 129)";
@@ -18,6 +15,7 @@ function doFirst() {
     edit.style.background = "rgb(118, 206, 169)";
   });
 
+  // 在更動畫面裡，選擇照片後改變上面顯示的照片
   fileSelect.addEventListener("change", function() {
     readFile = new FileReader();
     readFile.readAsDataURL(fileSelect.files[0]);
@@ -28,41 +26,6 @@ function doFirst() {
       headPicture.style.maxHeight = "200px";
     });
   });
-  btSubmit.addEventListener("click", mySubmit);
-}
-
-
-function mySubmit() {
-  edit.style.visibility = "visible";
-  fileSelect.style.visibility = "hidden";
-  btSubmit.style.visibility = "hidden";
-  email = document.getElementsByName("email")[0];
-  phone = document.getElementsByName("phone")[0];
-  address = document.getElementsByName("address")[0];
-  let newEmail = `${email.value}`;
-  let newPhone = `${phone.value}`;
-  let newAddress = `${address.value}`;
-  // for (let i = 0; i < personalUpdates.length; i++) {
-  //   personalUpdates[i].firstChild.remove();
-  // }
-  personalUpdates[0].innerText = newEmail;
-  personalUpdates[1].innerText = newPhone;
-  personalUpdates[2].innerText = newAddress;
-
-
-
-
-/**/ 
-  for (let i = 0; i < personalUpdates.length; i++) {
-    personalUpdates[i].style.display='block';
-  }
-  for(let i=0;i<inputPersonal.length;i++){
-    inputPersonal[i].style.display='none';
-  }
-/**/ 
-
-  form = document.getElementById('personForm');
-  document.form.submit();
 }
 
 
@@ -71,32 +34,27 @@ function update() {
   fileSelect.style.visibility = "visible";
   btSubmit.style.visibility = "visible";
 
+  // 抓原本表格上的值
   oldemail = personalUpdates[0].innerText;
   oldphone = personalUpdates[1].innerText;
   oldaddress = personalUpdates[2].innerText;
+
+  // 清空td裡的字
   for (let i = 0; i < personalUpdates.length; i++) {
-    // personalUpdates[i].innerText = "";
-
-/**/
-    personalUpdates[i].style.display='none';
+     personalUpdates[i].innerText = "";
   }
-  
-  for(let i=0;i<inputPersonal.length;i++){
-    inputPersonal[i].style.display='block';
-  }
-/**/
 
-  // let updateEmail = document.createElement("input");
-  // let updatePhone = document.createElement("input");
-  // let updateAddress = document.createElement("input");
-  // updateToInput(0, updateEmail, oldemail, "email");
-  // updateToInput(1, updatePhone, oldphone, "phone");
-  // updateToInput(2, updateAddress, oldaddress, "address");
-
-//   console.log(form);
+  // 動態新增input
+   let updateEmail = document.createElement("input");
+   let updatePhone = document.createElement("input");
+   let updateAddress = document.createElement("input");
+   updateToInput(0, updateEmail, "email", oldemail, "email");
+   updateToInput(1, updatePhone, "text", oldphone, "phone");
+   updateToInput(2, updateAddress, "text", oldaddress, "address");
 }
-function updateToInput(index, inputTitle, inputValue, inputName) {
-  inputTitle.type = "text";
+// 設定input屬性
+function updateToInput(index, inputTitle, inputType, inputValue, inputName) {
+  inputTitle.type = inputType;
   inputTitle.value = inputValue;
   inputTitle.name = inputName;
   inputTitle.style.font = "18px Tahoma";
