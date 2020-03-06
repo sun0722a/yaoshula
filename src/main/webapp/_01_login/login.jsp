@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <meta charset="UTF-8">
+    <title>要抒啦</title>
+    <link rel="stylesheet" href="/css/login.css">
+    
+<script type="text/javascript">
+//由<body>的onLoad事件處理函數觸發此函數
+function setFocusToUserId(){   
+	 document.forms[0].userId.focus();   // 將游標放在userId欄位內
+}
+</script>
+    
+</head>
+<body onLoad="setFocusToUserId()">
+<c:set var="funcName" value="LOG" scope="session"/>
+<c:set var="msg" value="登入" />
+<c:if test="${ ! empty sessionScope.timeOut }" > <!-- 表示使用逾時，重新登入 -->
+   <c:set var="msg" value="<font color='red'>${sessionScope.timeOut}</font>" />
+</c:if>
+
+    <div class="top_area">
+        <div class="logo">
+            <a href="">
+                <img src="img/heart.png" alt="">
+            </a>
+        </div>
+            <div class="login">
+                <a href="">
+                    <span>登入</span>
+                </a>
+            </div>
+        
+    </div>
+        <div class="top">
+            <ul class="main_menu">
+                    <li class="main_menu_li"><a href="">
+                            <img src="img/home.png">論壇</a>
+                            <ul class="item_menu">
+                                <li><a href="">天使</a>
+                                </li>
+                                <li><a href="">惡魔</a>
+                                </li>
+                                <li><a></a></li>
+                            </ul>
+                        
+                    </li>
+
+                    <li class="main_menu_li"><a href="">
+                            <img src="img/market.png">商城</a>
+                        <ul class="item_menu">
+                            <li><a href="">購物區</a>
+                            </li>
+                            <li><a href="">購物車</a>
+                            </li>
+                            <li><a href="">歷史訂單</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="main_menu_li"><a href="">
+                            <img src="img/about.png" style= "margin-right: 2px;" >關於我們</a>
+
+                        <ul class="item_menu">
+                            <li><a href="">創建理念</a>
+                            </li>
+                            <li><a href="">團隊介紹</a>
+                            </li>
+                            <li><a href="">關於我們</a>
+                            </li>
+                        </ul>
+                    </li>
+            </ul>
+        </div>
+    <div class="side_menu">
+        <span><a href="">登入</a></span>
+        <span><a href="">註冊</a></span>
+    </div>
+
+    <form class="box" action="<c:url value='login.do' />" method="post" name="LoginForm">
+        <h2>登入</h2>
+        <div>
+        <input type="text" name="userId" placeholder="帳號" 
+         value="${requestScope.user}${param.userId}">
+         
+         &nbsp;<small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
+             </Font></small>
+         </div>
+        <div>
+            <input type="password" name="pswd" placeholder="密碼"
+        value="${requestScope.password}${param.pswd}" >
+        &nbsp;<small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
+             </Font></small>
+        </div>
+        
+        <label class="rmButton">
+            <input type="checkbox" name="rememberMe"
+            <c:if test='${requestScope.rememberMe==true}' >      
+                  checked='checked'  
+               </c:if>
+               value="true" >記住我
+        </label>
+        
+        <input type="submit" name="" value="登入">
+    </form>
+
+    <div style="clear: both;"></div>
+    <div class="bottom" ></div>
+    
+</body>
+</html>
