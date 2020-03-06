@@ -1,60 +1,61 @@
-div {
-  /* border: 1px solid red */
-}
 table {
-  width: 100%;
+	width: 100%;
 }
-table tr td {
-/*   border: 1px red solid; */
-}
+
+/* 整個表單 */
 #personPage {
-  width: 40%;
-  border: 1px black solid;
-  padding: 1%;
+	width: 40%;
+	border: 1px black solid;
+	padding: 1%;
 }
+
+/* 內容標題 */
 .personalTitle {
-  font: bold 22px Tahoma;
-  width: 35%;
-  height: 50px;
-  line-height: 50px;
-  text-align: right;
+	font: bold 22px Tahoma;
+	width: 35%;
+	height: 50px;
+	line-height: 50px;
+	text-align: right;
 }
-.personal,
-.personalUpdate {
-  font: 18px Tahoma;
-  height: 50px;
-  line-height: 50px;
+
+/* 內容(可以改、不能改) */
+.personal, .personalUpdate {
+	font: 18px Tahoma;
+	height: 50px;
+	line-height: 50px;
 }
+
+/* 筆 */
 #edit {
-  padding: 5px;
-  width: 40px;
-  vertical-align: top;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  background: rgb(118, 206, 169);
+	padding: 5px;
+	width: 40px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	background: rgb(118, 206, 169);
 }
+
+/* 頭照DIV */
 #boxHeadPicture {
-  text-align: center;
-  line-height: 220px;
-  height: 220px;
+	text-align: center;
+	line-height: 220px;
+	height: 220px;
 }
+
+/* 設定照片大小 */
 #headPicture {
-  max-width: 50%;
-  max-height: 200px;
-  border: 1px solid;
-  padding: 5px;
+	max-width: 50%;
+	max-height: 200px;
+	border: 1px solid;
+	padding: 5px;
 }
-#submitUpdatePerson {
-  margin-top: 5px;
-  height: 30px;
+
+#btSubmit {
+	margin-top: 15px;
+	height: 30px;
 }
+
+/* 選擇照片DIV */
 #boxFileSelect {
-  text-align: center;
-  margin-top: 15px;
-}
-.inputPersonal {
-  display: none;
-  font: 18px Tahoma;
-  width: 70%;
-  padding: 5px;
+	text-align: center;
+	margin-bottom: 15px;
 }

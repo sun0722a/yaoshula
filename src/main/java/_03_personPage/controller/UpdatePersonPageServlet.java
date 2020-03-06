@@ -64,8 +64,6 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
-				System.out.println("fldName:" + fldName);
-				System.out.println("value:" + value);
 				// 1. 讀取使用者輸入資料
 				if (p.getContentType() == null) {
 					if (fldName.equals("email")) {
@@ -86,8 +84,6 @@ public class UpdatePersonPageServlet extends HttpServlet {
 					}
 				}
 			}
-			System.out.println("fileName= " + fileName);
-			System.out.println("email:" + email + " phone: " + phone + " address: " + address);
 		} else {
 			errorMsg.put("errTitle", "此表單不是上傳檔案的表單");
 
@@ -116,11 +112,8 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			// 如果更新列數為1 => 成功
 			if (n == 1) {
 				msgOK.put("UpdateOK", "<Font color='red'>更新成功</Font>");
-				MemberBean mb2 = (MemberBean) session.getAttribute("LoginOK");
-				System.out.println("member.email= " + mb2.getEmail());
 				RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
 				rd.forward(request, response);
-//				response.sendRedirect("/_03_personPage/personPage.jsp");
 				return;
 			} else {
 				errorMsg.put("UpdateError", "更新此筆資料有誤(UpdatePersonPageServlet)");

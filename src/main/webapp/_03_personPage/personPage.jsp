@@ -46,24 +46,19 @@
 				<tr>
 					<td class="personalTitle">E-mail：&nbsp&nbsp</td>
 					<td class="personalUpdate">${LoginOK.email}</td>
-					<td><input type="email" class="inputPersonal" name="email" value="${LoginOK.email}"></td>
 				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
 					<td class="personalUpdate">${LoginOK.cellphone}</td>
-					<td><input type="text" class="inputPersonal" name="phone" value="${LoginOK.cellphone}"></td>
-
 				</tr>
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
 					<td class="personalUpdate">${LoginOK.address}</td>
-					<td><input type="text" class="inputPersonal" name="address" value="${LoginOK.address}"></td>
-
 				</tr>
 				<tr>
 					<td colspan="2">
 						<div align="center">
-							<input id="btSubmit" type="button" value="儲存"
+							<input id="btSubmit" type="submit" value="儲存"
 								style="visibility: hidden;"  />
 						</div>
 					</td>
