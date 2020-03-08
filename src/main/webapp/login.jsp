@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta charset="UTF-8">
     <title>要抒啦</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
     
 <script type="text/javascript">
 //由<body>的onLoad事件處理函數觸發此函數
@@ -18,7 +18,6 @@ function setFocusToUserId(){
 </head>
 <body onLoad="setFocusToUserId()">
 <c:set var="funcName" value="LOG" scope="session"/>
-<c:set var="msg" value="登入" />
 <c:if test="${ ! empty sessionScope.timeOut }" > <!-- 表示使用逾時，重新登入 -->
    <c:set var="msg" value="<font color='red'>${sessionScope.timeOut}</font>" />
 </c:if>
@@ -26,7 +25,7 @@ function setFocusToUserId(){
     <div class="top_area">
         <div class="logo">
             <a href="">
-                <img src="img/heart.png" alt="">
+                <img src="${pageContext.request.contextPath}/webImage/heart.png" alt="">
             </a>
         </div>
             <div class="login">
@@ -39,7 +38,7 @@ function setFocusToUserId(){
         <div class="top">
             <ul class="main_menu">
                     <li class="main_menu_li"><a href="">
-                            <img src="img/home.png">論壇</a>
+                            <img src="${pageContext.request.contextPath}/webImage/home.png">論壇</a>
                             <ul class="item_menu">
                                 <li><a href="">天使</a>
                                 </li>
@@ -51,7 +50,7 @@ function setFocusToUserId(){
                     </li>
 
                     <li class="main_menu_li"><a href="">
-                            <img src="img/market.png">商城</a>
+                            <img src="${pageContext.request.contextPath}/webImage/market.png">商城</a>
                         <ul class="item_menu">
                             <li><a href="">購物區</a>
                             </li>
@@ -62,9 +61,8 @@ function setFocusToUserId(){
                         </ul>
 
                     </li>
-                    <li class="main_menu_li"><a href="">
-                            <img src="img/about.png" style= "margin-right: 2px;" >關於我們</a>
-
+                    <li class="main_menu_li"><a href="" >
+						<img src="${pageContext.request.contextPath}/webImage/about.png" style= "margin-right: 2px;" >關於我們</a>
                         <ul class="item_menu">
                             <li><a href="">創建理念</a>
                             </li>
@@ -72,7 +70,7 @@ function setFocusToUserId(){
                             </li>
                             <li><a href="">關於我們</a>
                             </li>
-                        </ul>
+                            </ul>
                     </li>
             </ul>
         </div>
@@ -82,22 +80,23 @@ function setFocusToUserId(){
     </div>
 
     <form class="box" action="<c:url value='login.do' />" method="post" name="LoginForm">
-        <h2>登入</h2>
-        <div>
+        <h2 >登入</h2>
+        <div style="display: inline-block">
         <input type="text" name="userId" placeholder="帳號" 
          value="${requestScope.user}${param.userId}">
-         
-         &nbsp;<small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
-             </Font></small>
+         	
+		        &nbsp;<small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
+		            </Font></small>
          </div>
-        <div>
+         <div style="clear:both"></div>
+        <div style="display: inline-block">
             <input type="password" name="pswd" placeholder="密碼"
         value="${requestScope.password}${param.pswd}" >
         &nbsp;<small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
              </Font></small>
         </div>
         
-        <label class="rmButton">
+        <label class="rmButton" style="clear:both">
             <input type="checkbox" name="rememberMe"
             <c:if test='${requestScope.rememberMe==true}' >      
                   checked='checked'  

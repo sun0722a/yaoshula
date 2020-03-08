@@ -1,4 +1,4 @@
-package _01_login;
+package member.login;
 
 import java.io.IOException;
 import java.util.HashMap;
