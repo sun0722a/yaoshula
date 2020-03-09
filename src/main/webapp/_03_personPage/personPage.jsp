@@ -12,7 +12,7 @@
 <script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
 </head>
 <body>
-	<form action="<c:url value='/_03_personPage/UpdatePersonPage.do' />"
+	<form action="<c:url value='/PersonPage' />"
 		method="POST" enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
