@@ -18,7 +18,7 @@ import _03_personPage.model.MemberBean;
 import _03_personPage.service.MemberService;
 import _03_personPage.service.impl.MemberServiceImpl;
 
-@WebServlet("/_01_login/login.do")
+@WebServlet("/member/login.do")
 public class LoginServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
