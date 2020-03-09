@@ -19,52 +19,62 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.omg.CORBA.RepositoryIdHelper;
+
 import _00_init.util.GlobalService;
 import _03_personPage.model.MemberBean;
 import _03_personPage.service.MemberService;
 import _03_personPage.service.impl.MemberServiceImpl;
 
+/* 等待: 首頁網址、連線逾時、成功訊息 */
+
+/* MultipartConfig的屬性說明: */
+//location: 上傳之表單資料與檔案暫時存放在Server端之路徑，此路徑必須存在，否則Web Container將丟出例外。
+//fileSizeThreshold: 上傳檔案的大小臨界值，超過此臨界值，上傳檔案會用存放在硬碟，否則存放在主記憶體。
+//maxFileSize: 上傳單一檔案之長度限制，如果超過此數值，Web Container會丟出例外
+//maxRequestSize: 上傳所有檔案之總長度限制，如果超過此數值，Web Container會丟出例外
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 
-@WebServlet("/_03_personPage/UpdatePersonPage.do")
+@WebServlet("/PersonPage")
 public class UpdatePersonPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8"); // 文字資料轉內碼
 
-		// 準備存放錯誤訊息的Map物件
-		Map<String, String> errorMsg = new HashMap<String, String>();
-		// 準備存放註冊成功之訊息的Map物件
-		Map<String, String> msgOK = new HashMap<String, String>();
-
+		// 使用逾時，回首頁
 		HttpSession session = request.getSession(false);
-		if (session == null) { // 使用逾時，回首頁
+		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
 
-		request.setAttribute("MsgError", errorMsg); // 顯示錯誤訊息
-		session.setAttribute("MsgOK", msgOK); // 顯示正常訊息
+		// 準備存放註冊成功之訊息的Map物件
+		Map<String, String> msgOK = new HashMap<String, String>();
+		session.setAttribute("MsgOK", msgOK);
 
+		// 取得原本的使用者資料(id、fileName)
 		MemberBean oldMember = (MemberBean) session.getAttribute("LoginOK");
 		int id = oldMember.getId();
 		String email = "";
 		String address = "";
 		String phone = "";
 		String fileName = oldMember.getFileName();
+		Blob blob = oldMember.getPicture();
 		long sizeInBytes = 0;
 		InputStream is = null;
+
 		// 取出HTTP request內所有的parts
 		Collection<Part> parts = request.getParts();
-		// 由parts != null來判斷此上傳資料是否為HTTP multipart request
-		if (parts != null) { // 如果這是一個上傳資料的表單
+		// 由parts != null來判斷此上傳資料是否為上傳資料的表單(HTTP multipart request)
+		if (parts != null) {
+			// 逐筆讀取使用者輸入資料
 			for (Part p : parts) {
-				String fldName = p.getName();
-				String value = request.getParameter(fldName);
-				// 1. 讀取使用者輸入資料
+				String fldName = p.getName(); // 取得欄位名稱(name)
+				String value = request.getParameter(fldName); // 取得欄位值(value)
 				if (p.getContentType() == null) {
 					if (fldName.equals("email")) {
 						email = value;
@@ -73,7 +83,8 @@ public class UpdatePersonPageServlet extends HttpServlet {
 					} else if (fldName.equals("address")) {
 						address = value;
 					}
-				} else {
+				} else { // p.getContentType() = application/octet-stream
+					// 如果有選擇圖片 => 取得檔名&inputStream
 					if (p.getSubmittedFileName().trim().length() != 0) {
 						// 取出圖片檔的檔名
 						fileName = p.getSubmittedFileName();
@@ -85,50 +96,37 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				}
 			}
 		} else {
-			errorMsg.put("errTitle", "此表單不是上傳檔案的表單");
-
-		}
-
-		if (!errorMsg.isEmpty()) {
-			// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
-			RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
-			rd.forward(request, response);
-			return;
+			System.out.println("此表單不是上傳檔案的表單");
 		}
 		try {
-			// 4. 產生MemberDao物件，以便進行Business Logic運算
-			Blob blob = oldMember.getPicture();
+			// 將圖片轉換成Blob
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
-			// 將所有會員資料封裝到MemberBean
+			// 將可更改的會員資料封裝到MemberBean
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, address, fileName, blob, null,
 					null, null);
-			// 呼叫MemberDao的updateMember方法
+			// 呼叫MemberDao的updateMember方法(經由MemberService)
 			MemberService service = new MemberServiceImpl();
 			int n = service.updateMember(mem);
+			// 更新session內的使用者資料
 			MemberBean mb = service.queryMember(id);
 			session.setAttribute("LoginOK", mb);
-			// 如果更新列數為1 => 成功
+			// 如果更新列數為1(updateMember的傳回值) => 成功
 			if (n == 1) {
 				msgOK.put("UpdateOK", "<Font color='red'>更新成功</Font>");
-				RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
-				rd.forward(request, response);
-				return;
 			} else {
-				errorMsg.put("UpdateError", "更新此筆資料有誤(UpdatePersonPageServlet)");
+				System.out.println("更新此筆資料有誤(UpdatePersonPageServlet)");
 			}
 
-			// 5.依照 Business Logic 運算結果來挑選適當的畫面
-			if (!errorMsg.isEmpty()) {
-				// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
-				RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
-				rd.forward(request, response);
-				return;
-			}
+			// 轉換頁面
+//			response.sendRedirect("/_03_personPage/personPage.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
+			rd.forward(request, response);
+			return;
+
 		} catch (Exception e) {
-			e.printStackTrace();
-			errorMsg.put("UpdateErrorException", e.getMessage());
+			System.out.println("UpdatePersonPageServlet類別的#fileToBlob()例外: " + e.getMessage());
 			RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
 			rd.forward(request, response);
 		}

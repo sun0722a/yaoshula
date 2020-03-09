@@ -12,7 +12,7 @@
 <script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
 </head>
 <body>
-	<form action="<c:url value='/_03_personPage/UpdatePersonPage.do' />"
+	<form action="<c:url value='/PersonPage' />"
 		method="POST" enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
@@ -27,7 +27,8 @@
 			</div>
 			<div id="boxFileSelect">
 				<input name="memberMultipartFile" type="file"
-					style="visibility: hidden;" id="fileSelect" value="${LoginOK.picture}"/>
+					style="visibility: hidden;" id="fileSelect"
+					value="${LoginOK.picture}" />
 			</div>
 
 			<table>
@@ -47,6 +48,10 @@
 					<td class="personalTitle">E-mail：&nbsp&nbsp</td>
 					<td class="personalUpdate">${LoginOK.email}</td>
 				</tr>
+				<tr class="errorMsg">
+					<td></td>
+					<td>&nbsp&nbspE-mail欄位不能空白</td>
+				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
 					<td class="personalUpdate">${LoginOK.cellphone}</td>
@@ -59,7 +64,7 @@
 					<td colspan="2">
 						<div align="center">
 							<input id="btSubmit" type="submit" value="儲存"
-								style="visibility: hidden;"  />
+								style="visibility: hidden;" />
 						</div>
 					</td>
 				</tr>

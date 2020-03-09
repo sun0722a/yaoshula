@@ -3,9 +3,10 @@ function doFirst() {
   fileSelect = document.getElementById("fileSelect");
   personalUpdates = document.getElementsByClassName("personalUpdate");
   headPicture = document.getElementById("headPicture");
+  btSubmit = document.getElementById("btSubmit");
 
   edit.addEventListener("click", update);
-  
+
   edit.addEventListener("mouseover", function() {
     edit.style.border = "2px solid rgb(2, 117, 69)";
     edit.style.background = "rgb(26, 202, 129)";
@@ -28,7 +29,6 @@ function doFirst() {
   });
 }
 
-
 function update() {
   edit.style.visibility = "hidden";
   fileSelect.style.visibility = "visible";
@@ -41,16 +41,29 @@ function update() {
 
   // 清空td裡的字
   for (let i = 0; i < personalUpdates.length; i++) {
-     personalUpdates[i].innerText = "";
+    personalUpdates[i].innerText = "";
   }
 
   // 動態新增input
-   let updateEmail = document.createElement("input");
-   let updatePhone = document.createElement("input");
-   let updateAddress = document.createElement("input");
-   updateToInput(0, updateEmail, "email", oldemail, "email");
-   updateToInput(1, updatePhone, "text", oldphone, "phone");
-   updateToInput(2, updateAddress, "text", oldaddress, "address");
+  updateEmail = document.createElement("input");
+  let updatePhone = document.createElement("input");
+  let updateAddress = document.createElement("input");
+  updateToInput(0, updateEmail, "email", oldemail, "email");
+  updateToInput(1, updatePhone, "text", oldphone, "phone");
+  updateToInput(2, updateAddress, "text", oldaddress, "address");
+
+  // 檢查email欄有沒有輸入東西
+  updateEmail.addEventListener("keyup", emailError);
+}
+function emailError() {
+  errorEmail = document.getElementsByClassName("errorMsg")[0];
+  if (updateEmail.value == "") {
+    errorEmail.style.display = "contents";
+    btSubmit.disabled = "true";
+  } else {
+    errorEmail.style.display = "none";
+    btSubmit.disabled = "";
+  }
 }
 // 設定input屬性
 function updateToInput(index, inputTitle, inputType, inputValue, inputName) {
