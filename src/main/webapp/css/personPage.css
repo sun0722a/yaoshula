@@ -1,7 +1,9 @@
 table {
 	width: 100%;
 }
-
+table td{
+	/* border: 1px solid red; */
+}
 /* 整個表單 */
 #personPage {
 	width: 40%;
@@ -58,4 +60,10 @@ table {
 #boxFileSelect {
 	text-align: center;
 	margin-bottom: 15px;
+}
+
+.errorMsg{
+	display: none;
+	font-size: 16px;
+	color: red;
 }
