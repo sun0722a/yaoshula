@@ -79,20 +79,23 @@ function setFocusToUserId(){
         <span><a href="">註冊</a></span>
     </div>
 
-    <form class="box" action="<c:url value='login.do' />" method="post" name="LoginForm">
+    <form class="box" action="<c:url value='/login/login.do' />" method="POST" >
+    
+<!--     name="LoginForm" -->
         <h2 >登入</h2>
         <div style="display: inline-block">
         <input type="text" name="userId" placeholder="帳號" 
-         value="${requestScope.user}${param.userId}">
-         	
-		        &nbsp;<small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
+         value="${param.userId}">
+<%--          	${requestScope.user} --%>
+		        <small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
 		            </Font></small>
          </div>
          <div style="clear:both"></div>
         <div style="display: inline-block">
-            <input type="password" name="pswd" placeholder="密碼"
-        value="${requestScope.password}${param.pswd}" >
-        &nbsp;<small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
+            <input type="password" name="password" placeholder="密碼"
+        value= "${param.password}" >    
+<%--         ${requestScope.password} --%>
+       <small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
              </Font></small>
         </div>
         
@@ -101,12 +104,17 @@ function setFocusToUserId(){
             <c:if test='${requestScope.rememberMe==true}' >      
                   checked='checked'  
                </c:if>
+              
                value="true" >記住我
         </label>
-        
-        <input type="submit" name="" value="登入">
+        <div style= "display: inline-block">
+         <small><Font color='red' size="-3">${ErrorMsgKey.LoginError}
+             </Font></small>
+        </div>
+        <input type="submit" value="登入">
+        	
     </form>
-
+		
     <div style="clear: both;"></div>
     <div class="bottom" ></div>
     

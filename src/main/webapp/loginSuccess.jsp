@@ -16,7 +16,7 @@
     </div>
     <div class="main-menu">
         <div class="menu">
-            <a href="">論壇</a>
+            <a href="${pageContext.request.contextPath}">論壇</a>
         </div>
         <div class="menu">
             <a href="">商城</a>

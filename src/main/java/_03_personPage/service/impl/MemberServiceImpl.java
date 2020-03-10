@@ -27,12 +27,14 @@ public class MemberServiceImpl implements MemberService {
 		return dao.queryMember(id);
 	}
 
-	public MemberBean checkIdPassword(String userId, String password) {
-		MemberBean mb = dao.checkIdPassword(userId, password);
+	public MemberBean checkIdPassword(String name, String password) {
+		MemberBean mb = dao.checkIdPassword(name, password);
 		return mb;
 	}
 	
 	public int updateMember(MemberBean mb) {
 		return dao.updateMember(mb);
 	}
+	
+	
 }

@@ -140,7 +140,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	@Override
 	public MemberBean checkIdPassword(String userId, String password) {
 		MemberBean mb = null;
-		String sql = "SELECT * FROM Memberinfo m WHERE m.memberId = ? and m.password = ?";
+		String sql = "SELECT * FROM Memberinfo m WHERE m.user_name = ? and m.user_password = ?";
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, userId);
 			ps.setString(2, password);

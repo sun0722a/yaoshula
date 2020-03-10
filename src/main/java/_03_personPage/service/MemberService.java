@@ -1,5 +1,7 @@
 package _03_personPage.service;
 
+import java.util.List;
+
 import _03_personPage.model.MemberBean;
 
 public interface MemberService {
@@ -8,4 +10,6 @@ public interface MemberService {
 	MemberBean queryMember(int id);
 	MemberBean checkIdPassword(String userId, String password) ;
 	int updateMember(MemberBean mb);
+	
+	
 }
