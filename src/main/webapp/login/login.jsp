@@ -83,14 +83,13 @@ function setFocusToUserId(){
         <h2 >登入</h2>
         <div style="display: inline-block">
         <input type="text" name="userId" placeholder="帳號" 
-         value="${requestScope.user}${param.userId}">
-         	
+         value="${requestScope.user}${param.userId}" >
 		        &nbsp;<small><Font color='red' size="-3">${ErrorMsgKey.AccountEmptyError}
 		            </Font></small>
          </div>
          <div style="clear:both"></div>
         <div style="display: inline-block">
-            <input type="password" name="pswd" placeholder="密碼"
+            <input type="password" name="password" placeholder="密碼"
         value="${requestScope.password}${param.pswd}" >
         &nbsp;<small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
              </Font></small>

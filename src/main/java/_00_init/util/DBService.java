@@ -10,6 +10,7 @@ public class DBService {
 	public static final String USERID_MySQL = "root";
 	public static final String PSWD_MySQL = "cathy1228";
 
+
 	private static final String DROP_Member_MySQL = "DROP Table IF EXISTS Memberinfo ";
 
 	private static final String CREATE_Member_MySQL = " CREATE TABLE memberinfo " + "(user_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
