@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/personPage.css" />
-    <script src="../js/updatePersonPage.js"></script>
+    <link rel="stylesheet" href="../css/personPageForm.css" />
+    <script src="../js/updatePersonPageForm.js"></script>
   </head>
   <body>
     <form action="" method="" id="personForm">
       <div id="personPage">
         <div>
-          <img src="../image/icons8-edit-144.png" id="edit" />
+          <button id="btEdit" style="visibility: hidden;">
+            <img src="../image/icons8-edit-144.png" id="edit" />
+          </button>
         </div>
         <div id="boxHeadPicture">
           <img src="../image/headPicture.jpg" id="headPicture" />
@@ -19,7 +21,6 @@
           <input
             name="memberMultipartFile"
             type="file"
-            style="visibility: hidden;"
             id="fileSelect"
           />
         </div>
@@ -39,17 +40,39 @@
           </tr>
           <tr>
             <td class="personalTitle"><font color='red'>*&nbsp</font>E-mail：&nbsp&nbsp</td>
-            <td class="personalUpdate">se6hxbrv@gmail.com</td>
+            <td class="personalUpdate">
+              <input
+                type="email"
+                name="email"
+                value="se6hxbrv@gmail.com"
+                class="updateInput"
+                required="required"
+              />
+            </td>
           </tr>
 
           <tr>
             <td class="personalTitle">手機：&nbsp&nbsp</td>
-            <td class="personalUpdate">0988888888</td>
+            <td class="personalUpdate">
+              <input
+                type="text"
+                name="phone"
+                value="0988888888"
+                class="updateInput"
+              />
+            </td>
           </tr>
 
           <tr>
             <td class="personalTitle">地址：&nbsp&nbsp</td>
-            <td class="personalUpdate">台北市大安區忠孝東路三段一號三樓之一</td>
+            <td class="personalUpdate">
+              <input
+                type="text"
+                name="address"
+                value="台北市大安區忠孝東路三段一號三樓之一"
+                class="updateInput"
+              />
+            </td>
           </tr>
           <tr>
             <td colspan="2">
@@ -58,13 +81,13 @@
                   id="btSubmit"
                   type="submit"
                   value="儲存"
-                  style="visibility: hidden;"
+                  style="visibility: visible;"
                 />
                 <input
                   type="submit"
                   id="btCancel"
                   value="取消"
-                  style="visibility: hidden;"
+                  style="visibility: visible;"
                 />
               </div>
             </td>

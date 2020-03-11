@@ -8,17 +8,20 @@
 <meta charset="UTF-8" />
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/personPage.css" />
-<script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
+	href="${pageContext.request.contextPath}/css/personPageForm.css" />
+<script
+	src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
 </head>
 <body>
 	<form action="<c:url value='/PersonPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
-				<img
-					src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
-					id="edit" />
+				<button id="btEdit" style="visibility: hidden;">
+					<img
+						src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
+						id="edit" />
+				</button>
 			</div>
 			<div id="boxHeadPicture">
 				<img
@@ -26,8 +29,7 @@
 					id="headPicture" />
 			</div>
 			<div id="boxFileSelect">
-				<input name="memberMultipartFile" type="file"
-					style="visibility: hidden;" id="fileSelect"
+				<input name="memberMultipartFile" type="file" id="fileSelect"
 					value="${LoginOK.picture}" />
 			</div>
 
@@ -45,24 +47,25 @@
 					<td class="personal">${LoginOK.birthday}</td>
 				</tr>
 				<tr>
-					<td class="personalTitle">E-mail：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.email}</td>
+					<td class="personalTitle"><font color='red'>*&nbsp</font>E-mail：&nbsp&nbsp</td>
+					<td class="personalUpdate"><input type="email" name="email"
+						value="${LoginOK.email}" class="updateInput" required="required" /></td>
 				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.cellphone}</td>
+					<td class="personalUpdate"><input type="text" name="phone"
+						value="${LoginOK.cellphone}" class="updateInput" /></td>
 				</tr>
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.address}</td>
+					<td class="personalUpdate"><input type="text" name="address"
+						value="${LoginOK.address}" class="updateInput" /></td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<div align="center">
-							<input id="btSubmit" type="submit" value="儲存"
-								style="visibility: hidden;" /> <input
-								type="submit" id="btCancel" value="取消"
-								style="visibility: hidden;" name="cancel" />
+							<input id="btSubmit" type="submit" value="儲存" /> <input
+								type="submit" id="btCancel" value="取消" />
 						</div>
 					</td>
 				</tr>

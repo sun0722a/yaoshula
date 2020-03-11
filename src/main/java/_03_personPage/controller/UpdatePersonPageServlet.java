@@ -39,7 +39,8 @@ import _03_personPage.service.impl.MemberServiceImpl;
 @WebServlet("/PersonPage")
 public class UpdatePersonPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -75,7 +76,12 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName(); // 取得欄位名稱(name)
 				String value = request.getParameter(fldName); // 取得欄位值(value)
+
 				if (p.getContentType() == null) {
+					if (fldName.equals("cancel")) {
+						response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
+						return;
+					}
 					if (fldName.equals("email")) {
 						email = value;
 					} else if (fldName.equals("phone")) {
@@ -120,15 +126,12 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			}
 
 			// 轉換頁面
-//			response.sendRedirect("/_03_personPage/personPage.jsp");
-			RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
 			return;
 
 		} catch (Exception e) {
 			System.out.println("UpdatePersonPageServlet類別的#fileToBlob()例外: " + e.getMessage());
-			RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
 		}
 	}
 }

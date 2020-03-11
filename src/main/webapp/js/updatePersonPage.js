@@ -4,6 +4,9 @@ function doFirst() {
   personalUpdates = document.getElementsByClassName("personalUpdate");
   headPicture = document.getElementById("headPicture");
   btSubmit = document.getElementById("btSubmit");
+  btCancel = document.getElementById("btCancel");
+  emailTitle = document.getElementsByClassName("personalTitle")[3];
+  
 
   edit.addEventListener("click", update);
 
@@ -33,6 +36,8 @@ function update() {
   edit.style.visibility = "hidden";
   fileSelect.style.visibility = "visible";
   btSubmit.style.visibility = "visible";
+  btCancel.style.visibility = "visible";
+  emailTitle.innerHTML=`<font color='red'>*&nbsp</font>E-mail：&nbsp&nbsp`;
 
   // 抓原本表格上的值
   oldemail = personalUpdates[0].innerText;
@@ -51,19 +56,7 @@ function update() {
   updateToInput(0, updateEmail, "email", oldemail, "email");
   updateToInput(1, updatePhone, "text", oldphone, "phone");
   updateToInput(2, updateAddress, "text", oldaddress, "address");
-
-  // 檢查email欄有沒有輸入東西
-  updateEmail.addEventListener("keyup", emailError);
-}
-function emailError() {
-  errorEmail = document.getElementsByClassName("errorMsg")[0];
-  if (updateEmail.value == "") {
-    errorEmail.style.display = "contents";
-    btSubmit.disabled = "true";
-  } else {
-    errorEmail.style.display = "none";
-    btSubmit.disabled = "";
-  }
+  updateEmail.required=true;
 }
 // 設定input屬性
 function updateToInput(index, inputTitle, inputType, inputValue, inputName) {

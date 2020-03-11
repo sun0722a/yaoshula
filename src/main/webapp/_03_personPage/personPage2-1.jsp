@@ -8,17 +8,17 @@
 <meta charset="UTF-8" />
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/personPage.css" />
-<script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
+	href="${pageContext.request.contextPath}/css/personPageForm.css" />
+<script src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
 </head>
 <body>
-	<form action="<c:url value='/PersonPage' />" method="POST"
+	<form action="<c:url value='/_03_personPage/personPage2-2.jsp' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
-				<img
-					src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
-					id="edit" />
+				<button id="btEdit">
+					<img src="${pageContext.request.contextPath}/image/icons8-edit-144.png" id="edit" />
+				</button>
 			</div>
 			<div id="boxHeadPicture">
 				<img
@@ -26,9 +26,7 @@
 					id="headPicture" />
 			</div>
 			<div id="boxFileSelect">
-				<input name="memberMultipartFile" type="file"
-					style="visibility: hidden;" id="fileSelect"
-					value="${LoginOK.picture}" />
+				
 			</div>
 
 			<table>
@@ -60,9 +58,8 @@
 					<td colspan="2">
 						<div align="center">
 							<input id="btSubmit" type="submit" value="儲存"
-								style="visibility: hidden;" /> <input
-								type="submit" id="btCancel" value="取消"
-								style="visibility: hidden;" name="cancel" />
+								style="visibility: hidden;" /> <input type="submit"
+								id="btCancel" value="取消" style="visibility: hidden;" />
 						</div>
 					</td>
 				</tr>
