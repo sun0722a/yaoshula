@@ -75,3 +75,10 @@ table td{
 	width: 70%;
 	padding: 5px;
 }
+
+/*下拉式選單地址*/
+#address select{
+	font: 16px Tahoma;
+	height: 30px;
+	margin-right: 10px;
+}

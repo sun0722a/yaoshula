@@ -5,6 +5,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/personPageForm.css" />
     <script src="../js/updatePersonPageForm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+
+    <script>
+      new TwCitySelector();
+    </script>
   </head>
   <body>
     <form action="" method="" id="personForm">
@@ -18,12 +23,10 @@
           <img src="../image/headPicture.jpg" id="headPicture" />
         </div>
         <div id="boxFileSelect">
-          <input
-            name="memberMultipartFile"
-            type="file"
-            id="fileSelect"
-          />
+          <input name="memberMultipartFile" type="file" id="fileSelect" />
         </div>
+
+
 
         <table>
           <tr>
@@ -39,7 +42,9 @@
             <td class="personal">1999-11-11</td>
           </tr>
           <tr>
-            <td class="personalTitle"><font color='red'>*&nbsp</font>E-mail：&nbsp&nbsp</td>
+            <td class="personalTitle">
+              <font color="red">*&nbsp</font>E-mail：&nbsp&nbsp
+            </td>
             <td class="personalUpdate">
               <input
                 type="email"
@@ -47,6 +52,7 @@
                 value="se6hxbrv@gmail.com"
                 class="updateInput"
                 required="required"
+                placeholder="example@gmail.com"
               />
             </td>
           </tr>
@@ -59,6 +65,9 @@
                 name="phone"
                 value="0988888888"
                 class="updateInput"
+                placeholder="0912345678"
+                maxlength="10"
+                onkeyup="value=value.replace(/[^\d]/g,'')"
               />
             </td>
           </tr>
@@ -66,10 +75,12 @@
           <tr>
             <td class="personalTitle">地址：&nbsp&nbsp</td>
             <td class="personalUpdate">
+              <div role="tw-city-selector" data-county-value="台北市"
+              data-district-value="中正區" class="address"></div>
               <input
                 type="text"
                 name="address"
-                value="台北市大安區忠孝東路三段一號三樓之一"
+                value="忠孝東路三段一號三樓之一"
                 class="updateInput"
               />
             </td>

@@ -10,6 +10,15 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/personPage.css" />
 <script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
+
+<!-- 下拉式地址 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+<script>
+	new TwCitySelector();
+</script>
+<!-- 下拉式地址 -->
+
 </head>
 <body>
 	<form action="<c:url value='/PersonPage' />" method="POST"
@@ -60,9 +69,9 @@
 					<td colspan="2">
 						<div align="center">
 							<input id="btSubmit" type="submit" value="儲存"
-								style="visibility: hidden;" /> <input
-								type="submit" id="btCancel" value="取消"
-								style="visibility: hidden;" name="cancel" />
+								style="visibility: hidden;" /> <input type="submit"
+								id="btCancel" value="取消" style="visibility: hidden;"
+								name="cancel" />
 						</div>
 					</td>
 				</tr>

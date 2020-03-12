@@ -57,6 +57,13 @@ function update() {
   updateToInput(1, updatePhone, "text", oldphone, "phone");
   updateToInput(2, updateAddress, "text", oldaddress, "address");
   updateEmail.required=true;
+  updateEmail.placeholder="example@gmail.com";
+  updatePhone.placeholder="0912345678";
+  updatePhone.maxLength="10";
+  updatePhone.addEventListener('keyup',function(){
+    this.value=this.value.replace(/[^\d]/g,'');
+  });
+
 }
 // 設定input屬性
 function updateToInput(index, inputTitle, inputType, inputValue, inputName) {
