@@ -32,6 +32,7 @@ a{
 }
 
 
+
 ul{       /*取消ul預設的樣式 */
     padding: 0;
     margin: 0;
@@ -63,9 +64,6 @@ ul.main_menu a{      /* 上層及子選單的字體樣式 */
     line-height: 40px;
 }
 
- ul.main_menu:hover{                 /* 碰到主要選單的區塊會變色*/
-    background-color: #99F7AB;
-}
 
 
 
@@ -77,15 +75,13 @@ ul.main_menu ul{     /*  下拉式選單在滑鼠經過前都不會顯示*/
 }
 
 
-ul.main_menu li:hover >ul {   /* 碰到上層選單時，所有子選單會顯示出來 */
-    width: 100%;
+.main_menu_li:hover > ul {   /* 碰到上層選單時，所有子選單會顯示出來 */
+    border: 1px solid black;
     display: block;
-    border-bottom: 1px dotted;
+    /* border-bottom: 1px dotted;
     border-right: 1px solid transparent;
-    
+     */
 }
-
-
 
 /* 左邊及中間的主要內容*/
 .center-content{
