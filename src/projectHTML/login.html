@@ -4,70 +4,79 @@
     <meta charset="UTF-8">
     <title>要抒啦</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
-<body>
+<style>
+    a{
+        color: black;
+    }
+    #a-style a{
+        text-decoration: none;
+    }
+</style>
+
+<body class="bg-light">
 
     <div class="top_area">
         
         <div class="logo">
             <a href="">
-                <img src="img/heart.png" alt="">
+                <img src="img/logo.jpg" style="width: 100px; height: 100px;" alt="">
             </a>
         </div>
         <div class="top-space"></div>
-            <div class="login">
-                <a href="">
-                    登入
-                </a>
-            </div>     
+        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            登入
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
     </div>
 
-        <div class="top">
-            <ul class="main_menu">
-                    <li class="main_menu_li"><a href=""></a>
-                            <img src="img/home.png">論壇</a>
-                            <ul>
-                                <li><a href="">天使</a>
-                                </li>
-                                <li><a href="">惡魔</a>
-                                </li>
-                            </ul>
-                        
-                    </li>
+    
+    <ul id="a-style">
+        <div class="test">
+        <li class="dropdown">
+            <i class="fas fa-bullhorn" style="margin-right: -20px;"></i>
+            <a href="#home">論壇</a>
+            <div class="dropdown-content">
+                <a href="#">惡魔版</a>
+                <a href="#">天使版</a>
+              </div>
+        </li>
+        <li class="dropdown">
+            <i class="fas fa-shopping-bag" style="margin-right: -20px;"></i>
+            <a href="#news">商城</a>
+            <div class="dropdown-content">
+                <a href="#">購物區</a>
+                <a href="#">購物車</a>
+                <a href="#">歷史訂單</a>
+              </div>
+        </li>
+        <li class="dropdown">
+        <i class="fas fa-user-friends" style="margin-right: -20px;"></i>
+          <a href="" >關於我們</a>
+          <div class="dropdown-content">
+            <a href="#">創建理念</a>
+            <a href="#">團隊介紹</a>
+            <a href="#">關於我們</a>
+          </div>
+        </li>
+    </div>
+      </ul>
 
-                    <li class="main_menu_li"><a href="">
-                            <img src="img/market.png">商城</a>
-                        <ul>
-                            <li><a href="">購物區</a>
-                            </li>
-                            <li><a href="">購物車</a>
-                            </li>
-                            <li><a href="">歷史訂單</a>
-                            </li>
-                        </ul>
-
-                    </li>
-                    <li class="main_menu_li"><a href="">
-                            <img src="img/about.png" style= "margin-right: 2px;" >關於我們</a>
-
-                        <ul>
-                            <li><a href="">創建理念</a>
-                            </li>
-                            <li><a href="">團隊介紹</a>
-                            </li>
-                            <li><a href="">關於我們</a>
-                            </li>
-                        </ul>
-                    </li>
-            </ul>
-        </div>
     <div class="center-content">    
         <div class="side_menu">
             <div><a href="">登入</a></div>
             <div><a href="">註冊</a></div>
         </div>
-    
-        <form class="login-box" action="" method="post">
+   
+        <form class="login-box animated flash" style="animation-iteration-count: 0.5;"  method="post">
             <h2>登入</h2>
                 <input type="text" name="name" placeholder="帳號" >
                 <input type="password" name="password" placeholder="密碼">
@@ -77,11 +86,17 @@
             <div class="errorMSG" style="margin: 5%;"></div>
             <input type="submit" name="" value="登入" style="margin-top:30px;">    
         </form>
-
+    
         <div class="left-area"></div>
     </div>  
 
     <div class="bottom" ></div>
     
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

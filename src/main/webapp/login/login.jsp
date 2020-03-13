@@ -18,6 +18,7 @@ function setFocusToUserId(){
 </head>
 <body onLoad="setFocusToUserId()">
 <c:set var="funcName" value="LOG" scope="session"/>
+<jsp:include page="/top/topMenuTemp.jsp" />
 <c:if test="${ ! empty sessionScope.timeOut }" > <!-- 表示使用逾時，重新登入 -->
    <c:set var="msg" value="<font color='red'>${sessionScope.timeOut}</font>" />
 </c:if>
@@ -74,6 +75,7 @@ function setFocusToUserId(){
                     </li>
             </ul>
         </div>
+    <div class="middle">
     <div class="side_menu">
         <span><a href="">登入</a></span>
         <span><a href="">註冊</a></span>
@@ -93,6 +95,7 @@ function setFocusToUserId(){
         value="${requestScope.password}${param.pswd}" >
         &nbsp;<small><Font color='red'  size="-3">${ErrorMsgKey.PasswordEmptyError}
              </Font></small>
+             
         </div>
         
         <label class="rmButton" style="clear:both">
@@ -102,11 +105,10 @@ function setFocusToUserId(){
                </c:if>
                value="true" >記住我
         </label>
-        
+        	<div style='font-size:10px; color:red'>${ErrorMsgKey.LoginError}</div>
         <input type="submit" name="" value="登入">
     </form>
-
-    <div style="clear: both;"></div>
+	</div>
     <div class="bottom" ></div>
     
 </body>

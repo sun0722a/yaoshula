@@ -152,14 +152,14 @@ ul.main_menu:hover ul{   /* 碰到上層選單時，所有子選單會顯示出�
     margin: -5px 10px;
 }
 
-
-
-.bottom{
-    position: absolute;
-    top: 95%;
-    width: 100%;
-    height: 5%;
-    background-color: #99F7AB;
-    z-index: 99;
+.middle{
+	height: 600px;
+	width:70%
 }
 
+.bottom{
+    top: 10%;
+    width: 70%;
+    height: 5%;
+    background-color: #99F7AB;
+}

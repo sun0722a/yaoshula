@@ -1,0 +1,122 @@
+<div class="top">
+            <ul class="main_menu">
+                    <li class="main_menu_li"><a href=""></a>
+                            <img src="img/home.png">論壇</a>
+                            <ul>
+                                <li><a href="">天使</a>
+                                </li>
+                                <li><a href="">惡魔</a>
+                                </li>
+                            </ul>
+                        
+                    </li>
+
+                    <li class="main_menu_li"><a href="">
+                            <img src="img/market.png">商城</a>
+                        <ul>
+                            <li><a href="">購物區</a>
+                            </li>
+                            <li><a href="">購物車</a>
+                            </li>
+                            <li><a href="">歷史訂單</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="main_menu_li"><a href="">
+                            <img src="img/about.png" style= "margin-right: 2px;" >關於我們</a>
+
+                        <ul>
+                            <li><a href="">創建理念</a>
+                            </li>
+                            <li><a href="">團隊介紹</a>
+                            </li>
+                            <li><a href="">關於我們</a>
+                            </li>
+                        </ul>
+                    </li>
+            </ul>
+        </div>
+
+
+
+ul{       /*取消ul預設的樣式 */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul.main_menu{  /* 主要選單的背景顏色 */
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* background-color: #FEE18F; */
+    background-color: #99F7AB;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+.main_menu_li{     /* 三個主要標題*/
+    width: 25%;
+    margin: 1%;
+    z-index: 1;
+}
+
+
+ul.main_menu a{      /* 上層及子選單的字體樣式 */
+    color: black;
+    padding: 0 30px;
+    line-height: 40px;
+}
+
+
+
+
+
+ul.main_menu ul{     /*  下拉式選單在滑鼠經過前都不會顯示*/
+    width: 100%;
+    background-color: #FEFBF1;
+    display: none;
+}
+
+
+.main_menu_li:hover > ul {   /* 碰到上層選單時，所有子選單會顯示出來 */
+    border: 1px solid black;
+    display: block;
+    /* border-bottom: 1px dotted;
+    border-right: 1px solid transparent;
+     */
+}
+
+
+
+<i class="fas fa-bullhorn" style="font-size: 18px ;"></i>
+           <a href="" class="text-dark" >論壇</a>
+           <a class="dropdown-item bg-light" href="">天使版</a>
+           <a class="dropdown-item bg-light" href="">惡魔版</a>
+
+
+//上層選單
+
+            <div class="main-menu container ">
+       <div class="drop col p-3 text-center ">
+           <a href="">論壇</a>
+           <div class="dropdown-content">
+            <a href="#">天使版</a>
+            <a href="#">惡魔版</a>
+            
+           
+        </div>
+        <div class="col p-3 text-center">
+            <i class="fas fa-shopping-bag"></i>
+            <a href="" class="text-dark">商城</a>
+            
+        </div>
+        <div class="col p-3 text-center">
+            <i class="fas fa-user-friends"></i>
+            <a href="" class="text-dark">關於我們</a>
+        </div>
+    </div>
+    </div>
