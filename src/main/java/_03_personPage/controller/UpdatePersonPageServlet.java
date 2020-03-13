@@ -39,7 +39,7 @@ import _03_personPage.service.impl.MemberServiceImpl;
 @WebServlet("/PersonPage")
 public class UpdatePersonPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -76,6 +76,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName(); // 取得欄位名稱(name)
 				String value = request.getParameter(fldName); // 取得欄位值(value)
+				System.out.println("fldName= " + fldName + "value= " + value);
 
 				if (p.getContentType() == null) {
 					if (fldName.equals("cancel")) {
@@ -86,8 +87,12 @@ public class UpdatePersonPageServlet extends HttpServlet {
 						email = value;
 					} else if (fldName.equals("phone")) {
 						phone = value;
+					} else if (fldName.equals("county")) {
+						address += value;
+					} else if (fldName.equals("district")) {
+						address += value;
 					} else if (fldName.equals("address")) {
-						address = value;
+						address += value;
 					}
 				} else { // p.getContentType() = application/octet-stream
 					// 如果有選擇圖片 => 取得檔名&inputStream

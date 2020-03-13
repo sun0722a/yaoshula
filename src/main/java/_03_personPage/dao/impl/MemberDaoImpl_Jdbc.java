@@ -20,7 +20,6 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	private Connection conn = null;
 
 	public MemberDaoImpl_Jdbc() {
-		System.out.println("DBService.JNDI_DB_NAME=" + DBService.nameMy);
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup(DBService.nameMy);

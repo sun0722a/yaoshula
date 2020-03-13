@@ -11,6 +11,15 @@
 	href="${pageContext.request.contextPath}/css/personPageForm.css" />
 <script
 	src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
+
+<!-- 下拉式地址 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+<script>
+	new TwCitySelector();
+</script>
+<!-- 下拉式地址 -->
+
 </head>
 <body>
 	<form action="<c:url value='/PersonPage' />" method="POST"
@@ -49,17 +58,23 @@
 				<tr>
 					<td class="personalTitle"><font color='red'>*&nbsp</font>E-mail：&nbsp&nbsp</td>
 					<td class="personalUpdate"><input type="email" name="email"
-						value="${LoginOK.email}" class="updateInput" required="required" /></td>
+						value="${LoginOK.email}" class="updateInput" required="required"
+						placeholder="example@gmail.com" /></td>
 				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
 					<td class="personalUpdate"><input type="text" name="phone"
-						value="${LoginOK.cellphone}" class="updateInput" /></td>
+						value="${LoginOK.cellphone}" class="updateInput"
+						placeholder="0912345678" maxlength="10"
+						onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
 				</tr>
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
-					<td class="personalUpdate"><input type="text" name="address"
-						value="${LoginOK.address}" class="updateInput" /></td>
+					<td class="personalUpdate">
+						<div role="tw-city-selector" data-county-value="台北市"
+							data-district-value="中正區" id="address"></div> <input type="text"
+						name="address" value="${LoginOK.address}" class="updateInput" />
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
