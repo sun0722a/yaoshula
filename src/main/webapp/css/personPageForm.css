@@ -1,8 +1,10 @@
 table {
 	width: 100%;
 }
-table td{
+
+table td {
 	/* border: 1px solid red; */
+	
 }
 /* 整個表單 */
 #personPage {
@@ -35,7 +37,8 @@ table td{
 	/* border-radius: 50%; */
 	/* background: rgb(118, 206, 169); */
 }
-#btEdit{
+
+#btEdit {
 	/* width: 40px; */
 	padding: 5px;
 	border: 2px solid #fff;
@@ -58,7 +61,7 @@ table td{
 	padding: 5px;
 }
 
-#btSubmit ,#btCancel{
+#btSubmit, #btCancel {
 	margin: 15px;
 	height: 30px;
 }
@@ -70,14 +73,14 @@ table td{
 	margin-bottom: 15px;
 }
 /*表格*/
-.updateInput{
+.updateInput {
 	font: 18px Tahoma;
 	width: 70%;
 	padding: 5px;
 }
 
 /*下拉式選單地址*/
-#address select{
+#address select {
 	font: 16px Tahoma;
 	height: 30px;
 	margin-right: 10px;

@@ -14,9 +14,6 @@
 <!-- 下拉式地址 -->
 <script
 	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
-<script>
-	new TwCitySelector();
-</script>
 <!-- 下拉式地址 -->
 
 </head>
