@@ -76,7 +76,6 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName(); // 取得欄位名稱(name)
 				String value = request.getParameter(fldName); // 取得欄位值(value)
-				System.out.println("fldName= " + fldName + "value= " + value);
 
 				if (p.getContentType() == null) {
 					if (fldName.equals("cancel")) {
@@ -131,7 +130,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			}
 
 			// 轉換頁面
-			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
+			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage2-1.jsp");
 			return;
 
 		} catch (Exception e) {
