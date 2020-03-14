@@ -9,15 +9,24 @@
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/personPageForm.css" />
-<script src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
 </head>
 <body>
-	<form action="<c:url value='/_03_personPage/personPage2-2.jsp' />" method="POST"
-		enctype='multipart/form-data' id="personForm">
+	<jsp:include page="/top/topMenuTemp.jsp" />
+
+	<div class="side_menu">
+		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
+	</div>
+
+	<form action="<c:url value='/_03_personPage/personPage2-2.jsp' />"
+		method="POST" enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
 				<button id="btEdit">
-					<img src="${pageContext.request.contextPath}/image/icons8-edit-144.png" id="edit" />
+					<img
+						src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
+						id="edit" />
 				</button>
 			</div>
 			<div id="boxHeadPicture">
@@ -25,9 +34,7 @@
 					src="${pageContext.request.contextPath}/_00_init/getMemberImage?id=${LoginOK.id}"
 					id="headPicture" />
 			</div>
-			<div id="boxFileSelect">
-				
-			</div>
+			<div id="boxFileSelect"></div>
 
 			<table>
 				<tr>

@@ -8,7 +8,7 @@ public class DBService {
 	private static final String DBURL_MySQL = "jdbc:mysql://" + host
 			+ "/jspdb?useUnicode=yes&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Taipei";
 	public static final String USERID_MySQL = "root";
-	public static final String PSWD_MySQL = "00000000";
+	public static final String PSWD_MySQL = "ho5866252";
 
 
 	private static final String DROP_Member_MySQL = "DROP Table IF EXISTS Memberinfo ";

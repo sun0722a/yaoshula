@@ -6,7 +6,11 @@ table td{
 }
 /* 整個表單 */
 #personPage {
-	width: 40%;
+	position: absolute;
+	top: 20%;
+    left: 15%;
+	
+	width: 70%;
 	border: 1px black solid;
 	padding: 1%;
 }
