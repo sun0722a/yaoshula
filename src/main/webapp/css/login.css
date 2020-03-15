@@ -116,7 +116,7 @@ ul.main_menu:hover ul{   /* 碰到上層選單時，所有子選單會顯示出�
 
 
 .box{
-    /* border: 1px solid black; */
+/*     border: 1px solid black; */
     /* background-color: #C9E4FF; */
     position: absolute;
     top: 40%;

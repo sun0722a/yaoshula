@@ -14,13 +14,16 @@
 <!-- 下拉式地址 -->
 <script
 	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
-<script>
-	new TwCitySelector();
-</script>
 <!-- 下拉式地址 -->
 
 </head>
 <body>
+	<jsp:include page="/top/topMenuTemp.jsp" />
+
+	<div class="side_menu">
+		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
+	</div>
+
 	<form action="<c:url value='/PersonPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">

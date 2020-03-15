@@ -22,6 +22,12 @@
 
 </head>
 <body>
+	<jsp:include page="/top/topMenuTemp.jsp" />
+
+	<div class="side_menu">
+		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
+	</div>
+
 	<form action="<c:url value='/PersonPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
