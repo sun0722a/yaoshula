@@ -1,4 +1,4 @@
-package member.login;
+package _02_login;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import _03_personPage.model.MemberBean;
 import _03_personPage.service.MemberService;
 import _03_personPage.service.impl.MemberServiceImpl;
 
-@WebServlet("/login/login.do")
+@WebServlet("/login.do")
 public class LoginServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -35,10 +35,12 @@ public class LoginServlet extends HttpServlet{
 		String rm = request.getParameter("rememberMe");
 //		String requestURI = (String) session.getAttribute("requestURI");
 		
+
 		if(userId == null || userId.trim().length() == 0){
 			errorMsgMap.put("AccountEmptyError", "帳號欄必須輸入");
 			
 		}
+
 		if(password == null || password.trim().length() == 0) {
 			errorMsgMap.put("PasswordEmptyError", "密碼欄必須輸入");
 		}

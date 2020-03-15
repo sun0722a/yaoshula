@@ -1,4 +1,4 @@
-package member.login;
+package _02_login;
 
 import java.io.IOException;
 
