@@ -1,15 +1,12 @@
-package _03_personPage.controller;
+package _03_personPage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.omg.CORBA.RepositoryIdHelper;
-
 import _00_init.util.GlobalService;
-import _03_personPage.model.MemberBean;
-import _03_personPage.service.MemberService;
-import _03_personPage.service.impl.MemberServiceImpl;
+import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
+import _01_register.service.impl.MemberServiceImpl;
 
 /* 等待: 首頁網址、連線逾時、成功訊息 */
 
@@ -36,7 +31,7 @@ import _03_personPage.service.impl.MemberServiceImpl;
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 
-@WebServlet("/PersonPage")
+@WebServlet("/personPage")
 public class UpdatePersonPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import _03_personPage.model.MemberBean;
+import _01_register.model.MemberBean;
 
 
 @WebFilter(

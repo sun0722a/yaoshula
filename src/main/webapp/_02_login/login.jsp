@@ -18,7 +18,7 @@ function setFocusToUserId(){
 </head>
 <body onLoad="setFocusToUserId()">
 <c:set var="funcName" value="LOG" scope="session"/>
-<jsp:include page="/top/topMenuTemp.jsp" />
+<jsp:include page="/fragment/topMenuTemp.jsp" />
 <c:if test="${ ! empty sessionScope.timeOut }" > <!-- 表示使用逾時，重新登入 -->
    <c:set var="msg" value="<font color='red'>${sessionScope.timeOut}</font>" />
 </c:if>

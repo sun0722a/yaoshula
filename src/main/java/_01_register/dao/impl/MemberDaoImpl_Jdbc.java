@@ -1,4 +1,4 @@
-package _03_personPage.dao.impl;
+package _01_register.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import _00_init.util.DBService;
-import _03_personPage.dao.MemberDao;
-import _03_personPage.model.MemberBean;
+import _01_register.dao.MemberDao;
+import _01_register.model.MemberBean;
 
 // 本類別使用為標準的JDBC技術來存取資料庫。
 public class MemberDaoImpl_Jdbc implements MemberDao {
@@ -53,7 +53,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 			n = ps.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			//需要再度丟出例外給使用這個程式的Sevlet知道
+			// 需要再度丟出例外給使用這個程式的Sevlet知道
 			throw new RuntimeException("MemberDaoImpl_Jdbc類別#saveMember()發生例外: " + ex.getMessage());
 		}
 		return n;
@@ -63,7 +63,8 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	@Override
 	public int updateMember(MemberBean mb) {
 		String sql = "UPDATE Memberinfo "
-				+ " SET user_email= ?, user_phone= ?, user_address= ?, fileName= ?,user_picture= ?" + " WHERE user_id= ?";
+				+ " SET user_email= ?, user_phone= ?, user_address= ?, fileName= ?,user_picture= ?"
+				+ " WHERE user_id= ?";
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, mb.getEmail());

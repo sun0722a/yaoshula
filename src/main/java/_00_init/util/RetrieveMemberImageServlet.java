@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import _03_personPage.model.MemberBean;
-import _03_personPage.service.MemberService;
-import _03_personPage.service.impl.MemberServiceImpl;
+import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
+import _01_register.service.impl.MemberServiceImpl;
 
 @WebServlet("/_00_init/getMemberImage")
 public class RetrieveMemberImageServlet extends HttpServlet {
@@ -43,7 +43,7 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.jpg)
 			if (is == null) {
 				fileName = "NoImage.jpg";
-				is = getServletContext().getResourceAsStream("/image/" + fileName);
+				is = getServletContext().getResourceAsStream("/image/_03_personPage/" + fileName);
 			}
 
 			// 由圖片檔的檔名來得到檔案的MIME型態

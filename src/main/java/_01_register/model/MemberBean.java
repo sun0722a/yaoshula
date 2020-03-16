@@ -1,4 +1,4 @@
-package _03_personPage.model;
+package _01_register.model;
 
 import java.sql.Blob;
 import java.sql.Clob;

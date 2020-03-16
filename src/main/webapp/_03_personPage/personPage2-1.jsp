@@ -8,12 +8,12 @@
 <meta charset="UTF-8" />
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/personPageForm.css" />
+	href="${pageContext.request.contextPath}/css/_03_personPage/personPageForm.css" />
 <script
-	src="${pageContext.request.contextPath}/js/updatePersonPageForm.js"></script>
+	src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPageForm.js"></script>
 </head>
 <body>
-	<jsp:include page="/top/topMenuTemp.jsp" />
+	<jsp:include page="/fragment/topMenuTemp.jsp" />
 
 	<div class="side_menu">
 		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
@@ -25,7 +25,7 @@
 			<div>
 				<button id="btEdit">
 					<img
-						src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
+						src="${pageContext.request.contextPath}/image/_03_personPage/icons8-edit-144.png"
 						id="edit" />
 				</button>
 			</div>
