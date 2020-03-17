@@ -35,15 +35,13 @@ __:mega:上網抒發，最怕遇到酸民來搗亂！<br>
 
 
 ## 開發技術
-Java |Spring MVC | Hirbernate | Javascript | CSS3 | HTML | mySQL | Git
+Java | Spring MVC | Hirbernate | Javascript | CSS3 | HTML | mySQL | Git
 <i class="fab fa-html5"></i>
 <i class="fab fa-css3-alt"></i>
 <i class="fab fa-js-square"></i>
 <i class="fab fa-java"></i>
 
 ## 首次訪問
-
-If you are a total beginner to this, start here!
 
 1. 拜訪我們的首頁。
 2. 選擇天使版/惡魔版。
