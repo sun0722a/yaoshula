@@ -1,8 +1,6 @@
-package _03_personPage.service;
+package _01_register.service;
 
-import java.util.List;
-
-import _03_personPage.model.MemberBean;
+import _01_register.model.MemberBean;
 
 public interface MemberService {
 	boolean idExists(int id);

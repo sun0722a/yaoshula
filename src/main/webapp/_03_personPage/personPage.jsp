@@ -8,8 +8,8 @@
 <meta charset="UTF-8" />
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/personPage.css" />
-<script src="${pageContext.request.contextPath}/js/updatePersonPage.js"></script>
+	href="${pageContext.request.contextPath}/css/_03_personPage/personPage.css" />
+<script src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPage.js"></script>
 
 <!-- 下拉式地址 -->
 <script
@@ -18,18 +18,18 @@
 
 </head>
 <body>
-	<jsp:include page="/top/topMenuTemp.jsp" />
+	<jsp:include page="/fragment/topMenuTemp.jsp" />
 
 	<div class="side_menu">
 		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
 	</div>
 
-	<form action="<c:url value='/PersonPage' />" method="POST"
+	<form action="<c:url value='/personPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>
 				<img
-					src="${pageContext.request.contextPath}/image/icons8-edit-144.png"
+					src="${pageContext.request.contextPath}/image/_03_personPage/icons8-edit-144.png"
 					id="edit" />
 			</div>
 			<div id="boxHeadPicture">

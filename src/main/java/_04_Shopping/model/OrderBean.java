@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "Orders")
 public class OrderBean {
@@ -20,44 +19,34 @@ public class OrderBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer orderNo;
 	String memberId;
-	Integer totalQuantity;
+	Integer totalPrice;
 	String address;
 	String phoneNumber;
+	String orderNote;
 	Date orderDate;
 	Date shippingDate;
-	
+	Date arriveDate;
+
 	@OneToMany(mappedBy = "orderBean", cascade = CascadeType.ALL)
 	Set<OrderItemBean> orderItems = new LinkedHashSet<>();
-	
-	public OrderBean() {
-		
-	}
-	
-	
 
-
-
-
-
-
-
-
-	public OrderBean(Integer orderNo, String memberId, Integer totalQuantity, String address, String phoneNumber,
-			Date orderDate, Date shippingDate, Set<OrderItemBean> orderItems) {
+	public OrderBean(Integer orderNo, String memberId, Integer totalPrice, String address, String phoneNumber,
+			String orderNote, Date orderDate, Date shippingDate, Date arriveDate) {
 		super();
 		this.orderNo = orderNo;
 		this.memberId = memberId;
-		this.totalQuantity = totalQuantity;
+		this.totalPrice = totalPrice;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
+		this.orderNote = orderNote;
 		this.orderDate = orderDate;
 		this.shippingDate = shippingDate;
-		this.orderItems = orderItems;
+		this.arriveDate = arriveDate;
 	}
 
+	public OrderBean() {
 
-
-
+	}
 
 	public Integer getOrderNo() {
 		return orderNo;
@@ -75,12 +64,36 @@ public class OrderBean {
 		this.memberId = memberId;
 	}
 
-	public Integer getTotalQuantity() {
-		return totalQuantity;
+	public Integer getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setTotalQuantity(Integer totalQuantity) {
-		this.totalQuantity = totalQuantity;
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getOrderNote() {
+		return orderNote;
+	}
+
+	public void setOrderNote(String orderNote) {
+		this.orderNote = orderNote;
 	}
 
 	public Date getOrderDate() {
@@ -99,6 +112,14 @@ public class OrderBean {
 		this.shippingDate = shippingDate;
 	}
 
+	public Date getArriveDate() {
+		return arriveDate;
+	}
+
+	public void setArriveDate(Date arriveDate) {
+		this.arriveDate = arriveDate;
+	}
+
 	public Set<OrderItemBean> getOrderItems() {
 		return orderItems;
 	}
@@ -106,22 +127,5 @@ public class OrderBean {
 	public void setOrderItems(Set<OrderItemBean> orderItems) {
 		this.orderItems = orderItems;
 	}
-	
-	public String getAddress() {
-		return address;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	
 }

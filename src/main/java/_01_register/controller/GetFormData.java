@@ -1,6 +1,7 @@
-package members.controller;
+package _01_register.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,14 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
-
-@WebServlet("/GetFormData2")
-public class GetFormDataServlet extends HttpServlet {
+@WebServlet("/GetFormData")
+public class GetFormData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public GetFormDataServlet() {
+	public GetFormData() {
 		super();
 	}
 
@@ -46,8 +46,6 @@ public class GetFormDataServlet extends HttpServlet {
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ParseException {
-		
-		
 		/* Setting the Encoding of Input Data */
 		request.setCharacterEncoding("UTF-8");
 
@@ -59,7 +57,7 @@ public class GetFormDataServlet extends HttpServlet {
 
         char[] unValidChar = {'_', '-', '@', '#', '$', '!', '&', '*'};
 //      讀取使用者所輸入，由瀏覽器送來的 mId 欄位內的資料
-        String mid = request.getParameter("mId");
+		String mid = request.getParameter("mId");
 //      String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");
 		String Address = request.getParameter("mAddress");
@@ -171,11 +169,6 @@ public class GetFormDataServlet extends HttpServlet {
 		System.out.println("langue -> " + langue);
 		System.out.println("學習的程式語言：" + langueMap.get(langue2));
 		request.setAttribute("langue", langueMap.get(langue2));
-		
-//		MemberBean mb = new MemberBean(mid,null,password,gender,datepicker,Email,iPhone,Address,null,new java.sql.Timestamp(System.currentTimeMillis()),null);
-//		registerService rs = new registerServiceImpl();
-//		rs.save(mb);
-//		request.setAttribute("MemberBean", mb);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("page2.jsp");
 		requestDispatcher.forward(request, response);

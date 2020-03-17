@@ -1,8 +1,8 @@
-package _03_personPage.dao;
+package _01_register.dao;
 
 import java.sql.Connection;
 
-import _03_personPage.model.MemberBean;
+import _01_register.model.MemberBean;
 
 
 public interface MemberDao {
