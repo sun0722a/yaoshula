@@ -6,7 +6,7 @@ __:mega:上網抒發，最怕遇到酸民來搗亂！<br>
 &nbsp; &nbsp; &nbsp; &nbsp;作為「台北科技大學Java & Android人才養成班」第十三屆學員從0開始，歷經六個月密集訓練後的成果作品。抱持科技人對人文關懷的使命，「要抒啦！」是個能夠預期回應溫度的論壇空間，想被拍拍誇誇來碗心靈雞湯的你請右轉「天使版:innocent:」，想來碗惡魔毒湯被罵醒或和鄉民講講幹話的你左轉「惡魔版:smiling_imp:」。無論感情、生活、工作、時事都可以聊，還附設購物商城「要買啦！:money_with_wings:」，各種新奇有趣的商品都在這裡。
 ## 本站首頁
 :construction_worker:努力開發中...先看看Logo！
-<div align=center><img width="250" height="250" src="https://i.imgur.com/YcAYvay.png"></div>
+<div align=center><img width="500" height="300" src="https://i.imgur.com/vUDp9pO.png"></div>
 
 ## 開發人員
 >   曾品睿(國立台北大學應用外語系)
@@ -33,9 +33,8 @@ __:mega:上網抒發，最怕遇到酸民來搗亂！<br>
 >   張孟群(高級客服工程師)
 >> * 右手殘廢中
 
-
-## 開發技術
-Java | Spring MVC | Hirbernate | Javascript | CSS3 | HTML | mySQL | Git
+## 開發技術與使用工具
+Java | JDBC | JSP | Spring MVC | Hirbernate | Javascript | jQuery | AJAX | CSS3 | HTML | MySQL | Git | Bootstrap | Tomcat
 <i class="fab fa-html5"></i>
 <i class="fab fa-css3-alt"></i>
 <i class="fab fa-js-square"></i>
@@ -49,9 +48,15 @@ Java | Spring MVC | Hirbernate | Javascript | CSS3 | HTML | mySQL | Git
 4. 如果你錢太多，購物！
 
 
-開發時程
+開發進度
 ---
-
+- [x] 前期規劃
+- [x] 會員系統
+- [ ] 商城系統
+- [ ] 論壇系統
+- [ ] 後台系統
+- [ ] 測試階段
+- [ ] 正式發表
 > 了解我們的開發行事曆 : https://calendar.google.com/calendar?cid=Y2Fycm90NzcxMkBnbWFpbC5jb20
 
 
