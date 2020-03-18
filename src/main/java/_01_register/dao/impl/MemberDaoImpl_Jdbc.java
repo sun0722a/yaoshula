@@ -31,24 +31,23 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 
 	// 儲存MemberBean物件，將參數mb新增到Memberinfo表格內。
 	public int saveMember(MemberBean mb) {
-		String sql = "INSERT INTO Memberinfo " + " (user_id, user_name, user_password, user_gender, user_birthday, "
+		String sql = "INSERT INTO Memberinfo " + " (user_name, user_password, user_gender, user_birthday, "
 				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time, user_status, user_permission)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setInt(1, mb.getId());
-			ps.setString(2, mb.getName());
-			ps.setString(3, mb.getPassword());
-			ps.setString(4, mb.getGender());
-			ps.setDate(5, mb.getBirthday());
-			ps.setString(6, mb.getEmail());
-			ps.setString(7, mb.getCellphone());
-			ps.setString(8, mb.getAddress());
-			ps.setString(9, mb.getFileName());
-			ps.setBlob(10, mb.getPicture());
-			ps.setTimestamp(11, mb.getCreateTime());
-			ps.setString(12, mb.getStatus());
-			ps.setString(13, mb.getPermission());
+			ps.setString(1, mb.getName());
+			ps.setString(2, mb.getPassword());
+			ps.setString(3, mb.getGender());
+			ps.setDate(4, mb.getBirthday());
+			ps.setString(5, mb.getEmail());
+			ps.setString(6, mb.getCellphone());
+			ps.setString(7, mb.getAddress());
+			ps.setString(8, mb.getFileName());
+			ps.setBlob(9, mb.getPicture());
+			ps.setTimestamp(10, mb.getCreateTime());
+			ps.setString(11, mb.getStatus());
+			ps.setString(12, mb.getPermission());
 
 			n = ps.executeUpdate();
 		} catch (Exception ex) {

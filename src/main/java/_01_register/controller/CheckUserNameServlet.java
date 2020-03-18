@@ -18,17 +18,20 @@ public class CheckUserNameServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		Writer os = null;
 		os = response.getWriter();
 
 		String userName = request.getParameter("userName");
 		MemberService service = new MemberServiceImpl();
-		boolean exist = service.idExists(userName);
-		if (exist) {
-			os.write("此帳號可使用");
-		} else {
-			os.write("此帳號已被使用");
+		if (userName.trim().length() != 0) {
+			boolean exist = service.idExists(userName);
+			if (!exist) {
+				os.write("此帳號可使用");
+			} else {
+				os.write("此帳號已被使用");
+			}
 		}
-
+		return;
 	}
 }

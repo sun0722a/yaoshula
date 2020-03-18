@@ -26,6 +26,7 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
+/* 等待: email檢查不能重複 */
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/register")
@@ -35,14 +36,13 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/* Setting the Encoding of Input Data */
 		request.setCharacterEncoding("UTF-8");
 
 		HttpSession session = request.getSession();
 		String target = (String) session.getAttribute("target");
 		// 準備存放錯誤訊息的Map物件
 		Map<String, String> errorMsg = new HashMap<String, String>();
-		request.setAttribute("MsgMap", errorMsg); // 顯示錯誤訊息
+		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
 		String userName = "";
 		String password = "";
@@ -63,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
 //				System.out.println("fldName= " + fldName + "value= " + value);
-				
+
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
 					if (fldName.equals("cancel")) {
@@ -87,8 +87,9 @@ public class RegisterServlet extends HttpServlet {
 						address = value;
 					} else if (fldName.equals("birthday")) {
 						try {
-							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-							birthday = (Date) simpleDateFormat.parse(value);
+							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+							java.util.Date date = simpleDateFormat.parse(value);
+							birthday = new Date(date.getTime());
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
@@ -140,7 +141,7 @@ public class RegisterServlet extends HttpServlet {
 			// 呼叫MemberDao的saveMember方法
 			int n = service.saveMember(mem);
 			if (n == 1) {
-				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+				response.sendRedirect(getServletContext().getContextPath() + "/_02_login/login.jsp");
 				return;
 			} else {
 				System.out.println("更新此筆資料有誤(RegisterServlet)");

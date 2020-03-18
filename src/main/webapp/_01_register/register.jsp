@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <title>要抒啦--註冊</title>
-<!-- <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css"> -->
-<!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
-<!-- <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
-<!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/_01_register/register.css" />
-<script src="${pageContext.request.contextPath}/js/_01_register/register.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/_01_register/register.css" />
+<script
+	src="${pageContext.request.contextPath}/js/_01_register/register.js"></script>
 
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -43,15 +41,19 @@
 <!-- 下拉式地址 -->
 </head>
 <body>
+	<jsp:include page="/fragment/topMenuTemp.jsp" />
+
+	<div class="side_menu">
+		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
+	</div>
+
 	<form method="post" action="<c:url value='/register' />"
-		enctype="application/x-www-form-urlencoded" id="registerForm">
-		<!-- id屬性 是給 JavaScript程式看的 -->
-		<!-- name屬性 是給 後端 Servlet程式看的 -->
+		enctype="multipart/form-data" id="registerForm">
 		<!-- autocomplete="off"不要讓瀏覽器記住使用者輸入資料的歷史紀錄 -->
-		<!-- 		required="required" 會提示內容要輸入 -->
 		<div id="registerPage">
 			<div id="boxHeadPicture">
-				<img src="${pageContext.request.contextPath}/image/_03_personPage/headPicture.jpg"
+				<img
+					src="${pageContext.request.contextPath}/image/_03_personPage/headPicture.jpg"
 					id="headPicture" />
 			</div>
 			<div id="boxFileSelect">
@@ -62,15 +64,15 @@
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>
 						帳號：&nbsp&nbsp</td>
-					<td class="tdInput"><input name="userName" value=""
-						placeholder="不能含有特殊字元" required="required" type="text"
+					<td class="tdInput"><input id="userName" name="userName"
+						value="" placeholder="不能含有特殊字元" required="required" type="text"
 						class="contentText" onkeyup="value=value.replace(/[\W]/g,'')" />
 					</td>
 					<td><input type="button" id="btnUserName" value="檢查帳號" /></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="errorText"></td>
+					<td class="errorText" id="userNameText">${errorMsg.errorId}</td>
 				</tr>
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>
@@ -100,7 +102,7 @@
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>生日：&nbsp&nbsp
 					</td>
-					<td class="tdInput"><input id="datepicker" name="datepicker"
+					<td class="tdInput"><input id="datepicker" name="birthday"
 						placeholder="1911-01-01" value="" type="text" autocomplete="off"
 						required="required" class="contentText" /></td>
 				</tr>
@@ -110,6 +112,11 @@
 					<td class="tdInput"><input name="email"
 						placeholder="member@example.com" value="" type="text"
 						required="required" class="contentText" /></td>
+					<td><input type="button" id="btnUserName" value="檢查帳號" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="errorText" id="userNameText">${errorMsg.errorId}</td>
 				</tr>
 
 				<tr>
@@ -122,8 +129,7 @@
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
 					<td class="tdInput">
-						<div role="tw-city-selector" data-county-value="台北市"
-							data-district-value="中正區" id="address"></div> <input
+						<div role="tw-city-selector" id="address"></div> <input
 						name="address" value="" type="text" class="contentText" />
 					</td>
 				</tr>

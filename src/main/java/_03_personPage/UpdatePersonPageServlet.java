@@ -119,7 +119,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			}
 
 			// 轉換頁面
-			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage2-1.jsp");
+			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
 			return;
 
 		} catch (Exception e) {
