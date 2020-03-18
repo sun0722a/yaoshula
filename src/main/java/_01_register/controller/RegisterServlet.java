@@ -16,44 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/GetFormData")
-public class GetFormData extends HttpServlet {
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public GetFormData() {
-		super();
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-//        try {
-//            processRequest(request, response);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ParseException {
 		/* Setting the Encoding of Input Data */
 		request.setCharacterEncoding("UTF-8");
-
-		/* Setting the encoding of the output data to the web page */
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-
-		/* https://www.itread01.com/content/1548753308.html */
 
 		char[] unValidChar = { '_', '-', '@', '#', '$', '!', '&', '*' };
 //      讀取使用者所輸入，由瀏覽器送來的 mId 欄位內的資料
@@ -152,11 +123,17 @@ public class GetFormData extends HttpServlet {
 		// yyyy 西元年，MM 月份，dd 日期
 		// %tF 同 %tY-%tm-%td 顯示西元年-月-日
 		// %tT 同 %tH:%tM:%tS 顯示24小時制的時:分:秒
-		Date date = simpleDateFormat.parse(datepicker);
-		System.out.println("#1 date -> " + date);
-		System.out.printf("#2 date -> %tF %<tT%n", date);
-		String date2 = String.format("%tF", date);
-		request.setAttribute("date", date2);
+		Date date;
+		try {
+			date = simpleDateFormat.parse(datepicker);
+			System.out.println("#1 date -> " + date);
+			System.out.printf("#2 date -> %tF %<tT%n", date);
+			String date2 = String.format("%tF", date);
+			request.setAttribute("date", date2);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// -----------------------------------------------
 
 		// 性別--------------------------------------------------------
@@ -173,7 +150,6 @@ public class GetFormData extends HttpServlet {
 
 		response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 		return;
-
 	}
 
 }

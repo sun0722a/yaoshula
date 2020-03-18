@@ -24,7 +24,7 @@ import _01_register.model.MemberBean;
 @WebFilter(
 		urlPatterns = { "/*" }, 
 		initParams = { 
-				@WebInitParam(name = "url_1", value = "/member/*")
+				@WebInitParam(name = "url_1", value = "/_03_personPage/*")
 		})
 public class LoginFilter implements Filter {
 
@@ -66,7 +66,7 @@ public class LoginFilter implements Filter {
 				}else {   
 						HttpSession session = req.getSession();
 						session.setAttribute("target", req.getServletPath());
-						RequestDispatcher rd = request.getRequestDispatcher("/login/login.jsp");
+						RequestDispatcher rd = request.getRequestDispatcher("/_02_login/login.jsp");
 						rd.forward(req, resp);
 				}
 				}

@@ -38,8 +38,7 @@
 
 
 	<p>會員註冊</p>
-	<form method="post"
-		action="${pageContext.request.contextPath}/GetFormData"
+	<form method="post" action="<c:url value='/register' />"
 		enctype="application/x-www-form-urlencoded">
 		<!-- id屬性 是給 JavaScript程式看的 -->
 		<!-- name屬性 是給 後端 Servlet程式看的 -->
@@ -92,20 +91,8 @@
 			<%-- 		<input name="mPhone" value="${param.mPhone}" type="text" size="20"></td>     --%>
 			手機 : <input id="iphone" name="iPhone" value="" type="text" size="20">
 		</p>
-
-
-		<P>
-			程式語言：<select name="langue">
-				<option value="0">C</option>
-				<option value="1">C++</option>
-				<option value="2">Java</option>
-				<option value="3">MATLAB</option>
-			</select>
-		</P>
 		<input type="submit" value="提交" /> <input type="reset" value="重設" />
 	</form>
-
-	<!-- 參考網站：https://www.runoob.com/jqueryui/example-datepicker.html -->
 
 </body>
 </html>

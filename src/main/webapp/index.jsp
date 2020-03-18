@@ -14,7 +14,13 @@
 <body>
 	<div class="top">
 		<div class="logo"></div>
-		<div class="login"></div>
+		<span class="option"> <a
+			href="<c:url value='/_01_register/register.jsp' />">註冊</a>
+		</span> <span class="option"> <a
+			href="<c:url value='/_02_login/login.jsp' />">登入</a>
+		</span> <span class="option"> <a
+			href="<c:url value='/_03_personPage/personPage.jsp' />">個人頁面</a>
+		</span>
 	</div>
 	<div class="main-menu">
 		<div class="menu">
