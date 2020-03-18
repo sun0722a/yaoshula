@@ -5,6 +5,7 @@ import java.sql.Blob;
 import java.sql.Clob;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,25 +22,38 @@ public class ProductBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private Integer productId;
 	private String productName;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_CategoryBean_Category")
 	private CategoryBean category;
 	private Integer price;
-	private String formate;
+	@Id
+	private String formateTitle1;
+	@Id
+	private String formateContent1;
+	@Id
+	private String formateTitle2;
+	@Id
+	private String formateContent2;
 	private String fileName;
 	private Blob image;
 	private Clob detail;
 	private Integer stock;
 
-	public ProductBean(Integer productId, String productName, Integer price, String formate, String fileName,
+	public ProductBean(Integer productId, String productName, CategoryBean category, Integer price,
+			String formateTitle1, String formateContent1, String formateTitle2, String formateContent2, String fileName,
 			Blob image, Clob detail, Integer stock) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
+		this.category = category;
 		this.price = price;
-		this.formate = formate;
+		this.formateTitle1 = formateTitle1;
+		this.formateContent1 = formateContent1;
+		this.formateTitle2 = formateTitle2;
+		this.formateContent2 = formateContent2;
 		this.fileName = fileName;
 		this.image = image;
 		this.detail = detail;
@@ -81,12 +95,36 @@ public class ProductBean implements Serializable {
 		this.price = price;
 	}
 
-	public String getFormate() {
-		return formate;
+	public String getFormateTitle1() {
+		return formateTitle1;
 	}
 
-	public void setFormate(String formate) {
-		this.formate = formate;
+	public void setFormateTitle1(String formateTitle1) {
+		this.formateTitle1 = formateTitle1;
+	}
+
+	public String getFormateContent1() {
+		return formateContent1;
+	}
+
+	public void setFormateContent1(String formateContent1) {
+		this.formateContent1 = formateContent1;
+	}
+
+	public String getFormateTitle2() {
+		return formateTitle2;
+	}
+
+	public void setFormateTitle2(String formateTitle2) {
+		this.formateTitle2 = formateTitle2;
+	}
+
+	public String getFormateContent2() {
+		return formateContent2;
+	}
+
+	public void setFormateContent2(String formateContent2) {
+		this.formateContent2 = formateContent2;
 	}
 
 	public String getFileName() {

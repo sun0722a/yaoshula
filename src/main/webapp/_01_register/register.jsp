@@ -10,89 +10,133 @@
 <!-- <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
 <!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/_01_register/register.css" />
+<script src="${pageContext.request.contextPath}/js/_01_register/register.js"></script>
+
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript"
 	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script type="text/javascript" src="./lib/padStartLibrary.js"></script>
+<link rel="stylesheet"
+	href="http://jqueryui.com/resources/demos/style.css" />
 
-<script type="text/javascript">
+<script>
 	$(function() {
-		$("#datepicker").datepicker();
-		console.log("#1 loading");
+		$("#datepicker").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			yearRange : "-150:+0"
+		});
+		$("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 	});
 </script>
 
-<script type="text/javascript">
-	function btclick() {
-		if (!((document.getElementById("np").value)
-				.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/))) {
-			alert("your password : " + document.getElementById("np").value);
-		}
-	}
+<!-- 下拉式地址 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+
+<script>
+	new TwCitySelector();
 </script>
+<!-- 下拉式地址 -->
 </head>
 <body>
-
-
-	<p>會員註冊</p>
 	<form method="post" action="<c:url value='/register' />"
-		enctype="application/x-www-form-urlencoded">
+		enctype="application/x-www-form-urlencoded" id="registerForm">
 		<!-- id屬性 是給 JavaScript程式看的 -->
 		<!-- name屬性 是給 後端 Servlet程式看的 -->
 		<!-- autocomplete="off"不要讓瀏覽器記住使用者輸入資料的歷史紀錄 -->
 		<!-- 		required="required" 會提示內容要輸入 -->
-		<p>
-			<font size="3" color="red">*</font> 帳號 : <input id='num' name="mId"
-				value="" placeholder="不能有特殊字元" required="required" type="text"
-				size="16"> ${ErrorMsg.id}
-		</p>
-		<p>
-			<font size="3" color="red">*</font>
-			<!-- 		密碼:<input id="np" type="password" name="np" id="np" class="content_text" /> -->
-			密碼 : <input id="password" name="password" type="password"
-				placeholder="此欄位不能空白" required="required" class="content_text">
-			${ErrorMsg.password}
-		</p>
+		<div id="registerPage">
+			<div id="boxHeadPicture">
+				<img src="${pageContext.request.contextPath}/image/_03_personPage/headPicture.jpg"
+					id="headPicture" />
+			</div>
+			<div id="boxFileSelect">
+				<input name="memberMultipartFile" type="file" id="fileSelect" />
+			</div>
 
-		<p>
-			<font size="3" color="red">*</font> 密碼確認:<input id="passwordCheck"
-				name="passwordCheck" type="password" class="content_text">
-			${ErrorMsg.passwordCheck}
-		</p>
+			<table>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>
+						帳號：&nbsp&nbsp</td>
+					<td class="tdInput"><input name="userName" value=""
+						placeholder="不能含有特殊字元" required="required" type="text"
+						class="contentText" onkeyup="value=value.replace(/[\W]/g,'')" />
+					</td>
+					<td><input type="button" id="btnUserName" value="檢查帳號" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="errorText"></td>
+				</tr>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>
+						密碼：&nbsp&nbsp</td>
+					<td class="tdInput"><input id="password" name="password"
+						type="password" placeholder="長度為8~12字元" required="required"
+						class="contentText" maxlength="15" minlength="8" /></td>
+				</tr>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>
+						密碼確認：&nbsp&nbsp</td>
+					<td class="tdInput"><input id="passwordCheck"
+						name="passwordCheck" type="password" placeholder="長度為8~12字元"
+						class="contentText" maxlength="15" minlength="8" /></td>
+				</tr>
+				<tr style="display: none;" id="passwordError">
+					<td></td>
+					<td class="errorText">密碼確認錯誤</td>
+				</tr>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>性別：&nbsp&nbsp
+					</td>
+					<td class="tdInput"><input type="radio" name="gender"
+						value="男" required="required" />男 <input type="radio"
+						name="gender" value="女" required="required" />女</td>
+				</tr>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>生日：&nbsp&nbsp
+					</td>
+					<td class="tdInput"><input id="datepicker" name="datepicker"
+						placeholder="1911-01-01" value="" type="text" autocomplete="off"
+						required="required" class="contentText" /></td>
+				</tr>
+				<tr>
+					<td class="personalTitle"><font size="3" color="red">*</font>
+						E-mail：&nbsp&nbsp</td>
+					<td class="tdInput"><input name="email"
+						placeholder="member@example.com" value="" type="text"
+						required="required" class="contentText" /></td>
+				</tr>
 
-		<p>
-			性別： <input type="radio" name="gender" value="male"
-				required="required" />男 <input type="radio" name="gender"
-				value="female" required="required" />女
-		</p>
+				<tr>
+					<td class="personalTitle">手機：&nbsp&nbsp</td>
+					<td class="tdInput"><input name="phone"
+						placeholder="0912345678" value="" type="text" class="contentText"
+						maxlength="10" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+				</tr>
 
-
-		<p>
-			住址: <input id="mAddress" name="mAddress" value="" type="text"
-				size="54">
-		</p>
-
-		<p>
-			日期： <input type="text" id="datepicker" name="datepicker"
-				autocomplete="off" required="required" />
-		</p>
-
-		<p>
-			<%-- 								   value="${param.mWeight}" --%>
-			<font size="3" color="red">*</font> E-mail : <input id="Email"
-				name="Email" placeholder="此欄位不能空白" value="" type="text" size="14">
-			${ErrorMsg.Email}
-		</p>
-
-		<p>
-			<%-- 		<input name="mPhone" value="${param.mPhone}" type="text" size="20"></td>     --%>
-			手機 : <input id="iphone" name="iPhone" value="" type="text" size="20">
-		</p>
-		<input type="submit" value="提交" /> <input type="reset" value="重設" />
+				<tr>
+					<td class="personalTitle">地址：&nbsp&nbsp</td>
+					<td class="tdInput">
+						<div role="tw-city-selector" data-county-value="台北市"
+							data-district-value="中正區" id="address"></div> <input
+						name="address" value="" type="text" class="contentText" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div align="center">
+							<input id="btSubmit" type="submit" value="送出" /> <input
+								id="btCancel" type="submit" value="取消" name="cancel" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</form>
-
 </body>
 </html>

@@ -4,43 +4,16 @@ table {
 
 table td {
 	/* border: 1px solid red; */
-	
 }
 /* 整個表單 */
-#personPage {
+#registerPage {
 	position: absolute;
 	top: 20%;
     left: 15%;
 	
-	
 	width: 70%;
 	border: 1px black solid;
 	padding: 1%;
-}
-
-/* 內容標題 */
-.personalTitle {
-	font: bold 22px Tahoma;
-	width: 35%;
-	height: 50px;
-	line-height: 50px;
-	text-align: right;
-}
-
-/* 內容(可以改、不能改) */
-.personal, .personalUpdate {
-	font: 18px Tahoma;
-	height: 50px;
-	line-height: 50px;
-}
-
-/* 筆 */
-#edit {
-	width: 40px;
-	padding: 5px;
-	border: 2px solid #fff;
-	border-radius: 50%;
-	background: rgb(118, 206, 169);
 }
 
 /* 頭照DIV */
@@ -58,11 +31,6 @@ table td {
 	padding: 5px;
 }
 
-#btSubmit, #btCancel {
-	margin: 15px;
-	height: 30px;
-}
-
 /* 選擇檔案DIV */
 #boxFileSelect {
 	height: 50px;
@@ -70,11 +38,43 @@ table td {
 	margin-bottom: 15px;
 }
 
-/*表格*/
-.updateInput {
+/* td1*/
+.personalTitle {
+	font: bold 22px Tahoma;
+	width: 35%;
+	height: 50px;
+	line-height: 50px;
+	text-align: right;
+}
+
+/* td2 */
+.tdInput{
 	font: 18px Tahoma;
-	width: 70%;
+	height: 50px;
+	line-height: 50px;
+	width: 45%;
+}
+
+/*表格*/
+.contentText {
+	font: 18px Tahoma;
 	padding: 5px;
+	width: 90%;
+}
+
+#btSubmit, #btCancel {
+	margin: 15px;
+	height: 30px;
+}
+
+/*錯誤訊息*/
+.errorText{
+	font-size: 10px;
+	color: red;
+}
+
+#btnUserName{
+	height: 30px;
 }
 
 /*下拉式選單地址*/
@@ -83,3 +83,14 @@ table td {
 	height: 30px;
 	margin-right: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+

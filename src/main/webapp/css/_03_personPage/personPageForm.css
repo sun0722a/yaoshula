@@ -33,6 +33,13 @@ table td {
 	line-height: 50px;
 }
 
+/*表格*/
+.updateInput {
+	font: 18px Tahoma;
+	width: 70%;
+	padding: 5px;
+}
+
 /* 筆 */
 #edit {
 	width: 40px;
@@ -70,17 +77,11 @@ table td {
 	height: 30px;
 }
 
-/* 選擇照片DIV */
+/* 選擇檔案DIV */
 #boxFileSelect {
 	height: 50px;
 	text-align: center;
 	margin-bottom: 15px;
-}
-/*表格*/
-.updateInput {
-	font: 18px Tahoma;
-	width: 70%;
-	padding: 5px;
 }
 
 /*下拉式選單地址*/
