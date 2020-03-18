@@ -32,7 +32,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	// 儲存MemberBean物件，將參數mb新增到Memberinfo表格內。
 	public int saveMember(MemberBean mb) {
 		String sql = "INSERT INTO Memberinfo " + " (user_id, user_name, user_password, user_gender, user_birthday, "
-				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time,user_status,user_permission)"
+				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time, user_status, user_permission)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
@@ -85,11 +85,11 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	// 判斷參數id(會員帳號)是否已經被現有客戶使用，如果是，傳回true，表示此id不能使用，
 	// 否則傳回false，表示此id可使用。
 	@Override
-	public boolean idExists(int id) {
+	public boolean idExists(String id) {
 		boolean exist = false;
-		String sql = "SELECT * FROM Memberinfo WHERE memberID = ?";
+		String sql = "SELECT * FROM Memberinfo WHERE user_name = ?";
 		try (Connection connection = ds.getConnection(); PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1, id);
+			ps.setString(1, id);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					exist = true;

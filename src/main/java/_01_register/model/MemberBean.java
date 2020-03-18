@@ -1,7 +1,6 @@
 package _01_register.model;
 
 import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -19,7 +18,7 @@ public class MemberBean {
 	private Timestamp createTime;
 	private String status;
 	private String permission;
-	
+
 	public MemberBean(Integer id, String name, String password, String gender, Date birthday, String email,
 			String cellphone, String address, String fileName, Blob picture, Timestamp createTime, String status,
 			String permission) {
@@ -146,6 +145,5 @@ public class MemberBean {
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-
 
 }

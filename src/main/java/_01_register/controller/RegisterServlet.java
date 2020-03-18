@@ -1,21 +1,33 @@
 package _01_register.controller;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import _00_init.util.GlobalService;
+import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
+import _01_register.service.impl.MemberServiceImpl;
+
+@MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
+		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,130 +38,123 @@ public class RegisterServlet extends HttpServlet {
 		/* Setting the Encoding of Input Data */
 		request.setCharacterEncoding("UTF-8");
 
-		char[] unValidChar = { '_', '-', '@', '#', '$', '!', '&', '*' };
-//      讀取使用者所輸入，由瀏覽器送來的 mId 欄位內的資料
-		String mid = request.getParameter("mId");
-//      String password = request.getParameter("password");
-		String passwordCheck = request.getParameter("passwordCheck");
-		String Address = request.getParameter("mAddress");
-		String iPhone = request.getParameter("iPhone");
-		String Email = request.getParameter("Email");
-		boolean mail = Email.matches("[a-zA-Z0-9]+@[0-9]+\\.[a-z]+");
-		System.out.println(mail);
-//		request.setAttribute("id", mid);
-//      request.setAttribute("password", password);
-//		request.setAttribute("passwordCheck", passwordCheck);
-		request.setAttribute("address", Address);
-		request.setAttribute("iPhone", iPhone);
-		request.setAttribute("Email", Email);
+		HttpSession session = request.getSession();
+		String target = (String) session.getAttribute("target");
+		// 準備存放錯誤訊息的Map物件
+		Map<String, String> errorMsg = new HashMap<String, String>();
+		request.setAttribute("MsgMap", errorMsg); // 顯示錯誤訊息
 
-//		HttpSession session = request.getSession();
-		// 定義存放錯誤訊息的 Collection物件
-		Map<String, String> errorMessage = new HashMap<>();
-		request.setAttribute("ErrorMsg", errorMessage);
-		request.setCharacterEncoding("UTF-8");
+		String userName = "";
+		String password = "";
+		String gender = "";
+		String address = "";
+		Date birthday = null;
+		String email = "";
+		String phone = "";
+		String fileName = "";
+		long sizeInBytes = 0;
+		InputStream is = null;
 
-//        帳號 密碼抓設定 request.setAttribute("id", mid);
-//        Map<String, String> mIdPs = new HashMap<>(); 
-//        mIdPs.put("mid",mid);
-//        mIdPs.put("password",password);   
-//        request.setAttribute("mIdPs", mIdPs);     
+		// 取出HTTP multipart request內所有的parts
+		Collection<Part> parts = request.getParts();
+		// 由parts != null來判斷此上傳資料是否為HTTP multipart request
+		if (parts != null) { // 如果這是一個上傳資料的表單
+			for (Part p : parts) {
+				String fldName = p.getName();
+				String value = request.getParameter(fldName);
+//				System.out.println("fldName= " + fldName + "value= " + value);
+				
+				// 逐項讀取使用者輸入資料
+				if (p.getContentType() == null) {
+					if (fldName.equals("cancel")) {
+						if (target != null) {
+							response.sendRedirect(
+									response.encodeRedirectURL(getServletContext().getContextPath() + target));
 
-		// 讀取使用者所輸入，由瀏覽器送來的 pswd 欄位內的資料，注意大小寫
-		String password = request.getParameter("password");
-		// 檢查使用者所輸入的資料
-		if (password.trim().length() == 0 || password.trim().length() < 8) {
-			errorMessage.put("password", "密碼長度不可小於8位數");
-		} else if (password.trim().length() > 15) {
-			errorMessage.put("password", "密碼長度不能超過15位數");
-		}
-
-		// -------------------------------------
-		for (char ch : unValidChar) {
-			if (mid.contains(Character.toString(ch))) {
-				errorMessage.put("id", "帳號不可有特殊符號 _, -, @ , # , $ , ! , & , * ");
+						} else {
+							response.sendRedirect(
+									response.encodeRedirectURL(getServletContext().getContextPath() + "/index.jsp"));
+						}
+						return;
+					}
+					if (fldName.equals("userName")) {
+						userName = value;
+					} else if (fldName.equals("password")) {
+						password = value;
+					} else if (fldName.equals("gender")) {
+						gender = value;
+					} else if (fldName.equals("address")) {
+						address = value;
+					} else if (fldName.equals("birthday")) {
+						try {
+							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+							birthday = (Date) simpleDateFormat.parse(value);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+					} else if (fldName.equals("email")) {
+						email = value;
+					} else if (fldName.equals("phone")) {
+						phone = value;
+					}
+				} else {
+					// 取出圖片檔的檔名
+					fileName = p.getSubmittedFileName();
+					// 調整圖片檔檔名的長度，需要檔名中的附檔名，所以調整主檔名以免檔名太長無法寫入表格
+					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
+					if (fileName != null && fileName.trim().length() > 0) {
+						sizeInBytes = p.getSize();
+						is = p.getInputStream();
+					}
+				}
 			}
-		}
-//		if(!errorMessage.isEmpty()){
-//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-//			requestDispatcher.forward(request, response);
-//			return;
-//		}
-		request.setAttribute("id", mid);
-		// -------------------------顯示 密碼
-		// 錯誤訊息---------------------------------------------------
-		if (!errorMessage.isEmpty()) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/_01_register/register.jsp");
-			requestDispatcher.forward(request, response);
-			return;
 
+		} else {
+			System.out.println("此表單不是上傳檔案的表單(RegisterServlet)");
 		}
-//		errorMessage.clear();
-		request.setAttribute("password", password);
 
-//-------------------密碼進行比較確認是否相同--------------------------------------------		
-		if (!passwordCheck.equals(password)) {
-			errorMessage.put("passwordCheck", "密碼不相同請確認!!");
+		// 呼叫MemberDao的idExists方法(經由MemberService)
+		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
+		MemberService service = new MemberServiceImpl();
+		if (service.idExists(userName)) {
+			errorMsg.put("errorId", "此帳號已存在");
 		}
-		if (!errorMessage.isEmpty()) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/_01_register/register.jsp");
-			requestDispatcher.forward(request, response);
+		// 如果有錯誤
+		if (!errorMsg.isEmpty()) {
+			// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
+			RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+			rd.forward(request, response);
 			return;
 		}
-
-		request.setAttribute("passwordCheck", passwordCheck);
-//--------------------------------------------------------------------
-//        地址 改用上面 request.setAttribute("address", Address);簡單寫法 
-//        Map<String, String> address = new HashMap<>(); 
-//        address.put("mAddress",Address);            
-//        request.setAttribute("address", address);
-
-		// 性別
-		Map<String, String> genderMap = new HashMap<String, String>();
-		genderMap.put("male", "男性");
-		genderMap.put("female", "女性");
-
-		// 範例
-		Map<Integer, String> langueMap = new HashMap<Integer, String>();
-		langueMap.put(0, "C");
-		langueMap.put(1, "C++");
-		langueMap.put(2, "Java");
-		langueMap.put(3, "MATLAB");
-
-		// 生日-----------------------------------------------
-		String datepicker = request.getParameter("datepicker");
-		System.out.println("datepicker -> " + datepicker);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		// yyyy 西元年，MM 月份，dd 日期
-		// %tF 同 %tY-%tm-%td 顯示西元年-月-日
-		// %tT 同 %tH:%tM:%tS 顯示24小時制的時:分:秒
-		Date date;
 		try {
-			date = simpleDateFormat.parse(datepicker);
-			System.out.println("#1 date -> " + date);
-			System.out.printf("#2 date -> %tF %<tT%n", date);
-			String date2 = String.format("%tF", date);
-			request.setAttribute("date", date2);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			// 為了配合Hibernate的版本。要在此加密，不要在 dao.saveMember(mem)進行加密
+			password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
+			Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+			Blob blob = null;
+			if (is != null) {
+				blob = GlobalService.fileToBlob(is, sizeInBytes);
+			}
+			// 將所有會員資料封裝到MemberBean(類別的)物件
+			MemberBean mem = new MemberBean(null, userName, password, gender, birthday, email, phone, address, fileName,
+					blob, ts, "正常", "一般會員");
+			// 呼叫MemberDao的saveMember方法
+			int n = service.saveMember(mem);
+			if (n == 1) {
+				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+				return;
+			} else {
+				System.out.println("更新此筆資料有誤(RegisterServlet)");
+				RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+				rd.forward(request, response);
+				return;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
+			RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+			rd.forward(request, response);
+			return;
 		}
-		// -----------------------------------------------
 
-		// 性別--------------------------------------------------------
-		String gender = request.getParameter("gender");
-		System.out.println("gender -> " + gender);
-		System.out.println("性別：" + genderMap.get(gender));
-		request.setAttribute("gender", genderMap.get(gender));
-		// --------------------------------------------------------------
-		String langue = request.getParameter("langue");
-		int langue2 = Integer.parseInt(langue);
-		System.out.println("langue -> " + langue);
-		System.out.println("學習的程式語言：" + langueMap.get(langue2));
-		request.setAttribute("langue", langueMap.get(langue2));
-
-		response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
-		return;
 	}
 
 }

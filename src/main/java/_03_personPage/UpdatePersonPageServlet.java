@@ -21,7 +21,7 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-/* 等待: 首頁網址、連線逾時、成功訊息 */
+/* 等待: 連線逾時 */
 
 /* MultipartConfig的屬性說明: */
 //location: 上傳之表單資料與檔案暫時存放在Server端之路徑，此路徑必須存在，否則Web Container將丟出例外。
@@ -48,10 +48,6 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			return;
 		}
 
-		// 準備存放註冊成功之訊息的Map物件
-		Map<String, String> msgOK = new HashMap<String, String>();
-		session.setAttribute("MsgOK", msgOK);
-
 		// 取得原本的使用者資料(id、fileName)
 		MemberBean oldMember = (MemberBean) session.getAttribute("LoginOK");
 		int id = oldMember.getId();
@@ -67,7 +63,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 		Collection<Part> parts = request.getParts();
 		// 由parts != null來判斷此上傳資料是否為上傳資料的表單(HTTP multipart request)
 		if (parts != null) {
-			// 逐筆讀取使用者輸入資料
+			// 逐項讀取使用者輸入資料
 			for (Part p : parts) {
 				String fldName = p.getName(); // 取得欄位名稱(name)
 				String value = request.getParameter(fldName); // 取得欄位值(value)
@@ -101,7 +97,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				}
 			}
 		} else {
-			System.out.println("此表單不是上傳檔案的表單");
+			System.out.println("此表單不是上傳檔案的表單(UpdatePersonPageServlet)");
 		}
 		try {
 			// 將圖片轉換成Blob
@@ -117,10 +113,8 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			// 更新session內的使用者資料
 			MemberBean mb = service.queryMember(id);
 			session.setAttribute("LoginOK", mb);
-			// 如果更新列數為1(updateMember的傳回值) => 成功
-			if (n == 1) {
-				msgOK.put("UpdateOK", "<Font color='red'>更新成功</Font>");
-			} else {
+			// 如果更新列數不為1(updateMember的傳回值) => 失敗
+			if (n != 1) {
 				System.out.println("更新此筆資料有誤(UpdatePersonPageServlet)");
 			}
 
