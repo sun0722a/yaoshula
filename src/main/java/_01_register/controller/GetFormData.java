@@ -55,7 +55,7 @@ public class GetFormData extends HttpServlet {
 
 		/* https://www.itread01.com/content/1548753308.html */
 
-        char[] unValidChar = {'_', '-', '@', '#', '$', '!', '&', '*'};
+		char[] unValidChar = { '_', '-', '@', '#', '$', '!', '&', '*' };
 //      讀取使用者所輸入，由瀏覽器送來的 mId 欄位內的資料
 		String mid = request.getParameter("mId");
 //      String password = request.getParameter("password");
@@ -63,7 +63,7 @@ public class GetFormData extends HttpServlet {
 		String Address = request.getParameter("mAddress");
 		String iPhone = request.getParameter("iPhone");
 		String Email = request.getParameter("Email");
-		boolean mail = Email.matches("[a-zA-Z0-9]+@[0-9]+\\.[a-z]+"); 
+		boolean mail = Email.matches("[a-zA-Z0-9]+@[0-9]+\\.[a-z]+");
 		System.out.println(mail);
 //		request.setAttribute("id", mid);
 //      request.setAttribute("password", password);
@@ -87,15 +87,15 @@ public class GetFormData extends HttpServlet {
 		// 讀取使用者所輸入，由瀏覽器送來的 pswd 欄位內的資料，注意大小寫
 		String password = request.getParameter("password");
 		// 檢查使用者所輸入的資料
-		if (password.trim().length() == 0|| password.trim().length() < 8) {
+		if (password.trim().length() == 0 || password.trim().length() < 8) {
 			errorMessage.put("password", "密碼長度不可小於8位數");
 		} else if (password.trim().length() > 15) {
 			errorMessage.put("password", "密碼長度不能超過15位數");
 		}
-       
-	   //-------------------------------------
-		for(char ch : unValidChar) {
-			if(mid.contains(Character.toString(ch))) {
+
+		// -------------------------------------
+		for (char ch : unValidChar) {
+			if (mid.contains(Character.toString(ch))) {
 				errorMessage.put("id", "帳號不可有特殊符號 _, -, @ , # , $ , ! , & , * ");
 			}
 		}
@@ -105,12 +105,13 @@ public class GetFormData extends HttpServlet {
 //			return;
 //		}
 		request.setAttribute("id", mid);
-       //-------------------------顯示 密碼  錯誤訊息---------------------------------------------------
+		// -------------------------顯示 密碼
+		// 錯誤訊息---------------------------------------------------
 		if (!errorMessage.isEmpty()) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/_01_register/register.jsp");
 			requestDispatcher.forward(request, response);
 			return;
-			
+
 		}
 //		errorMessage.clear();
 		request.setAttribute("password", password);
@@ -118,13 +119,13 @@ public class GetFormData extends HttpServlet {
 //-------------------密碼進行比較確認是否相同--------------------------------------------		
 		if (!passwordCheck.equals(password)) {
 			errorMessage.put("passwordCheck", "密碼不相同請確認!!");
-		} 
-		if(!errorMessage.isEmpty()){
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+		}
+		if (!errorMessage.isEmpty()) {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/_01_register/register.jsp");
 			requestDispatcher.forward(request, response);
 			return;
 		}
-		
+
 		request.setAttribute("passwordCheck", passwordCheck);
 //--------------------------------------------------------------------
 //        地址 改用上面 request.setAttribute("address", Address);簡單寫法 
@@ -170,8 +171,7 @@ public class GetFormData extends HttpServlet {
 		System.out.println("學習的程式語言：" + langueMap.get(langue2));
 		request.setAttribute("langue", langueMap.get(langue2));
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("page2.jsp");
-		requestDispatcher.forward(request, response);
+		response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 		return;
 
 	}

@@ -4,7 +4,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>index</title>
+<title>要抒啦--註冊</title>
 <!-- <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css"> -->
 <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
 <!-- <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
@@ -26,70 +26,74 @@
 </script>
 
 <script type="text/javascript">
-function btclick(){
-    if (!((document.getElementById("np").value).match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/))){
-        alert( "your password : "+document.getElementById("np").value );
-    }
-}
+	function btclick() {
+		if (!((document.getElementById("np").value)
+				.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/))) {
+			alert("your password : " + document.getElementById("np").value);
+		}
+	}
 </script>
 </head>
 <body>
 
 
-<p>會員註冊</p>
+	<p>會員註冊</p>
 	<form method="post"
 		action="${pageContext.request.contextPath}/GetFormData"
 		enctype="application/x-www-form-urlencoded">
 		<!-- id屬性 是給 JavaScript程式看的 -->
 		<!-- name屬性 是給 後端 Servlet程式看的 -->
 		<!-- autocomplete="off"不要讓瀏覽器記住使用者輸入資料的歷史紀錄 -->
-        <!-- 		required="required" 會提示內容要輸入 -->
-		<p>  
-		         <font size="3" color="red">*</font>
-		         帳號 : <input id='num'  name="mId" value="" placeholder="不能有特殊字元" required="required" type="text" size="16">
- 					     ${ErrorMsg.id}
-		</p>
-		<p>			
-			      <font size="3" color="red">*</font>
-<!-- 		密碼:<input id="np" type="password" name="np" id="np" class="content_text" /> -->
-			 密碼 : <input id="password" name="password" type="password" placeholder="此欄位不能空白" required="required" class="content_text">
-			              ${ErrorMsg.password}	
-	     </p>
-		
+		<!-- 		required="required" 會提示內容要輸入 -->
 		<p>
-		           <font size="3" color="red">*</font>
-			 密碼確認:<input id="passwordCheck" name="passwordCheck" type="password"   class="content_text">		
-		             ${ErrorMsg.passwordCheck}
+			<font size="3" color="red">*</font> 帳號 : <input id='num' name="mId"
+				value="" placeholder="不能有特殊字元" required="required" type="text"
+				size="16"> ${ErrorMsg.id}
 		</p>
-		
 		<p>
-			性別： <input type="radio" name="gender" value="male" required="required" />男 
-			     <input type="radio" name="gender" value="female" required="required" />女
+			<font size="3" color="red">*</font>
+			<!-- 		密碼:<input id="np" type="password" name="np" id="np" class="content_text" /> -->
+			密碼 : <input id="password" name="password" type="password"
+				placeholder="此欄位不能空白" required="required" class="content_text">
+			${ErrorMsg.password}
 		</p>
-		
-		
+
 		<p>
-			 住址: <input id="mAddress" name="mAddress" value="" type="text" size="54">	
+			<font size="3" color="red">*</font> 密碼確認:<input id="passwordCheck"
+				name="passwordCheck" type="password" class="content_text">
+			${ErrorMsg.passwordCheck}
 		</p>
-		
+
+		<p>
+			性別： <input type="radio" name="gender" value="male"
+				required="required" />男 <input type="radio" name="gender"
+				value="female" required="required" />女
+		</p>
+
+
+		<p>
+			住址: <input id="mAddress" name="mAddress" value="" type="text"
+				size="54">
+		</p>
+
 		<p>
 			日期： <input type="text" id="datepicker" name="datepicker"
 				autocomplete="off" required="required" />
 		</p>
-		
-		<p>                        
-<%-- 								   value="${param.mWeight}" --%>
-			<font size="3" color="red">*</font> 
-			E-mail : <input id="Email" name="Email" placeholder="此欄位不能空白" value="" type="text" size="14">
-		                  ${ErrorMsg.Email}
-		</p>	
-		
-		<p>                        
-<%-- 		<input name="mPhone" value="${param.mPhone}" type="text" size="20"></td>     --%>
-			手機 : <input id="iphone" name="iPhone" value="" type="text" size="20">
-		</p>		
 
-		
+		<p>
+			<%-- 								   value="${param.mWeight}" --%>
+			<font size="3" color="red">*</font> E-mail : <input id="Email"
+				name="Email" placeholder="此欄位不能空白" value="" type="text" size="14">
+			${ErrorMsg.Email}
+		</p>
+
+		<p>
+			<%-- 		<input name="mPhone" value="${param.mPhone}" type="text" size="20"></td>     --%>
+			手機 : <input id="iphone" name="iPhone" value="" type="text" size="20">
+		</p>
+
+
 		<P>
 			程式語言：<select name="langue">
 				<option value="0">C</option>

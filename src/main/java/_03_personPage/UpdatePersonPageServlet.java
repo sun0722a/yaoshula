@@ -131,6 +131,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println("UpdatePersonPageServlet類別的#fileToBlob()例外: " + e.getMessage());
 			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
+			return;
 		}
 	}
 }

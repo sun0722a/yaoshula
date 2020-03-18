@@ -9,7 +9,8 @@
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_03_personPage/personPage.css" />
-<script src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPage.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPage.js"></script>
 
 <!-- 下拉式地址 -->
 <script
