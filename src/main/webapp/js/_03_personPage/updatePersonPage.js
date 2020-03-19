@@ -69,7 +69,7 @@ function update() {
 	updateToInput(1, updatePhone, "text", oldphone, "phone");
 	updateToInput(2, updateAddress, "text", oldaddress, "address");
 	updateEmail.required = true;
-	updateEmail.placeholder = "example@gmail.com";
+	updateEmail.placeholder = "member@example.com";
 	updatePhone.placeholder = "0912345678";
 	updatePhone.maxLength = "10";
 	updatePhone.addEventListener("keyup", function() {

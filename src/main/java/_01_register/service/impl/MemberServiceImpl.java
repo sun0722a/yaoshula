@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean idExists(int id) {
+	public boolean idExists(String id) {
 		return dao.idExists(id);
 	}
 

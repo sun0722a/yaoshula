@@ -7,7 +7,7 @@ import _01_register.model.MemberBean;
 
 public interface MemberDao {
 	
-	public boolean idExists(int id);
+	public boolean idExists(String id);
 
 	public int saveMember(MemberBean mb) ;
 	
@@ -18,4 +18,5 @@ public interface MemberDao {
 	public MemberBean checkIdPassword(String userId, String password);	
 	
 	public void setConnection(Connection con);
+
 }

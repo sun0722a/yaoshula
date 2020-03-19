@@ -9,7 +9,8 @@
 <title>要抒拉--個人頁面</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_03_personPage/personPage.css" />
-<script src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPage.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/_03_personPage/updatePersonPage.js"></script>
 
 <!-- 下拉式地址 -->
 <script
@@ -23,7 +24,7 @@
 	<div class="side_menu">
 		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
 	</div>
-
+	
 	<form action="<c:url value='/personPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
@@ -34,7 +35,7 @@
 			</div>
 			<div id="boxHeadPicture">
 				<img
-					src="${pageContext.request.contextPath}/_00_init/getMemberImage?id=${LoginOK.id}"
+					src="${pageContext.request.contextPath}/init/getUserImage?id=${LoginOK.id}"
 					id="headPicture" />
 			</div>
 			<div id="boxFileSelect">

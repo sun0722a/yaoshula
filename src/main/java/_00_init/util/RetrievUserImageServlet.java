@@ -16,8 +16,8 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-@WebServlet("/_00_init/getMemberImage")
-public class RetrieveMemberImageServlet extends HttpServlet {
+@WebServlet("/init/getUserImage")
+public class RetrievUserImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,7 +61,7 @@ public class RetrieveMemberImageServlet extends HttpServlet {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(
-					"_00_init.util.RetrieveMemberImageServlet#doGet()發生SQLException: " + ex.getMessage());
+					"_00_init.util.RetrieveUserImageServlet#doGet()發生SQLException: " + ex.getMessage());
 		} finally {
 			if (is != null)
 				is.close();

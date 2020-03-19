@@ -31,24 +31,23 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 
 	// 儲存MemberBean物件，將參數mb新增到Memberinfo表格內。
 	public int saveMember(MemberBean mb) {
-		String sql = "INSERT INTO Memberinfo " + " (user_id, user_name, user_password, user_gender, user_birthday, "
-				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time,user_status,user_permission)"
+		String sql = "INSERT INTO Memberinfo " + " (user_name, user_password, user_gender, user_birthday, "
+				+ " user_email, user_phone, user_address, fileName, user_picture, user_create_time, user_status, user_permission)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setInt(1, mb.getId());
-			ps.setString(2, mb.getName());
-			ps.setString(3, mb.getPassword());
-			ps.setString(4, mb.getGender());
-			ps.setDate(5, mb.getBirthday());
-			ps.setString(6, mb.getEmail());
-			ps.setString(7, mb.getCellphone());
-			ps.setString(8, mb.getAddress());
-			ps.setString(9, mb.getFileName());
-			ps.setBlob(10, mb.getPicture());
-			ps.setTimestamp(11, mb.getCreateTime());
-			ps.setString(12, mb.getStatus());
-			ps.setString(13, mb.getPermission());
+			ps.setString(1, mb.getName());
+			ps.setString(2, mb.getPassword());
+			ps.setString(3, mb.getGender());
+			ps.setDate(4, mb.getBirthday());
+			ps.setString(5, mb.getEmail());
+			ps.setString(6, mb.getCellphone());
+			ps.setString(7, mb.getAddress());
+			ps.setString(8, mb.getFileName());
+			ps.setBlob(9, mb.getPicture());
+			ps.setTimestamp(10, mb.getCreateTime());
+			ps.setString(11, mb.getStatus());
+			ps.setString(12, mb.getPermission());
 
 			n = ps.executeUpdate();
 		} catch (Exception ex) {
@@ -85,11 +84,11 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 	// 判斷參數id(會員帳號)是否已經被現有客戶使用，如果是，傳回true，表示此id不能使用，
 	// 否則傳回false，表示此id可使用。
 	@Override
-	public boolean idExists(int id) {
+	public boolean idExists(String id) {
 		boolean exist = false;
-		String sql = "SELECT * FROM Memberinfo WHERE memberID = ?";
+		String sql = "SELECT * FROM Memberinfo WHERE user_name = ?";
 		try (Connection connection = ds.getConnection(); PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1, id);
+			ps.setString(1, id);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					exist = true;
