@@ -83,8 +83,12 @@ public class RegisterServlet extends HttpServlet {
 						password = value;
 					} else if (fldName.equals("gender")) {
 						gender = value;
+					} else if (fldName.equals("county")) {
+						address += value;
+					} else if (fldName.equals("district")) {
+						address += value;
 					} else if (fldName.equals("address")) {
-						address = value;
+						address += value;
 					} else if (fldName.equals("birthday")) {
 						try {
 							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,18 +122,13 @@ public class RegisterServlet extends HttpServlet {
 		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
 		MemberService service = new MemberServiceImpl();
 		if (service.idExists(userName)) {
+			userName = "";
 			errorMsg.put("errorId", "此帳號已存在");
 		}
 		// 檢查信箱是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
 		if (service.emailExists(email)) {
+			email = "";
 			errorMsg.put("errorEmail", "此信箱已被註冊");
-		}
-		// 如果有錯誤
-		if (!errorMsg.isEmpty()) {
-			// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
-			RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
-			rd.forward(request, response);
-			return;
 		}
 		try {
 			// 為了配合Hibernate的版本。要在此加密，不要在 dao.saveMember(mem)進行加密
@@ -140,10 +139,18 @@ public class RegisterServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
-			MemberBean mem = new MemberBean(null, userName, password, gender, birthday, email, phone, address, fileName,
+			MemberBean mb = new MemberBean(null, userName, password, gender, birthday, email, phone, address, fileName,
 					blob, ts, "正常", "一般會員");
+			// 如果有錯誤
+			if (!errorMsg.isEmpty()) {
+				request.setAttribute("mb", mb);
+				// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
+				RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+				rd.forward(request, response);
+				return;
+			}
 			// 呼叫MemberDao的saveMember方法
-			int n = service.saveMember(mem);
+			int n = service.saveMember(mb);
 			if (n == 1) {
 				response.sendRedirect(getServletContext().getContextPath() + "/_02_login/login.jsp");
 				return;

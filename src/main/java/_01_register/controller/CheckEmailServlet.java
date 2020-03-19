@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-@WebServlet("/register/checkUserName")
-public class CheckUserEmailServlet extends HttpServlet {
+@WebServlet("/register/checkEmail")
+public class CheckEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,7 +25,7 @@ public class CheckUserEmailServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		MemberService service = new MemberServiceImpl();
 		if (email.trim().length() != 0) {
-			boolean exist = service.idExists(email);
+			boolean exist = service.emailExists(email);
 			if (!exist) {
 				os.write("此信箱可使用");
 			} else {

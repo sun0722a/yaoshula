@@ -52,7 +52,7 @@ function checkPassword() {
 function check(e) {
   e.preventDefault();
   xhr = new XMLHttpRequest();
-  if (e.id == "btUserName") {
+  if (this.id == "btUserName") {
     xhr.open(
       "GET",
       "/yaoshula/register/checkUserName?userName=" + userName.value,
