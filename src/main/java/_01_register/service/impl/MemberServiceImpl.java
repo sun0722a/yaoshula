@@ -7,7 +7,8 @@ import _01_register.service.MemberService;
 
 public class MemberServiceImpl implements MemberService {
 
-	MemberDao  dao ;
+	MemberDao dao;
+
 	public MemberServiceImpl() {
 		this.dao = new MemberDaoImpl_Jdbc();
 	}
@@ -23,18 +24,24 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public boolean emailExists(String email) {
+		return dao.emailExists(email);
+	}
+
+	@Override
 	public MemberBean queryMember(int id) {
 		return dao.queryMember(id);
 	}
 
+	@Override
 	public MemberBean checkIdPassword(String name, String password) {
 		MemberBean mb = dao.checkIdPassword(name, password);
 		return mb;
 	}
-	
+
+	@Override
 	public int updateMember(MemberBean mb) {
 		return dao.updateMember(mb);
 	}
-	
-	
+
 }

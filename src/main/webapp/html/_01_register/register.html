@@ -7,8 +7,8 @@
     <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <!-- <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
     <!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
-	<link rel="stylesheet" href="../../css/_01_register/register.css" />
-	<script src="../../js/_01_register/register.js"></script>
+    <link rel="stylesheet" href="../../css/_01_register/register.css" />
+    <script src="../../js/_01_register/register.js"></script>
 
     <link
       rel="stylesheet"
@@ -29,13 +29,19 @@
     <!-- <script type="text/javascript" src="./lib/padStartLibrary.js"></script> -->
 
     <script>
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      let now = year + "-" + month + "-" + day;
       $(function() {
         $("#datepicker").datepicker({
           changeMonth: true,
-		  changeYear: true,
-		  yearRange: "-150:+0"
+          changeYear: true,
+          yearRange: "-150:+0",
+          maxDate: now,
+          dateFormat: "yy-mm-dd"
         });
-        $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
       });
     </script>
 
@@ -85,11 +91,11 @@
                 onkeyup="value=value.replace(/[\W]/g,'')"
               />
             </td>
-            <td><input type="button" id="btnUserName" value="檢查帳號" /></td>
+            <td><input type="button" id="btUserName" value="檢查帳號" /></td>
           </tr>
           <tr>
             <td></td>
-            <td class="errorText"></td>
+            <td class="errorText" id="userNameText"></td>
           </tr>
           <tr>
             <td class="personalTitle">
@@ -170,6 +176,7 @@
             </td>
             <td class="tdInput">
               <input
+                id="email"
                 name="email"
                 placeholder="member@example.com"
                 value=""
@@ -178,8 +185,12 @@
                 class="contentText"
               />
             </td>
+            <td><input type="button" id="btEmail" value="檢查信箱" /></td>
           </tr>
-
+          <tr>
+            <td></td>
+            <td class="errorText" id="emailText"></td>
+          </tr>
           <tr>
             <td class="personalTitle">手機：&nbsp&nbsp</td>
             <td class="tdInput">

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>要抒啦--註冊</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_01_register/register.css" />
@@ -21,13 +21,19 @@
 	href="http://jqueryui.com/resources/demos/style.css" />
 
 <script>
+	let date = new Date();
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+	let now = year + "-" + month + "-" + day;
 	$(function() {
 		$("#datepicker").datepicker({
 			changeMonth : true,
 			changeYear : true,
-			yearRange : "-150:+0"
+			yearRange : "-150:+0",
+			maxDate : now,
+			dateFormat : "yy-mm-dd"
 		});
-		$("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
 	});
 </script>
 
@@ -65,10 +71,10 @@
 					<td class="personalTitle"><font size="3" color="red">*</font>
 						帳號：&nbsp&nbsp</td>
 					<td class="tdInput"><input id="userName" name="userName"
-						value="" placeholder="不能含有特殊字元" required="required" type="text"
-						class="contentText" onkeyup="value=value.replace(/[\W]/g,'')" />
-					</td>
-					<td><input type="button" id="btnUserName" value="檢查帳號" /></td>
+						value="${mb.name}" placeholder="不能含有特殊字元" required="required"
+						type="text" class="contentText"
+						onkeyup="value=value.replace(/[\W]/g,'')" /></td>
+					<td><input type="button" id="btUserName" value="檢查帳號" /></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -96,41 +102,45 @@
 					<td class="personalTitle"><font size="3" color="red">*</font>性別：&nbsp&nbsp
 					</td>
 					<td class="tdInput"><input type="radio" name="gender"
-						value="男" required="required" />男 <input type="radio"
-						name="gender" value="女" required="required" />女</td>
+						value="男" required="required"
+						<c:if test='${mb.gender=="男"}'>checked='checked'</c:if> />男 <input
+						type="radio" name="gender" value="女" required="required"
+						<c:if test='${mb.gender=="女"}'> checked='checked'</c:if> />女</td>
 				</tr>
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>生日：&nbsp&nbsp
 					</td>
 					<td class="tdInput"><input id="datepicker" name="birthday"
-						placeholder="1911-01-01" value="" type="text" autocomplete="off"
-						required="required" class="contentText" /></td>
+						placeholder="1911-01-01" value="${mb.birthday}" type="text"
+						autocomplete="off" required="required" class="contentText" /></td>
 				</tr>
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>
 						E-mail：&nbsp&nbsp</td>
-					<td class="tdInput"><input name="email"
-						placeholder="member@example.com" value="" type="text"
+					<td class="tdInput"><input id="email" name="email"
+						placeholder="member@example.com" value="${mb.email}" type="text"
 						required="required" class="contentText" /></td>
-					<td><input type="button" id="btnUserName" value="檢查帳號" /></td>
+					<td><input type="button" id="btEmail" value="檢查信箱" /></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="errorText" id="userNameText">${errorMsg.errorId}</td>
+					<td class="errorText" id="emailText">${errorMsg.errorEmail}</td>
 				</tr>
 
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
 					<td class="tdInput"><input name="phone"
-						placeholder="0912345678" value="" type="text" class="contentText"
-						maxlength="10" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+						placeholder="0912345678" value="${mb.cellphone}" type="text"
+						class="contentText" maxlength="10"
+						onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
 				</tr>
 
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
 					<td class="tdInput">
 						<div role="tw-city-selector" id="address"></div> <input
-						name="address" value="" type="text" class="contentText" />
+						name="address" value="${mb.address}" type="text"
+						class="contentText" />
 					</td>
 				</tr>
 				<tr>
