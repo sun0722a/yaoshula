@@ -120,6 +120,10 @@ public class RegisterServlet extends HttpServlet {
 		if (service.idExists(userName)) {
 			errorMsg.put("errorId", "此帳號已存在");
 		}
+		// 檢查信箱是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
+		if (service.emailExists(email)) {
+			errorMsg.put("errorEmail", "此信箱已被註冊");
+		}
 		// 如果有錯誤
 		if (!errorMsg.isEmpty()) {
 			// 導向原來輸入資料的畫面，這次會顯示錯誤訊息

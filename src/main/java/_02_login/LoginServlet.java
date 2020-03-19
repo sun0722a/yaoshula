@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
@@ -96,6 +97,7 @@ public class LoginServlet extends HttpServlet {
 
 //		String tmp = GlobalService.encryptString(password);
 //		password = GlobalService.getMD5Endocing(tmp);
+		password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 		MemberBean mb = null;
 
 		try {
