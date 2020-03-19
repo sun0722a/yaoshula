@@ -21,7 +21,7 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-/* 等待: 連線逾時 */
+/* 待測試: 連線逾時 */
 
 /* MultipartConfig的屬性說明: */
 //location: 上傳之表單資料與檔案暫時存放在Server端之路徑，此路徑必須存在，否則Web Container將丟出例外。

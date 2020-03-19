@@ -1,4 +1,4 @@
-package _04_Shopping.model;
+package _04_shopping.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

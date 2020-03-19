@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 
 // 本類別封裝單筆書籍資料
 @Entity
-@Table(name = "ProductCategorys")
+@Table(name = "ProductCategory")
 public class CategoryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id

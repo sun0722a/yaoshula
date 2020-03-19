@@ -42,7 +42,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 			ps.setString(3, mb.getGender());
 			ps.setDate(4, mb.getBirthday());
 			ps.setString(5, mb.getEmail());
-			ps.setString(6, mb.getCellphone());
+			ps.setString(6, mb.getPhone());
 			ps.setString(7, mb.getAddress());
 			ps.setString(8, mb.getFileName());
 			ps.setBlob(9, mb.getPicture());
@@ -108,7 +108,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 		int n = 0;
 		try (Connection con = ds.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, mb.getEmail());
-			ps.setString(2, mb.getCellphone());
+			ps.setString(2, mb.getPhone());
 			ps.setString(3, mb.getAddress());
 			ps.setString(4, mb.getFileName());
 			ps.setBlob(5, mb.getPicture());
@@ -139,7 +139,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 					mb.setGender(rs.getString("user_gender"));
 					mb.setBirthday(rs.getDate("user_birthday"));
 					mb.setEmail(rs.getString("user_email"));
-					mb.setCellphone(rs.getString("user_phone"));
+					mb.setPhone(rs.getString("user_phone"));
 					mb.setAddress(rs.getString("user_address"));
 					mb.setFileName(rs.getString("fileName"));
 					mb.setPicture(rs.getBlob("user_picture"));
@@ -173,7 +173,7 @@ public class MemberDaoImpl_Jdbc implements MemberDao {
 					mb.setGender(rs.getString("user_gender"));
 					mb.setBirthday(rs.getDate("user_birthday"));
 					mb.setEmail(rs.getString("user_email"));
-					mb.setCellphone(rs.getString("user_phone"));
+					mb.setPhone(rs.getString("user_phone"));
 					mb.setAddress(rs.getString("user_address"));
 					mb.setFileName(rs.getString("fileName"));
 					mb.setPicture(rs.getBlob("user_picture"));

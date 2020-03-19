@@ -16,8 +16,10 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
+/* 未完成: 預設圖片--register.jsp */
+
 @WebServlet("/init/getUserImage")
-public class RetrievUserImageServlet extends HttpServlet {
+public class GetUserImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

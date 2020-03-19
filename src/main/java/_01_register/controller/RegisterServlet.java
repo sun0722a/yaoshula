@@ -26,7 +26,8 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-/* 等待: email檢查不能重複 */
+/* 未完成: 網址列上顯示.jsp */
+
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/register")
