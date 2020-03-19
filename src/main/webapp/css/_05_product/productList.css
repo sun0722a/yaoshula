@@ -1,0 +1,32 @@
+.product{
+    width: 50%;
+}
+.productImg{
+    width: 80%;
+    margin: auto;
+}
+#search{
+    margin-top: 20px;
+}
+#searchText{
+    margin-left: 10%;
+}
+#searchBar{
+    width: 50%;
+}
+#arrange{
+    margin-left: 20%;
+}
+#pages{
+    text-align: center;
+}
+.btPage{
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+}
+#pages{
+    margin: 20px;
+}
+
+
