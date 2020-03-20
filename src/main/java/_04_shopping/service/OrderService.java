@@ -1,8 +1,8 @@
-package _04_Shopping.service;
+package _04_shopping.service;
 
 import java.util.List;
 
-import _04_Shopping.model.OrderBean;
+import _04_shopping.model.OrderBean;
 
 public interface OrderService {
 	void persistOrder(OrderBean ob);

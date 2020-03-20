@@ -1,7 +1,7 @@
-package _04_Shopping.dao;
+package _04_shopping.dao;
 
 
-import _04_Shopping.model.OrderItemBean;
+import _04_shopping.model.OrderItemBean;
 
 public interface OrderItemDao {
 	

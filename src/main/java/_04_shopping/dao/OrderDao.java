@@ -1,8 +1,8 @@
-package _04_Shopping.dao;
+package _04_shopping.dao;
 
 import java.util.List;
 
-import _04_Shopping.model.OrderBean;
+import _04_shopping.model.OrderBean;
 
 public interface OrderDao {
 	void insertOrder(OrderBean ob);

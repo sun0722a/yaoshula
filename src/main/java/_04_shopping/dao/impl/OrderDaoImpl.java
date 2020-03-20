@@ -1,4 +1,4 @@
-package _04_Shopping.dao.impl;
+package _04_shopping.dao.impl;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import _00_init.util.HibernateUtils;
-import _04_Shopping.dao.OrderDao;
-import _04_Shopping.model.OrderBean;
+import _04_shopping.dao.OrderDao;
+import _04_shopping.model.OrderBean;
 
 public class OrderDaoImpl implements OrderDao{
 	private String memberId = null;
