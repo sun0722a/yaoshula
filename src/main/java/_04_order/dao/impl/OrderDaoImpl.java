@@ -1,4 +1,4 @@
-package _04_shopping.dao.impl;
+package _04_order.dao.impl;
 
 import java.util.List;
 
@@ -6,24 +6,25 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import _00_init.util.HibernateUtils;
-import _04_shopping.dao.OrderDao;
-import _04_shopping.model.OrderBean;
+import _04_order.dao.OrderDao;
+import _04_order.model.OrderBean;
 
-public class OrderDaoImpl implements OrderDao{
+public class OrderDaoImpl implements OrderDao {
 	private String memberId = null;
 	SessionFactory factory;
 	int orderNo = 0;
-	
-	
+
 	public OrderDaoImpl() {
 		factory = HibernateUtils.getSessionFactory();
 	}
+
 	@Override
 	public void insertOrder(OrderBean ob) {
 		Session session = factory.getCurrentSession();
 		session.save(ob);
-		
+
 	}
+
 	@Override
 	public OrderBean getOrder(int orderNo) {
 		OrderBean ob = null;
@@ -31,6 +32,7 @@ public class OrderDaoImpl implements OrderDao{
 		ob = session.get(OrderBean.class, orderNo);
 		return ob;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderBean> getAllOrders() {
@@ -40,6 +42,7 @@ public class OrderDaoImpl implements OrderDao{
 		list = session.createQuery(hql).getResultList();
 		return list;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderBean> getMemberOrders(String memberId) {
@@ -50,12 +53,13 @@ public class OrderDaoImpl implements OrderDao{
 		list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
 		return list;
 	}
+
 	public String getMemberId() {
 		return memberId;
 	}
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
-	
+
 }

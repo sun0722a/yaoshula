@@ -1,15 +1,16 @@
-package _04_shopping.service;
+package _04_order.dao;
 
 import java.util.List;
 
-import _04_shopping.model.OrderBean;
+import _04_order.model.OrderBean;
 
-public interface OrderService {
-	void persistOrder(OrderBean ob);
+public interface OrderDao {
+	void insertOrder(OrderBean ob);
 	
 	OrderBean getOrder(int orderNo);
 	
 	List<OrderBean> getAllOrders();
 	
 	List<OrderBean> getMemberOrders(String memberId);
+	
 }

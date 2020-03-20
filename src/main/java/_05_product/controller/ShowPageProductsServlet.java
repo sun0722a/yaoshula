@@ -19,7 +19,6 @@ import _05_product.service.impl.ProductServiceImpl;
 
 /* 刪除 : request.setAttribute("baBean", service);--line78，不知道會不會出事 */
 
-// 本控制器負責進行必要的前置作業，以便Dao取回某一頁的商品資料
 @WebServlet("/product/ShowPageProducts")
 public class ShowPageProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -1,13 +1,10 @@
-package _04_shopping.dao.impl;
-
-import java.util.List;
+package _04_order.dao.impl;
 
 import org.hibernate.SessionFactory;
 
 import _00_init.util.HibernateUtils;
-import _04_shopping.dao.OrderItemDao;
-import _04_shopping.model.OrderBean;
-import _04_shopping.model.OrderItemBean;
+import _04_order.dao.OrderItemDao;
+import _04_order.model.OrderItemBean;
 
 public class OrderItemDaoImpl implements OrderItemDao {
 	SessionFactory factory;

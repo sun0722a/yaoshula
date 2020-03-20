@@ -28,8 +28,6 @@ function doFirst() {
   btEmail.addEventListener("click", check);
   password.addEventListener("blur", checkPW);
   passwordCheck.addEventListener("blur", checkPassword);
-
-  // btSubmit.addEventListener('click',checkPassword);
 }
 function checkPW() {
   if (password.value != passwordCheck.value && passwordCheck.value != "") {
