@@ -1,9 +1,9 @@
 .product{
-    width: 50%;
+    width: 70%;
 }
 .productImg{
     width: 80%;
-    margin: auto;
+    margin:5px auto;
 }
 #search{
     margin-top: 20px;
@@ -11,11 +11,10 @@
 #searchText{
     margin-left: 10%;
 }
-#searchBar{
-    width: 50%;
-}
+
 #arrange{
-    margin-left: 20%;
+    float: left;
+    /* margin-left: 5%; */
 }
 #pages{
     text-align: center;
