@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="check.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="cart.js"></script>
+    <script src="cartCheck.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -75,7 +75,7 @@
             <div class="items-menu" >
                 <hr style="background: black;"> 
                 <div class="cart-text">
-                    <div class="text-items"><input type="checkbox">全選</div>
+                    <div class="text-items"><input type="checkbox" disabled=true;>全選</div>
                     <div class="text-items">商品名稱</div>
                     <div class="text-items">規格</div>
                     <div class="text-items">單價</div>
@@ -88,13 +88,14 @@
               <table>
         
                     <div class="items">
-                    <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
+                    <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox" disabled=true;><img src="img/product.jpg" style="width:80px;"></div>
                     <div class="items-detail">香精油</div>
-                    <div class="items-detail"><select name="" id="" style="font-size:xx-small;">
+                    <div class="items-detail">
+                    <select name="" id="" disabled="false" onf style="font-size:xx-small;">
                         <option value="">薰衣草50ml</option>
                     </select></div>
                     <div id="cost">5000</div>
-                    <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10"></div>
+                    <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10" disabled="disabled"></div>
                     <div class="total">5000</div>
                 </div> 
             </table>
@@ -111,26 +112,27 @@
         </div>
         
 
-            
+            <div class="row">
+              <div class="formBox col-7">
             <form>
                 
-                <label for="orderInfo" class="col-sm-2">訂單資訊</label>
+                <label for="orderInfo" class="col-sm-6">訂單資訊</label>
                
                 <div class="form-group row">
-                  <label for="name" class="col-sm-2 ml-3">姓名</label>
-                  <input type="email" class="form-control  col-4" id="name" aria-describedby="emailHelp" placeholder="Name">
+                  <label for="name" class="col-sm-3 ml-3">姓名</label>
+                  <input type="email" class="form-control  col-6" id="name" aria-describedby="emailHelp" placeholder="Name">
                 </div> 
                 <div class="form-group row">
-                  <label for="address" class="col-sm-2 ml-3">地址</label>
-                  <input type="password" class="form-control col-4" id="address" placeholder="Address">
+                  <label for="address" class="col-sm-3 ml-3">地址</label>
+                  <input type="password" class="form-control col-6" id="address" placeholder="Address">
                 </div>
                 <div class="form-group row">
-                    <label for="address" class="col-sm-2 ml-3">電話</label>
-                    <input type="password" class="form-control col-4" id="phone" placeholder="Phone">
+                    <label for="address" class="col-sm-3 ml-3">電話</label>
+                    <input type="password" class="form-control col-6" id="phone" placeholder="Phone">
                   </div>
                   <div class="form-group row">
-                  <label for="payment" class="col-sm-2 ml-3">付款方式</label>
-                  <select class="form-control form-control-sm col-4">
+                  <label for="payment" class="col-sm-3 ml-3">付款方式</label>
+                  <select class="form-control form-control-sm col-6">
                     <option>信用卡付款</option>
                   </select>
                 </div>
@@ -138,7 +140,12 @@
                 <button type="submit" class="btn btn-primary ml-3">Submit</button>
              
             </form>
-        
+          </div>
+          <div class="textAreaBox col-5">
+            <label for="">備註</label>
+            <textarea class="form-control w-75 h-50"></textarea>
+          </div>
+          </div>
 
     </div>
     

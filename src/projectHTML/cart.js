@@ -8,8 +8,9 @@ $(document).ready(function(){
         $('.total').text(total);
     });
 
-
-    // $('submitBtn').click((){
-        
-    // })
+    //checkBox 全選的功能
+    $('#allCheck').change(function(){
+        $('.items').find(':checkbox').prop('checked', $(this).is(':checked')?true:false);
+    })
+    
 });
