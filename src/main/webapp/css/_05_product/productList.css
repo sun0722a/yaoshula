@@ -5,17 +5,6 @@
     width: 80%;
     margin:5px auto;
 }
-#search{
-    margin-top: 20px;
-}
-#searchText{
-    margin-left: 10%;
-}
-
-#arrange{
-    float: left;
-    /* margin-left: 5%; */
-}
 #pages{
     text-align: center;
 }
