@@ -1,4 +1,4 @@
-package _04_shopping.model;
+package _04_order.model;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
