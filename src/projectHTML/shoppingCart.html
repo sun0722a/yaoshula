@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="cart.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="cartCheck.js"></script>
+    <script src="cart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -76,7 +76,7 @@
             <div class="items-menu" >
                 <hr style="background: black;"> 
                 <div class="cart-text">
-                    <div class="text-items"><input type="checkbox">全選</div>
+                    <div class="text-items"><input type="checkbox" id="allCheck">全選</div>
                     <div class="text-items">商品名稱</div>
                     <div class="text-items">規格</div>
                     <div class="text-items">單價</div>
@@ -88,7 +88,7 @@
           <section>
               <table>
         
-                    <div class="items">
+                    <div class="items" >
                     <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
                     <div class="items-detail">香精油</div>
                     <div class="items-detail"><select name="" id="" style="font-size:xx-small;">
@@ -99,10 +99,27 @@
                     <div class="total">5000</div>
                 </div> 
             </table>
-        </section>
-
-
             <hr style="background: black;">
+        </section>
+        <section>
+            <table>
+      
+                  <div class="items">
+                  <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
+                  <div class="items-detail">香精油</div>
+                  <div class="items-detail"><select name="" id="" style="font-size:xx-small;">
+                      <option value="">薰衣草50ml</option>
+                  </select></div>
+                  <div id="cost">5000</div>
+                  <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10"></div>
+                  <div class="total">5000</div>
+              </div> 
+          </table>
+          <hr style="background: black;">
+      </section>
+
+
+            
             <div class="check">
                 <div class="check-kid">總金額</div>
                 <div class="total">5000</div>
