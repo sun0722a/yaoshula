@@ -10,8 +10,8 @@
 
 
 .logo{    /* 論壇logo */
-    width: 10%;
-    margin: auto 40px ;
+    /* width: 10%; */
+    /* margin: auto 40px ; */
 }
 
 .top-space{
@@ -100,85 +100,79 @@ li a{
 
 }
 
-/* 左邊及中間的主要內容*/
-.center-content{
-    margin: 5% 10% 1% 10%;
-    height: 600px;
-    display: flex;
-    flex-direction: row;
-}
-
-
-
-.side_menu{
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    background-color: #99F7AB;
-    z-index: 2;
-    
-}
-
-.side_menu div{
-    text-align: center;
-    margin-top: 20px;
-    font: 24px bold;
-    font-family: Arial, Helvetica, sans-serif;
-    
-}
-
-/* 登入BOX */
-.login-box{
-    text-align: center;
-    border: 1px solid black;
-    border-radius: 5px;
-    height: 50%;
-    margin: 10% auto 0 auto;
-    box-shadow: 1px 1px 5px gray;
-}
-
-.login-box h2{
-    color: darkblue;
-    font-weight: bolder;
-}
-
-.login-box input[type = "text"], .login-box input[type="password"]{
-    border: 0;
-    background: white;
-    border-radius: 3px;
-    display: block;
-    margin: 8% 10px;
-    border: 1px solid black;
-    padding: 8px 8px;
-    width: 200px;
-    outline: none;
-    
-}
-.login-box input:focus{
-    border: 1px solid forestgreen;
-}
-
-.rmButton{
-    display: flex;
-    font-size: 14px;
-    margin: -5px 10px;
-}
-
-.left-area{
-    width: 100px;
-    border: 1px solid black;
-}
-
-/* 登入BOX 結束*/
-/* 中間及主要內容結束*/
-
-
-
-.bottom{ 
+/*購物車*/
+.cart-box{
+    height: max-content;
     width: 80%;
-    height: 50px;
-    background-color: #99F7AB;
+    border: 1px solid black;
     margin: 0 auto;
 }
 
+.cart-box > :first-child{
+    height:60px;
+    font-size: 30px;
+    margin: 5%;
+}
 
+/* 第一排的文字*/
+.cart-text{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* 每樣商品的細項 */
+.items{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 確認區*/
+
+.check{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    
+}
+
+.check > div{
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.items-menu{
+    margin: 10px;
+}
+
+.orderItem{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.orderItem input{
+    width: 150px;
+}
+
+
+
+.checkBox{
+    border: 1px solid black;
+    margin: 10px;
+    height: 250px;
+   display: flex;
+   flex-direction: row;
+}
+
+.checkBox input{
+    width: 200px;
+
+}
+
+.form-text{
+    
+}
