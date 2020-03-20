@@ -31,7 +31,7 @@
 		<span><a href="">登入</a></span> <span><a href="">註冊</a></span>
 	</div>
 
-	<form class="box" action="<c:url value='/login.do' />" method="post"
+	<form class="box" action="<c:url value='/login' />" method="post"
 		name="LoginForm">
 		<h2>登入</h2>
 		<div>

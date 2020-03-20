@@ -63,7 +63,7 @@
 				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.cellphone}</td>
+					<td class="personalUpdate">${LoginOK.phone}</td>
 				</tr>
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>

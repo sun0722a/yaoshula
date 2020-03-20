@@ -91,7 +91,7 @@ prefix="c"%>
               <input
                 type="text"
                 name="phone"
-                value="${LoginOK.cellphone}"
+                value="${LoginOK.phone}"
                 class="updateInput"
                 placeholder="0912345678"
                 maxlength="10"

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../css/_05_product/productList.css" />
+  </head>
+  <body>
+    <div class="product" style="border: 1px solid green;">
+      <div class="w-75 m-auto">
+        <div id="searchTop">
+          <div
+            style="border: 1px solid red; float: left;"
+            class="input-group ml-5 my-3 w-50"
+          >
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="addon-wrapping"
+                ><img src="../../image/_05_product/search.png"
+              /></span>
+            </div>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="關鍵字搜尋"
+              aria-label="Recipient's username"
+              aria-describedby="button-addon2"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+              >
+                搜尋
+              </button>
+            </div>
+          </div>
+          <div id="arrange" class="my-3 ml-5">
+            依
+            <select name="arrange">
+              <option value="popular">熱門</option>
+              <option value="time">最新</option>
+            </select>
+            排列
+          </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="products">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4 mt-4">
+              <div class="card border-dark">
+                <img
+                  src="../../image/_05_product/香精油.jpg"
+                  class="card-img-top productImg"
+                />
+                <div class="card-body">
+                  <h5
+                    class="card-title"
+                    style="text-align: center; font-size: 30px;"
+                  >
+                    香精油
+                  </h5>
+                  <div
+                    class="card-text mt-2"
+                    style=" text-align: center; font-size: 20px;"
+                  >
+                    $500
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4 mt-4">
+              <div class="card border-dark">
+                <img
+                  src="../../image/_05_product/香精油.jpg"
+                  class="card-img-top productImg"
+                />
+                <div class="card-body">
+                  <h5
+                    class="card-title"
+                    style="text-align: center; font-size: 30px;"
+                  >
+                    香精油
+                  </h5>
+                  <div
+                    class="card-text mt-2"
+                    style=" text-align: center; font-size: 20px;"
+                  >
+                    $500
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4 mt-4">
+              <div class="card border-dark">
+                <img
+                  src="../../image/_05_product/香精油.jpg"
+                  class="card-img-top productImg"
+                />
+                <div class="card-body">
+                  <h5
+                    class="card-title"
+                    style="text-align: center; font-size: 30px;"
+                  >
+                    香精油
+                  </h5>
+                  <div
+                    class="card-text mt-2"
+                    style=" text-align: center; font-size: 20px;"
+                  >
+                    $500
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="pages">
+          <button class="btPage">
+            <img
+              src="../../image/_05_product/上一頁.png"
+              alt=""
+              style="max-width: 90%;"
+            />
+          </button>
+          <button class="btPage">1</button>
+          <!-- <button class="btPage">2</button> -->
+          <span>．．．</span>
+          <span>第</span>
+          <select name="nowPage" id="nowPage">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <span>頁</span>
+          <span>．．．</span>
+          <!-- <button class="btPage">4</button> -->
+          <button class="btPage">5</button>
+          <button class="btPage">
+            <img
+              src="../../image/_05_product/下一頁.png"
+              alt=""
+              style="max-width: 90%;"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
