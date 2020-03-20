@@ -11,7 +11,7 @@ public class MemberBean {
 	private String gender;
 	private Date birthday;
 	private String email;
-	private String cellphone;
+	private String phone;
 	private String address;
 	private String fileName;
 	private Blob picture;
@@ -20,7 +20,7 @@ public class MemberBean {
 	private String permission;
 
 	public MemberBean(Integer id, String name, String password, String gender, Date birthday, String email,
-			String cellphone, String address, String fileName, Blob picture, Timestamp createTime, String status,
+			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
 			String permission) {
 		super();
 		this.id = id;
@@ -29,7 +29,7 @@ public class MemberBean {
 		this.gender = gender;
 		this.birthday = birthday;
 		this.email = email;
-		this.cellphone = cellphone;
+		this.phone = phone;
 		this.address = address;
 		this.fileName = fileName;
 		this.picture = picture;
@@ -39,7 +39,6 @@ public class MemberBean {
 	}
 
 	public MemberBean() {
-		super();
 	}
 
 	public Integer getId() {
@@ -90,12 +89,12 @@ public class MemberBean {
 		this.email = email;
 	}
 
-	public String getCellphone() {
-		return cellphone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setCellphone(String cellphone) {
-		this.cellphone = cellphone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getAddress() {

@@ -20,7 +20,10 @@ import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
-@WebServlet("/login.do")
+/* 未完成: 記住我功能、LoginFilter 跳轉頁面提示 */
+/* 待測試: 登入完成後頁面跳轉至使用者使用頁面 */
+
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
