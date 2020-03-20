@@ -40,11 +40,12 @@ public class ProductBean implements Serializable {
 	private String fileName;
 	private Blob image;
 	private Clob detail;
+	private Integer sales;
 	private Integer stock;
 
 	public ProductBean(Integer productId, String productName, CategoryBean category, Integer price,
 			String formateTitle1, String formateContent1, String formateTitle2, String formateContent2, String fileName,
-			Blob image, Clob detail, Integer stock) {
+			Blob image, Clob detail, Integer sales, Integer stock) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -57,6 +58,7 @@ public class ProductBean implements Serializable {
 		this.fileName = fileName;
 		this.image = image;
 		this.detail = detail;
+		this.sales = sales;
 		this.stock = stock;
 	}
 
@@ -149,6 +151,14 @@ public class ProductBean implements Serializable {
 
 	public void setDetail(Clob detail) {
 		this.detail = detail;
+	}
+
+	public Integer getSales() {
+		return sales;
+	}
+
+	public void setSales(Integer sales) {
+		this.sales = sales;
 	}
 
 	public Integer getStock() {
