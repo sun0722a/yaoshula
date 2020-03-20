@@ -20,7 +20,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public Integer findItemsTotalPrice(OrderItemBean oib) {
 		Integer total = oib.getQuantity() * oib.getUnitPrice();
 		return total;
-	}
+	} 
 
 	@Override
 	public Integer updateProductStock(OrderItemBean oib) {
