@@ -16,28 +16,29 @@
 <body>
 	<div class="product">
 		<div class="w-75 m-auto">
-
 			<!-- 搜尋選擇列=================================== -->
 			<form action="" id="searchForm">
 				<div id="searchTop" class="row">
-					<div class="input-group col-9 my-3">
+					<div class="input-group my-3 col-9 ">
 						<div class="input-group-prepend">
-							<span class="input-group-text" id="addon-wrapping"><img
-								src="../../image/_05_product/search.png" /></span>
+							<span class="input-group-text"><img
+								src="${pageContext.request.contextPath}/image/_05_product/search.png"
+								class="productImg" /></span>
 						</div>
 						<input type="search" class="form-control" placeholder="關鍵字搜尋"
-							name="search" aria-label="Recipient's username"
-							aria-describedby="button-addon2" />
+							name="search" aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-default" />
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary" type="button"
 								id="button-addon2">搜尋</button>
 						</div>
 					</div>
-					<div id="arrange" class="col-3 my-3">
-						依 <select name="arrange">
+					<div id="arrange"
+						class="col-3 my-3 d-flex justify-content-end align-items-center">
+						<span style="font-size: 10px;">排序：</span> <select name="arrange">
 							<option value="popular">熱門</option>
 							<option value="time">最新</option>
-						</select> 排列
+						</select>
 					</div>
 				</div>
 			</form>
@@ -45,48 +46,54 @@
 			<div id="products">
 				<div class="row">
 					<c:forEach var="entry" items="${products_map}">
-						<div class="col-12 col-sm-6 col-lg-4 mt-4">
-							<div class="card border-dark">
-								<img
-									src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
-									class="card-img-top productImg" />
-								<div class="card-body">
-									<h5 class="card-title"
-										style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
-									<div class="card-text mt-2"
-										style="text-align: center; font-size: 20px;">${entry.value.price}</div>
+						<a href="" class="col-12 col-sm-6 col-lg-4 mt-4">
+							<div>
+								<div class="card border-dark">
+									<img
+										src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
+										class="card-img-top productImg" />
+									<div class="card-body">
+										<h5 class="card-title"
+											style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
+										<div class="card-text mt-2"
+											style="text-align: center; font-size: 20px;">${entry.value.price}</div>
+									</div>
 								</div>
 							</div>
-						</div>
+						</a>
 					</c:forEach>
 				</div>
-
 			</div>
 			<!-- 頁碼列=================================== -->
 			<form action="" id="pageForm">
 				<div id="pages">
-					<button class="btPage" name="pageNo" value="${pageNo-1}"
+					<a href="<c:url value='DisplayPageProducts?pageNo=${pageNo-1}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
-						<img
-							src="${pageContext.request.contextPath}/image/_05_product/上一頁.png"
-							style="max-width: 90%;" />
-					</button>
-					<button class="btPage" name="pageNo" value="1"
-						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>1</button>
-					<span>．．．</span> <span>第</span> <select name="nowPage" id="nowPage">
+						<button class="btPage">
+							<img
+								src="${pageContext.request.contextPath}/image/_05_product/上一頁.png"
+								style="max-width: 90%;" />
+						</button>
+					</a> <a href="<c:url value='DisplayPageProducts?pageNo=1'/>"
+						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>><button
+							class="btPage">1</button> </a> <span>．．．</span> <span>第</span> <select
+						name="nowPage" id="nowPage">
 						<c:forEach var="pages" begin="1" end="${totalPages}">
 							<option value="${pages}"
 								<c:if test="${pages==pageNo}"> selected </c:if>>${pages}</option>
 						</c:forEach>
-					</select> <span>頁</span> <span>．．．</span>
-					<button class="btPage" name="pageNo" value="${totalPages}"
-						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>${totalPages}</button>
-					<button class="btPage" name="pageNo" value="${pageNo+1}"
+					</select> <span>頁</span> <span>．．．</span> <a
+						href="<c:url value='DisplayPageProducts?pageNo=${totalPages}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
-						<img
-							src="${pageContext.request.contextPath}/image/_05_product/下一頁.png"
-							style="max-width: 90%;" />
-					</button>
+						<button class="btPage">${totalPages}</button>
+					</a> <a href="<c:url value='DisplayPageProducts?pageNo=${pageNo+1}'/>"
+						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
+						<button class="btPage">
+							<img
+								src="${pageContext.request.contextPath}/image/_05_product/下一頁.png"
+								style="max-width: 90%;" />
+						</button>
+					</a>
 				</div>
 			</form>
 		</div>
