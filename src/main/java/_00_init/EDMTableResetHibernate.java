@@ -18,6 +18,7 @@ import _00_init.util.GlobalService;
 import _00_init.util.HibernateUtils;
 import _05_product.model.CategoryBean;
 import _05_product.model.ProductBean;
+import _05_product.model.ProductFormatBean;
 
 /* 未完成: data未製作 */
 
@@ -33,7 +34,7 @@ public class EDMTableResetHibernate {
 		// 1. ProductCategory
 		try {
 			tx = session.beginTransaction();
-			try (FileReader fr = new FileReader("data/ProductCategory.dat");
+			try (FileReader fr = new FileReader("data/productCategory.dat");
 					BufferedReader br = new BufferedReader(fr);) {
 				while ((line = br.readLine()) != null) {
 					if (line.startsWith(UTF8_BOM)) {
@@ -62,7 +63,7 @@ public class EDMTableResetHibernate {
 		tx = null;
 		try {
 			tx = session.beginTransaction();
-			File file = new File("data/Products.dat");
+			File file = new File("data/products.dat");
 			try (FileInputStream fis = new FileInputStream(file);
 					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
 					BufferedReader br = new BufferedReader(isr);) {
@@ -70,8 +71,8 @@ public class EDMTableResetHibernate {
 					if (line.startsWith(UTF8_BOM)) {
 						line = line.substring(1);
 					}
-					String[] token = line.split("\\|");
 
+					String[] token = line.split("\\|");
 					String productName = token[0];
 					/* data example: 天使:書籍 */
 					String categoryTitle = token[1].split(":")[0];
@@ -86,17 +87,11 @@ public class EDMTableResetHibernate {
 						cb = beans.get(0);
 					}
 					Integer price = Integer.parseInt(token[2].trim());
-					String formateTitle1 = token[3];
-					String formateContent1 = token[4];
-					String formateTitle2 = token[5];
-					String formateContent2 = token[6];
-					String fileName = GlobalService.extractFileName(token[7].trim());
-					Blob image = GlobalService.fileToBlob(token[8].trim());
-					Clob detail = GlobalService.fileToClob(token[9]);
-					Integer sales = Integer.parseInt(token[10].trim());
-					Integer stock = Integer.parseInt(token[11].trim());
-					ProductBean product = new ProductBean(null, productName, cb, price, formateTitle1, formateContent1,
-							formateTitle2, formateContent2, fileName, image, detail, sales, stock);
+					String fileName = GlobalService.extractFileName(token[3].trim());
+					Blob image = GlobalService.fileToBlob(token[3].trim());
+					Clob detail = GlobalService.fileToClob(token[4]);
+					ProductBean product = new ProductBean(null, productName, cb, price, fileName, image, detail, 0,
+							null);
 
 					session.save(product);
 					session.flush();
@@ -110,6 +105,54 @@ public class EDMTableResetHibernate {
 				tx.rollback();
 			}
 			System.err.println("新建Products表格時發生IO例外: " + ex.getMessage());
+		}
+
+		// 3. ProductFormat
+		session = factory.getCurrentSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+			File file = new File("data/productFormat.dat");
+			try (FileInputStream fis = new FileInputStream(file);
+					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+					BufferedReader br = new BufferedReader(isr);) {
+				while ((line = br.readLine()) != null) {
+					if (line.startsWith(UTF8_BOM)) {
+						line = line.substring(1);
+					}
+					String[] token = line.split("\\|");
+
+					String formatTitle1 = token[0];
+					String formatContent1 = token[1];
+					String formatTitle2 = token[2];
+					String formatContent2 = token[3];
+					Integer stock = Integer.parseInt(token[4].trim());
+
+					ProductBean pb = null;
+					/* data example: 天使:書籍 */
+					String hql = "FROM ProductBean pb WHERE (pb.productName like :productName) ";
+					@SuppressWarnings("unchecked")
+					List<ProductBean> beans = session.createQuery(hql).setParameter("categoryTitle", token[5])
+							.getResultList();
+					if (beans.size() > 0) {
+						pb = beans.get(0);
+					}
+
+					ProductFormatBean productFormat = new ProductFormatBean(null, formatTitle1, formatContent1,
+							formatTitle2, formatContent2, stock, pb);
+
+					session.save(productFormat);
+					session.flush();
+				}
+				tx.commit();
+				System.out.println("ProductFormat表格新增成功");
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+			System.err.println("新建ProductFormat表格時發生IO例外: " + ex.getMessage());
 		}
 	}
 
