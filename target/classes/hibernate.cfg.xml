@@ -27,8 +27,8 @@
 
 		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
 		<mapping class="_01_register.model.MemberBean"></mapping>
-		<mapping class="_04_Shopping.model.OrderBean"></mapping>
-		<mapping class="_04_Shopping.model.OrderItemBean"></mapping>
+		<mapping class="_04_order.model.OrderBean"></mapping>
+		<mapping class="_04_order.model.OrderItemBean"></mapping>
 		<mapping class="_05_commoditys.model.CommodityBean"></mapping>
 
 	</session-factory>
