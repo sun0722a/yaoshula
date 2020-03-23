@@ -20,6 +20,8 @@
 			href="<c:url value='/_02_login/login.jsp' />">登入</a>
 		</span> <span class="option"> <a
 			href="<c:url value='/_03_personPage/personPage.jsp' />">個人頁面</a>
+		</span><span class="option"> <a
+			href="<c:url value='/product/ShowPageProducts' />">購物區</a>
 		</span>
 	</div>
 	<div class="main-menu">
