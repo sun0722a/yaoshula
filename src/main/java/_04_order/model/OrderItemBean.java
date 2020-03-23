@@ -20,22 +20,20 @@ public class OrderItemBean {
 	Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name = "FK_orderNo")
+	@JoinColumn(name = "FK_OrderBean_orderNo")
 	OrderBean orderBean;
 
 	public OrderItemBean() {
 
 	}
 
-	public OrderItemBean(Integer seqno, Integer productId, String productName, Integer unitPrice, Integer quantity,
-			OrderBean orderBean) {
-		super();
+	public OrderItemBean(Integer seqno, Integer productId, String productName, Integer unitPrice, Integer quantity
+			) {
 		this.seqno = seqno;
 		this.productId = productId;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
-		this.orderBean = orderBean;
 	}
 
 	public Integer getSeqno() {
@@ -78,12 +76,6 @@ public class OrderItemBean {
 		this.quantity = quantity;
 	}
 
-	public OrderBean getOrderBean() {
-		return orderBean;
-	}
-
-	public void setOrderBean(OrderBean orderBean) {
-		this.orderBean = orderBean;
-	}
+	
 
 }
