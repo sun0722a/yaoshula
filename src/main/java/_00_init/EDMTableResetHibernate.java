@@ -20,7 +20,7 @@ import _05_product.model.CategoryBean;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 
-/* 未完成: data未製作 */
+/* 未完成: data未製作完成(only 測試版) */
 
 public class EDMTableResetHibernate {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
@@ -34,7 +34,7 @@ public class EDMTableResetHibernate {
 		// 1. ProductCategory
 		try {
 			tx = session.beginTransaction();
-			try (FileReader fr = new FileReader("data/productCategory.dat");
+			try (FileReader fr = new FileReader("data/product/productCategory.dat");
 					BufferedReader br = new BufferedReader(fr);) {
 				while ((line = br.readLine()) != null) {
 					if (line.startsWith(UTF8_BOM)) {
@@ -63,7 +63,7 @@ public class EDMTableResetHibernate {
 		tx = null;
 		try {
 			tx = session.beginTransaction();
-			File file = new File("data/products.dat");
+			File file = new File("data/product/products.dat");
 			try (FileInputStream fis = new FileInputStream(file);
 					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
 					BufferedReader br = new BufferedReader(isr);) {
@@ -79,7 +79,7 @@ public class EDMTableResetHibernate {
 					String categoryName = token[1].split(":")[1];
 					CategoryBean cb = null;
 					String hql = "FROM CategoryBean cb WHERE (cb.categoryTitle like :categoryTitle) "
-							+ "&& (cb.categoryName like :categoryName)";
+							+ "and (cb.categoryName like :categoryName)";
 					@SuppressWarnings("unchecked")
 					List<CategoryBean> beans = session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
 							.setParameter("categoryName", categoryName).getResultList();
@@ -112,7 +112,7 @@ public class EDMTableResetHibernate {
 		tx = null;
 		try {
 			tx = session.beginTransaction();
-			File file = new File("data/productFormat.dat");
+			File file = new File("data/product/productFormat.dat");
 			try (FileInputStream fis = new FileInputStream(file);
 					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
 					BufferedReader br = new BufferedReader(isr);) {
@@ -132,7 +132,7 @@ public class EDMTableResetHibernate {
 					/* data example: 天使:書籍 */
 					String hql = "FROM ProductBean pb WHERE (pb.productName like :productName) ";
 					@SuppressWarnings("unchecked")
-					List<ProductBean> beans = session.createQuery(hql).setParameter("categoryTitle", token[5])
+					List<ProductBean> beans = session.createQuery(hql).setParameter("productName", token[5])
 							.getResultList();
 					if (beans.size() > 0) {
 						pb = beans.get(0);

@@ -11,7 +11,7 @@
 
 		<!-- 2. 其他與資料存取有關的設定 -->
 		<!-- 自動產生資料庫的Schema -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 		<!-- 顯示實際操作資料庫時的SQL -->
 		<property name="show_sql">true</property>
 		<!-- 將顯示的SQL排版，方便觀看 -->
@@ -26,10 +26,11 @@
 		<property name="connection_pool_size">8</property>
 
 		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
-		<mapping class="_01_register.model.MemberBean"></mapping>
-		<mapping class="_04_Shopping.model.OrderBean"></mapping>
-		<mapping class="_04_Shopping.model.OrderItemBean"></mapping>
-		<mapping class="_05_commoditys.model.CommodityBean"></mapping>
+		<mapping class="_04_order.model.OrderBean"></mapping>
+		<mapping class="_04_order.model.OrderItemBean"></mapping>
+		<mapping class="_05_product.model.CategoryBean"></mapping>
+		<mapping class="_05_product.model.ProductBean"></mapping>
+		<mapping class="_05_product.model.ProductFormatBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>
