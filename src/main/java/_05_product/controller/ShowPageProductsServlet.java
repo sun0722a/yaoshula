@@ -23,6 +23,7 @@ import _05_product.service.impl.ProductServiceImpl;
 public class ShowPageProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	int pageNo = 1;
+	int memberId = 0; // 訪客Id=0
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,18 +33,16 @@ public class ShowPageProductsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 先取出session物件
-		HttpSession session = request.getSession(false);
-
-		// 如果session物件不存在
-		if (session == null) {
-			// 請使用者登入
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/_02_login/login.jsp"));
-			return;
-		}
-		// 登入成功後(經由LoginFilter)，Session範圍內才會有LoginOK對應的MemberBean物件
+		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		// 取出使用者的memberId，後面的Cookie會用到
-		int memberId = mb.getId();
+		// 如果MemberBean物件不存在(未登入)，就memberId=0(訪客)
+		if (mb == null) {
+			memberId = 0;
+		} else {
+			// 登入成功後，Session範圍內才會有LoginOK對應的MemberBean物件
+			// 取出使用者的memberId，後面的Cookie會用到
+			memberId = mb.getId();
+		}
 
 		// 讀取瀏覽送來的 pageNo
 		String pageNoStr = request.getParameter("pageNo");

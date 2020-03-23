@@ -12,6 +12,8 @@
 	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_05_product/productList.css" />
+<script
+	src="${pageContext.request.contextPath}/js/_05_product/productList.js"></script>
 </head>
 <body>
 	<div class="product">
@@ -47,17 +49,15 @@
 				<div class="row">
 					<c:forEach var="entry" items="${products_map}">
 						<a href="" class="col-12 col-sm-6 col-lg-4 mt-4">
-							<div>
-								<div class="card border-dark">
-									<img
-										src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
-										class="card-img-top productImg" />
-									<div class="card-body">
-										<h5 class="card-title"
-											style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
-										<div class="card-text mt-2"
-											style="text-align: center; font-size: 20px;">${entry.value.price}</div>
-									</div>
+							<div class="card border-dark">
+								<img
+									src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
+									class="card-img-top productImg" />
+								<div class="card-body">
+									<h5 class="card-title"
+										style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
+									<div class="card-text mt-2"
+										style="text-align: center; font-size: 20px;">${entry.value.price}</div>
 								</div>
 							</div>
 						</a>
@@ -65,37 +65,50 @@
 				</div>
 			</div>
 			<!-- 頁碼列=================================== -->
-			<form action="" id="pageForm">
-				<div id="pages">
-					<a href="<c:url value='DisplayPageProducts?pageNo=${pageNo-1}'/>"
-						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
-						<button class="btPage">
-							<img
-								src="${pageContext.request.contextPath}/image/_05_product/上一頁.png"
-								style="max-width: 90%;" />
-						</button>
-					</a> <a href="<c:url value='DisplayPageProducts?pageNo=1'/>"
-						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>><button
-							class="btPage">1</button> </a> <span>．．．</span> <span>第</span> <select
-						name="nowPage" id="nowPage">
+			<div id="pages">
+				<a
+					href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}'/>"
+					<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
+					<button class="btPage">
+						<img
+							src="${pageContext.request.contextPath}/image/_05_product/上一頁.png"
+							style="max-width: 90%;" />
+					</button>
+				</a> <a href="<c:url value='/product/ShowPageProducts?pageNo=1'/>"
+					<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
+					<button class="btPage">1</button>
+				</a> <span <c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>．．．</span>
+
+
+				<form action="<c:url value='/product/ShowPageProducts' />"
+					id="pageForm">
+					<span>第</span> <select name="pageNo" id="nowPage">
 						<c:forEach var="pages" begin="1" end="${totalPages}">
 							<option value="${pages}"
 								<c:if test="${pages==pageNo}"> selected </c:if>>${pages}</option>
 						</c:forEach>
-					</select> <span>頁</span> <span>．．．</span> <a
-						href="<c:url value='DisplayPageProducts?pageNo=${totalPages}'/>"
-						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
-						<button class="btPage">${totalPages}</button>
-					</a> <a href="<c:url value='DisplayPageProducts?pageNo=${pageNo+1}'/>"
-						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
-						<button class="btPage">
-							<img
-								src="${pageContext.request.contextPath}/image/_05_product/下一頁.png"
-								style="max-width: 90%;" />
-						</button>
-					</a>
-				</div>
-			</form>
+					</select> <span>頁</span>
+				</form>
+
+
+				<span
+					<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>．．．</span>
+
+
+				<a
+					href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}'/>"
+					<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
+					<button class="btPage">${totalPages}</button>
+				</a> <a
+					href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}'/>"
+					<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
+					<button class="btPage">
+						<img
+							src="${pageContext.request.contextPath}/image/_05_product/下一頁.png"
+							style="max-width: 90%;" />
+					</button>
+				</a>
+			</div>
 		</div>
 	</div>
 
