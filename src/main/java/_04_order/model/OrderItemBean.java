@@ -76,6 +76,14 @@ public class OrderItemBean {
 		this.quantity = quantity;
 	}
 
+	public OrderBean getOrderBean() {
+		return orderBean;
+	}
+
+	public void setOrderBean(OrderBean orderBean) {
+		this.orderBean = orderBean;
+	}
+
 	
 
 }

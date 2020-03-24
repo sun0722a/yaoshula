@@ -19,6 +19,7 @@ public class OrderBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer orderNo;
 	String memberId;
+	String memberName;
 	Integer totalPrice;
 	String address;
 	String phoneNumber;
@@ -30,11 +31,12 @@ public class OrderBean {
 	@OneToMany(mappedBy = "orderBean", cascade = CascadeType.ALL)
 	Set<OrderItemBean> orderItems = new LinkedHashSet<>();
 
-	public OrderBean(Integer orderNo, String memberId, Integer totalPrice, String address, String phoneNumber,
+	public OrderBean(Integer orderNo, String memberId,String memberName,Integer totalPrice, String address, String phoneNumber,
 			String orderNote, Date orderDate, Date shippingDate, Date arriveDate) {
 		super();
 		this.orderNo = orderNo;
 		this.memberId = memberId;
+		this.memberName = memberName;
 		this.totalPrice = totalPrice;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
@@ -127,5 +129,15 @@ public class OrderBean {
 	public void setOrderItems(Set<OrderItemBean> orderItems) {
 		this.orderItems = orderItems;
 	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	
+	
 
 }

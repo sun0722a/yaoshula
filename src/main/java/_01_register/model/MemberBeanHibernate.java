@@ -1,13 +1,22 @@
 package _01_register.model;
 
-
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public class MemberBean{
+import org.hibernate.annotations.GenericGenerator;
+@Entity(name="Members")
+public class MemberBeanHibernate implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name="increment", strategy = "native")
 	private Integer id;
 	private String name;
 	private String password;
@@ -22,7 +31,7 @@ public class MemberBean{
 	private String status;
 	private String permission;
 
-	public MemberBean(Integer id, String name, String password, String gender, Date birthday, String email,
+	public MemberBeanHibernate(Integer id, String name, String password, String gender, Date birthday, String email,
 			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
 			String permission) {
 		super();
@@ -41,7 +50,7 @@ public class MemberBean{
 		this.permission = permission;
 	}
 
-	public MemberBean() {
+	public MemberBeanHibernate() {
 	}
 
 	public Integer getId() {

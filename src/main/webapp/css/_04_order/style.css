@@ -123,8 +123,7 @@ a{
 
 .productBox{
    margin-left: 50px;
-   m
-    width: 70%;
+    width: 100%;
     height: fit-content;
     /* background: aqua; */
     border: 1px solid black;

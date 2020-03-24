@@ -48,7 +48,7 @@
 			<div id="products">
 				<div class="row">
 					<c:forEach var="entry" items="${products_map}">
-						<a href="" class="col-12 col-sm-6 col-lg-4 mt-4">
+						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>" class="col-12 col-sm-6 col-lg-4 mt-4">
 							<div class="card border-dark">
 								<img
 									src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
@@ -68,8 +68,7 @@
 			<div class="row">
 				<div id="pages"
 					class="col d-flex justify-content-center align-items-center">
-					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}'/>"
+					<a href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}'/>" 
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img

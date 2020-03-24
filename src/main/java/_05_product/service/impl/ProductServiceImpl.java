@@ -1,5 +1,9 @@
 package _05_product.service.impl;
 
+import java.io.BufferedReader;
+import java.io.Reader;
+import java.sql.Clob;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
@@ -186,4 +190,25 @@ public class ProductServiceImpl implements ProductService {
 		return bean;
 	}
 
+	@Override
+	public List<ProductBean> getProductInfo(int productId) {
+		List<ProductBean> list = null;
+		Session session = factory.getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			list = dao.getProductInfo(productId);
+			tx.commit();
+		}catch(Exception e) {
+			if(tx != null)
+				tx.rollback();
+				throw new RuntimeException();
+		}
+		return list;
+	}
+
+	
+	
+
+	
 }
