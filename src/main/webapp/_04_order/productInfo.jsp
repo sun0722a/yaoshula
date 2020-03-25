@@ -25,7 +25,7 @@
             </div>
             <div class="top-space"></div>
 
-                <a class="animateCart animated flash text-danger" href="<c:url value='shoppingCart.do' />" ><i class="fas fa-shopping-cart"></i></a>
+                <a class="animateCart animated flash text-danger" href="<c:url value='/order/ShoppingCart' />" ><i class="fas fa-shopping-cart"></i></a>
                 <a class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
                     登入
                 </a>
@@ -67,7 +67,7 @@
           </ul>
 
           <div class="center-content">    
-            <div class="side_menu">
+            <div class="side_menu col-3">
                 <div><h3>天使</h3></div>
                 <div><a href="<c:url value='#' />"> 書籍</a></div>
                 <div><a href="<c:url value='#' />">紓壓小物</a></div>
@@ -76,33 +76,40 @@
                 <div><a href="<c:url value='#' />">紓壓小物</a></div>
             </div>
             <!-- <div class="column"> -->
-                <div class="productBox">
-                    <div class="topProductBox">		
-                    <div class="productImg col-5"><img src="${pageContext.request.contextPath}/image/_04_order/product.jpg" class="img-thumbnail"></div>
+<%--             <form action = "<c:url value='shoppingCart.do' />" method = "POST"> --%>
+                <div class="productBox col-6">
+                <c:forEach var="anProductBean" varStatus="stat" items="${productInfo}">	
+                    <div class="topProductBox">
+                    
+                    <div class="productImg col-5"><img src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg" class="img-thumbnail"></div>
                     <div class="itemSelect col-lg-6 col-sm-3 m-2">
-                        <div class="mt-2">${product.name}
+                        <div class="mt-2">${anProductBean.productName}
                             <span style="float: right;"><i class="fas fa-external-link-alt ml-5" ></i></span>
                         </div>
-                        <div class="mt-2">${product.price}</div>
-                        <div class="btn-group-sm mt-3" role="group">${product.categoryTitle}
-                            <button type="button" class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${product.categoryName}</button>
-                            <button type="button" class="btn btn-secondary text-monospace col-4 ">${product.categoryName}</button>
+                        <div class="mt-2">${anProductBean.price}</div>
+                        <div class="btn-group-sm mt-3" role="group">${entry.value.formatTitle1}
+                            <button type="button" class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${entry.value.formatContent1}</button>
+                            <button type="button" class="btn btn-secondary text-monospace col-4 ">${entry.value.formatContent2}</button>
                           </div>
                         <div class="mt-2">數量<input type="number" value="1" min="1" max="9" class="ml-3 mt-2"></div>
                         <div class="btn-group-sm" role="group" aria-label="Basic example">
-                        <a type="button" class="butNow btn btn-dark mt-3" href="<c:url value='shoppingCart.do' />" role="button">立即購買</a>
-                        <button type="button" class="btn btn-dark mt-3" id="joinCart">加入購物車</button>
+                        <a type="button" class="butNow btn btn-dark mt-3" href="<c:url value='/order/ShoppingCart?productId=${anProductBean.productId}' />" role="button">立即購買</a>
+                        <input type='hidden' name='productId' value="${anProductBean.productId}" >
+                        <a type="button" class="btn btn-dark mt-3" id="joinCart" role="button" href="<c:url value='#' />">加入購物車</a>
                         </div>
                     </div>
+                    
                 </div>
             
                 <div class="productDesc">
                     <p style="text-align: center;"><span>商品介紹</span></p>
-                    <span>${product.detail}</span>
+                    <span>${anProductBean.detail}</span>
                 </div>
+                </c:forEach>
             </div>
+<!--             </form> -->
             </div>
-
+	
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

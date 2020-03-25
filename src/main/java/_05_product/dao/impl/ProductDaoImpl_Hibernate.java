@@ -181,4 +181,15 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return bean;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBean> getProductInfo(int productId) {
+		List<ProductBean> list = null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProductBean pb WHERE pb.productId = :pid";
+		list = session.createQuery(hql).setParameter("pid", productId).getResultList();
+		return list;
+	}
+	
+	
 }

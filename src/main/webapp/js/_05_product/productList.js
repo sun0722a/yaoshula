@@ -7,7 +7,8 @@ function doFirst() {
 		searchForm.submit();
 	});
 	nowPage.addEventListener("change", function() {
-		 pageForm.submit();
+		pageForm.submit();
 	});
 }
+
 window.addEventListener("load", doFirst);

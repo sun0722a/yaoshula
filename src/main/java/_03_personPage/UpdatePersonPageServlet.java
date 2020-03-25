@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;

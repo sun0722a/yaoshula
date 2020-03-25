@@ -1,5 +1,6 @@
 ﻿package _05_product.model;
 
+
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -108,6 +109,8 @@ public class ProductBean implements Serializable {
 		this.detail = detail;
 	}
 
+	
+	
 	public Integer getSales() {
 		return sales;
 	}
