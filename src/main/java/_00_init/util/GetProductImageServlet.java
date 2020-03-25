@@ -18,7 +18,7 @@ import _05_product.service.impl.ProductServiceImpl;
 
 /* 未完成: 預設圖片  */
 
-@WebServlet("/_00_init/getProductImage")
+@WebServlet("/init/getProductImage")
 public class GetProductImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

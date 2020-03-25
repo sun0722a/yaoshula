@@ -51,7 +51,7 @@
 						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>" class="col-12 col-sm-6 col-lg-4 mt-4">
 							<div class="card border-dark">
 								<img
-									src="${pageContext.request.contextPath}/image/_05_product/香精油.jpg"
+									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
 									class="card-img-top productImg" />
 								<div class="card-body">
 									<h5 class="card-title"

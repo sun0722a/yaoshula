@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,129 +33,98 @@ public class EDMTableResetHibernate {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 
+		// 商品類(product)一起新增
+		session = factory.getCurrentSession();
+		tx = session.beginTransaction();
 		// 1. ProductCategory
-		try {
-			tx = session.beginTransaction();
-			try (FileReader fr = new FileReader("data/product/productCategory.dat");
-					BufferedReader br = new BufferedReader(fr);) {
-				while ((line = br.readLine()) != null) {
-					if (line.startsWith(UTF8_BOM)) {
-						line = line.substring(1);
-					}
-					String[] token = line.split("\\|");
-					String categoryTitle = token[0];
-					String categoryName = token[1];
-					CategoryBean cb = new CategoryBean(null, categoryTitle, categoryName);
-					session.save(cb);
-					session.flush();
+		try (FileReader fr1 = new FileReader("data/product/productCategory.dat");
+				BufferedReader br1 = new BufferedReader(fr1);) {
+			while ((line = br1.readLine()) != null) {
+				if (line.startsWith(UTF8_BOM)) {
+					line = line.substring(1);
 				}
-				tx.commit();
+				String[] token1 = line.split("\\|");
+				String categoryTitle1 = token1[0];
+				String categoryName1 = token1[1];
+				String[] categoryProducts = token1[2].split(",");
+				CategoryBean categoryBean = new CategoryBean(null, categoryTitle1, categoryName1, null);
+
+				// 2. Products
+				Set<ProductBean> products = new LinkedHashSet<>();
+				try (FileReader fr2 = new FileReader("data/product/products.dat");
+						BufferedReader br2 = new BufferedReader(fr2);) {
+					while ((line = br2.readLine()) != null) {
+						if (line.startsWith(UTF8_BOM)) {
+							line = line.substring(1);
+						}
+						String[] token2 = line.split("\\|");
+						String productName = token2[0];
+
+						for (String str : categoryProducts) {
+							if (str.equals(productName)) {
+								CategoryBean cb = categoryBean;
+								Integer price = Integer.parseInt(token2[1].trim());
+								String fileName = GlobalService.extractFileName(token2[2].trim());
+								Blob image = GlobalService.fileToBlob(token2[2].trim());
+								Clob detail = GlobalService.fileToClob(token2[3]);
+
+								ProductBean product = new ProductBean(null, productName, cb, price, fileName, image,
+										detail, 0, null);
+
+								// 3. ProductFormat
+								Set<ProductFormatBean> productFormats = new LinkedHashSet<>();
+								try (FileReader fr3 = new FileReader("data/product/productFormat.dat");
+										BufferedReader br3 = new BufferedReader(fr3);) {
+									while ((line = br3.readLine()) != null) {
+										if (line.startsWith(UTF8_BOM)) {
+											line = line.substring(1);
+										}
+										String[] token = line.split("\\|");
+										String productNameCheck = token[5];
+										if (productName.equals(productNameCheck)) {
+											String formatTitle1 = token[0];
+											String formatContent1 = token[1];
+											String formatTitle2 = token[2];
+											String formatContent2 = token[3];
+											Integer stock = Integer.parseInt(token[4].trim());
+											
+											ProductFormatBean productFormat = new ProductFormatBean(null, formatTitle1,
+													formatContent1, formatTitle2, formatContent2, stock, product);
+											productFormats.add(productFormat);
+										}
+									}
+								} catch (Exception e) {
+									e.printStackTrace();
+									if (tx != null) {
+										tx.rollback();
+									}
+									System.err.println("新建ProductFormat表格時發生例外: " + e.getMessage());
+								}
+								product.setProductFormat(productFormats);
+								products.add(product);
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					if (tx != null) {
+						tx.rollback();
+					}
+					System.err.println("新建Products表格時發生例外: " + e.getMessage());
+				}
+				categoryBean.setProducts(products);
+				session.save(categoryBean);
+				session.flush();
 				System.out.println("ProductCategory表格新增成功");
-			} catch (IOException e) {
-				System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
 			}
-		} catch (Exception ex) {
+			tx.commit();
+		} catch (IOException e) {
 			if (tx != null) {
 				tx.rollback();
 			}
+			System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
 		}
 
-		// 2. Products
-		session = factory.getCurrentSession();
-		tx = null;
-		try {
-			tx = session.beginTransaction();
-			File file = new File("data/product/products.dat");
-			try (FileInputStream fis = new FileInputStream(file);
-					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-					BufferedReader br = new BufferedReader(isr);) {
-				while ((line = br.readLine()) != null) {
-					if (line.startsWith(UTF8_BOM)) {
-						line = line.substring(1);
-					}
-
-					String[] token = line.split("\\|");
-					String productName = token[0];
-					/* data example: 天使:書籍 */
-					String categoryTitle = token[1].split(":")[0];
-					String categoryName = token[1].split(":")[1];
-					CategoryBean cb = null;
-					String hql = "FROM CategoryBean cb WHERE (cb.categoryTitle like :categoryTitle) "
-							+ "and (cb.categoryName like :categoryName)";
-					@SuppressWarnings("unchecked")
-					List<CategoryBean> beans = session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
-							.setParameter("categoryName", categoryName).getResultList();
-					if (beans.size() > 0) {
-						cb = beans.get(0);
-					}
-					Integer price = Integer.parseInt(token[2].trim());
-					String fileName = GlobalService.extractFileName(token[3].trim());
-					Blob image = GlobalService.fileToBlob(token[3].trim());
-					Clob detail = GlobalService.fileToClob(token[4]);
-					ProductBean product = new ProductBean(null, productName, cb, price, fileName, image, detail, 0,
-							null);
-
-					session.save(product);
-					session.flush();
-				}
-				tx.commit();
-				System.out.println("Products表格新增成功");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			if (tx != null) {
-				tx.rollback();
-			}
-			System.err.println("新建Products表格時發生IO例外: " + ex.getMessage());
-		}
-
-		// 3. ProductFormat
-		session = factory.getCurrentSession();
-		tx = null;
-		try {
-			tx = session.beginTransaction();
-			File file = new File("data/product/productFormat.dat");
-			try (FileInputStream fis = new FileInputStream(file);
-					InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-					BufferedReader br = new BufferedReader(isr);) {
-				while ((line = br.readLine()) != null) {
-					if (line.startsWith(UTF8_BOM)) {
-						line = line.substring(1);
-					}
-					String[] token = line.split("\\|");
-
-					String formatTitle1 = token[0];
-					String formatContent1 = token[1];
-					String formatTitle2 = token[2];
-					String formatContent2 = token[3];
-					Integer stock = Integer.parseInt(token[4].trim());
-
-					ProductBean pb = null;
-					/* data example: 天使:書籍 */
-					String hql = "FROM ProductBean pb WHERE (pb.productName like :productName) ";
-					@SuppressWarnings("unchecked")
-					List<ProductBean> beans = session.createQuery(hql).setParameter("productName", token[5])
-							.getResultList();
-					if (beans.size() > 0) {
-						pb = beans.get(0);
-					}
-
-					ProductFormatBean productFormat = new ProductFormatBean(null, formatTitle1, formatContent1,
-							formatTitle2, formatContent2, stock, pb);
-
-					session.save(productFormat);
-					session.flush();
-				}
-				tx.commit();
-				System.out.println("ProductFormat表格新增成功");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			if (tx != null) {
-				tx.rollback();
-			}
-			System.err.println("新建ProductFormat表格時發生IO例外: " + ex.getMessage());
-		}
 	}
 
 }
