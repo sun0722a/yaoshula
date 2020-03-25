@@ -89,46 +89,47 @@
                 </div>
                 <hr style="background: black;">
 
-          <!-- <section>
+           <section>
               <table>
-        
+        		<c:forEach var="cartMap" varStatus="vs" items="${ShoppingCart.content}">
                     <div class="items" >
                     <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
-                    <div class="items-detail">香精油</div>
+                    <div class="items-detail">${cartMap.value.productName}</div>
                     <div class="items-detail"><select name="" id="" style="font-size:xx-small;">
                         <option value="">薰衣草50ml</option>
                     </select></div>
-                    <div id="cost">5000</div>
+                    <div id="cost">${cartMap.value.price}</div>
                     <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10"></div>
                     <div class="total">5000</div>
                     <div class="delete" ><a href="" style="font-size: small;">刪除</a></div>
-                </div> 
+                </div>
+                </c:forEach> 
             </table>
             <hr style="background: black;">
-        </section> -->
-        <!-- <section>
-            <table>
+        </section> 
+<!--          <section> -->
+<!--             <table> -->
       
-                  <div class="items">
-                  <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
-                  <div class="items-detail">香精油</div>
-                  <div class="items-detail"><select name="" id="" style="font-size:xx-small;">
-                      <option value="">薰衣草50ml</option>
-                  </select></div>
-                  <div id="cost">5000</div>
-                  <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10"></div>
-                  <div class="total">5000</div>
-              </div> 
-          </table>
-          <hr style="background: black;">
-      </section> -->
+<!--                   <div class="items"> -->
+<!--                   <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div> -->
+<!--                   <div class="items-detail">香精油</div> -->
+<!--                   <div class="items-detail"><select name="" id="" style="font-size:xx-small;"> -->
+<!--                       <option value="">薰衣草50ml</option> -->
+<!--                   </select></div> -->
+<!--                   <div id="cost">5000</div> -->
+<!--                   <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10"></div> -->
+<!--                   <div class="total">5000</div> -->
+<!--               </div>  -->
+<!--           </table> -->
+<!--           <hr style="background: black;"> -->
+<!--       </section>  -->
 
 
             
             <div class="check">
                 <div class="check-kid">總金額</div>
                 <div class="total">0</div>
-                <div class="check-kid" id="submitBtn"><a href="shoppingCheck.html">確認訂單</a></div>
+                <div class="check-kid" id="submitBtn"><a href="/order/orderCheck">確認訂單</a></div>
             </div>
             <hr style="background: black;">
         </div>
