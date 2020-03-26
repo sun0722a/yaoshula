@@ -33,7 +33,13 @@ public class ShowPageProductsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 先取出session物件
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+
+		// 使用逾時，回首頁
+		if (session == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+			return;
+		}
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		// 如果MemberBean物件不存在(未登入)，就memberId=0(訪客)
 		if (mb == null) {
