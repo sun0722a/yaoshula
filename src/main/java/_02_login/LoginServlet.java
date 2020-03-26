@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
@@ -30,7 +29,13 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
+		
+		// 使用逾時，回首頁
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+			return;
+		}
 
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
 

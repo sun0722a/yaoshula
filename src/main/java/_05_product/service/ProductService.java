@@ -11,6 +11,8 @@ public interface ProductService {
 	long getRecordCounts();
 
 	Map<Integer, ProductBean> getPageProducts(int pageNo);
+	
+	Map<Integer, ProductBean> getFamousProducts(String categoryTitle);
 
 //	List<String> getCategory();
 //

@@ -39,7 +39,13 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-		HttpSession session = request.getSession();
+		// 使用逾時，回首頁
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+			return;
+		}
+
 		String target = (String) session.getAttribute("target");
 		// 準備存放錯誤訊息的Map物件
 		Map<String, String> errorMsg = new HashMap<String, String>();

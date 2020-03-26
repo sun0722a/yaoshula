@@ -19,6 +19,7 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 
 	// 預設值：每頁九筆
 	private int recordsPerPage = GlobalService.RECORDS_PER_PAGE;
+	private int recordsPerFamous = GlobalService.RECORDS_PER_FAMOUS;
 	private int totalPages = -1;
 
 	String selected = "";
@@ -55,7 +56,7 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, ProductBean> getPageProducts(int pageNo) {
-		String hql = "FROM ProductBean";
+		String hql = "FROM ProductBean ";
 		Session session = factory.getCurrentSession();
 
 		Map<Integer, ProductBean> map = new HashMap<>();
@@ -68,6 +69,30 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return map;
 	}
 
+	// 查詢熱門商品(天使or惡魔)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, ProductBean> getFamousProducts(String categoryTitle) {
+		String hql = "";
+
+		if (categoryTitle == "天使") {
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb where pb.category=cb.categoryId WHERE cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+
+		} else if (categoryTitle == "惡魔") {
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb where pb.category=cb.categoryId WHERE cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+		}
+
+		Session session = factory.getCurrentSession();
+
+		Map<Integer, ProductBean> map = new HashMap<>();
+		List<ProductBean> list = new ArrayList<ProductBean>();
+		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous).getResultList();
+		for (ProductBean bean : list) {
+			map.put(bean.getProductId(), bean);
+		}
+		return map;
+	}
+	
 //	@SuppressWarnings("unchecked")
 //	@Override
 //	public List<String> getCategory() {
