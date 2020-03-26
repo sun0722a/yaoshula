@@ -80,19 +80,22 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 
 		} else if (categoryTitle == "惡魔") {
 			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+		} else {
+			return null;
 		}
 
 		Session session = factory.getCurrentSession();
 
 		Map<Integer, ProductBean> map = new HashMap<>();
 		List<ProductBean> list = new ArrayList<ProductBean>();
-		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous).getResultList();
+		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
+				.getResultList();
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
 		}
 		return map;
 	}
-	
+
 //	@SuppressWarnings("unchecked")
 //	@Override
 //	public List<String> getCategory() {

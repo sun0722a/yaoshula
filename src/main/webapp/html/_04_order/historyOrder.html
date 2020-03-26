@@ -10,42 +10,241 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
-    <script src="../../js/_04_order/historOrder.js"></script>
+    <script src="../../js/_04_order/historyOrder.js"></script>
+    <style>
+      .orderItems {
+        background: rgba(80, 189, 138, 0.3);
+      }
+    </style>
   </head>
   <body>
-    <div class="history w-75 my-5 mx-auto">
-      <ul class="nav nav-tabs nav-justified">
+    <div class="w-75 my-5 mx-auto">
+      <ul class="nav nav-tabs nav-justified ">
         <li class="nav-item">
-          <a class="nav-link active" href="#">全部</a>
+          <a class="nav-link active text-dark" href="#">全部</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">待出貨</a>
+          <a class="nav-link text-dark" href="#">待出貨</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">已出貨</a>
+          <a class="nav-link text-dark" href="#">已出貨</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">完成</a>
-          </li>
-        
+          <a class="nav-link text-dark" href="#">完成</a>
+        </li>
       </ul>
-      <div style="border: 1px solid black;">
-        <table>
-             <tr class="" style="text-align: center;">
-                 <td>訂單編號</td>
-                 <td>訂購日期</td>
-                 <td>出貨日期</td>
-                 <td>到貨日期</td>
-                 <td>訂單狀態</td>
-             </tr>
-             <tr class="orderList" style="text-align: center;">
-                 <td>1</td>
-                 <td>2020-03-26</td>
-                 <td>2020-03-26</td>
-                 <td>2020-03-26</td>
-                 <td>完成</td>
-             </tr>
-        </table>
+
+      <div
+        class="container-fluid"
+        style="border: 1px solid rgba(0, 0, 0, 0.575);"
+      >
+        <div class="row border-bottom">
+          <div class="col-1 text-center my-2"></div>
+          <div class="col-2 text-center my-2">
+            訂單編號
+          </div>
+          <div class="col-2 text-center my-2">
+            訂購日期
+          </div>
+          <div class="col-2 text-center my-2">
+            出貨日期
+          </div>
+          <div class="col-2 text-center my-2">
+            到貨日期
+          </div>
+          <div class="col-2 text-center my-2">
+            訂單狀態
+          </div>
+          <div class="col-1 text-center my-2"></div>
+        </div>
+
+        <div class="row orderRow">
+          <div class="col-1 text-center my-2"></div>
+          <div class="col-2 text-center my-2">
+            1
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-26
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-27
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-28
+          </div>
+          <div class="col-2 text-center my-2">
+            完成
+          </div>
+          <div class="col-1 text-center my-2"></div>
+        </div>
+
+        <div class="row orderItems" style="display: none;">
+          <div class="col-2 text-center my-2"></div>
+          <div class="col-2 text-center my-2">
+            商品名稱
+          </div>
+          <div class="col-2 text-center my-2">
+            規格
+          </div>
+          <div class="col-2 text-center my-2">
+            單價
+          </div>
+          <div class="col-2 text-center my-2">
+            數量
+          </div>
+          <div class="col-2 text-center my-2">
+            總價
+          </div>
+
+          <div class="col-2 text-center border-top border-light my-2">
+            <img
+              src="../../image/_05_product/香精油.jpg"
+              alt=""
+              style="max-width: 100px;"
+            />
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            香精油
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            薰衣草 50ml
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 5000
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            2
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 10000
+          </div>
+
+          <div
+            class="col-12 d-flex justify-content-end align-items-center border-top border-light my-2"
+          >
+            <span style="font-size: 20px;">總金額: $10000</span>
+          </div>
+        </div>
+
+        <div class="row orderRow">
+          <div class="col-1 text-center my-2"></div>
+          <div class="col-2 text-center my-2">
+            2
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-26
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-27
+          </div>
+          <div class="col-2 text-center my-2">
+            2020-03-28
+          </div>
+          <div class="col-2 text-center my-2">
+            待出貨
+          </div>
+          <div class="col-1 text-center my-2"></div>
+        </div>
+
+        <div class="row orderItems" style="display: none;">
+          <div class="col-2 text-center my-2"></div>
+          <div class="col-2 text-center my-2">
+            商品名稱
+          </div>
+          <div class="col-2 text-center my-2">
+            規格
+          </div>
+          <div class="col-2 text-center my-2">
+            單價
+          </div>
+          <div class="col-2 text-center my-2">
+            數量
+          </div>
+          <div class="col-2 text-center my-2">
+            總價
+          </div>
+
+          <div class="col-2 text-center border-top border-light my-2">
+            <img
+              src="../../image/_05_product/香精油.jpg"
+              alt=""
+              style="max-width: 100px;"
+            />
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            香精油
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            薰衣草 50ml
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 5000
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            2
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 10000
+          </div>
+          <div class="col-2 text-center border-top border-light my-2">
+            <img
+              src="../../image/_05_product/香精油.jpg"
+              alt=""
+              style="max-width: 100px;"
+            />
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            香精油
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            茶樹 150ml
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 10000
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            1
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2"
+          >
+            $ 10000
+          </div>
+
+          <div
+            class="col-12 d-flex justify-content-end align-items-center border-top border-light my-2"
+          >
+            <span style="font-size: 20px;">總金額: $20000</span>
+          </div>
+        </div>
       </div>
     </div>
 
