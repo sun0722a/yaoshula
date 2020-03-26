@@ -76,10 +76,10 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		String hql = "";
 
 		if (categoryTitle == "天使") {
-			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb where pb.category=cb.categoryId WHERE cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
 
 		} else if (categoryTitle == "惡魔") {
-			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb where pb.category=cb.categoryId WHERE cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
 		}
 
 		Session session = factory.getCurrentSession();
