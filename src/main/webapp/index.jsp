@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +21,8 @@
 			href="<c:url value='/_03_personPage/personPage.jsp' />">個人頁面</a>
 		</span><span class="option"> <a
 			href="<c:url value='/product/ShowPageProducts' />">購物區</a>
+		</span><span class="option"> <a
+			href="<c:url value='/product/ShowFamousProducts' />">熱門商品區</a>
 		</span>
 	</div>
 	<div class="main-menu">

@@ -1,9 +1,5 @@
 package _05_product.service.impl;
 
-import java.io.BufferedReader;
-import java.io.Reader;
-import java.sql.Clob;
-import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
@@ -67,6 +63,23 @@ public class ProductServiceImpl implements ProductService {
 		return map;
 	}
 
+	@Override
+	public Map<Integer, ProductBean> getFamousProducts(String categoryTitle) {
+		Session session = factory.getCurrentSession();
+		Transaction tx = null;
+		Map<Integer, ProductBean> map = null;
+		try {
+			tx = session.beginTransaction();
+			map = dao.getFamousProducts(categoryTitle);
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return map;
+	}
 //	@Override
 //	public List<String> getCategory() {
 //		Session session = factory.getCurrentSession();
@@ -172,43 +185,12 @@ public class ProductServiceImpl implements ProductService {
 		dao.setRecordsPerPage(recordsPerPage);
 	}
 
+	// 避免LazyLoading
 	@Override
 	public ProductBean getProduct(int productId) {
-		Session session = factory.getCurrentSession();
-		Transaction tx = null;
 		ProductBean bean = null;
-		try {
-			tx = session.beginTransaction();
-			bean = dao.getProduct(productId);
-			tx.commit();
-		} catch (Exception ex) {
-			if (tx != null)
-				tx.rollback();
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-		}
+		bean = dao.getProduct(productId);
 		return bean;
 	}
 
-	@Override
-	public List<ProductBean> getProductInfo(int productId) {
-		List<ProductBean> list = null;
-		Session session = factory.getCurrentSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			list = dao.getProductInfo(productId);
-			tx.commit();
-		}catch(Exception e) {
-			if(tx != null)
-				tx.rollback();
-				throw new RuntimeException();
-		}
-		return list;
-	}
-
-	
-	
-
-	
 }

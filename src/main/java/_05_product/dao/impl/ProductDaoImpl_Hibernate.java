@@ -19,6 +19,7 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 
 	// 預設值：每頁九筆
 	private int recordsPerPage = GlobalService.RECORDS_PER_PAGE;
+	private int recordsPerFamous = GlobalService.RECORDS_PER_FAMOUS;
 	private int totalPages = -1;
 
 	String selected = "";
@@ -55,13 +56,40 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, ProductBean> getPageProducts(int pageNo) {
-		String hql = "FROM ProductBean";
+		String hql = "FROM ProductBean ";
 		Session session = factory.getCurrentSession();
 
 		Map<Integer, ProductBean> map = new HashMap<>();
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		List<ProductBean> list = new ArrayList<ProductBean>();
 		list = session.createQuery(hql).setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
+		for (ProductBean bean : list) {
+			map.put(bean.getProductId(), bean);
+		}
+		return map;
+	}
+
+	// 查詢熱門商品(天使or惡魔)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, ProductBean> getFamousProducts(String categoryTitle) {
+		String hql = "";
+
+		if (categoryTitle == "天使") {
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+
+		} else if (categoryTitle == "惡魔") {
+			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
+		} else {
+			return null;
+		}
+
+		Session session = factory.getCurrentSession();
+
+		Map<Integer, ProductBean> map = new HashMap<>();
+		List<ProductBean> list = new ArrayList<ProductBean>();
+		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
+				.getResultList();
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
 		}
@@ -181,15 +209,4 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return bean;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ProductBean> getProductInfo(int productId) {
-		List<ProductBean> list = null;
-		Session session = factory.getCurrentSession();
-		String hql = "FROM ProductBean pb WHERE pb.productId = :pid";
-		list = session.createQuery(hql).setParameter("pid", productId).getResultList();
-		return list;
-	}
-	
-	
 }

@@ -27,14 +27,15 @@ public class CategoryBean implements Serializable {
 	private Integer categoryId;
 	private String categoryTitle;
 	private String categoryName;
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade=CascadeType.ALL)
 	private Set<ProductBean> products = new LinkedHashSet<>();
 
-	public CategoryBean(Integer categoryId, String categoryTitle, String categoryName) {
+	public CategoryBean(Integer categoryId, String categoryTitle, String categoryName, Set<ProductBean> products) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryTitle = categoryTitle;
 		this.categoryName = categoryName;
+		this.products = products;
 	}
 
 	public CategoryBean() {

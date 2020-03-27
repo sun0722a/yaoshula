@@ -29,9 +29,14 @@ import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialClob;
 import javax.xml.bind.DatatypeConverter;
 
+import _05_product.model.ProductBean;
+import _05_product.service.ProductService;
+import _05_product.service.impl.ProductServiceImpl;
+
 public class GlobalService {
 
 	public static final int RECORDS_PER_PAGE = 6;
+	public static final int RECORDS_PER_FAMOUS = 6;
 	public static final String SYSTEM_NAME = "要抒拉";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
 
@@ -311,6 +316,19 @@ public class GlobalService {
 		is.read(b);
 		sb = new SerialBlob(b);
 		return sb;
+	}
+
+	public static String clobToString(Clob clob) throws IOException, SQLException {
+		String detail = "";
+
+		try (Reader reader = clob.getCharacterStream(); BufferedReader br = new BufferedReader(reader);) {
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				detail += line;
+				detail += "\n";
+			}
+		}
+		return detail;
 	}
 
 	public static String extractFileName(String pathName) throws IOException, SQLException {

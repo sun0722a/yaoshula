@@ -1,6 +1,5 @@
 package _05_product.dao;
 
-import java.util.List;
 import java.util.Map;
 
 import _05_product.model.ProductBean;
@@ -12,6 +11,8 @@ public interface ProductDao {
 	long getRecordCounts();
 
 	Map<Integer, ProductBean> getPageProducts(int pageNo);
+
+	Map<Integer, ProductBean> getFamousProducts(String categoryTitle);
 
 //	List<String> getCategory();
 //
@@ -30,7 +31,5 @@ public interface ProductDao {
 	void setRecordsPerPage(int recordsPerPage);
 
 	ProductBean getProduct(int productId);
-	
-	List<ProductBean> getProductInfo(int productId);
 
 }
