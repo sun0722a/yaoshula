@@ -12,4 +12,6 @@ public interface OrderService {
 	List<OrderBean> getAllOrders();
 	
 	List<OrderBean> getMemberOrders(String memberId);
+	
+	String checkOrderStatus(Integer orderNo);
 }

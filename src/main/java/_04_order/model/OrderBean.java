@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,15 +25,20 @@ public class OrderBean {
 	String address;
 	String phoneNumber;
 	String orderNote;
+	@Column(columnDefinition = "Date")
 	Date orderDate;
+	@Column(columnDefinition = "Date")
 	Date shippingDate;
+	@Column(columnDefinition = "Date")
 	Date arriveDate;
+	String status;
 
 	@OneToMany(mappedBy = "orderBean", cascade = CascadeType.ALL)
 	Set<OrderItemBean> orderItems = new LinkedHashSet<>();
 
-	public OrderBean(Integer orderNo, String memberId,String memberName,Integer totalPrice, String address, String phoneNumber,
-			String orderNote, Date orderDate, Date shippingDate, Date arriveDate) {
+	public OrderBean(Integer orderNo, String memberId, String memberName, Integer totalPrice, String address,
+			String phoneNumber, String orderNote, Date orderDate, Date shippingDate, Date arriveDate, String status,
+			Set<OrderItemBean> orderItems) {
 		super();
 		this.orderNo = orderNo;
 		this.memberId = memberId;
@@ -44,6 +50,8 @@ public class OrderBean {
 		this.orderDate = orderDate;
 		this.shippingDate = shippingDate;
 		this.arriveDate = arriveDate;
+		this.status = status;
+		this.orderItems = orderItems;
 	}
 
 	public OrderBean() {
@@ -137,7 +145,13 @@ public class OrderBean {
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
-	
-	
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

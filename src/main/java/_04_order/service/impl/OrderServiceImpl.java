@@ -97,6 +97,23 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 	
+	public String checkOrderStatus(Integer orderNo) {
+		String status = null;
+		Session session = factory.getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			status = checkOrderStatus(orderNo);
+			tx.commit();
+		}catch(Exception e) {
+			if(tx != null) {
+				tx.rollback();
+				throw new RuntimeException(e);
+			}
+		}
+		return status;
+	}
+	
 	
 	
 }

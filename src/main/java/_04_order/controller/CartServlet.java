@@ -1,7 +1,11 @@
 package _04_order.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +19,7 @@ import _01_register.model.MemberBean;
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
+import _05_product.model.ProductFormatBean;
 
 
 @WebServlet("/order/ShoppingCart")
@@ -72,7 +77,8 @@ public class CartServlet extends HttpServlet {
 //		}catch(NumberFormatException e) {
 //			throw new ServletException(e);
 //		}
-		OrderItemBean oib = new OrderItemBean(null,productId,bean.getProductName(),bean.getPrice(),qty);
+
+		OrderItemBean oib = new OrderItemBean(null,productId,bean.getProductName(),null,null,bean.getPrice(),qty,null);
 		cart.addToCart(productId, oib);
 		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
 		rd.forward(request, response);
