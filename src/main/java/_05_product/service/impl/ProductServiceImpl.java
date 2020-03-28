@@ -23,13 +23,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int getTotalPages() {
+	public int getTotalPages(String searchStr) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		int n = 0;
 		try {
 			tx = session.beginTransaction();
-			n = dao.getTotalPages();
+			n = dao.getTotalPages(searchStr);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null)
@@ -46,13 +46,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Map<Integer, ProductBean> getPageProducts(int pageNo) {
+	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		Map<Integer, ProductBean> map = null;
 		try {
 			tx = session.beginTransaction();
-			map = dao.getPageProducts(pageNo);
+			map = dao.getPageProducts(pageNo, arrange, searchStr);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null)
@@ -80,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return map;
 	}
+
 //	@Override
 //	public List<String> getCategory() {
 //		Session session = factory.getCurrentSession();

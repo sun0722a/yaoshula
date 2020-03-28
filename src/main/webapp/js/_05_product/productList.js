@@ -1,9 +1,10 @@
 function doFirst() {
 	nowPage = document.getElementById("nowPage");
 	pageForm = document.getElementById("pageForm");
+	arrange = document.getElementById("arrange");
 	searchForm = document.getElementById("searchForm");
 
-	searchForm.addEventListener("change", function() {
+	arrange.addEventListener("change", function() {
 		searchForm.submit();
 	});
 	nowPage.addEventListener("change", function() {
