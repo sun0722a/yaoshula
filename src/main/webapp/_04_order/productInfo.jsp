@@ -32,8 +32,15 @@
 		<div class="top-space"></div>
 
 		<a class="animateCart animated flash text-danger"
+<<<<<<< HEAD
+			href="<c:url value='/order/ShoppingCart' />">
+			<i
+			class="fas fa-shopping-cart"></i></a>
+			<a
+=======
 			href="<c:url value='/order/ShoppingCart' />"><i
 			class="fas fa-shopping-cart"></i></a> <a
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 			class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />"
 			id="navbarDropdown" role="button" data-toggle="dropdown"
 			aria-haspopup="true"> 登入 </a>
@@ -68,7 +75,11 @@
 	</ul>
 
 	<div class="center-content">
+<<<<<<< HEAD
+		<div class="side_menu col-2">
+=======
 		<div class="side_menu col-3">
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 			<div>
 				<h3>天使</h3>
 			</div>
@@ -88,8 +99,13 @@
 				<a href="<c:url value='#' />">紓壓小物</a>
 			</div>
 		</div>
+<<<<<<< HEAD
+		
+		<form action = "/order/checkOrder" method="POST">
+=======
 		<!-- <div class="column"> -->
 		<%--             <form action = "<c:url value='shoppingCart.do' />" method = "POST"> --%>
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 		<div class="productBox col-6">
 			<div class="topProductBox">
 
@@ -105,6 +121,21 @@
 					</div>
 					<div class="mt-2">${product.price}</div>
 					
+<<<<<<< HEAD
+					<div class="btn-group-vertical btn-group-toggle mt-3 " data-toggle="buttons">${title1}
+						<c:forEach var="entry" items="${content1}">
+						<label class="btn btn-outline-secondary text-monospace  m-2 active">
+							<input type="radio" autocomplete="off" name="content1" value="${param.content}">${entry}
+						</label>
+						</c:forEach>
+					</div>
+					
+					<div class="btn-group-vertical btn-group-toggle mt-3" data-toggle="buttons">${title2}
+						<c:forEach var="entry2" items="${content2}">
+						<label  class="btn btn-outline-secondary text-monospace  m-2 active">
+							<input type="radio" autocomplete="off" name="content2" value="${param.contnet}">${entry2}
+						</label>
+=======
 					<div class="btn-group-sm mt-3" role="group">${title1}
 						<c:forEach var="entry" items="${content1}">
 							<button type="button"
@@ -116,10 +147,22 @@
 						<c:forEach var="entry" items="${content2}">
 							<button type="button"
 								class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${entry}</button>
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 						</c:forEach>
 					</div>
 					
 					<div class="mt-2">
+<<<<<<< HEAD
+						數量<input type="number" value="1" min="1" max="9" class="ml-6 mt-2">
+					</div>
+					<div class="btn-group-sm ml-3 mb-3" role="group" aria-label="Basic example">
+						<a type="button" class="butNow btn btn-dark mt-3"
+							href="<c:url value='/order/checkOrder?productId=${product.productId}' />"
+							role="button">立即購買</a> 
+							<input type='hidden' name='productId' id="productId"value="${product.productId}"> 
+							<a type="button"class="btn btn-dark mt-3" id="joinCart" role="button"
+							href="<c:url value='' />">加入購物車</a>
+=======
 						數量<input type="number" value="1" min="1" max="9" class="ml-3 mt-2">
 					</div>
 					<div class="btn-group-sm" role="group" aria-label="Basic example">
@@ -129,6 +172,7 @@
 							value="${product.productId}"> <a type="button"
 							class="btn btn-dark mt-3" id="joinCart" role="button"
 							href="<c:url value='#' />">加入購物車</a>
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 					</div>
 				</div>
 
@@ -141,7 +185,11 @@
 				<span>${detail}</span>
 			</div>
 		</div>
+<<<<<<< HEAD
+		</form>
+=======
 		<!--             </form> -->
+>>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 	</div>
 
 

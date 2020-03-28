@@ -77,7 +77,6 @@ public class CartServlet extends HttpServlet {
 //		}catch(NumberFormatException e) {
 //			throw new ServletException(e);
 //		}
-
 		OrderItemBean oib = new OrderItemBean(null,productId,bean.getProductName(),null,null,bean.getPrice(),qty,null);
 		cart.addToCart(productId, oib);
 		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
