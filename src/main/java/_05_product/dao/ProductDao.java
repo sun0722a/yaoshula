@@ -12,6 +12,8 @@ public interface ProductDao {
 
 	Map<Integer, ProductBean> getPageProducts(int pageNo);
 
+	Map<Integer, ProductBean> getFamousProducts(String categoryTitle);
+
 //	List<String> getCategory();
 //
 //	String getCategoryTag();

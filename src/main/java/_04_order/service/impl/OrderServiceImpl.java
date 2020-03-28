@@ -80,22 +80,23 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBean> getMemberOrders(String memberId) {
+	public List<OrderBean> getMemberOrders(String memberId,String status) {
 		List<OrderBean> list = null;
-		Session session = factory.getCurrentSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			list = odao.getMemberOrders(memberId);
-			tx.commit();
-		}catch(Exception e) {
-			if(tx != null) {
-				tx.rollback();
-				throw new RuntimeException(e);
-			}
-		}
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = null;
+//		try {
+//			tx = session.beginTransaction();
+			list = odao.getMemberOrders(memberId,status);
+//			tx.commit();
+//		}catch(Exception e) {
+//			if(tx != null) {
+//				tx.rollback();
+//				throw new RuntimeException(e);
+//			}
+//		}
 		return list;
 	}
+	
 	
 	public String checkOrderStatus(Integer orderNo) {
 		String status = null;
@@ -113,7 +114,5 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return status;
 	}
-	
-	
 	
 }

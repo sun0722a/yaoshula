@@ -23,7 +23,7 @@ div a {
 </style>
 </head>
 <body>
-	<div class="angelHot w-75 my-5 mx-auto">
+	<div class="w-75 my-5 mx-auto">
 		<h1>天使熱門榜</h1>
 		<div class="swiper-container">
 			<!-- Additional required wrapper -->
@@ -32,10 +32,10 @@ div a {
 				<!-- Slides -->
 				<c:forEach var="entry" items="${angel_products_map}">
 					<div class="p-3 swiper-slide">
-						<a href="">
+						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
 							<div class="card border-dark">
-								<h3 class="m-auto">------- -------</h3>
-								<img src="../../image/_05_product/香精油.jpg"
+								<img
+									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
 									class="card-img-top productImg" />
 								<div class="card-body">
 									<h5 class="card-title"
@@ -54,7 +54,8 @@ div a {
 		</div>
 	</div>
 
-	<div class="devilHot w-75 my-5 mx-auto">
+	
+	<div class="w-75 my-5 mx-auto">
 		<h1>惡魔熱門榜</h1>
 		<div class="swiper-container">
 			<!-- Additional required wrapper -->
@@ -63,10 +64,10 @@ div a {
 				<!-- Slides -->
 				<c:forEach var="entry" items="${evil_products_map}">
 					<div class="p-3 swiper-slide">
-						<a href="">
+						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
 							<div class="card border-dark">
-								<h3 class="m-auto">------- -------</h3>
-								<img src="../../image/_05_product/香精油.jpg"
+								<img
+									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
 									class="card-img-top productImg" />
 								<div class="card-body">
 									<h5 class="card-title"
@@ -84,6 +85,9 @@ div a {
 			<div class="swiper-button-next"></div>
 		</div>
 	</div>
+	
+	
+	
 
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>

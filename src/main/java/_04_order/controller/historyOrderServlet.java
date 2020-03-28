@@ -3,6 +3,7 @@ package _04_order.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,8 +45,10 @@ public class historyOrderServlet extends HttpServlet {
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		String memberId = mb.getId().toString();
 
+		String status = request.getParameter("orderStatus");
 		OrderService service = new OrderServiceImpl();
-		List<OrderBean> orders = service.getMemberOrders(memberId);
+		List<OrderBean> orders = service.getMemberOrders(memberId, status);
+		
 		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
 		for (int i = 0; i < orders.size(); i++) {
 			int orderNo = orders.get(i).getOrderNo();
@@ -55,7 +58,7 @@ public class historyOrderServlet extends HttpServlet {
 
 		session.setAttribute("order_list", orders);
 		session.setAttribute("orderItem_map", orderItemGroup);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/historyOrder.jsp");
 		rd.forward(request, response);
 		return;

@@ -45,12 +45,17 @@ public class OrderDaoImpl implements OrderDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderBean> getMemberOrders(String memberId) {
+	public List<OrderBean> getMemberOrders(String memberId,String status) {
 
 		List<OrderBean> list = null;
 		Session session = factory.getCurrentSession();
-		String hql = "FROM OrderBean ob Where ob.memberId = :mid";
-		list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
+		if(status==null) {
+			String hql = "FROM OrderBean ob Where ob.memberId = :mid";
+			list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
+		}else {
+			String hql = "FROM OrderBean ob Where ob.memberId = :memberId AND ob.status = :status";
+			list = session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
+		}
 		return list;
 	}
 
@@ -77,5 +82,5 @@ public class OrderDaoImpl implements OrderDao {
 		}
 		return status;
 	}
-
+	
 }
