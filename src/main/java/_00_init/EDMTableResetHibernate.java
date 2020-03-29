@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +21,8 @@ import org.hibernate.Transaction;
 
 import _00_init.util.GlobalService;
 import _00_init.util.HibernateUtils;
+import _04_order.model.OrderBean;
+import _04_order.model.OrderItemBean;
 import _05_product.model.CategoryBean;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
@@ -87,7 +92,7 @@ public class EDMTableResetHibernate {
 											String formatTitle2 = token[2];
 											String formatContent2 = token[3];
 											Integer stock = Integer.parseInt(token[4].trim());
-											
+
 											ProductFormatBean productFormat = new ProductFormatBean(null, formatTitle1,
 													formatContent1, formatTitle2, formatContent2, stock, product);
 											productFormats.add(productFormat);
@@ -125,6 +130,80 @@ public class EDMTableResetHibernate {
 			System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
 		}
 
+		// 訂單類(order)一起新增
+		session = factory.getCurrentSession();
+		tx = session.beginTransaction();
+		// 1. Orders
+		try (FileReader fr1 = new FileReader("data/order/orders.dat"); BufferedReader br1 = new BufferedReader(fr1);) {
+			while ((line = br1.readLine()) != null) {
+				if (line.startsWith(UTF8_BOM)) {
+					line = line.substring(1);
+				}
+				String[] token1 = line.split("\\|");
+				String memberId = token1[0];
+				String memberName = token1[1];
+//				Integer totalPrice = Integer.parseInt(token1[2]);
+				Integer totalPrice = 0;
+				String address = token1[2];
+				String phoneNumber = token1[3];
+				String orderNote = token1[4];
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = simpleDateFormat.parse(token1[5]);
+				Date orderDate = new Date(date.getTime());
+				date = simpleDateFormat.parse(token1[6]);
+				Date shippingDate = new Date(date.getTime());
+				date = simpleDateFormat.parse(token1[7]);
+				Date arriveDate = new Date(date.getTime());
+
+				OrderBean orderBean = new OrderBean(null, memberId, memberName, totalPrice, address, phoneNumber,
+						orderNote, orderDate, shippingDate, arriveDate,"待出貨", null);
+
+				// 2. OrderItems
+				Set<OrderItemBean> orderItems = new LinkedHashSet<>();
+				OrderItemBean orderItemBean = null;
+				try (FileReader fr2 = new FileReader("data/order/orderItems.dat");
+						BufferedReader br2 = new BufferedReader(fr2);) {
+					while ((line = br2.readLine()) != null) {
+						if (line.startsWith(UTF8_BOM)) {
+							line = line.substring(1);
+						}
+						String[] token2 = line.split("\\|");
+						String orderNoCheck = token2[6];
+						if (token1[8].equals(orderNoCheck)) {
+							Integer productId = Integer.parseInt(token2[0]);
+							String productName = token2[1];
+							String formatContent1 = token2[2];
+							String formatContent2 = token2[3];
+							Integer unitPrice = Integer.parseInt(token2[4]);
+							Integer quantity = Integer.parseInt(token2[5]);
+							totalPrice += unitPrice * quantity;
+							orderItemBean = new OrderItemBean(null, productId, productName, 
+									 formatContent1, formatContent2, unitPrice, quantity,
+									orderBean);
+							orderItems.add(orderItemBean);
+						}
+					}
+
+				} catch (Exception e) {
+					if (tx != null) {
+						tx.rollback();
+					}
+					System.err.println("新建OrderItems表格時發生IO例外: " + e.getMessage());
+					e.printStackTrace();
+				}
+				orderBean.setTotalPrice(totalPrice);
+				orderBean.setOrderItems(orderItems);
+				session.save(orderBean);
+				session.flush();
+				System.out.println("Orders表格新增成功");
+			}
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			System.err.println("新建Orders表格時發生IO例外: " + e.getMessage());
+		}
 	}
 
 }

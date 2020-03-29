@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +23,13 @@
 	<div class="w-75 my-5 mx-auto">
 
 		<ul class="nav nav-tabs nav-justified ">
-			<li class="nav-item"><a class="nav-link active text-dark"
-				href="#">全部</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" href="#">待出貨</a>
+			<li class="nav-item"><a class="nav-link text-dark"
+				href="<c:url value='/order/showHistoryOrder'/>">全部</a></li>
+			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=待出貨'/>">待出貨</a>
 			</li>
-			<li class="nav-item"><a class="nav-link text-dark" href="#">已出貨</a>
+			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=已出貨'/>">已出貨</a>
 			</li>
-			<li class="nav-item"><a class="nav-link text-dark" href="#">完成</a>
+			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=完成'/>">完成</a>
 			</li>
 		</ul>
 
@@ -49,9 +50,9 @@
 				<div class="row orderRow">
 					<div class="col-1 text-center my-2"></div>
 					<div class="col-2 text-center my-2">${entry.orderNo}</div>
-					<div class="col-2 text-center my-2">${entry.orderDate}</div>
-					<div class="col-2 text-center my-2">${entry.shippingDate}</div>
-					<div class="col-2 text-center my-2">${entry.arriveDate}</div>
+					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.orderDate}" pattern="yyyy-MM-dd"/></div>
+					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.shippingDate}" pattern="yyyy-MM-dd"/></div>
+					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.arriveDate}" pattern="yyyy-MM-dd"/></div>
 					<div class="col-2 text-center my-2">${entry.status}</div>
 					<div class="col-1 text-center my-2"></div>
 				</div>
@@ -64,29 +65,32 @@
 					<div class="col-2 text-center my-2">數量</div>
 					<div class="col-2 text-center my-2">總價</div>
 
-					<c:forEach var="detailEntry" items="${orderItem_map}">
-						<c:if test="${detailEntry.key==entry.orderNo}">
-							<div class="col-2 text-center border-top border-light my-2">
-								<img
-									src="${pageContext.request.contextPath}/init/getProductImage?id=${detailEntry.value.productId}"
-									alt="" style="max-width: 100px;" />
-							</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-								${detailEntry.value.productName}</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-								${detailEntry.value.formatContent1}
-								${detailEntry.value.formatContent2}</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-								$ ${detailEntry.value.unitPrice}</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-								${detailEntry.value.quantity}</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-								$ ${detailEntry.value.unitPrice*detailEntry.value.quantity}</div>
+					<c:forEach var="detailMap" items="${orderItem_map}">
+						<c:if test="${detailMap.key==entry.orderNo}">
+							<c:forEach var="detailEntry" items="${detailMap.value}">
+								<div class="col-2 text-center border-top border-light my-2">
+									<img
+										src="${pageContext.request.contextPath}/init/getProductImage?id=${detailEntry.productId}"
+										alt="" style="max-width: 100px;" />
+								</div>
+								<div
+									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
+									${detailEntry.productName}</div>
+								<div
+									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
+									${detailEntry.formatContent1}
+									${detailEntry.formatContent2}</div>
+								<div
+									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
+									$ ${detailEntry.unitPrice}</div>
+								<div
+									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
+									${detailEntry.quantity}</div>
+								<div
+									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
+									$ ${detailEntry.unitPrice*detailEntry.quantity}</div>
+							</c:forEach>
+
 						</c:if>
 					</c:forEach>
 					<div

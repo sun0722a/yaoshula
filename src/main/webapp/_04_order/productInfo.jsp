@@ -36,9 +36,12 @@
 			<i
 			class="fas fa-shopping-cart"></i></a>
 			<a
+<<<<<<< HEAD
 			href="<c:url value='/order/ShoppingCart' />"><i
 			class="fas fa-shopping-cart"></i></a> <a
 >>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
+=======
+>>>>>>> b5a2eeff7066d426f8bb7f1bfc47474ba0474b54
 			class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />"
 			id="navbarDropdown" role="button" data-toggle="dropdown"
 			aria-haspopup="true"> 登入 </a>
@@ -74,9 +77,12 @@
 
 	<div class="center-content">
 		<div class="side_menu col-2">
+<<<<<<< HEAD
 
 		<div class="side_menu col-3">
 
+=======
+>>>>>>> b5a2eeff7066d426f8bb7f1bfc47474ba0474b54
 			<div>
 				<h3>天使</h3>
 			</div>
@@ -96,13 +102,8 @@
 				<a href="<c:url value='#' />">紓壓小物</a>
 			</div>
 		</div>
-<<<<<<< HEAD
 		
 		<form action = "/order/checkOrder" method="POST">
-=======
-		<!-- <div class="column"> -->
-		<%--             <form action = "<c:url value='shoppingCart.do' />" method = "POST"> --%>
->>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 		<div class="productBox col-6">
 			<div class="topProductBox">
 
@@ -132,6 +133,7 @@
 							<input type="radio" autocomplete="off" name="content2" value="${param.contnet}">${entry2}
 						</label>
 						</c:forEach>
+<<<<<<< HEAD
 					<div class="btn-group-sm mt-3" role="group">${title1}
 						<c:forEach var="entry" items="${content1}">
 							<button type="button"
@@ -144,6 +146,8 @@
 							<button type="button"
 								class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${entry}</button>
 					</c:forEach>
+=======
+>>>>>>> b5a2eeff7066d426f8bb7f1bfc47474ba0474b54
 					</div>
 					<div class="mt-2">
 						數量<input type="number" value="1" min="1" max="9" class="ml-6 mt-2">
@@ -155,6 +159,7 @@
 							<input type='hidden' name='productId' id="productId"value="${product.productId}"> 
 							<a type="button"class="btn btn-dark mt-3" id="joinCart" role="button"
 							href="<c:url value='' />">加入購物車</a>
+<<<<<<< HEAD
 						數量<input type="number" value="1" min="1" max="9" class="ml-3 mt-2">
 					</div>
 					<div class="btn-group-sm" role="group" aria-label="Basic example">
@@ -164,6 +169,8 @@
 							value="${product.productId}"> <a type="button"
 							class="btn btn-dark mt-3" id="joinCart" role="button"
 							href="<c:url value='#' />">加入購物車</a>
+=======
+>>>>>>> b5a2eeff7066d426f8bb7f1bfc47474ba0474b54
 					</div>
 				</div>
 
@@ -176,11 +183,7 @@
 				<span>${detail}</span>
 			</div>
 		</div>
-<<<<<<< HEAD
 		</form>
-=======
-		<!--             </form> -->
->>>>>>> 3767a8a8e1393da466fcf456e02e851d7ec2467c
 	</div>
 
 
