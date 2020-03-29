@@ -31,7 +31,7 @@ __:mega:上網抒發，最怕遇到酸民來搗亂！<br>
 >> * 八萬五丟水溝
 
 >   張孟群(高級客服工程師)
->> * 右手殘廢中
+>> * 大家的靈魂伴侶
 
 ## 開發技術與使用工具
 Java | JDBC | JSP | Spring MVC | Hirbernate | Javascript | jQuery | AJAX | CSS3 | HTML | MySQL | Git | Bootstrap | Tomcat
