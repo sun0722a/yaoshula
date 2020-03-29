@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 			cookiePassword.setPath(request.getContextPath());
 
 			cookieRememberMe = new Cookie("rm", "true");
-			cookieRememberMe.setMaxAge(7 * 24 * 60 * 60);
+			cookieRememberMe.setMaxAge(30 * 24 * 60 * 60);
 			cookieRememberMe.setPath(request.getContextPath());
 			// 如果使用者沒有按下記住帳密 就不會保存帳號密碼的cookie
 		} else {

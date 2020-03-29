@@ -78,7 +78,7 @@
             <div class="items-menu" >
                 <hr style="background: black;"> 
                 <div class="cart-text">
-                    <div class="text-items"><input type="checkbox" disabled=true;>全選</div>
+                    <div class="text-items">商品圖片</div>
                     <div class="text-items">商品名稱</div>
                     <div class="text-items">規格</div>
                     <div class="text-items">單價</div>
@@ -88,18 +88,19 @@
                 <hr style="background: black;">
 
           <section>
-              <table>
-        
+              <table> 
                     <div class="items">
-                    <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox" disabled=true;><img src="img/product.jpg" style="width:80px;"></div>
+                    <div class="items-detail" style="margin-bottom: 5px;"><input type="checkbox"><img src="img/product.jpg" style="width:80px;"></div>
                     <div class="items-detail">${product.name}</div>
                     <div class="items-detail">
-                    <select name="" id="" disabled="false" onf style="font-size:xx-small;">
+                    <select name="" id="" style="font-size:xx-small;">
                         <option value="">${product.formatTitle}${product.formatContent}</option>
                     </select></div>
                     <div id="cost">${product.price}</div>
                     <div class="amount" style="font-size: xx-small;"><input type="number" value="1" min="1" max="10" disabled="disabled"></div>
-                    <div class="total">5000</div>
+                    <div class="total">
+                    	<c:out value="${ShopingCart.subTotal}" />
+                    </div>
                 </div> 
             </table>
         </section>
@@ -108,7 +109,9 @@
             <hr style="background: black;">
             <div class="check">
                 <div class="check-kid">總金額</div>
-                <div class="total">5000</div>
+                <div class="total">
+					<c:out value="${ShopingCart.subTotal}" />
+				</div>
             </div>
             <hr style="background: black;">
         </div>
