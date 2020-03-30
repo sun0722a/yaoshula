@@ -22,6 +22,7 @@ import _05_product.service.impl.ProductServiceImpl;
 @WebServlet("/product/ShowPageProducts")
 public class ShowPageProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String UTF8_BOM = "\uFEFF";
 	int pageNo = 1;
 	int memberId = 0; // 訪客Id=0
 
@@ -54,9 +55,6 @@ public class ShowPageProductsServlet extends HttpServlet {
 		String pageNoStr = request.getParameter("pageNo");
 		String arrange = request.getParameter("arrange");
 		String searchStr = request.getParameter("search");
-		System.out.println("pageNoStr= " + pageNoStr);
-		System.out.println("arrange= " + arrange);
-		System.out.println("searchStr= " + searchStr);
 		// 如果讀不到(之前沒點擊過商品區)
 		if (pageNoStr == null) {
 			pageNo = 1;
@@ -86,7 +84,6 @@ public class ShowPageProductsServlet extends HttpServlet {
 		if (pageNo == -1) {
 			pageNo = 1;
 		}
-		System.out.println("pageNo= " + pageNo);
 		ProductService service = new ProductServiceImpl();
 		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo, arrange, searchStr);
 		request.setAttribute("searchStr", searchStr);

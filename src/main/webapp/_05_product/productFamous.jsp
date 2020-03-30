@@ -32,7 +32,8 @@ div a {
 				<!-- Slides -->
 				<c:forEach var="entry" items="${angel_products_map}">
 					<div class="p-3 swiper-slide">
-						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
+						<a
+							href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
 							<div class="card border-dark">
 								<img
 									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
@@ -54,7 +55,7 @@ div a {
 		</div>
 	</div>
 
-	
+
 	<div class="w-75 my-5 mx-auto">
 		<h1>惡魔熱門榜</h1>
 		<div class="swiper-container">
@@ -64,7 +65,8 @@ div a {
 				<!-- Slides -->
 				<c:forEach var="entry" items="${evil_products_map}">
 					<div class="p-3 swiper-slide">
-						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
+						<a
+							href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>">
 							<div class="card border-dark">
 								<img
 									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
@@ -85,9 +87,9 @@ div a {
 			<div class="swiper-button-next"></div>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>

@@ -32,8 +32,10 @@
 		<div class="top-space"></div>
 
 		<a class="animateCart animated flash text-danger"
-			href="<c:url value='/order/ShoppingCart' />"><i
-			class="fas fa-shopping-cart"></i></a> <a
+			href="<c:url value='/order/ShoppingCart' />">
+			<i
+			class="fas fa-shopping-cart"></i></a>
+			<a
 			class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />"
 			id="navbarDropdown" role="button" data-toggle="dropdown"
 			aria-haspopup="true"> 登入 </a>
@@ -68,7 +70,7 @@
 	</ul>
 
 	<div class="center-content">
-		<div class="side_menu col-3">
+		<div class="side_menu col-2">
 			<div>
 				<h3>天使</h3>
 			</div>
@@ -88,8 +90,8 @@
 				<a href="<c:url value='#' />">紓壓小物</a>
 			</div>
 		</div>
-		<!-- <div class="column"> -->
-		<%--             <form action = "<c:url value='shoppingCart.do' />" method = "POST"> --%>
+		
+		<form action = "/order/checkOrder" method="POST">
 		<div class="productBox col-6">
 			<div class="topProductBox">
 
@@ -105,30 +107,32 @@
 					</div>
 					<div class="mt-2">${product.price}</div>
 					
-					<div class="btn-group-sm mt-3" role="group">${title1}
+					<div class="btn-group-vertical btn-group-toggle mt-3 " data-toggle="buttons">${title1}
 						<c:forEach var="entry" items="${content1}">
-							<button type="button"
-								class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${entry}</button>
+						<label class="btn btn-outline-secondary text-monospace  m-2 active">
+							<input type="radio" autocomplete="off" name="content1" value="${param.content}">${entry}
+						</label>
 						</c:forEach>
 					</div>
 					
-					<div class="btn-group-sm mt-3" role="group">${title2}
-						<c:forEach var="entry" items="${content2}">
-							<button type="button"
-								class="btn btn-secondary text-monospace col-4 mr-2 ml-2">${entry}</button>
+					<div class="btn-group-vertical btn-group-toggle mt-3" data-toggle="buttons">${title2}
+						<c:forEach var="entry2" items="${content2}">
+						<label  class="btn btn-outline-secondary text-monospace  m-2 active">
+							<input type="radio" autocomplete="off" name="content2" value="${param.contnet}">${entry2}
+						</label>
 						</c:forEach>
 					</div>
 					
 					<div class="mt-2">
-						數量<input type="number" value="1" min="1" max="9" class="ml-3 mt-2">
+						數量<input type="number" value="1" min="1" max="9" class="ml-6 mt-2">
 					</div>
-					<div class="btn-group-sm" role="group" aria-label="Basic example">
+					<div class="btn-group-sm ml-3 mb-3" role="group" aria-label="Basic example">
 						<a type="button" class="butNow btn btn-dark mt-3"
-							href="<c:url value='/order/ShoppingCart?productId=${product.productId}' />"
-							role="button">立即購買</a> <input type='hidden' name='productId' id="productId"
-							value="${product.productId}"> <a type="button"
-							class="btn btn-dark mt-3" id="joinCart" role="button"
-							href="<c:url value='#' />">加入購物車</a>
+							href="<c:url value='/order/checkOrder?productId=${product.productId}' />"
+							role="button">立即購買</a> 
+							<input type='hidden' name='productId' id="productId"value="${product.productId}"> 
+							<a type="button"class="btn btn-dark mt-3" id="joinCart" role="button"
+							href="<c:url value='' />">加入購物車</a>
 					</div>
 				</div>
 
@@ -141,7 +145,7 @@
 				<span>${detail}</span>
 			</div>
 		</div>
-		<!--             </form> -->
+		</form>
 	</div>
 
 

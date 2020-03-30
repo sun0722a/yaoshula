@@ -24,6 +24,9 @@
 		</span><span class="option"> <a
 			href="<c:url value='/product/ShowFamousProducts' />">熱門商品區</a>
 		</span>
+		<span class="option"> <a
+			href="<c:url value='/order/showHistoryOrder' />">歷史訂單</a>
+		</span>
 	</div>
 	<div class="main-menu">
 		<div class="menu">

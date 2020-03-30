@@ -2,6 +2,7 @@ package _05_product.controller;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,6 +37,7 @@ public class ShowFamousProductsServlet extends HttpServlet {
 		}
 
 		ProductService service = new ProductServiceImpl();
+
 		Map<Integer, ProductBean> angelProductMap = service.getFamousProducts("天使");
 		Map<Integer, ProductBean> evilProductMap = service.getFamousProducts("惡魔");
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件

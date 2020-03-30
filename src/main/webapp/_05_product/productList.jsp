@@ -79,7 +79,7 @@
 				<div id="pages"
 					class="col d-flex justify-content-center align-items-center">
 					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}&search=${searchStr}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img
@@ -87,7 +87,7 @@
 								style="max-width: 90%;" />
 						</button>
 					</a> <a
-						href="<c:url value='/product/ShowPageProducts?pageNo=1&search=${searchStr}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=1&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">1</button>
 					</a> <span <c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>．．．</span>
@@ -101,7 +101,8 @@
 									<c:if test="${pages==pageNo}"> selected </c:if>>${pages}</option>
 							</c:forEach>
 						</select> <span>頁</span> <input type="hidden" name="search"
-							value="${searchStr}">
+							value="${searchStr}"> <input type="hidden"
+							value="${arrange}" name="arrange">
 					</form>
 
 
@@ -110,11 +111,11 @@
 
 
 					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}&search=${searchStr}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">${totalPages}</button>
 					</a> <a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}&search=${searchStr}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img

@@ -2,6 +2,7 @@ package _05_product.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,48 +63,38 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr) {
 		String hql = "";
 		Session session = factory.getCurrentSession();
-		String[] arranges = GlobalService.PRODUCT_ARRANGE; // "最新", "熱門", "價格"
-		Map<Integer, ProductBean> map = new HashMap<>();
+		String[] arranges = GlobalService.PRODUCT_ARRANGE; // "time", "popular", "price"
+		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		List<ProductBean> list = new ArrayList<ProductBean>();
 
 		// 判斷hql
 		if (searchStr != null) {
-			if (arrange == arranges[1]) {
-				System.out.println("arrange=popular");
-				hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.sales DESC";
-			} else if (arrange == arranges[2]) {
-				System.out.println("arrange=price");
-				hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.price DESC";
-			} else {
-				System.out.println("arrange=athother");
-				hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.productId DESC";
+			hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.productId DESC";
+			if (arrange != null) {
+				if (arrange.equals(arranges[1])) {
+					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.sales DESC";
+				} else if (arrange.equals(arranges[2])) {
+					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.price DESC";
+				}
 			}
-			list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
-					.setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
-
 			if (searchStr != "") {
 				// 計算此次搜尋共有多少商品
 				String hqlCal = "SELECT count(*) FROM ProductBean pb WHERE pb.productName LIKE :searchStr";
 				long count = 0;
 				List<Long> listCal = session.createQuery(hqlCal).setParameter("searchStr", "%" + searchStr + "%")
 						.getResultList();
-				if (list.size() > 0) {
+				if (listCal.size() > 0) {
 					count = listCal.get(0);
 				}
 				nowTotalPages = (int) (Math.ceil(count / (double) recordsPerPage));
 			}
+			list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
+					.setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
 		} else {
-			if (arrange == arranges[1]) {
-				hql = "FROM ProductBean pb ORDER BY pb.sales DESC";
-			} else if (arrange == arranges[2]) {
-				hql = "FROM ProductBean pb ORDER BY pb.price DESC";
-			} else {
-				hql = "FROM ProductBean pb ORDER BY pb.productId DESC";
-			}
+			hql = "FROM ProductBean pb ORDER BY pb.productId DESC";
 			list = session.createQuery(hql).setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
 		}
-
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
 		}
@@ -117,11 +108,13 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		String hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
 		Session session = factory.getCurrentSession();
 
-		Map<Integer, ProductBean> map = new HashMap<>();
+		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		List<ProductBean> list = new ArrayList<ProductBean>();
 		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
 				.getResultList();
 		for (ProductBean bean : list) {
+			System.out.println("name: " + bean.getProductName());
+			System.out.println("sales: " + bean.getSales());
 			map.put(bean.getProductId(), bean);
 		}
 		return map;

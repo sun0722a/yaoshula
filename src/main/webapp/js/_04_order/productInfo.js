@@ -3,4 +3,6 @@ $(document).ready(function() {
 	$('#joinCart').click(function() {
 		$('.animateCart').show();
 	})
+	
+	$('.btn').button('toggle');
 });

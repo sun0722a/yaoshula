@@ -60,7 +60,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		String note = request.getParameter("note"); //訂單備註
 		Date today = new Date();
 		
-		OrderBean ob = new OrderBean(null,memberId,memberName,totalPrice,address,phone,note,today,null,null);
+		OrderBean ob = new OrderBean(null,memberId,memberName,totalPrice,address,phone,note,today,null,null,"待出貨",null);
 		Map<Integer, OrderItemBean> content = cart.getContent();
 		
 		Set<OrderItemBean> items = new LinkedHashSet<>();
