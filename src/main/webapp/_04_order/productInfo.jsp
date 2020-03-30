@@ -31,24 +31,28 @@
 		</div>
 		<div class="top-space"></div>
 
-		<a class="animateCart animated flash text-danger"
-			href="<c:url value='/order/ShoppingCart' />">
-			<i
-			class="fas fa-shopping-cart"></i></a>
-			<a
-			class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />"
-			id="navbarDropdown" role="button" data-toggle="dropdown"
-			aria-haspopup="true"> 登入 </a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="<c:url value='#' />">Another
-				action</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="<c:url value='#' />">Something
-				else here</a>
+			<div>
+				<a class="animateCart animated flash text-danger" href="<c:url value='' />">
+					<i class="fas fa-shopping-cart"></i>
+				</a>
+			</div>
+			<div>
+				<a class="nav-link dropdown-toggle text-dark" href="<c:url value='#' />"
+					id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true"> 登入 </a>
+			
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="<c:url value='#' />">Another
+						action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value='#' />">Something
+						else here</a>
+				</div>
+			</div>
 		</div>
-	</div>
+		
 	<ul id="a-style">
-		<div class="test ">
+		<div class="test">
 			<li class="dropdown"><i class="fas fa-bullhorn"></i> <a
 				href="<c:url value='#' />">論壇</a>
 				<div class="dropdown-content">
@@ -70,7 +74,11 @@
 	</ul>
 
 	<div class="center-content">
+<!-- 		<div class="side_menu col-2"> -->
+
 		<div class="side_menu col-2">
+
+
 			<div>
 				<h3>天使</h3>
 			</div>
@@ -91,8 +99,9 @@
 			</div>
 		</div>
 		
-		<form action = "/order/checkOrder" method="POST">
-		<div class="productBox col-6">
+		
+		<div class="productBox col-10">
+		<form action="<c:url value='/order/checkOrder' />">
 			<div class="topProductBox">
 
 				<div class="productImg col-5">
@@ -101,65 +110,71 @@
 						class="img-thumbnail">
 				</div>
 				<div class="itemSelect col-lg-6 col-sm-3 m-2">
-					<div class="mt-2">${product.productName}
+					<div class="mt-2">商品名稱: ${product.productName}
 						<span style="float: right;"><i
 							class="fas fa-external-link-alt ml-5"></i></span>
 					</div>
-					<div class="mt-2">${product.price}</div>
+					<div class="mt-2">商品價格: ${product.price}</div>
+					<div class="mt-3"></div>
 					
-					<div class="btn-group-vertical btn-group-toggle mt-3 " data-toggle="buttons">${title1}
-						<c:forEach var="entry" items="${content1}">
-						<label class="btn btn-outline-secondary text-monospace  m-2 active">
-							<input type="radio" autocomplete="off" name="content1" value="${param.content}">${entry}
-						</label>
-						</c:forEach>
-					</div>
+						<div class="btn-group-vertical btn-group-toggle mb-5" data-toggle="buttons">${title1}
+							<c:forEach var="entry" items="${content1}">
+							<div class="btn btn-outline-secondary text-monospace mt-2 active">
+								<input type="radio" name="content1" value="${entry}">${entry}
+							</div>
+							</c:forEach>
+						</div>
+						
+						<div class="btn-group-vertical btn-group-toggle" data-toggle="buttons">${title2}
+							<c:forEach var="entry2" items="${content2}">
+							<div  class="btn btn-outline-secondary text-monospace mt-2 active">
+								<input type="radio" name="content2" value="${entry2}">${entry2}
+							</div>
+							</c:forEach>
+						</div>
+	
+						<div class="mt-2">
+							數量<input type="number" name="qty" value="1" min="1" max="9" class="ml-6 mt-2">
+						</div>
+						<div class="btn-group-sm ml-3 mb-3" role="group" aria-label="Basic example">
+							<input type="submit" class="butNow btn btn-dark mt-3"
+								role="button" value="立即購買 ">
+								<input type='hidden' name='productId' value="${product.productId}"> 						
+								<input type="submit" class="btn btn-dark mt-3" id="joinCart" role="button" value="加入購物車">
+<!-- 								<input type="button" class="btn btn-dark mt-3" id="joinCart" value="加入購物車"> -->
+						</div>
 					
-					<div class="btn-group-vertical btn-group-toggle mt-3" data-toggle="buttons">${title2}
-						<c:forEach var="entry2" items="${content2}">
-						<label  class="btn btn-outline-secondary text-monospace  m-2 active">
-							<input type="radio" autocomplete="off" name="content2" value="${param.contnet}">${entry2}
-						</label>
-						</c:forEach>
-					</div>
-					
-					<div class="mt-2">
-						數量<input type="number" value="1" min="1" max="9" class="ml-6 mt-2">
-					</div>
-					<div class="btn-group-sm ml-3 mb-3" role="group" aria-label="Basic example">
-						<a type="button" class="butNow btn btn-dark mt-3"
-							href="<c:url value='/order/checkOrder?productId=${product.productId}' />"
-							role="button">立即購買</a> 
-							<input type='hidden' name='productId' id="productId"value="${product.productId}"> 
-							<a type="button"class="btn btn-dark mt-3" id="joinCart" role="button"
-							href="<c:url value='' />">加入購物車</a>
-					</div>
-				</div>
-
+			
 			</div>
-
+			<!-- topProduct結束標前 -->
+			</div>
+			</form>
 			<div class="productDesc">
 				<p style="text-align: center;">
 					<span>商品介紹</span>
 				</p>
 				<span>${detail}</span>
 			</div>
+		
 		</div>
-		</form>
+		
 	</div>
 
 
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+			crossorigin="anonymous">
+	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+	</script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+	</script>
 </body>
 </html>

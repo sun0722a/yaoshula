@@ -4,5 +4,4 @@ $(document).ready(function() {
 		$('.animateCart').show();
 	})
 	
-	$('.btn').button('toggle');
 });

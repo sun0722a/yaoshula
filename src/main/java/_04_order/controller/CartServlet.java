@@ -1,11 +1,7 @@
 package _04_order.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,21 +15,18 @@ import _01_register.model.MemberBean;
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
-import _05_product.model.ProductFormatBean;
 
-
-@WebServlet("/order/ShoppingCart")
+//把商品裝入購物車的部分
+@WebServlet("/product/shoppingCart.do")
 public class CartServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
@@ -60,28 +53,35 @@ public class CartServlet extends HttpServlet {
 		//如果session內沒有購物車物件 就新建一個session物件
 		if(cart == null) {
 			cart = new ShoppingCart();
-			
 			session.setAttribute("ShoppingCart", cart);
 		}
 		
 		String productIdStr = request.getParameter("productId");
 		Integer productId = Integer.parseInt(productIdStr.trim());
-		
+		System.out.println(productId);
 		String qtyStr = request.getParameter("qty");
 		Integer qty = 0;
 		Map<Integer, ProductBean> productMap = (Map<Integer, ProductBean>) session.getAttribute("products_map");
 		ProductBean bean = productMap.get(productId);
 		
-//		try {
-//			qty = Integer.parseInt(qtyStr.trim());
-//		}catch(NumberFormatException e) {
-//			throw new ServletException(e);
-//		}
+//		String pageNo = request.getParameter("pageNo");
+//		if (pageNo == null || pageNo.trim().length() == 0){
+//			pageNo = (String) session.getAttribute("pageNo") ;
+//			if (pageNo == null){
+//			   pageNo = "1";
+//			} 
+//		} 
+		
+		//把商品詳細收到的數量轉為Integer型態
+		try {
+			qty = Integer.parseInt(qtyStr.trim());
+		}catch(NumberFormatException e) {
+			throw new ServletException(e);
+		}
 		OrderItemBean oib = new OrderItemBean(null,productId,bean.getProductName(),null,null,bean.getPrice(),qty,null);
 		cart.addToCart(productId, oib);
-		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
-		return;
 	}
 	
 }
