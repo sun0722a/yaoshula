@@ -42,7 +42,7 @@ div a {
 									<h5 class="card-title"
 										style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
 									<div class="card-text mt-2"
-										style="text-align: center; font-size: 20px;">${entry.value.price}</div>
+										style="text-align: center; font-size: 20px;">$ ${entry.value.price}</div>
 								</div>
 							</div>
 						</a>

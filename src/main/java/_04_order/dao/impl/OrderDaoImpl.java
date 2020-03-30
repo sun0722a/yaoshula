@@ -10,7 +10,7 @@ import _04_order.dao.OrderDao;
 import _04_order.model.OrderBean;
 
 public class OrderDaoImpl implements OrderDao {
-	private String memberId = null;
+	private Integer memberId = null;
 	SessionFactory factory;
 	int orderNo = 0;
 
@@ -45,42 +45,36 @@ public class OrderDaoImpl implements OrderDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderBean> getMemberOrders(String memberId,String status) {
-
+	public List<OrderBean> getMemberOrders(Integer memberId) {
 		List<OrderBean> list = null;
 		Session session = factory.getCurrentSession();
-		if(status==null) {
-			String hql = "FROM OrderBean ob Where ob.memberId = :mid";
-			list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
-		}else {
-			String hql = "FROM OrderBean ob Where ob.memberId = :memberId AND ob.status = :status";
-			list = session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
-		}
+		String hql = "FROM OrderBean ob Where ob.memberId = :mid";
+		list = session.createQuery(hql).setParameter("mid", memberId.toString()).getResultList();
 		return list;
 	}
 
-	public String getMemberId() {
+	public Integer getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(String memberId) {
+	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
 	}
-	
+
 	public String checkOrderStatus(Integer orderNo) {
 		OrderBean orderBean = null;
 		String status = null;
 		Session session = factory.getCurrentSession();
-		String hql = "From OrderBean ob where ob.orderNo = :orderNo"; 
+		String hql = "From OrderBean ob where ob.orderNo = :orderNo";
 		orderBean = (OrderBean) session.createQuery(hql).setParameter("orderNo", orderNo).getSingleResult();
-		if(orderBean.getShippingDate()==null) {
-			status="待出貨";
-		}else if(orderBean.getArriveDate()==null) {
-			status="已出貨";
-		}else {
-			status="完成";
+		if (orderBean.getShippingDate() == null) {
+			status = "待出貨";
+		} else if (orderBean.getArriveDate() == null) {
+			status = "已出貨";
+		} else {
+			status = "完成";
 		}
 		return status;
 	}
-	
+
 }

@@ -113,8 +113,6 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
 				.getResultList();
 		for (ProductBean bean : list) {
-			System.out.println("name: " + bean.getProductName());
-			System.out.println("sales: " + bean.getSales());
 			map.put(bean.getProductId(), bean);
 		}
 		return map;

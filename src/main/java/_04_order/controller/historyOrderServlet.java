@@ -43,12 +43,11 @@ public class historyOrderServlet extends HttpServlet {
 		}
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		String memberId = mb.getId().toString();
+		Integer memberId = mb.getId();
 
-		String status = request.getParameter("orderStatus");
 		OrderService service = new OrderServiceImpl();
-		List<OrderBean> orders = service.getMemberOrders(memberId, status);
-		
+		List<OrderBean> orders = service.getMemberOrders(memberId);
+
 		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
 		for (int i = 0; i < orders.size(); i++) {
 			int orderNo = orders.get(i).getOrderNo();
