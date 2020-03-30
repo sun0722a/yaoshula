@@ -101,7 +101,7 @@
 
 
 		<div class="productBox col-10">
-			<form action="<c:url value='/order/checkOrder' />" name="buyForm">
+			<form action="" name="buyForm">
 				<div class="topProductBox">
 
 					<div class="productImg col-5">

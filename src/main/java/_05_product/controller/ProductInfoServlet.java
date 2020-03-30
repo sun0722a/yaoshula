@@ -1,4 +1,4 @@
-package _04_order.controller;
+package _05_product.controller;
 
 import java.io.IOException;
 import java.sql.Clob;
@@ -95,7 +95,7 @@ public class ProductInfoServlet extends HttpServlet {
 			request.setAttribute("content2", contentSet2);
 			request.setAttribute("detail", detail);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/productInfo.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");
 			rd.forward(request, response);
 			return;
 

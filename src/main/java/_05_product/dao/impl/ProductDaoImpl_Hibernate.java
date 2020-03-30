@@ -2,6 +2,7 @@ package _05_product.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,21 +21,25 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	// 預設值：每頁九筆
 	private int recordsPerPage = GlobalService.RECORDS_PER_PAGE;
 	private int recordsPerFamous = GlobalService.RECORDS_PER_FAMOUS;
-	private int totalPages = -1;
 
 	String selected = "";
+	int nowTotalPages = -1;
 	SessionFactory factory;
 
 	public ProductDaoImpl_Hibernate() {
 		factory = HibernateUtils.getSessionFactory();
 	}
 
-	// 計算販售的商品總共有幾頁
+	// 計算所有商品總共有幾頁
 	@Override
-	public int getTotalPages() {
-		// 總共幾頁=無條件進位(共有幾個商品/一頁的商品數)
-		totalPages = (int) (Math.ceil(getRecordCounts() / (double) recordsPerPage));
-		return totalPages;
+	public int getTotalPages(String searchStr) {
+		if (searchStr == null || searchStr == "") {
+			// 總共幾頁=無條件進位(共有幾個商品/一頁的商品數)
+			int totalPages = (int) (Math.ceil(getRecordCounts() / (double) recordsPerPage));
+			return totalPages;
+		} else {
+			return nowTotalPages;
+		}
 	}
 
 	// 計算總共有多少商品
@@ -52,17 +57,44 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return count;
 	}
 
-	// 查詢某一頁的商品資料
+	// 查詢某一頁的商品資料(頁數, 排序, 搜尋字串)
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<Integer, ProductBean> getPageProducts(int pageNo) {
-		String hql = "FROM ProductBean ";
+	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr) {
+		String hql = "";
 		Session session = factory.getCurrentSession();
-
-		Map<Integer, ProductBean> map = new HashMap<>();
+		String[] arranges = GlobalService.PRODUCT_ARRANGE; // "time", "popular", "price"
+		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		List<ProductBean> list = new ArrayList<ProductBean>();
-		list = session.createQuery(hql).setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
+
+		// 判斷hql
+		if (searchStr != null) {
+			hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.productId DESC";
+			if (arrange != null) {
+				if (arrange.equals(arranges[1])) {
+					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.sales DESC";
+				} else if (arrange.equals(arranges[2])) {
+					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.price DESC";
+				}
+			}
+			if (searchStr != "") {
+				// 計算此次搜尋共有多少商品
+				String hqlCal = "SELECT count(*) FROM ProductBean pb WHERE pb.productName LIKE :searchStr";
+				long count = 0;
+				List<Long> listCal = session.createQuery(hqlCal).setParameter("searchStr", "%" + searchStr + "%")
+						.getResultList();
+				if (listCal.size() > 0) {
+					count = listCal.get(0);
+				}
+				nowTotalPages = (int) (Math.ceil(count / (double) recordsPerPage));
+			}
+			list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
+					.setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
+		} else {
+			hql = "FROM ProductBean pb ORDER BY pb.productId DESC";
+			list = session.createQuery(hql).setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
+		}
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
 		}
@@ -73,20 +105,10 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, ProductBean> getFamousProducts(String categoryTitle) {
-		String hql = "";
-
-		if (categoryTitle == "天使") {
-			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
-
-		} else if (categoryTitle == "惡魔") {
-			hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
-		} else {
-			return null;
-		}
-
+		String hql = "SELECT pb FROM ProductBean pb,CategoryBean cb WHERE pb.category=cb.categoryId AND cb.categoryTitle= :categoryTitle ORDER BY pb.sales DESC";
 		Session session = factory.getCurrentSession();
 
-		Map<Integer, ProductBean> map = new HashMap<>();
+		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		List<ProductBean> list = new ArrayList<ProductBean>();
 		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
 				.getResultList();

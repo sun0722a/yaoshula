@@ -1,17 +1,18 @@
 package _05_product.service;
 
 import java.util.Map;
+import java.util.Set;
 
 import _05_product.model.ProductBean;
 
 public interface ProductService {
 
-	int getTotalPages();
+	int getTotalPages(String searchStr);
 
 	long getRecordCounts();
 
-	Map<Integer, ProductBean> getPageProducts(int pageNo);
-	
+	Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr);
+
 	Map<Integer, ProductBean> getFamousProducts(String categoryTitle);
 
 //	List<String> getCategory();

@@ -37,6 +37,7 @@ public class GlobalService {
 
 	public static final int RECORDS_PER_PAGE = 6;
 	public static final int RECORDS_PER_FAMOUS = 6;
+	public static final String[] PRODUCT_ARRANGE = { "time", "popular", "price" };
 	public static final String SYSTEM_NAME = "要抒拉";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
 
