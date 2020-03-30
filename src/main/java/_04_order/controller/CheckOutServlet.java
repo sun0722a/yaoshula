@@ -38,11 +38,7 @@ public class CheckOutServlet extends HttpServlet {
 //				return;
 			}
 			
-			
-			
-//			MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-//			ProductBean pb = (ProductBean)session.getAttribute("pb");
-//			
+				
 //			Integer memberId = mb.getId();
 //			Integer productId = pb.getProductId();
 //			System.out.println(productId);
