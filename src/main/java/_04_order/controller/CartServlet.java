@@ -95,8 +95,9 @@ public class CartServlet extends HttpServlet {
 				qty, null);
 		cart.addToCart(productFormatId, oib, formats);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
+		RequestDispatcher rd = request.getRequestDispatcher("/_04_ShoppingCart/ShowCartContent.jsp");
 		rd.forward(request, response);
+		return;
 	}
 
 }

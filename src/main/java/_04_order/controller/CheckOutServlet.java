@@ -1,6 +1,7 @@
 package _04_order.controller;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import _04_order.model.OrderItemBean;
+import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
+import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
 import _05_product.service.impl.ProductServiceImpl;
 
@@ -37,6 +41,13 @@ public class CheckOutServlet extends HttpServlet {
 			return;
 		}
 		
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
+
+		// 如果session內沒有購物車物件 就新建一個session物件
+		if (cart == null) {
+			cart = new ShoppingCart();
+			session.setAttribute("ShoppingCart", cart);
+		}
 		
 		//透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
@@ -60,11 +71,23 @@ public class CheckOutServlet extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		} else {
+			Integer qty = Integer.parseInt(qtytr.trim());
 			request.setAttribute("content1", content1);
 			request.setAttribute("content2", content2);
 			request.setAttribute("qty", qtytr);
 			request.setAttribute("productInfo", pb);
 			
+			Set<ProductFormatBean> formats = pb.getProductFormat();
+			int productFormatId = 0;
+			for (ProductFormatBean pfb : formats) {
+				if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
+					// 正確規格，則把productFormatId存下來
+					productFormatId = pfb.getProductFormatId();
+				}
+			}
+			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
+					qty, null);
+			cart.addToCart(productFormatId, oib, formats);
 			System.out.println(content1);
 			System.out.println(content2);
 			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");

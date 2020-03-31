@@ -15,12 +15,9 @@ import org.hibernate.Transaction;
 
 import _00_init.util.HibernateUtils;
 
-<<<<<<< HEAD
-@WebFilter(urlPatterns = { "/product/ShowProductInfo", "/init/getProductImage", "/init/getProductDetail", "/order/showHistoryOrder", "/order/checkOrder" })
-=======
 @WebFilter(urlPatterns = { "/init/getProductImage", "/init/getProductDetail", "/product/ShowProductInfo",
-		"/order/shoppingCart", "/order/showHistoryOrder" })
->>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
+		"/order/shoppingCart", "/order/showHistoryOrder","/order/checkOrder" })
+
 public class LazyLoadingFilter implements Filter {
 
 	SessionFactory factory;

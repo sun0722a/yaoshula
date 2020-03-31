@@ -92,15 +92,12 @@ public class ShoppingCart {
 		}
 		return subTotal;
 	}
-<<<<<<< HEAD
+
 	
 	public int addProductId(int productId) {
 		return productId;
 	}
 	
-	
-=======
 
->>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
 }
 

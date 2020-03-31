@@ -115,7 +115,7 @@ a {
 		</div>
 
 
-		<form action="<c:url value='/order/orderProcess' />">
+		<form action="<c:url value='/order/orderCheck' />">
 			<div class="row">
 				<div class="formBox col-7">
 
@@ -123,17 +123,17 @@ a {
 
 					<div class="form-group row">
 						<label for="name" class="col-sm-3 ml-3">姓名</label> <input
-							type="text" class="form-control  col-6" id="name"
+							type="text" class="form-control  col-6" name="name" 
 							placeholder="Name">
 					</div>
 					<div class="form-group row">
 						<label for="address" class="col-sm-3 ml-3">地址</label> <input
-							type="text" class="form-control col-6" id="address"
+							type="text" class="form-control col-6" name="address"
 							placeholder="Address">
 					</div>
 					<div class="form-group row">
 						<label for="address" class="col-sm-3 ml-3">電話</label> <input
-							type="text" class="form-control col-6" id="phone"
+							type="text" class="form-control col-6" name="phone"
 							placeholder="Phone">
 					</div>
 					<div class="form-group row">
