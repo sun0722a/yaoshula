@@ -8,11 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/_04_order/style.css">
+	href="${pageContext.request.contextPath}/css/_05_product/productInfo.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/js/_04_order/productInfo.js"></script>
+	src="${pageContext.request.contextPath}/js/_05_product/productInfo.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <link rel="stylesheet"
@@ -122,11 +122,16 @@
 							<c:forEach var="entry" items="${content1}">
 								<div
 									class="btn btn-outline-secondary text-monospace mt-2 active">
+<<<<<<< HEAD
 									<input type="radio" name="content1" value="${entry}">${entry}
 									
 									<c:set var="content1" value="${param.content1}" scope="application"/>
 									
 									
+=======
+									<input type="radio" name="content1" required="required"
+										value="${entry}">${entry}
+>>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
 								</div>
 							</c:forEach>
 						</div>
@@ -136,9 +141,14 @@
 							<c:forEach var="entry2" items="${content2}">
 								<div
 									class="btn btn-outline-secondary text-monospace mt-2 active">
+<<<<<<< HEAD
 									<input type="radio" name="content2" value="${entry2}">${entry2}
 									
 									<c:set var="content2" value="${param.content2}" scope="application"/>
+=======
+									<input type="radio" name="content2" required="required"
+										value="${entry2}">${entry2}
+>>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
 								</div>
 							</c:forEach>
 						</div>
@@ -149,17 +159,13 @@
 						</div>
 						<div class="btn-group-sm ml-3 mb-3" role="group"
 							aria-label="Basic example">
-							<input type="button" class="butNow btn btn-dark mt-3"
-								role="button" value="立即購買 " id="buyNow"
-								onclick="buyForm.action='<c:url value="/order/checkOrder" />';buyForm.submit();">
-							<input type='hidden' name='productId'
-								value="${product.productId}"> <input type="button"
-								class="btn btn-dark mt-3" id="joinCart" role="button"
+							<input type="submit" class="btn btn-dark mt-3" role="button"
+								value="立即購買 "
+								onclick="buyForm.action='<c:url value="/order/checkOrder" />';">
+							<input type="submit" class="btn btn-dark mt-3" role="button"
 								value="加入購物車"
-								onclick="buyForm.action='<c:url value="/order/shoppingCart" />';buyForm.submit();">
+								onclick="buyForm.action='<c:url value="/order/shoppingCart" />';">
 						</div>
-
-
 					</div>
 					<!-- topProduct結束標前 -->
 				</div>

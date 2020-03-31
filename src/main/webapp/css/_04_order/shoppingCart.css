@@ -102,58 +102,8 @@ li a{
 
 /*購物車*/
 .cart-box{
-    height: 600px;
+    min-height: 600px;
     width: 80%;
     border: 1px solid black;
     margin: 0 auto;
-}
-
-.cart-box > :first-child{
-    height:60px;
-    font-size: 30px;
-    margin: 5%;
-}
-
-/* 第一排的文字*/
-.cart-text{
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-/* 每樣商品的細項 */
-.items{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-/* 確認區*/
-
-.check{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    
-}
-
-.check > div{
-    margin-right: 10px;
-    margin-top: 10px;
-}
-
-.items-menu{
-    margin: 10px;
-}
-
-.orderItem{
-    display: flex;
-    flex-direction: column;
-
-}
-
-.orderItem input{
-    width: 150px;
 }

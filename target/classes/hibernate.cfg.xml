@@ -5,7 +5,11 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="hibernate.connection.username">root</property>
+<<<<<<< HEAD
 		<property name="hibernate.connection.password">00000000</property>
+=======
+		<property name="hibernate.connection.password">cathy1228</property>
+>>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/speakitup?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=Asia/Taipei</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
 

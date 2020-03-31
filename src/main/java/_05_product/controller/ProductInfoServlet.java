@@ -96,7 +96,11 @@ public class ProductInfoServlet extends HttpServlet {
 			request.setAttribute("title2", title2);
 			request.setAttribute("content2", contentSet2);
 			request.setAttribute("detail", detail);
+<<<<<<< HEAD
 			
+=======
+			// 設成Session，為了讓CarServlet抓到
+>>>>>>> 7a4065b70d0f7738c36cb5c4c6c705564032ba5f
 			session.setAttribute("productId", productId);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");

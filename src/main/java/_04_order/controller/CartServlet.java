@@ -1,7 +1,7 @@
 package _04_order.controller;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import _01_register.model.MemberBean;
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
+import _05_product.model.ProductFormatBean;
+import _05_product.service.ProductService;
+import _05_product.service.impl.ProductServiceImpl;
 
-//把商品裝入購物車的部分
+// 把商品裝入購物車的部分
 @WebServlet("/order/shoppingCart")
 public class CartServlet extends HttpServlet {
 
@@ -27,28 +29,17 @@ public class CartServlet extends HttpServlet {
 		doPost(request, response);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-		// 只要舊的session物件 如果沒有就傳null讓使用者去登入
+		// 使用逾時，回首頁
 		HttpSession session = request.getSession(false);
-
-		// 紀錄之前使用者的網頁位置 登入成功後可以回到原本的地方
-		String requestURI = request.getRequestURI();
-
-//		if(session == null || session.isNew()){
-//			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +"/_02_login/login.jsp"));
-//			return;
-//		}
-
-		session.setAttribute("requestURI", requestURI);
-
-		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		if (mb == null) {
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/_02_login/login.jsp"));
+		if (session == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+			return;
 		}
+
 		// 取出session物件裡的購物車資料
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 
@@ -58,31 +49,52 @@ public class CartServlet extends HttpServlet {
 			session.setAttribute("ShoppingCart", cart);
 		}
 
-		String productIdStr = request.getParameter("productId");
+		// 取得瀏覽器傳來的資料
+		String productIdStr = session.getAttribute("productId").toString();
 		Integer productId = Integer.parseInt(productIdStr.trim());
-		System.out.println(productId);
+		System.out.println("productIdStr= " + productIdStr);
+
+		String content1 = request.getParameter("content1");
+		String content2 = request.getParameter("content2");
+		System.out.println("content1= " + content1);
+		System.out.println("content2= " + content2);
 		String qtyStr = request.getParameter("qty");
-		Integer qty = 0;
-		Map<Integer, ProductBean> productMap = (Map<Integer, ProductBean>) session.getAttribute("products_map");
-		ProductBean bean = productMap.get(productId);
-
-//		String pageNo = request.getParameter("pageNo");
-//		if (pageNo == null || pageNo.trim().length() == 0){
-//			pageNo = (String) session.getAttribute("pageNo") ;
-//			if (pageNo == null){
-//			   pageNo = "1";
-//			} 
-//		} 
-
-		// 把商品詳細收到的數量轉為Integer型態
-		try {
-			qty = Integer.parseInt(qtyStr.trim());
-		} catch (NumberFormatException e) {
-			throw new ServletException(e);
+		System.out.println("qtyStr= " + qtyStr);
+		if (qtyStr == null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
+			rd.forward(request, response);
+			return;
 		}
-		OrderItemBean oib = new OrderItemBean(null, productId, bean.getProductName(), null, null, bean.getPrice(), qty,
-				null);
-		cart.addToCart(productId, oib);
+		Integer qty = Integer.parseInt(qtyStr.trim());
+
+//		Map<Integer, ProductBean> productMap = (Map<Integer, ProductBean>) session.getAttribute("products_map");
+//		ProductBean bean = productMap.get(productId);
+		// 透過 service & productId 取得商品資訊
+		ProductService productService = new ProductServiceImpl();
+		ProductBean pb = productService.getProduct(productId);
+
+		// 取得商品的productFormat，進行比對
+		Set<ProductFormatBean> formats = pb.getProductFormat();
+		int productFormatId = 0;
+		for (ProductFormatBean pfb : formats) {
+			if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
+				// 正確規格，則把productFormatId存下來
+				productFormatId = pfb.getProductFormatId();
+			}
+		}
+
+		// 如果找不到規格相同的商品，就不做事
+		if (productFormatId == 0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
+			rd.forward(request, response);
+			return;
+		}
+
+		// 把資料封裝進OrderItemBean
+		OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
+				qty, null);
+		cart.addToCart(productFormatId, oib, formats);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
 	}

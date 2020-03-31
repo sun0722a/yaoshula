@@ -88,10 +88,10 @@ public class ShowPageProductsServlet extends HttpServlet {
 		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo, arrange, searchStr);
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("arrange", arrange);
-		session.setAttribute("pageNo", String.valueOf(pageNo));
+		request.setAttribute("pageNo", String.valueOf(pageNo));
 		request.setAttribute("totalPages", service.getTotalPages(searchStr));
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件
-		session.setAttribute("products_map", productMap);
+		request.setAttribute("products_map", productMap);
 
 		// 使用Cookie來儲存目前讀取的網頁編號，Cookie的名稱為memberId + "pageNo"
 		// -----------------------

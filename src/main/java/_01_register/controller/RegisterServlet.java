@@ -46,7 +46,6 @@ public class RegisterServlet extends HttpServlet {
 			return;
 		}
 
-		String target = (String) session.getAttribute("target");
 		// 準備存放錯誤訊息的Map物件
 		Map<String, String> errorMsg = new HashMap<String, String>();
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
@@ -73,17 +72,6 @@ public class RegisterServlet extends HttpServlet {
 
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
-					if (fldName.equals("cancel")) {
-						if (target != null) {
-							response.sendRedirect(
-									response.encodeRedirectURL(getServletContext().getContextPath() + target));
-
-						} else {
-							response.sendRedirect(
-									response.encodeRedirectURL(getServletContext().getContextPath() + "/index.jsp"));
-						}
-						return;
-					}
 					if (fldName.equals("userName")) {
 						userName = value;
 					} else if (fldName.equals("password")) {
