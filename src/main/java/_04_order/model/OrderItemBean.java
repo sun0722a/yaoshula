@@ -24,7 +24,6 @@ public class OrderItemBean {
 	@ManyToOne
 	@JoinColumn(name = "FK_OrderBean_orderNo")
 	OrderBean orderBean;
-	
 
 	public OrderItemBean() {
 
@@ -106,5 +105,4 @@ public class OrderItemBean {
 	public void setOrderBean(OrderBean orderBean) {
 		this.orderBean = orderBean;
 	}
-
 }

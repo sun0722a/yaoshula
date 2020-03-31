@@ -1,7 +1,6 @@
 package _02_login;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -18,9 +17,6 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import _01_register.model.MemberBean;
 
@@ -65,7 +61,7 @@ public class LoginFilter implements Filter {
 					chain.doFilter(request, response);
 				} else {
 					HttpSession session = req.getSession();
-					session.setAttribute("target", req.getServletPath());
+					session.setAttribute("target", servletPath);
 					RequestDispatcher rd = request.getRequestDispatcher("/_02_login/login.jsp");
 					rd.forward(req, resp);
 				}
