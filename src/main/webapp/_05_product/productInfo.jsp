@@ -101,7 +101,7 @@
 
 
 		<div class="productBox col-10">
-			<form action="" name="buyForm">
+			<form action="" name="buyForm" method="Post">
 				<div class="topProductBox">
 
 					<div class="productImg col-5">
@@ -123,6 +123,10 @@
 								<div
 									class="btn btn-outline-secondary text-monospace mt-2 active">
 									<input type="radio" name="content1" value="${entry}">${entry}
+									
+									<c:set var="content1" value="${param.content1}" scope="application"/>
+									
+									
 								</div>
 							</c:forEach>
 						</div>
@@ -133,6 +137,8 @@
 								<div
 									class="btn btn-outline-secondary text-monospace mt-2 active">
 									<input type="radio" name="content2" value="${entry2}">${entry2}
+									
+									<c:set var="content2" value="${param.content2}" scope="application"/>
 								</div>
 							</c:forEach>
 						</div>

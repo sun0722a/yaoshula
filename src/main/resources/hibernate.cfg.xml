@@ -5,7 +5,7 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">ho5866252</property>
+		<property name="hibernate.connection.password">00000000</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/speakitup?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=Asia/Taipei</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
 
@@ -26,6 +26,7 @@
 		<property name="connection_pool_size">8</property>
 
 		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
+		<mapping class="_01_register.model.MemberBeanHibernate"></mapping>
 		<mapping class="_04_order.model.OrderBean"></mapping>
 		<mapping class="_04_order.model.OrderItemBean"></mapping>
 		<mapping class="_05_product.model.CategoryBean"></mapping>
