@@ -1,3 +1,4 @@
+/* 商品詳細的css*/
 
 
 .top_area{      /* logo 登入那塊 */
@@ -8,16 +9,8 @@
     
 }
 
-
 .top-space{
     width: 70%;
-    
-}
-
-
-.login{
-    width:10%;
-    margin-top: 10px;
 }
 
 .animateCart{
@@ -152,5 +145,6 @@ img{
     border: 1px solid black;
     margin: 50px auto 100px auto;
     padding-bottom: 50px;
+    padding:10px;
 }
 

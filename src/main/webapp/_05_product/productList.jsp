@@ -18,8 +18,10 @@
 <body>
 	<div class="product">
 		<div class="w-75 m-auto">
+			<a href="<c:url value='/product/ShowPageProducts' />">購物區</a>
 			<!-- 搜尋選擇列=================================== -->
-			<form action="" id="searchForm">
+			<form action="<c:url value='/product/ShowPageProducts' />"
+				id="searchForm">
 				<div id="searchTop" class="row">
 					<div class="input-group my-3 col-9 ">
 						<div class="input-group-prepend">
@@ -27,28 +29,35 @@
 								src="${pageContext.request.contextPath}/image/_05_product/search.png"
 								class="productImg" /></span>
 						</div>
-						<input type="search" class="form-control" placeholder="關鍵字搜尋"
+						<input type="search" class="form-control" placeholder="搜尋: 商品名稱"
 							name="search" aria-label="Sizing example input"
-							aria-describedby="inputGroup-sizing-default" />
+							aria-describedby="inputGroup-sizing-default" value="${searchStr}" />
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">搜尋</button>
+							<button class="btn btn-outline-secondary" id="button-addon2">搜尋</button>
 						</div>
 					</div>
-					<div id="arrange"
+					<div
 						class="col-3 my-3 d-flex justify-content-end align-items-center">
-						<span style="font-size: 10px;">排序：</span> <select name="arrange">
-							<option value="popular">熱門</option>
-							<option value="time">最新</option>
+						<span style="font-size: 10px;">排序：</span> <select name="arrange"
+							id="arrange">
+							<option value="time"
+								<c:if test="${arrange=='time'}"> selected </c:if>>最新</option>
+							<option value="popular"
+								<c:if test="${arrange=='popular'}"> selected </c:if>>熱門</option>
+							<option value="price"
+								<c:if test="${arrange=='price'}"> selected </c:if>>價格</option>
 						</select>
 					</div>
+					<input type="hidden" value="-1" name="pageNo">
 				</div>
 			</form>
 			<!-- products=================================== -->
 			<div id="products">
 				<div class="row">
 					<c:forEach var="entry" items="${products_map}">
-						<a href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>" class="col-12 col-sm-6 col-lg-4 mt-4">
+						<a
+							href="<c:url value='/product/ShowProductInfo?productId=${entry.value.productId}'/>"
+							class="col-12 col-sm-6 col-lg-4 mt-4">
 							<div class="card border-dark">
 								<img
 									src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
@@ -57,7 +66,8 @@
 									<h5 class="card-title"
 										style="text-align: center; font-size: 30px;">${entry.value.productName}</h5>
 									<div class="card-text mt-2"
-										style="text-align: center; font-size: 20px;">${entry.value.price}</div>
+										style="text-align: center; font-size: 20px;">$
+										${entry.value.price}</div>
 								</div>
 							</div>
 						</a>
@@ -68,14 +78,16 @@
 			<div class="row">
 				<div id="pages"
 					class="col d-flex justify-content-center align-items-center">
-					<a href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}'/>" 
+					<a
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img
 								src="${pageContext.request.contextPath}/image/_05_product/上一頁.png"
 								style="max-width: 90%;" />
 						</button>
-					</a> <a href="<c:url value='/product/ShowPageProducts?pageNo=1'/>"
+					</a> <a
+						href="<c:url value='/product/ShowPageProducts?pageNo=1&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">1</button>
 					</a> <span <c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>．．．</span>
@@ -88,7 +100,9 @@
 								<option value="${pages}"
 									<c:if test="${pages==pageNo}"> selected </c:if>>${pages}</option>
 							</c:forEach>
-						</select> <span>頁</span>
+						</select> <span>頁</span> <input type="hidden" name="search"
+							value="${searchStr}"> <input type="hidden"
+							value="${arrange}" name="arrange">
 					</form>
 
 
@@ -97,11 +111,11 @@
 
 
 					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">${totalPages}</button>
 					</a> <a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}&search=${searchStr}&arrange=${arrange}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img

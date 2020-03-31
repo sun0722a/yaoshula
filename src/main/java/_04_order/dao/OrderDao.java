@@ -11,7 +11,7 @@ public interface OrderDao {
 	
 	List<OrderBean> getAllOrders();
 	
-	List<OrderBean> getMemberOrders(String memberId,String status);
+	List<OrderBean> getMemberOrders(Integer memberId);
 	
 	String checkOrderStatus(Integer orderNo);
 }

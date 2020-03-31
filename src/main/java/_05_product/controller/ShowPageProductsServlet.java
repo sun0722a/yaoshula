@@ -22,6 +22,7 @@ import _05_product.service.impl.ProductServiceImpl;
 @WebServlet("/product/ShowPageProducts")
 public class ShowPageProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String UTF8_BOM = "\uFEFF";
 	int pageNo = 1;
 	int memberId = 0; // 訪客Id=0
 
@@ -50,8 +51,10 @@ public class ShowPageProductsServlet extends HttpServlet {
 			memberId = mb.getId();
 		}
 
-		// 讀取瀏覽送來的 pageNo
+		// 讀取瀏覽器送來的 pageNo
 		String pageNoStr = request.getParameter("pageNo");
+		String arrange = request.getParameter("arrange");
+		String searchStr = request.getParameter("search");
 		// 如果讀不到(之前沒點擊過商品區)
 		if (pageNoStr == null) {
 			pageNo = 1;
@@ -77,22 +80,30 @@ public class ShowPageProductsServlet extends HttpServlet {
 				pageNo = 1;
 			}
 		}
+		// 有輸入搜尋字串或有選排序
+		if (pageNo == -1) {
+			pageNo = 1;
+		}
 		ProductService service = new ProductServiceImpl();
-		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo);
+		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo, arrange, searchStr);
+		request.setAttribute("searchStr", searchStr);
+		request.setAttribute("arrange", arrange);
 		session.setAttribute("pageNo", String.valueOf(pageNo));
-		request.setAttribute("totalPages", service.getTotalPages());
+		request.setAttribute("totalPages", service.getTotalPages(searchStr));
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件
 		session.setAttribute("products_map", productMap);
 
 		// 使用Cookie來儲存目前讀取的網頁編號，Cookie的名稱為memberId + "pageNo"
 		// -----------------------
-		Cookie pageNoCookie = new Cookie(memberId + "pageNo", String.valueOf(pageNo));
-		// 設定Cookie的存活期為30天
-		pageNoCookie.setMaxAge(30 * 24 * 60 * 60);
-		// 設定Cookie的路徑為 Context Path
-		pageNoCookie.setPath(request.getContextPath());
-		// 將Cookie加入回應物件內
-		response.addCookie(pageNoCookie);
+		if (searchStr == "") {
+			Cookie pageNoCookie = new Cookie(memberId + "pageNo", String.valueOf(pageNo));
+			// 設定Cookie的存活期為30天
+			pageNoCookie.setMaxAge(30 * 24 * 60 * 60);
+			// 設定Cookie的路徑為 Context Path
+			pageNoCookie.setPath(request.getContextPath());
+			// 將Cookie加入回應物件內
+			response.addCookie(pageNoCookie);
+		}
 		// -----------------------
 		// 交由productList.jsp來顯示某頁的商品資料，同時準備『第一頁』、『前一頁』、『當前頁』、『下一頁』、『最末頁』等資料
 		RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productList.jsp");

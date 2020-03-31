@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
 	private SessionFactory factory;
 	private OrderItemDao oidao;
 	private OrderDao odao;
-	
+
 	public OrderServiceImpl() {
 		factory = HibernateUtils.getSessionFactory();
 		oidao = new OrderItemDaoImpl();
@@ -35,23 +35,22 @@ public class OrderServiceImpl implements OrderService {
 			tx = session.beginTransaction();
 			checkStock(ob);
 			tx.commit();
-		}catch(Exception e) {
-			if(tx != null) {
+		} catch (Exception e) {
+			if (tx != null) {
 				tx.rollback();
 				System.out.println("發生異常" + e.getMessage());
 				throw new RuntimeException(e);
 			}
 		}
-		
+
 	}
 
 	private void checkStock(OrderBean ob) {
 		Set<OrderItemBean> items = ob.getOrderItems();
-		for(OrderItemBean oib : items) {
+		for (OrderItemBean oib : items) {
 			oidao.updateProductStock(oib);
 		}
-		
-		
+
 	}
 
 	@Override
@@ -70,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
 			tx = session.beginTransaction();
 			list = odao.getAllOrders();
 			tx.commit();
-		}catch(Exception e) {
-			if(tx != null) {
+		} catch (Exception e) {
+			if (tx != null) {
 				tx.rollback();
 				throw new RuntimeException(e);
 			}
@@ -80,13 +79,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBean> getMemberOrders(String memberId,String status) {
+	public List<OrderBean> getMemberOrders(Integer memberId) {
 		List<OrderBean> list = null;
 //		Session session = factory.getCurrentSession();
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			list = odao.getMemberOrders(memberId,status);
+		list = odao.getMemberOrders(memberId);
 //			tx.commit();
 //		}catch(Exception e) {
 //			if(tx != null) {
@@ -96,8 +95,7 @@ public class OrderServiceImpl implements OrderService {
 //		}
 		return list;
 	}
-	
-	
+
 	public String checkOrderStatus(Integer orderNo) {
 		String status = null;
 		Session session = factory.getCurrentSession();
@@ -106,13 +104,13 @@ public class OrderServiceImpl implements OrderService {
 			tx = session.beginTransaction();
 			status = checkOrderStatus(orderNo);
 			tx.commit();
-		}catch(Exception e) {
-			if(tx != null) {
+		} catch (Exception e) {
+			if (tx != null) {
 				tx.rollback();
 				throw new RuntimeException(e);
 			}
 		}
 		return status;
 	}
-	
+
 }

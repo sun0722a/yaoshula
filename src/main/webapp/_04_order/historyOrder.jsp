@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,14 +23,10 @@
 	<div class="w-75 my-5 mx-auto">
 
 		<ul class="nav nav-tabs nav-justified ">
-			<li class="nav-item"><a class="nav-link text-dark"
-				href="<c:url value='/order/showHistoryOrder'/>">全部</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=待出貨'/>">待出貨</a>
-			</li>
-			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=已出貨'/>">已出貨</a>
-			</li>
-			<li class="nav-item"><a class="nav-link text-dark" href="<c:url value='/order/showHistoryOrder?orderStatus=完成'/>">完成</a>
-			</li>
+			<li class="nav-item nav-link" id="all">全部</li>
+			<li class="nav-item nav-link" id="waitShip">待出貨</li>
+			<li class="nav-item nav-link" id="alreadyShip">已出貨</li>
+			<li class="nav-item nav-link" id="finish">完成</li>
 		</ul>
 
 		<div class="container-fluid"
@@ -47,12 +43,18 @@
 			</div>
 
 			<c:forEach var="entry" items="${order_list}">
-				<div class="row orderRow">
+				<div class="row orderRow ${entry.status}">
 					<div class="col-1 text-center my-2"></div>
 					<div class="col-2 text-center my-2">${entry.orderNo}</div>
-					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.orderDate}" pattern="yyyy-MM-dd"/></div>
-					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.shippingDate}" pattern="yyyy-MM-dd"/></div>
-					<div class="col-2 text-center my-2"><fmt:formatDate value="${entry.arriveDate}" pattern="yyyy-MM-dd"/></div>
+					<div class="col-2 text-center my-2">
+						<fmt:formatDate value="${entry.orderDate}" pattern="yyyy-MM-dd" />
+					</div>
+					<div class="col-2 text-center my-2">
+						<fmt:formatDate value="${entry.shippingDate}" pattern="yyyy-MM-dd" />
+					</div>
+					<div class="col-2 text-center my-2">
+						<fmt:formatDate value="${entry.arriveDate}" pattern="yyyy-MM-dd" />
+					</div>
 					<div class="col-2 text-center my-2">${entry.status}</div>
 					<div class="col-1 text-center my-2"></div>
 				</div>
@@ -78,8 +80,7 @@
 									${detailEntry.productName}</div>
 								<div
 									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
-									${detailEntry.formatContent1}
-									${detailEntry.formatContent2}</div>
+									${detailEntry.formatContent1} ${detailEntry.formatContent2}</div>
 								<div
 									class="col-2 d-flex justify-content-center align-items-center border-top border-light my-2">
 									$ ${detailEntry.unitPrice}</div>
