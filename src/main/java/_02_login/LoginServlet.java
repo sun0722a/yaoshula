@@ -19,7 +19,6 @@ import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
 
 /* 未完成: 記住我功能、LoginFilter 跳轉頁面提示 */
-/* 待測試: 登入完成後頁面跳轉至使用者使用頁面 */
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+
 		// 使用逾時，回首頁
 		HttpSession session = request.getSession(false);
 		if (session == null) {
@@ -44,7 +43,6 @@ public class LoginServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String rm = request.getParameter("rememberMe");
-//		String requestURI = (String) session.getAttribute("requestURI");
 
 		if (userId == null || userId.trim().length() == 0) {
 			errorMsgMap.put("AccountEmptyError", "帳號欄必須輸入");
@@ -102,8 +100,6 @@ public class LoginServlet extends HttpServlet {
 
 		MemberService memberService = new MemberServiceImpl();
 
-//		String tmp = GlobalService.encryptString(password);
-//		password = GlobalService.getMD5Endocing(tmp);
 		password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 		MemberBean mb = null;
 
@@ -119,19 +115,10 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		if (errorMsgMap.isEmpty()) {
-//			if(requestURI != null) {
-//				requestURI = (requestURI.length() == 0 ? request.getContextPath() : requestURI);
-//				response.sendRedirect(response.encodeRedirectURL(requestURI));
-//				return;
-//			}else {
-//				response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
-//				return;
-//			}
 			String contextPath = getServletContext().getContextPath();
 			String target = (String) session.getAttribute("target");
 			if (target != null) {
 				response.sendRedirect(response.encodeRedirectURL(contextPath + target));
-
 			} else {
 				response.sendRedirect(response.encodeRedirectURL(contextPath + "/index.jsp"));
 			}

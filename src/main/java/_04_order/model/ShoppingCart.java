@@ -4,71 +4,93 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import _05_product.model.ProductFormatBean;
+
 public class ShoppingCart {
-	
-	private Map<Integer, OrderItemBean> cart = new LinkedHashMap<>();
-	
+
+	private Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> cart = new LinkedHashMap<>();
+
 	public ShoppingCart() {
-		
 	}
 
-	public Map<Integer, OrderItemBean> getContent(){
+	public Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> getContent() {
 		return cart;
 	}
-						//還需要確認我們商品的ID是啥
-	public void addToCart(int productId, OrderItemBean oib) {
-		if(oib.getQuantity() <=0) {
+
+	// 加入購物車(Map)
+	public void addToCart(int productFormatId, OrderItemBean oib, Set<ProductFormatBean> formats) {
+		if (oib.getQuantity() <= 0) {
 			return;
 		}
-		
-		//如果購物車裡沒有此商品 加進購物車的map
-		if(cart.get(productId) == null){
-			
-			cart.put(productId,oib);
-		}else {
-			//如果有的話 取得在購物車裡該商品的ID
-			OrderItemBean oiBean = cart.get(productId);
-			//並把原有的數量加進來
+		// 如果購物車裡沒有此規格商品 => 加進購物車的map
+		if (cart.get(productFormatId) == null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = new LinkedHashMap<OrderItemBean, Set<ProductFormatBean>>();
+			orderMap.put(oib, formats);
+			cart.put(productFormatId, orderMap);
+		} else {
+			// 如果有的話 取得在購物車裡該商品的ID
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
+			OrderItemBean oiBean = orderMap.keySet().iterator().next();
+			// 並把原有的數量加進來
 			oiBean.setQuantity(oib.getQuantity() + oiBean.getQuantity());
 		}
 	}
-		//如果用js寫 應該不用  更動數量
-	public boolean changeQty(int productId, int newQty) {
-		if(cart.get(productId) != null) {
-			OrderItemBean bean = cart.get(productId);
+
+	// 更動購物車內的商品數量
+	public boolean changeQty(int productFormatId, int newQty) {
+		if (cart.get(productFormatId) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
+			OrderItemBean bean = orderMap.keySet().iterator().next();
 			bean.setQuantity(newQty);
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
-	//刪除購物車內的商品
-	public int deleteProduct(int productId) {
-		if(cart.get(productId) != null) {
-			cart.remove(productId);
+
+	// 更動購物車內的商品規格
+	public boolean changeFormat(int productFormatId, String content1, String content2) {
+		if (cart.get(productFormatId) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
+			OrderItemBean bean = orderMap.keySet().iterator().next();
+			if (content1 != null) {
+				bean.setFormatContent1(content1);
+			}
+			if (content2 != null) {
+				bean.setFormatContent2(content2);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// 刪除購物車內的商品
+	public int deleteProduct(int productFormatId) {
+		if (cart.get(productFormatId) != null) {
+			cart.remove(productFormatId);
 			return 1;
-		}else {
+		} else {
 			return 0;
 		}
 	}
-	
+
 	public int getItemNumber() {
 		return cart.size();
 	}
-	
-	//計算加總 可能也不會用到 會使用js
+
+	// 計算購物車內的商品價格加總
 	public int getSubTotal() {
 		Integer subTotal = 0;
 		Set<Integer> set = cart.keySet();
-		for(int n : set) {
-			OrderItemBean oib = cart.get(n);
+		for (int n : set) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(n);
+			OrderItemBean oib = orderMap.keySet().iterator().next();
 			Integer price = oib.getUnitPrice();
 			Integer quantity = oib.getQuantity();
-			subTotal += price * quantity; 
+			subTotal += price * quantity;
 		}
 		return subTotal;
 	}
-	
-	
+
 }

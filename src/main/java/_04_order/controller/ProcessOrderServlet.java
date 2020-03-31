@@ -19,58 +19,62 @@ import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _04_order.service.OrderService;
 import _04_order.service.impl.OrderServiceImpl;
+import _05_product.model.ProductFormatBean;
 
-//儲存會員的訂單
+// 儲存會員的訂單
 @WebServlet("/order/orderCheck")
 public class ProcessOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
-		
+
 		String finalDecision = request.getParameter("finalDecision");
 		HttpSession session = request.getSession(false);
-		if(session == null) {
+		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
-		//如果購物車是空的　跳轉回首頁　但到時候可能在刪除時直接跳轉首頁
-		if(cart == null) {
+		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
+		if (cart == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		if(finalDecision.equals("Cancel")) {
+		if (finalDecision.equals("Cancel")) {
 			session.removeAttribute("ShoppingCart");
 			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
 			return;
 		}
 		String memberId = mb.getName();
-		String memberName = request.getParameter("name");	//訂購人姓名 跟資料庫的不一樣
-		Integer totalPrice = cart.getSubTotal();		//總金額
-		String address = request.getParameter("address");	//訂購人地址
-		String phone = request.getParameter("phoneNumber"); //訂購人電話
-		String note = request.getParameter("note"); //訂單備註
+		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
+		Integer totalPrice = cart.getSubTotal(); // 總金額
+		String address = request.getParameter("address"); // 訂購人地址
+		String phone = request.getParameter("phoneNumber"); // 訂購人電話
+		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
-		
-		OrderBean ob = new OrderBean(null,memberId,memberName,totalPrice,address,phone,note,today,null,null,"待出貨",null);
-		Map<Integer, OrderItemBean> content = cart.getContent();
-		
+
+		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
+				"待出貨", null);
+		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
+
 		Set<OrderItemBean> items = new LinkedHashSet<>();
 		Set<Integer> set = content.keySet();
-		for(Integer i : set) {
-			OrderItemBean oib = content.get(i);
+		for (Integer i : set) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
+			OrderItemBean oib = orderMap.keySet().iterator().next();
 			oib.setOrderBean(ob);
 			items.add(oib);
 		}
-		
+
 		ob.setOrderItems(items);
 		try {
 			OrderService orderService = new OrderServiceImpl();
@@ -78,11 +82,11 @@ public class ProcessOrderServlet extends HttpServlet {
 			session.removeAttribute("ShoppingCart");
 			response.sendRedirect(response.encodeRedirectURL(""));
 			return;
-		}catch(RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			String message = ex.getMessage();
 			String shortMessage = "";
 			shortMessage = message.substring(message.indexOf(":") + 1);
-			session.setAttribute("OrderErrorMsg","訂單發生異常" + shortMessage + "請更正訂單內容");
+			session.setAttribute("OrderErrorMsg", "訂單發生異常" + shortMessage + "請更正訂單內容");
 			response.sendRedirect(response.encodeRedirectURL(""));
 		}
 	}
