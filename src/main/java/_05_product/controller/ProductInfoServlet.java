@@ -27,8 +27,6 @@ import _05_product.service.impl.ProductServiceImpl;
 public class ProductInfoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	Set<String> contentSet1 = new HashSet<String>();
-	Set<String> contentSet2 = new HashSet<String>();
 	int memberId = 0;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,6 +58,8 @@ public class ProductInfoServlet extends HttpServlet {
 		// 利用getProduct取得該ID所擁有的資訊
 		ProductService service = new ProductServiceImpl();
 		ProductBean pb = service.getProduct(productId);
+		Set<String> contentSet1 = new HashSet<String>();
+		Set<String> contentSet2 = new HashSet<String>();
 
 		if (pb != null) {
 			// 使用iterator取出set裡的值

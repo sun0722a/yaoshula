@@ -3,32 +3,39 @@ package _04_order.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import _05_product.model.ProductFormatBean;
 
 public class ShoppingCart {
 
-	private Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> cart = new LinkedHashMap<>();
+	/* ConcurrentSkipListMap: 為了遍歷整個map */
+	private Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> cart = new ConcurrentSkipListMap<>();
+	private Map<Integer, String> checkedMap = new ConcurrentSkipListMap<>();
 
 	public ShoppingCart() {
 	}
 
-	public Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> getContent() {
+	public Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> getContent() {
 		return cart;
 	}
 
+	// 檢查有沒有勾起來(productFormatId, "y" or "n")
+	public Map<Integer, String> getCheckedMap() {
+		return checkedMap;
+	}
+
 	// 加入購物車(Map)
-	public void addToCart(String productFormatIdStr, OrderItemBean oib, Set<ProductFormatBean> formats) {
+	public void addToCart(int productFormatId, OrderItemBean oib, Set<ProductFormatBean> formats) {
 		if (oib.getQuantity() <= 0) {
 			return;
 		}
-		String productFormatId = productFormatIdStr.substring(1);
-		System.out.println("(ShoppingCart)productFormatId= " + productFormatId);
 		// 如果購物車裡沒有此規格商品 => 加進購物車的map
-		if (cart.get("y" + productFormatId) == null && cart.get("n" + productFormatId) == null) {
+		if (cart.get(productFormatId) == null) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = new LinkedHashMap<OrderItemBean, Set<ProductFormatBean>>();
 			orderMap.put(oib, formats);
-			cart.put(productFormatIdStr, orderMap);
+			checkedMap.put(productFormatId, "y");
+			cart.put(productFormatId, orderMap);
 		} else {
 			// 如果有的話 取得在購物車裡該商品的ID
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
@@ -39,9 +46,9 @@ public class ShoppingCart {
 	}
 
 	// 更動購物車內的商品數量
-	public boolean changeQty(String productFormatIdStr, int newQty) {
-		if (cart.get(productFormatIdStr) != null) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
+	public boolean changeQty(int productFormatId, int newQty) {
+		if (cart.get(productFormatId) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
 			OrderItemBean bean = orderMap.keySet().iterator().next();
 			bean.setQuantity(newQty);
 			return true;
@@ -51,9 +58,9 @@ public class ShoppingCart {
 	}
 
 	// 更動購物車內的商品規格
-	public boolean changeFormat(String productFormatIdStr, String content1, String content2) {
-		if (cart.get(productFormatIdStr) != null) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
+	public boolean changeFormat(int productFormatId, String content1, String content2) {
+		if (cart.get(productFormatId) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
 			OrderItemBean bean = orderMap.keySet().iterator().next();
 			if (content1 != null) {
 				bean.setFormatContent1(content1);
@@ -68,17 +75,14 @@ public class ShoppingCart {
 	}
 
 	// 更動購物車內的商品選取項(單項)
-	public boolean changeChecked(String productFormatIdStr, String choose) {
-		if (cart.get(productFormatIdStr) != null) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
-			// 將此項從map中移除，更換key值後重新加入
-			cart.remove(productFormatIdStr);
-			if (choose == "true") {
-				productFormatIdStr.replace('n', 'y');
+	public boolean changeChecked(int productFormatId, String choose) {
+		if (cart.get(productFormatId) != null) {
+			// 如果有勾單選，就把checkMap裡此productFormatId的value改成y
+			if (choose.equals("true")) {
+				checkedMap.put(productFormatId, "y");
 			} else {
-				productFormatIdStr.replace('y', 'n');
+				checkedMap.put(productFormatId, "n");
 			}
-			cart.put(productFormatIdStr, orderMap);
 			return true;
 		} else {
 			return false;
@@ -87,22 +91,24 @@ public class ShoppingCart {
 
 	// 更動購物車內的商品選取項(全選)
 	public void changeAllChecked(String chooseAll) {
-		Set<String> productFormatIdStrs = cart.keySet();
-		for (String productFormatIdStr : productFormatIdStrs) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
-			cart.remove(productFormatIdStr);
-			if (chooseAll == "true") {
-				productFormatIdStr.replace('n', 'y');
+		Set<Integer> productFormatIds = checkedMap.keySet();
+		for (int productFormatId : productFormatIds) {
+			// 如果有勾全選，就把所有的checkMap裡的value改成y
+			if (chooseAll.equals("true")) {
+				checkedMap.put(productFormatId, "y");
 			} else {
-				productFormatIdStr.replace('y', 'n');
+				checkedMap.put(productFormatId, "n");
 			}
-			cart.put(productFormatIdStr, orderMap);
 		}
 	}
 
 	// 刪除購物車內的商品
-	public int deleteProduct(String productFormatId) {
+	public int deleteProduct(int productFormatId) {
 		if (cart.get(productFormatId) != null) {
+			// checkedMap要記得一並刪除
+			if (checkedMap.get(productFormatId) != null) {
+				checkedMap.remove(productFormatId);
+			}
 			cart.remove(productFormatId);
 			return 1;
 		} else {
@@ -117,8 +123,8 @@ public class ShoppingCart {
 	// 計算購物車內的商品價格加總
 	public int getSubtotal() {
 		Integer subTotal = 0;
-		Set<String> set = cart.keySet();
-		for (String n : set) {
+		Set<Integer> set = cart.keySet();
+		for (Integer n : set) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(n);
 			OrderItemBean oib = orderMap.keySet().iterator().next();
 			Integer price = oib.getUnitPrice();

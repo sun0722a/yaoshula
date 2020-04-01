@@ -65,11 +65,11 @@ public class ProcessOrderServlet extends HttpServlet {
 
 		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
 				"待出貨", null);
-		Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
+		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
 
 		Set<OrderItemBean> items = new LinkedHashSet<>();
-		Set<String> set = content.keySet();
-		for (String i : set) {
+		Set<Integer> set = content.keySet();
+		for (Integer i : set) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
 			OrderItemBean oib = orderMap.keySet().iterator().next();
 			oib.setOrderBean(ob);

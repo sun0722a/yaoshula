@@ -69,7 +69,6 @@ public class CartServlet extends HttpServlet {
 		// 透過 service & productId 取得商品資訊
 		ProductService productService = new ProductServiceImpl();
 		ProductBean pb = productService.getProduct(productId);
-		System.out.println("content1= " + content1);
 		// 取得商品的productFormat，進行比對
 		Set<ProductFormatBean> formats = pb.getProductFormat();
 		Integer productFormatId = 0;
@@ -91,8 +90,7 @@ public class CartServlet extends HttpServlet {
 				qty, null);
 
 		// 為了之後能抓選取的勾勾(預設為勾起來)[y, n]
-		String productFormatIdStr = 'y' + productFormatId.toString();
-		cart.addToCart(productFormatIdStr, oib, formats);
+		cart.addToCart(productFormatId, oib, formats);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);

@@ -18,7 +18,6 @@ import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
 import _05_product.service.impl.ProductServiceImpl;
 
-
 @WebServlet("/order/checkOrder")
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,15 +31,14 @@ public class CheckOutServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		
-		
+
 		HttpSession session = request.getSession(false);
 
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		
+
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 
 		// 如果session內沒有購物車物件 就新建一個session物件
@@ -48,39 +46,37 @@ public class CheckOutServlet extends HttpServlet {
 			cart = new ShoppingCart();
 			session.setAttribute("ShoppingCart", cart);
 		}
-		
-		//透過productInfoServlet取得product的session
+
+		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
 		System.out.println(productIdStr);
 		Integer productId = Integer.parseInt(productIdStr.trim());
-		
-		
+
 		ProductService service = new ProductServiceImpl();
 		ProductBean pb = service.getProduct(productId);
-		
-		
-		//檢查有沒有取得選取規格的值
+
+		// 檢查有沒有取得選取規格的值
 		String content1 = request.getParameter("content1");
 		String content2 = request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
 		Integer price = pb.getPrice();
-		
+
 		System.out.println(price);
-		
-		//如果沒有的話要再回去商品詳細的頁面
+
+		// 如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 			rd.forward(request, response);
 			return;
 		} else {
 			Integer qty = Integer.parseInt(qtytr.trim());
-			
+
 			request.setAttribute("content1", content1);
 			request.setAttribute("content2", content2);
 			request.setAttribute("qty", qtytr);
 			request.setAttribute("price", price);
 			request.setAttribute("productInfo", pb);
-			
+
 			Set<ProductFormatBean> formats = pb.getProductFormat();
 			Integer productFormatId = 0;
 			for (ProductFormatBean pfb : formats) {
@@ -89,18 +85,16 @@ public class CheckOutServlet extends HttpServlet {
 					productFormatId = pfb.getProductFormatId();
 				}
 			}
-			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
-					qty, null);
-			String productFormatIdStr = 'y' + productFormatId.toString();
-			cart.addToCart(productFormatIdStr, oib, formats);
+			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2,
+					pb.getPrice(), qty, null);
+			cart.addToCart(productFormatId, oib, formats);
 			System.out.println(content1);
 			System.out.println(content2);
 			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");
 			rd.forward(request, response);
 			return;
 		}
-		
+
 	}
-	
 
 }

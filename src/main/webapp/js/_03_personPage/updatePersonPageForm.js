@@ -2,9 +2,6 @@ function doFirst() {
   btEdit = document.getElementById("btEdit");
   fileSelect = document.getElementById("fileSelect");
   headPicture = document.getElementById("headPicture");
-  btSubmit = document.getElementById("btSubmit");
-  btCancel = document.getElementById("btCancel");
-
 
   btEdit.addEventListener("mouseover", function() {
     btEdit.style.border = "2px solid rgb(2, 117, 69)";

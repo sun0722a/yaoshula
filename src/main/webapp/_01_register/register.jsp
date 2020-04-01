@@ -144,10 +144,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="3">
 						<div align="center">
-							<input id="btSubmit" type="submit" value="送出" /> <input
-								id="btCancel" type="submit" value="取消" name="cancel" />
+							<input id="btSubmit" type="submit" value="送出" /> 
 						</div>
 					</td>
 				</tr>

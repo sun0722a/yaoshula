@@ -1,7 +1,6 @@
 function doFirst() {
   fileSelect = document.getElementById("fileSelect");
   headPicture = document.getElementById("headPicture");
-  btSubmit = document.getElementById("btSubmit");
   password = document.getElementById("password");
   passwordCheck = document.getElementById("passwordCheck");
   registerForm = document.getElementById("registerForm");
@@ -38,7 +37,6 @@ function checkPW() {
   }
 }
 function checkPassword() {
-  // e.preventDefault();
   if (password.value != passwordCheck.value) {
     password.value = "";
     passwordCheck.value = "";
@@ -47,8 +45,7 @@ function checkPassword() {
     passwordError.style.display = "none";
   }
 }
-function check(e) {
-  e.preventDefault();
+function check() {
   xhr = new XMLHttpRequest();
   if (this.id == "btUserName") {
     xhr.open(

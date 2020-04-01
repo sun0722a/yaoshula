@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_04_order/shoppingCart.css">
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
 	src="${pageContext.request.contextPath}/js/_04_order/shoppingCart.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <link rel="stylesheet"
@@ -40,6 +41,20 @@
 		var newFmt = document.getElementById(x).value;
 		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=FMT&productFormatId="
 				+ key + "&newFmt=" + newFmt + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function changeChoose(key, index) {
+		var choose = document.getElementsByClassName("choose")[index].checked;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=CHS&productFormatId="
+				+ key + "&choose=" + choose + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function changeAll() {
+		var chooseAll = document.getElementById("allCheck").checked;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=CSA&chooseAll="
+				+ chooseAll + "' />";
 		document.forms[0].method = "POST";
 		document.forms[0].submit();
 	}
@@ -107,7 +122,7 @@ a {
 			<div class="row p-2">
 				<div
 					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
-					<input type="checkbox" id="allCheck" />
+					<input type="checkbox" id="allCheck" onchange="changeAll()" />
 				</div>
 				<div
 					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
@@ -131,7 +146,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="" id="cartForm">
+			<form action="">
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -140,7 +155,13 @@ a {
 						<div class="row p-2 cartItem">
 							<div
 								class="col-1 d-flex justify-content-center align-items-center">
-								<input type="checkbox" class="choose" name="" value="" />
+								<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}">
+									<c:if test="${checkedMap.key==cartMap.key}">
+										<input type="checkbox" class="choose"
+											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
+											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
+									</c:if>
+								</c:forEach>
 							</div>
 							<div
 								class="col-2 d-flex justify-content-center align-items-center">
@@ -153,15 +174,31 @@ a {
 								${orderMap.key.productName}</div>
 							<div
 								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
-								<select name="format" value="" id="newFmt${vs.index}"
-									style="max-width: 100%;"
-									onchange="modifyFormat(${cartMap.key},${vs.index})">
-									<c:forEach var="productSet" items="${orderMap.value}">
-										<option
-											value="${productSet.formatContent1},${productSet.formatContent2}"
-											<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected </c:if>>${productSet.formatContent1},${productSet.formatContent2}</option>
-									</c:forEach>
-								</select>
+								<c:choose>
+									<c:when
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}"> 無 </c:when>
+									<c:otherwise>
+										<select name="format" value="" id="newFmt${vs.index}"
+											style="max-width: 100%;"
+											onchange="modifyFormat('${cartMap.key}',${vs.index})">
+											<c:choose>
+												<c:when test="${(orderMap.key.formatContent2=='')}">
+													<c:forEach var="productSet" items="${orderMap.value}">
+														<option value="${productSet.formatContent1}"
+															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)}"> selected </c:if>>${productSet.formatContent1}</option>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="productSet" items="${orderMap.value}">
+														<option
+															value="${productSet.formatContent1},${productSet.formatContent2}"
+															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected </c:if>>${productSet.formatContent1},${productSet.formatContent2}</option>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										</select>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div
 								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
@@ -172,7 +209,7 @@ a {
 								style="padding: 0px;">
 								<select name="count" id="newQty${vs.index}"
 									style="max-width: 100%;"
-									onchange="modifyQuantity(${cartMap.key},${vs.index})">
+									onchange="modifyQuantity('${cartMap.key}',${vs.index})">
 									<c:forEach begin="1" end="10" var="number">
 										<option value="${number}"
 											<c:if test="${orderMap.key.quantity==number}"> selected </c:if>>${number}</option>
@@ -185,7 +222,8 @@ a {
 							</div>
 							<div
 								class="col-1 d-flex justify-content-center align-items-center">
-								<button class="cancel p-0" onclick="deleteCart(${cartMap.key})">
+								<button class="cancel p-0"
+									onclick="deleteCart('${cartMap.key}')">
 									<img
 										src="${pageContext.request.contextPath}/image/_04_order/trash.png"
 										style="max-width: 100%;" />
@@ -202,7 +240,7 @@ a {
 					<div class="col-5"></div>
 					<div
 						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
-						總金額： $ <span id="totalPrice">${ShoppingCart.subtotal}</span>
+						總金額： $ <span id="totalPrice"></span>
 					</div>
 					<div class="col-3 d-flex justify-content-center align-items-center">
 						<input type="button" value="確認訂單" style="max-width: 100%;" />
