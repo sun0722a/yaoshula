@@ -25,6 +25,9 @@
 			href="<c:url value='/product/ShowFamousProducts' />">熱門商品區</a>
 		</span>
 		<span class="option"> <a
+			href="<c:url value='/_04_order/shoppingCart.jsp' />">購物車</a>
+		</span>
+		<span class="option"> <a
 			href="<c:url value='/order/showHistoryOrder' />">歷史訂單</a>
 		</span>
 	</div>

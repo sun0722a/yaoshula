@@ -56,7 +56,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		}
 		String memberId = mb.getName();
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
-		Integer totalPrice = cart.getSubTotal(); // 總金額
+		Integer totalPrice = cart.getSubtotal(); // 總金額
 		String address = request.getParameter("address"); // 訂購人地址
 		String phone = request.getParameter("phoneNumber"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註

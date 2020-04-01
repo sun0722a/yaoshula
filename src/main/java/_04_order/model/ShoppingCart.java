@@ -80,7 +80,7 @@ public class ShoppingCart {
 	}
 
 	// 計算購物車內的商品價格加總
-	public int getSubTotal() {
+	public int getSubtotal() {
 		Integer subTotal = 0;
 		Set<Integer> set = cart.keySet();
 		for (int n : set) {

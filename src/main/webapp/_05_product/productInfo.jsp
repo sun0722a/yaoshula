@@ -22,6 +22,10 @@
 </head>
 <body class="bg-light">
 
+	<span class="option"> <a
+		href="<c:url value='/_04_order/shoppingCart.jsp' />">購物車</a>
+	</span>
+	
 	<div class="top_area">
 
 		<div class="logo">

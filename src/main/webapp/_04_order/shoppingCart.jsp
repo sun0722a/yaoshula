@@ -20,6 +20,30 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+<script type="text/javascript">
+	function deleteCart(n) {
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=DEL&productFormatId="
+				+ n + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function modifyQuantity(key, index) {
+		var x = "newQty" + index;
+		var newQty = document.getElementById(x).value;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=QTY&productFormatId="
+				+ key + "&newQty=" + newQty + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function modifyFormat(key, index) {
+		var x = "newFmt" + index;
+		var newFmt = document.getElementById(x).value;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=FMT&productFormatId="
+				+ key + "&newFmt=" + newFmt + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+</script>
 </head>
 <style>
 a {
@@ -107,51 +131,70 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="">
+			<form action="" id="cartForm">
 				<!-- 內容物=================================== -->
-				<div class="row p-2 cartItem">
-					<div class="col-1 d-flex justify-content-center align-items-center">
-						<input type="checkbox" class="choose" name="" value="" />
-					</div>
-					<div class="col-2 d-flex justify-content-center align-items-center">
-						<img
-							src="${pageContext.request.contextPath}/init/getProductImage?id=${product.productId}"
-							style="max-width: 80%; max-height: 150px;" />
-					</div>
-					<div
-						class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
-						香精油</div>
-					<div
-						class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
-						<select name="format" value="" style="max-width: 100%;">
-							<option value="">薰衣草50ml</option>
-						</select>
-					</div>
-					<div
-						class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
-						$ <span class="singlePrice">500</span>
-					</div>
-					<div
-						class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
-						style="padding: 0px;">
-						<select name="count" class="count" style="max-width: 100%;">
-							<c:forEach begin="1" end="10" var="number">
-								<option value="${number}">${number}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div
-						class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
-						$ <span class="singleTotal">500</span>
-					</div>
-					<div class="col-1 d-flex justify-content-center align-items-center">
-						<button class="cancel p-0">
-							<img
-								src="${pageContext.request.contextPath}/image/_04_order/trash.png"
-								style="max-width: 100%;" />
-						</button>
-					</div>
-				</div>
+				<c:forEach var="cartMap" varStatus="vs"
+					items="${ShoppingCart.content}">
+					<c:forEach var="orderMap" items="${cartMap.value}">
+
+						<div class="row p-2 cartItem">
+							<div
+								class="col-1 d-flex justify-content-center align-items-center">
+								<input type="checkbox" class="choose" name="" value="" />
+							</div>
+							<div
+								class="col-2 d-flex justify-content-center align-items-center">
+								<img
+									src="${pageContext.request.contextPath}/init/getProductImage?id=${orderMap.key.productId}"
+									style="max-width: 80%; max-height: 150px;" />
+							</div>
+							<div
+								class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
+								${orderMap.key.productName}</div>
+							<div
+								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+								<select name="format" value="" id="newFmt${vs.index}"
+									style="max-width: 100%;"
+									onchange="modifyFormat(${cartMap.key},${vs.index})">
+									<c:forEach var="productSet" items="${orderMap.value}">
+										<option
+											value="${productSet.formatContent1},${productSet.formatContent2}"
+											<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected </c:if>>${productSet.formatContent1},${productSet.formatContent2}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+								$ <span class="singlePrice">${orderMap.key.unitPrice}</span>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
+								style="padding: 0px;">
+								<select name="count" id="newQty${vs.index}"
+									style="max-width: 100%;"
+									onchange="modifyQuantity(${cartMap.key},${vs.index})">
+									<c:forEach begin="1" end="10" var="number">
+										<option value="${number}"
+											<c:if test="${orderMap.key.quantity==number}"> selected </c:if>>${number}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
+								$ <span class="singleTotal">${orderMap.key.unitPrice*orderMap.key.quantity}</span>
+							</div>
+							<div
+								class="col-1 d-flex justify-content-center align-items-center">
+								<button class="cancel p-0" onclick="deleteCart(${cartMap.key})">
+									<img
+										src="${pageContext.request.contextPath}/image/_04_order/trash.png"
+										style="max-width: 100%;" />
+								</button>
+							</div>
+						</div>
+					</c:forEach>
+				</c:forEach>
+
 
 				<hr class="m-0" style="background: black;" />
 				<!-- 總金額================================================= -->
@@ -159,7 +202,7 @@ a {
 					<div class="col-5"></div>
 					<div
 						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
-						總金額： $ <span id="totalPrice">1000</span>
+						總金額： $ <span id="totalPrice">${ShoppingCart.subtotal}</span>
 					</div>
 					<div class="col-3 d-flex justify-content-center align-items-center">
 						<input type="button" value="確認訂單" style="max-width: 100%;" />
