@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
 //	String servletPath;
 //	String contextPath;
 //	String requestURI;
-
+	String queryString;
 	public LoginFilter() {
 
 	}
@@ -54,7 +54,8 @@ public class LoginFilter implements Filter {
 //			contextPath = req.getContextPath();
 //			requestURI =req.getRequestURI();
 //			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
-
+//			queryString = req.getQueryString();
+			
 			if (mustLogin(servletPath)) {
 				if (checkLogin(req)) {
 					// 需要登入 但已經登入

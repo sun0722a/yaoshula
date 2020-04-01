@@ -122,13 +122,17 @@ li a{
     justify-content: space-around;
 }
 
+/* .items{ */
+/* 	 display: flex; */
+/*     flex-direction: row; */
+/* } */
 /* 每樣商品的細項 */
-.items{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
+/* .items-detail{ */
+   
+/*     justify-content: space-around; */
+/*     align-items: center; */
+    
+/* } */
 
 /* 確認區*/
 

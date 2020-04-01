@@ -93,4 +93,11 @@ public class ShoppingCart {
 		return subTotal;
 	}
 
+	
+	public int addProductId(int productId) {
+		return productId;
+	}
+	
+
 }
+

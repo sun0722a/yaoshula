@@ -36,12 +36,13 @@ public class ProcessOrderServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		String finalDecision = request.getParameter("finalDecision");
+//		String finalDecision = request.getParameter("finalDecision");
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
+		
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
@@ -49,16 +50,16 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		if (finalDecision.equals("Cancel")) {
-			session.removeAttribute("ShoppingCart");
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
-			return;
-		}
+//		if (finalDecision.equals("Cancel")) {
+//			session.removeAttribute("ShoppingCart");
+//			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
+//			return;
+//		}
 		String memberId = mb.getName();
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
 		Integer totalPrice = cart.getSubtotal(); // 總金額
 		String address = request.getParameter("address"); // 訂購人地址
-		String phone = request.getParameter("phoneNumber"); // 訂購人電話
+		String phone = request.getParameter("phone"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
 
@@ -80,7 +81,7 @@ public class ProcessOrderServlet extends HttpServlet {
 			OrderService orderService = new OrderServiceImpl();
 			orderService.persistOrder(ob);
 			session.removeAttribute("ShoppingCart");
-			response.sendRedirect(response.encodeRedirectURL(""));
+			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
 			return;
 		} catch (RuntimeException ex) {
 			String message = ex.getMessage();

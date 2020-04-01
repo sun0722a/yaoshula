@@ -34,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
 		try {
 			tx = session.beginTransaction();
 			checkStock(ob);
+			odao.insertOrder(ob);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) {

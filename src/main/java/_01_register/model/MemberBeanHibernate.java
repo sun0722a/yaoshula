@@ -156,5 +156,5 @@ public class MemberBeanHibernate implements Serializable{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-
+	
 }
