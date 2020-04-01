@@ -63,7 +63,9 @@ public class CheckOutServlet extends HttpServlet {
 		String content1 = request.getParameter("content1");
 		String content2 = request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
+		Integer price = pb.getPrice();
 		
+		System.out.println(price);
 		
 		//如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
@@ -72,9 +74,11 @@ public class CheckOutServlet extends HttpServlet {
 			return;
 		} else {
 			Integer qty = Integer.parseInt(qtytr.trim());
+			
 			request.setAttribute("content1", content1);
 			request.setAttribute("content2", content2);
 			request.setAttribute("qty", qtytr);
+			request.setAttribute("price", price);
 			request.setAttribute("productInfo", pb);
 			
 			Set<ProductFormatBean> formats = pb.getProductFormat();

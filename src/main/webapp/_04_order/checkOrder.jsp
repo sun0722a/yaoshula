@@ -90,14 +90,14 @@ a {
 							<img class="col-12"
 								src="${pageContext.request.contextPath}/init/getProductImage?id=${productInfo.productId}">
 						</div>
-						<div class="items-detail col-2 text-center">${productInfo.productName}</div>
+						<div class="items-detail col-2 text-center">${productName}</div>
 						<div class="items-detail col-2 text-center tx-sm"
 							style="font-size: small">${content1}${content2}</div>
-						<div class="items-detail col-2 text-center" id="cost">${productInfo.price}</div>
+						<div class="items-detail col-2 text-center" id="cost">${price}</div>
 						<div class="amount items-detail col-2 text-center"
 							style="font-size: small;">${qty}</div>
 						<div class="total items-detail col-2 text-center">
-							<c:out value="500" />
+							<c:out value="${qty*price}" />
 						</div>
 					</div>
 				</table>
@@ -108,7 +108,7 @@ a {
 			<div class="check">
 				<div class="check-kid">總金額</div>
 				<div class="total">
-					<c:out value="500" />
+					<c:out value="${qty*price}" />
 				</div>
 			</div>
 			<hr style="background: black;">
