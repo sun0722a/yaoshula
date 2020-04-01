@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import _04_order.model.ShoppingCart;
 
+/* 待測試:String[] newFmt 如果沒傳值  */
+
 // 本類別可修改購物車內的商品資料，包括刪除某項商品，修改某項商品的數量
 @WebServlet("/order/updateShoppingCart")
 public class UpdateCartServlet extends HttpServlet {
@@ -66,7 +68,6 @@ public class UpdateCartServlet extends HttpServlet {
 			String content1 = null;
 			String content2 = null;
 			if (newFmt.length == 2) {
-				System.out.println("length=2");
 				content1 = newFmt[0];
 				content2 = newFmt[1];
 			} else if (newFmt.length == 1) {

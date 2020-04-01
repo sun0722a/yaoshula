@@ -20,12 +20,12 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
 
+<body class="bg-light">
 	<span class="option"> <a
 		href="<c:url value='/_04_order/shoppingCart.jsp' />">購物車</a>
 	</span>
-	
+
 	<div class="top_area">
 
 		<div class="logo">
@@ -121,27 +121,30 @@
 						<div class="mt-2">商品價格: ${product.price}</div>
 						<div class="mt-3"></div>
 
-						<div class="btn-group-vertical btn-group-toggle mb-5"
-							data-toggle="buttons">${title1}
-							<c:forEach var="entry" items="${content1}">
-								<div
-									class="btn btn-outline-secondary text-monospace mt-2 active">
-									<input type="radio" name="content1" required="required"
-										value="${entry}">${entry}
-								</div>
-							</c:forEach>
-						</div>
-
-						<div class="btn-group-vertical btn-group-toggle"
-							data-toggle="buttons">${title2}
-							<c:forEach var="entry2" items="${content2}">
-								<div
-									class="btn btn-outline-secondary text-monospace mt-2 active">
-									<input type="radio" name="content2" required="required"
-										value="${entry2}">${entry2}
-								</div>
-							</c:forEach>
-						</div>
+						<c:if test="${title1!=''}">
+							<div class="btn-group-vertical btn-group-toggle mb-5"
+								data-toggle="buttons">${title1}
+								<c:forEach var="entry" items="${content1}">
+									<div
+										class="btn btn-outline-secondary text-monospace mt-2 active">
+										<input type="radio" name="content1" required="required"
+											value="${entry}">${entry}
+									</div>
+								</c:forEach>
+							</div>
+						</c:if>
+						<c:if test="${title2!=''}">
+							<div class="btn-group-vertical btn-group-toggle"
+								data-toggle="buttons">${title2}
+								<c:forEach var="entry2" items="${content2}">
+									<div
+										class="btn btn-outline-secondary text-monospace mt-2 active">
+										<input type="radio" name="content2" required="required"
+											value="${entry2}">${entry2}
+									</div>
+								</c:forEach>
+							</div>
+						</c:if>
 
 						<div class="mt-2">
 							數量<input type="number" name="qty" value="1" min="1" max="9"
@@ -154,7 +157,7 @@
 								onclick="buyForm.action='<c:url value="/order/checkOrder" />';">
 							<input type="submit" class="btn btn-dark mt-3" role="button"
 								value="加入購物車"
-								onclick="buyForm.action='<c:url value="/order/shoppingCart" />';">
+								onclick="buyForm.action='<c:url value="/order/shoppingCart" />'; ">
 						</div>
 					</div>
 					<!-- topProduct結束標前 -->

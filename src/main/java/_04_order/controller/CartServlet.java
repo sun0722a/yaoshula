@@ -52,14 +52,11 @@ public class CartServlet extends HttpServlet {
 		// 取得瀏覽器傳來的資料
 		String productIdStr = session.getAttribute("productId").toString();
 		Integer productId = Integer.parseInt(productIdStr.trim());
-		System.out.println("productIdStr= " + productIdStr);
 
-		String content1 = request.getParameter("content1");
-		String content2 = request.getParameter("content2");
-		System.out.println("content1= " + content1);
-		System.out.println("content2= " + content2);
+		// 如果無規格讓content的值為空字串，以便與資料庫進行比對
+		String content1 = request.getParameter("content1") == null ? "" : request.getParameter("content1");
+		String content2 = request.getParameter("content2") == null ? "" : request.getParameter("content2");
 		String qtyStr = request.getParameter("qty");
-		System.out.println("qtyStr= " + qtyStr);
 		if (qtyStr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 			rd.forward(request, response);
@@ -72,7 +69,7 @@ public class CartServlet extends HttpServlet {
 		// 透過 service & productId 取得商品資訊
 		ProductService productService = new ProductServiceImpl();
 		ProductBean pb = productService.getProduct(productId);
-
+		System.out.println("content1= " + content1);
 		// 取得商品的productFormat，進行比對
 		Set<ProductFormatBean> formats = pb.getProductFormat();
 		int productFormatId = 0;
@@ -95,7 +92,7 @@ public class CartServlet extends HttpServlet {
 				qty, null);
 		cart.addToCart(productFormatId, oib, formats);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_04_ShoppingCart/ShowCartContent.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
 		return;
 	}

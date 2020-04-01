@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/_04_order/shoppingCart.css">
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
 	src="${pageContext.request.contextPath}/js/_04_order/shoppingCart.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <link rel="stylesheet"
@@ -40,6 +41,20 @@
 		var newFmt = document.getElementById(x).value;
 		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=FMT&productFormatId="
 				+ key + "&newFmt=" + newFmt + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function changeChoose(key, index) {
+		var choose = document.getElementsByClassName("choose")[index].checked;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=CHS&productFormatId="
+				+ key + "&choose=" + choose + "' />";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	}
+	function changeAll() {
+		var chooseAll = document.getElementById("allCheck").checked;
+		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=CSA&chooseAll="
+				+ chooseAll + "' />";
 		document.forms[0].method = "POST";
 		document.forms[0].submit();
 	}
@@ -107,7 +122,7 @@ a {
 			<div class="row p-2">
 				<div
 					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
-					<input type="checkbox" id="allCheck" />
+					<input type="checkbox" id="allCheck" onchange="changeAll()"/>
 				</div>
 				<div
 					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
@@ -140,7 +155,7 @@ a {
 						<div class="row p-2 cartItem">
 							<div
 								class="col-1 d-flex justify-content-center align-items-center">
-								<input type="checkbox" class="choose" name="" value="" />
+								<input type="checkbox" class="choose" <c:if test="${fn:startsWith(cartMap.key,'y')}"> checked </c:if> onchange="changeChoose(${cartMap.key},${vs.index})"/>
 							</div>
 							<div
 								class="col-2 d-flex justify-content-center align-items-center">
@@ -218,7 +233,7 @@ a {
 					<div class="col-5"></div>
 					<div
 						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
-						總金額： $ <span id="totalPrice">${ShoppingCart.subtotal}</span>
+						總金額： $ <span id="totalPrice"></span>
 					</div>
 					<div class="col-3 d-flex justify-content-center align-items-center">
 						<input type="button" value="確認訂單" style="max-width: 100%;" />
