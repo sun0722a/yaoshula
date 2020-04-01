@@ -131,7 +131,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="" id="cartForm">
+			<form action="">
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -153,15 +153,31 @@ a {
 								${orderMap.key.productName}</div>
 							<div
 								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
-								<select name="format" value="" id="newFmt${vs.index}"
-									style="max-width: 100%;"
-									onchange="modifyFormat(${cartMap.key},${vs.index})">
-									<c:forEach var="productSet" items="${orderMap.value}">
-										<option
-											value="${productSet.formatContent1},${productSet.formatContent2}"
-											<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected </c:if>>${productSet.formatContent1},${productSet.formatContent2}</option>
-									</c:forEach>
-								</select>
+								<c:choose>
+									<c:when
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}"> 無 </c:when>
+									<c:otherwise>
+										<select name="format" value="" id="newFmt${vs.index}"
+											style="max-width: 100%;"
+											onchange="modifyFormat(${cartMap.key},${vs.index})">
+											<c:choose>
+												<c:when test="${(orderMap.key.formatContent2=='')}">
+														<c:forEach var="productSet" items="${orderMap.value}">
+															<option value="${productSet.formatContent1}"
+																<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)}"> selected </c:if>>${productSet.formatContent1}</option>
+														</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="productSet" items="${orderMap.value}">
+														<option
+															value="${productSet.formatContent1},${productSet.formatContent2}"
+															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected </c:if>>${productSet.formatContent1},${productSet.formatContent2}</option>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										</select>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div
 								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">

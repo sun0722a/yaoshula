@@ -2,17 +2,11 @@ table {
 	width: 100%;
 }
 
-table td {
-	/* border: 1px solid red; */
-	
-}
 /* 整個表單 */
 #personPage {
 	position: absolute;
 	top: 20%;
     left: 15%;
-	
-	
 	width: 70%;
 	border: 1px black solid;
 	padding: 1%;

@@ -4,7 +4,6 @@ function doFirst() {
   allCheck = document.getElementById("allCheck");
   choose = document.getElementsByClassName("choose");
   //   cancel = document.getElementsByClassName("cancel");
-  cartForm = document.getElementById("cartForm");
 
   allCheck.addEventListener("change", function() {
     if (this.checked) {
@@ -18,18 +17,6 @@ function doFirst() {
     }
   });
 
-  for (let i = 0; i < count.length; i++) {
-    count[i].addEventListener("change", function() {
-      // cartForm.submit();
-    });
-  }
-
-  //   for (let i = 0; i < cancel.length; i++) {
-  //     cancel[i].addEventListener("click", function() {
-  //       document.getElementsByClassName("cartItem")[i].re;
-
-  //     });
-  //   }
 }
 
 // function checkMoney() {
