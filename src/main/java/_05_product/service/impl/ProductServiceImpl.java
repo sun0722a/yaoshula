@@ -1,7 +1,6 @@
 package _05_product.service.impl;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,13 +23,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int getTotalPages(String searchStr) {
+	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		int n = 0;
 		try {
 			tx = session.beginTransaction();
-			n = dao.getTotalPages(searchStr);
+			n = dao.getTotalPages(searchStr, categoryTitle, categoryName);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null)
@@ -47,13 +46,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr) {
+	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr, String categoryTitle,
+			String categoryName) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		Map<Integer, ProductBean> map = null;
 		try {
 			tx = session.beginTransaction();
-			map = dao.getPageProducts(pageNo, arrange, searchStr);
+			map = dao.getPageProducts(pageNo, arrange, searchStr, categoryTitle, categoryName);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null)

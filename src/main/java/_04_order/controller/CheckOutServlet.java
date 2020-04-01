@@ -82,7 +82,7 @@ public class CheckOutServlet extends HttpServlet {
 			request.setAttribute("productInfo", pb);
 			
 			Set<ProductFormatBean> formats = pb.getProductFormat();
-			int productFormatId = 0;
+			Integer productFormatId = 0;
 			for (ProductFormatBean pfb : formats) {
 				if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
 					// 正確規格，則把productFormatId存下來
@@ -91,7 +91,8 @@ public class CheckOutServlet extends HttpServlet {
 			}
 			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
 					qty, null);
-			cart.addToCart(productFormatId, oib, formats);
+			String productFormatIdStr = 'y' + productFormatId.toString();
+			cart.addToCart(productFormatIdStr, oib, formats);
 			System.out.println(content1);
 			System.out.println(content2);
 			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");

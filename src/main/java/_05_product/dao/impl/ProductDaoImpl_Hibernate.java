@@ -13,6 +13,7 @@ import _00_init.util.HibernateUtils;
 import _05_product.dao.ProductDao;
 import _05_product.model.ProductBean;
 
+/* 問問問: hql使用count + join 會報錯 */
 /* 刪除 : implements Serializable，不知道會不會出事 */
 
 public class ProductDaoImpl_Hibernate implements ProductDao {
@@ -31,8 +32,8 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 
 	// 計算所有商品總共有幾頁
 	@Override
-	public int getTotalPages(String searchStr) {
-		if (searchStr == null || searchStr == "") {
+	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
+		if (searchStr == "" && categoryTitle == "" && categoryName == "") {
 			// 總共幾頁=無條件進位(共有幾個商品/一頁的商品數)
 			int totalPages = (int) (Math.ceil(getRecordCounts() / (double) recordsPerPage));
 			return totalPages;
@@ -59,41 +60,54 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	// 查詢某一頁的商品資料(頁數, 排序, 搜尋字串)
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr) {
-		String hql = "";
+	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr, String categoryTitle,
+			String categoryName) {
+		// 預設的搜尋
+		String hql = "SELECT pb FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
+				+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle LIKE :categoryTitle "
+				+ "AND cb.categoryName LIKE :categoryName " + "ORDER BY pb.productId DESC";
 		Session session = factory.getCurrentSession();
 		String[] arranges = GlobalService.PRODUCT_ARRANGE; // "time", "popular", "price"
 		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		List<ProductBean> list = new ArrayList<ProductBean>();
 
-		// 判斷hql
-		if (searchStr != null) {
-			hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.productId DESC";
-			if (arrange != null) {
-				if (arrange.equals(arranges[1])) {
-					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.sales DESC";
-				} else if (arrange.equals(arranges[2])) {
-					hql = "FROM ProductBean pb WHERE pb.productName LIKE :searchStr ORDER BY pb.price DESC";
-				}
+		// 判斷要如何排列
+		if (arrange != "") {
+			if (arrange.equals(arranges[1])) {
+				hql = "SELECT pb FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
+						+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle LIKE :categoryTitle "
+						+ "AND cb.categoryName LIKE :categoryName " + "ORDER BY pb.sales DESC";
+			} else if (arrange.equals(arranges[2])) {
+				hql = "SELECT pb FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
+						+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle LIKE :categoryTitle "
+						+ "AND cb.categoryName LIKE :categoryName " + "ORDER BY pb.price DESC";
 			}
-			if (searchStr != "") {
-				// 計算此次搜尋共有多少商品
-				String hqlCal = "SELECT count(*) FROM ProductBean pb WHERE pb.productName LIKE :searchStr";
-				long count = 0;
-				List<Long> listCal = session.createQuery(hqlCal).setParameter("searchStr", "%" + searchStr + "%")
-						.getResultList();
-				if (listCal.size() > 0) {
-					count = listCal.get(0);
-				}
-				nowTotalPages = (int) (Math.ceil(count / (double) recordsPerPage));
-			}
-			list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
-					.setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
-		} else {
-			hql = "FROM ProductBean pb ORDER BY pb.productId DESC";
-			list = session.createQuery(hql).setFirstResult(startRecordNo).setMaxResults(recordsPerPage).getResultList();
 		}
+		// 不是找全部的商品=>計算找到的商品個數
+		if (searchStr != "" || categoryTitle != "" || categoryName != "") {
+			// 計算此次搜尋共有多少商品
+//			String hqlCal = "SELECT count(*) FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
+//					+ "AND pb.productName LIKE :searchStr" + "AND cb.categoryTitle LIKE :categoryTitle "
+//					+ "AND cb.categoryName LIKE :categoryName ";
+//			long count = 0;
+//			List<Long> listCal = session.createQuery(hqlCal).setParameter("searchStr", "%" + searchStr + "%")
+//					.setParameter("categoryTitle", "%" + categoryTitle + "%")
+//					.setParameter("categoryName", "%" + categoryName + "%").getResultList();
+//			if (listCal.size() > 0) {
+//				count = listCal.get(0);
+//			}
+			int count = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
+					.setParameter("categoryTitle", "%" + categoryTitle + "%")
+					.setParameter("categoryName", "%" + categoryName + "%").getResultList().size();
+
+			nowTotalPages = (int) (Math.ceil(count / (double) recordsPerPage));
+		}
+		// 只取此頁的商品
+		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
+				.setParameter("categoryTitle", "%" + categoryTitle + "%")
+				.setParameter("categoryName", "%" + categoryName + "%").setFirstResult(startRecordNo)
+				.setMaxResults(recordsPerPage).getResultList();
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
 		}

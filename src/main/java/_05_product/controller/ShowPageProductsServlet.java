@@ -53,8 +53,11 @@ public class ShowPageProductsServlet extends HttpServlet {
 
 		// 讀取瀏覽器送來的 pageNo
 		String pageNoStr = request.getParameter("pageNo");
-		String arrange = request.getParameter("arrange");
-		String searchStr = request.getParameter("search");
+		String arrange = request.getParameter("arrange") == null ? "" : request.getParameter("arrange");
+		String searchStr = request.getParameter("search") == null ? "" : request.getParameter("search");
+		String categoryTitle = request.getParameter("categoryTitle") == null ? ""
+				: request.getParameter("categoryTitle");
+		String categoryName = request.getParameter("categoryName") == null ? "" : request.getParameter("categoryName");
 		// 如果讀不到(之前沒點擊過商品區)
 		if (pageNoStr == null) {
 			pageNo = 1;
@@ -85,17 +88,21 @@ public class ShowPageProductsServlet extends HttpServlet {
 			pageNo = 1;
 		}
 		ProductService service = new ProductServiceImpl();
-		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo, arrange, searchStr);
+		Map<Integer, ProductBean> productMap = service.getPageProducts(pageNo, arrange, searchStr, categoryTitle,
+				categoryName);
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("arrange", arrange);
+		request.setAttribute("categoryTitle", categoryTitle);
+		request.setAttribute("categoryName", categoryName);
 		request.setAttribute("pageNo", String.valueOf(pageNo));
-		request.setAttribute("totalPages", service.getTotalPages(searchStr));
+		request.setAttribute("totalPages", service.getTotalPages(searchStr, categoryTitle, categoryName));
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件
 		request.setAttribute("products_map", productMap);
 
+		// 如果不是搜尋全部商品(沒有搜尋字串 and 沒有搜尋類別)=>不記錄到Cookie
 		// 使用Cookie來儲存目前讀取的網頁編號，Cookie的名稱為memberId + "pageNo"
 		// -----------------------
-		if (searchStr == "") {
+		if (searchStr == "" && categoryTitle == "" && categoryName == "") {
 			Cookie pageNoCookie = new Cookie(memberId + "pageNo", String.valueOf(pageNo));
 			// 設定Cookie的存活期為30天
 			pageNoCookie.setMaxAge(30 * 24 * 60 * 60);

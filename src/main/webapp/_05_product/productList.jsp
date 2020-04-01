@@ -18,7 +18,15 @@
 <body>
 	<div class="product">
 		<div class="w-75 m-auto">
-			<a href="<c:url value='/product/ShowPageProducts' />">購物區</a>
+			<a href="<c:url value='/product/ShowPageProducts?pageNo=-1' />">全部商品</a>
+			<a
+				href="<c:url value='/product/ShowPageProducts?categoryTitle=天使&pageNo=-1' />">天使商品</a>
+			<a
+				href="<c:url value='/product/ShowPageProducts?categoryTitle=天使&categoryName=日常用品&pageNo=-1' />">日常用品</a>
+			<a
+				href="<c:url value='/product/ShowPageProducts?categoryTitle=天使&categoryName=紓壓小物&pageNo=-1' />">紓壓小物</a>
+			<a
+				href="<c:url value='/product/ShowPageProducts?categoryTitle=惡魔&pageNo=-1' />">惡魔商品</a>
 			<!-- 搜尋選擇列=================================== -->
 			<form action="<c:url value='/product/ShowPageProducts' />"
 				id="searchForm">
@@ -48,7 +56,9 @@
 								<c:if test="${arrange=='price'}"> selected </c:if>>價格</option>
 						</select>
 					</div>
-					<input type="hidden" value="-1" name="pageNo">
+					<input type="hidden" value="-1" name="pageNo"> <input
+						type="hidden" value="${categoryTitle}" name="categoryTitle"><input
+						type="hidden" value="${categoryName}" name="categoryName">
 				</div>
 			</form>
 			<!-- products=================================== -->
@@ -79,7 +89,7 @@
 				<div id="pages"
 					class="col d-flex justify-content-center align-items-center">
 					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}&search=${searchStr}&arrange=${arrange}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo-1}&search=${searchStr}&arrange=${arrange}&categoryTitle=${categoryTitle}&categoryName=${categoryName}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img
@@ -87,7 +97,7 @@
 								style="max-width: 90%;" />
 						</button>
 					</a> <a
-						href="<c:url value='/product/ShowPageProducts?pageNo=1&search=${searchStr}&arrange=${arrange}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=1&search=${searchStr}&arrange=${arrange}&categoryTitle=${categoryTitle}&categoryName=${categoryName}'/>"
 						<c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">1</button>
 					</a> <span <c:if test="${pageNo==1}">style="visibility: hidden;"</c:if>>．．．</span>
@@ -102,7 +112,9 @@
 							</c:forEach>
 						</select> <span>頁</span> <input type="hidden" name="search"
 							value="${searchStr}"> <input type="hidden"
-							value="${arrange}" name="arrange">
+							value="${arrange}" name="arrange"><input type="hidden"
+							value="${categoryTitle}" name="categoryTitle"><input
+							type="hidden" value="${categoryName}" name="categoryName">
 					</form>
 
 
@@ -111,11 +123,11 @@
 
 
 					<a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}&search=${searchStr}&arrange=${arrange}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${totalPages}&search=${searchStr}&arrange=${arrange}&categoryTitle=${categoryTitle}&categoryName=${categoryName}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">${totalPages}</button>
 					</a> <a
-						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}&search=${searchStr}&arrange=${arrange}'/>"
+						href="<c:url value='/product/ShowPageProducts?pageNo=${pageNo+1}&search=${searchStr}&arrange=${arrange}&categoryTitle=${categoryTitle}&categoryName=${categoryName}'/>"
 						<c:if test="${pageNo==totalPages}">style="visibility: hidden;"</c:if>>
 						<button class="btPage">
 							<img

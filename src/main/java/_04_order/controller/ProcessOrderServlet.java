@@ -42,7 +42,7 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		
+
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
@@ -65,11 +65,11 @@ public class ProcessOrderServlet extends HttpServlet {
 
 		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
 				"待出貨", null);
-		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
+		Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
 
 		Set<OrderItemBean> items = new LinkedHashSet<>();
-		Set<Integer> set = content.keySet();
-		for (Integer i : set) {
+		Set<String> set = content.keySet();
+		for (String i : set) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
 			OrderItemBean oib = orderMap.keySet().iterator().next();
 			oib.setOrderBean(ob);

@@ -72,7 +72,7 @@ public class CartServlet extends HttpServlet {
 		System.out.println("content1= " + content1);
 		// 取得商品的productFormat，進行比對
 		Set<ProductFormatBean> formats = pb.getProductFormat();
-		int productFormatId = 0;
+		Integer productFormatId = 0;
 		for (ProductFormatBean pfb : formats) {
 			if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
 				// 正確規格，則把productFormatId存下來
@@ -86,11 +86,13 @@ public class CartServlet extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		}
-
 		// 把資料封裝進OrderItemBean
 		OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
 				qty, null);
-		cart.addToCart(productFormatId, oib, formats);
+
+		// 為了之後能抓選取的勾勾(預設為勾起來)[y, n]
+		String productFormatIdStr = 'y' + productFormatId.toString();
+		cart.addToCart(productFormatIdStr, oib, formats);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);

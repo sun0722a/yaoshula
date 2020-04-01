@@ -8,25 +8,27 @@ import _05_product.model.ProductFormatBean;
 
 public class ShoppingCart {
 
-	private Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> cart = new LinkedHashMap<>();
+	private Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> cart = new LinkedHashMap<>();
 
 	public ShoppingCart() {
 	}
 
-	public Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> getContent() {
+	public Map<String, Map<OrderItemBean, Set<ProductFormatBean>>> getContent() {
 		return cart;
 	}
 
 	// 加入購物車(Map)
-	public void addToCart(int productFormatId, OrderItemBean oib, Set<ProductFormatBean> formats) {
+	public void addToCart(String productFormatIdStr, OrderItemBean oib, Set<ProductFormatBean> formats) {
 		if (oib.getQuantity() <= 0) {
 			return;
 		}
+		String productFormatId = productFormatIdStr.substring(1);
+		System.out.println("(ShoppingCart)productFormatId= " + productFormatId);
 		// 如果購物車裡沒有此規格商品 => 加進購物車的map
-		if (cart.get(productFormatId) == null) {
+		if (cart.get("y" + productFormatId) == null && cart.get("n" + productFormatId) == null) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = new LinkedHashMap<OrderItemBean, Set<ProductFormatBean>>();
 			orderMap.put(oib, formats);
-			cart.put(productFormatId, orderMap);
+			cart.put(productFormatIdStr, orderMap);
 		} else {
 			// 如果有的話 取得在購物車裡該商品的ID
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
@@ -37,9 +39,9 @@ public class ShoppingCart {
 	}
 
 	// 更動購物車內的商品數量
-	public boolean changeQty(int productFormatId, int newQty) {
-		if (cart.get(productFormatId) != null) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
+	public boolean changeQty(String productFormatIdStr, int newQty) {
+		if (cart.get(productFormatIdStr) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
 			OrderItemBean bean = orderMap.keySet().iterator().next();
 			bean.setQuantity(newQty);
 			return true;
@@ -49,9 +51,9 @@ public class ShoppingCart {
 	}
 
 	// 更動購物車內的商品規格
-	public boolean changeFormat(int productFormatId, String content1, String content2) {
-		if (cart.get(productFormatId) != null) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatId);
+	public boolean changeFormat(String productFormatIdStr, String content1, String content2) {
+		if (cart.get(productFormatIdStr) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
 			OrderItemBean bean = orderMap.keySet().iterator().next();
 			if (content1 != null) {
 				bean.setFormatContent1(content1);
@@ -65,8 +67,41 @@ public class ShoppingCart {
 		}
 	}
 
+	// 更動購物車內的商品選取項(單項)
+	public boolean changeChecked(String productFormatIdStr, String choose) {
+		if (cart.get(productFormatIdStr) != null) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
+			// 將此項從map中移除，更換key值後重新加入
+			cart.remove(productFormatIdStr);
+			if (choose == "true") {
+				productFormatIdStr.replace('n', 'y');
+			} else {
+				productFormatIdStr.replace('y', 'n');
+			}
+			cart.put(productFormatIdStr, orderMap);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// 更動購物車內的商品選取項(全選)
+	public void changeAllChecked(String chooseAll) {
+		Set<String> productFormatIdStrs = cart.keySet();
+		for (String productFormatIdStr : productFormatIdStrs) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(productFormatIdStr);
+			cart.remove(productFormatIdStr);
+			if (chooseAll == "true") {
+				productFormatIdStr.replace('n', 'y');
+			} else {
+				productFormatIdStr.replace('y', 'n');
+			}
+			cart.put(productFormatIdStr, orderMap);
+		}
+	}
+
 	// 刪除購物車內的商品
-	public int deleteProduct(int productFormatId) {
+	public int deleteProduct(String productFormatId) {
 		if (cart.get(productFormatId) != null) {
 			cart.remove(productFormatId);
 			return 1;
@@ -82,8 +117,8 @@ public class ShoppingCart {
 	// 計算購物車內的商品價格加總
 	public int getSubtotal() {
 		Integer subTotal = 0;
-		Set<Integer> set = cart.keySet();
-		for (int n : set) {
+		Set<String> set = cart.keySet();
+		for (String n : set) {
 			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(n);
 			OrderItemBean oib = orderMap.keySet().iterator().next();
 			Integer price = oib.getUnitPrice();
@@ -93,11 +128,8 @@ public class ShoppingCart {
 		return subTotal;
 	}
 
-	
 	public int addProductId(int productId) {
 		return productId;
 	}
-	
 
 }
-
