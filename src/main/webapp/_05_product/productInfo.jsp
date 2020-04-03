@@ -8,102 +8,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/_05_product/productInfo.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/_05_product/productInfo.js"></script>
-<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/_05_product/productInfo.css">
+
+
+
 </head>
 
 <body class="bg-light">
-	<span class="option"> <a
-		href="<c:url value='/_04_order/shoppingCart.jsp' />">購物車</a>
-	</span>
-
-	<div class="top_area">
-
-		<div class="logo">
-			<a href="<c:url value='' />"> <img src="img/logo_transparent.png"
-				style="width: 100px; height: 100px;" alt="">
-			</a>
-		</div>
-		<div class="top-space"></div>
-
-		<div>
-			<a class="animateCart animated flash text-danger"
-				href="<c:url value='' />"> <i class="fas fa-shopping-cart"></i>
-			</a>
-		</div>
-		<div>
-			<a class="nav-link dropdown-toggle text-dark"
-				href="<c:url value='#' />" id="navbarDropdown" role="button"
-				data-toggle="dropdown" aria-haspopup="true"> 登入 </a>
-
-			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" href="<c:url value='#' />">Another
-					action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="<c:url value='#' />">Something
-					else here</a>
-			</div>
-		</div>
-	</div>
-
-	<ul id="a-style">
-		<div class="test">
-			<li class="dropdown"><i class="fas fa-bullhorn"></i> <a
-				href="<c:url value='#' />">論壇</a>
-				<div class="dropdown-content">
-					<a href="<c:url value='#' />">惡魔版</a> <a href="<c:url value='#' />">天使版</a>
-				</div></li>
-			<li class="dropdown "><i class="fas fa-shopping-bag"></i> <a
-				href="#news">商城</a>
-				<div class="dropdown-content">
-					<a href="<c:url value='#' />">購物區</a> <a href="<c:url value='#' />">購物車</a>
-					<a href="<c:url value='#' />">歷史訂單</a>
-				</div></li>
-			<li class="dropdown"><i class="fas fa-user-friends"></i> <a
-				href="<c:url value='#' />">關於我們</a>
-				<div class="dropdown-content">
-					<a href="<c:url value='#' />">創建理念</a> <a
-						href="<c:url value='#' />">團隊介紹</a> <a href="<c:url value='#' />">關於我們</a>
-				</div></li>
-		</div>
-	</ul>
-
-	<div class="center-content">
-		<!-- 		<div class="side_menu col-2"> -->
-
-		<div class="side_menu col-2">
-
-
-			<div>
-				<h3>天使</h3>
-			</div>
-			<div>
-				<a href="<c:url value='#' />"> 書籍</a>
-			</div>
-			<div>
-				<a href="<c:url value='#' />">紓壓小物</a>
-			</div>
-			<div>
-				<h3>惡魔</h3>
-			</div>
-			<div>
-				<a href="<c:url value='#' />">書籍</a>
-			</div>
-			<div>
-				<a href="<c:url value='#' />">紓壓小物</a>
-			</div>
-		</div>
-
-
+	
+	<jsp:include page="/fragment/topForLogin.jsp" />
+	
 		<div class="productBox col-10">
 			<form action="" name="buyForm">
 				<div class="topProductBox">
@@ -155,10 +77,15 @@
 							<input type="submit" class="btn btn-dark mt-3" role="button"
 								value="立即購買 "
 								onclick="buyForm.action='<c:url value="/order/checkOrder" />';">
-							<input type="submit" class="btn btn-dark mt-3" role="button"
+							<input type="submit" class="btn btn-dark mt-3" role="button" id="joinCart"
 								value="加入購物車"
 								onclick="buyForm.action='<c:url value="/order/shoppingCart" />'; ">
+							<a type="button" class="btn btn-dark mt-3" role="button"
+								
+								href="<c:url value="/product/ShowPageProducts" /> ">返回商品列表</a>
 						</div>
+						
+								
 					</div>
 					<!-- topProduct結束標前 -->
 				</div>

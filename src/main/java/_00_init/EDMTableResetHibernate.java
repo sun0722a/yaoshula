@@ -140,7 +140,7 @@ public class EDMTableResetHibernate {
 					line = line.substring(1);
 				}
 				String[] token1 = line.split("\\|");
-				String memberId = token1[0];
+				Integer memberId = Integer.parseInt(token1[0]);
 				String memberName = token1[1];
 //				Integer totalPrice = Integer.parseInt(token1[2]);
 				Integer totalPrice = 0;
