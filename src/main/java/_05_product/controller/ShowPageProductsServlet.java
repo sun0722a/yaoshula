@@ -22,7 +22,6 @@ import _05_product.service.impl.ProductServiceImpl;
 @WebServlet("/product/ShowPageProducts")
 public class ShowPageProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String UTF8_BOM = "\uFEFF";
 	int pageNo = 1;
 	int memberId = 0; // 訪客Id=0
 
