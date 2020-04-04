@@ -1,18 +1,13 @@
 package _00_init;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -140,7 +135,7 @@ public class EDMTableResetHibernate {
 					line = line.substring(1);
 				}
 				String[] token1 = line.split("\\|");
-				String memberId = token1[0];
+				Integer memberId = Integer.parseInt(token1[0]);
 				String memberName = token1[1];
 //				Integer totalPrice = Integer.parseInt(token1[2]);
 				Integer totalPrice = 0;

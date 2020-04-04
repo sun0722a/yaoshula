@@ -20,10 +20,12 @@ import _01_register.service.impl.MemberServiceImpl;
 
 /* 未完成: 記住我功能、LoginFilter 跳轉頁面提示 */
 
+//進入登入畫面前會先去LoginFilter看該網頁需不需要登入　再來去FindUserPassword找有沒有cookie留的帳密
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,7 +37,8 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-
+		
+		
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
 
 		request.setAttribute("ErrorMsgKey", errorMsgMap);
@@ -74,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 			cookiePassword.setMaxAge(30 * 24 * 60 * 60);
 			cookiePassword.setPath(request.getContextPath());
 
-			cookieRememberMe = new Cookie("rm", "true");
+			cookieRememberMe = new Cookie("rememberMe", "true");
 			cookieRememberMe.setMaxAge(30 * 24 * 60 * 60);
 			cookieRememberMe.setPath(request.getContextPath());
 			// 如果使用者沒有按下記住帳密 就不會保存帳號密碼的cookie

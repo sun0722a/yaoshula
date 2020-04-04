@@ -72,6 +72,8 @@ public class ShoppingCart {
 		} else {
 			return false;
 		}
+		
+		
 	}
 
 	// 更動購物車內的商品選取項(單項)

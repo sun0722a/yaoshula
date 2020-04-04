@@ -76,6 +76,7 @@ public class CartServlet extends HttpServlet {
 			if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
 				// 正確規格，則把productFormatId存下來
 				productFormatId = pfb.getProductFormatId();
+
 			}
 		}
 
