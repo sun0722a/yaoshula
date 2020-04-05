@@ -58,13 +58,14 @@ public class CheckOutServlet extends HttpServlet {
 		ProductBean pb = service.getProduct(productId);
 
 		// 檢查有沒有取得選取規格的值
-		String content1 = request.getParameter("content1");
-		String content2 = request.getParameter("content2");
+		String content1 = request.getParameter("content1") == null ? "":request.getParameter("content1");
+		String content2 = request.getParameter("content2") == null ? "":request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
 		Integer price = pb.getPrice();
 
 		System.out.println(price);
-
+		System.out.println(content1);
+		System.out.println(content2);
 		// 如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);

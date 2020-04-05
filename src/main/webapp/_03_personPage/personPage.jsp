@@ -47,7 +47,7 @@
 			<table>
 				<tr>
 					<td class="personalTitle">帳號：&nbsp&nbsp</td>
-					<td class="personal">${LoginOK.name}</td>
+					<td class="personal">${LoginOK.memberId}</td>
 				</tr>
 				<tr>
 					<td class="personalTitle">性別：&nbsp&nbsp</td>

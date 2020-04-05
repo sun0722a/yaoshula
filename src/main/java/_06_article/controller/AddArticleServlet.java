@@ -61,7 +61,7 @@ public class AddArticleServlet extends HttpServlet {
 		InputStream is = null;
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		String authorName = mb.getName();
+		String authorName = mb.getMemberId();
 
 		// 取出HTTP multipart request內所有的parts
 		Collection<Part> parts = request.getParts();

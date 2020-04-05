@@ -1,33 +1,43 @@
 package _01_register.model;
 
-
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+@Entity
+@Table(name="Members")
 public class MemberBean{
 	
-	private Integer id;
-	private String name;
-	private String password;
-	private String gender;
-	private Date birthday;
-	private String email;
-	private String phone;
-	private String address;
-	private String fileName;
-	private Blob picture;
-	private Timestamp createTime;
-	private String status;
-	private String permission;
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name="increment", strategy = "native")
+	 Integer id;
+	 String memberId;
+	 String password;
+	 String gender;
+	 Date birthday;
+	 String email;
+	 String phone;
+	 String address;
+	 String fileName;
+	 Blob picture;
+	 Timestamp createTime;
+	 String status;
+	 String permission;
 
-	public MemberBean(Integer id, String name, String password, String gender, Date birthday, String email,
+	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
 			String permission) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.memberId = memberId;
 		this.password = password;
 		this.gender = gender;
 		this.birthday = birthday;
@@ -52,12 +62,12 @@ public class MemberBean{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getMemberId() {
+		return memberId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getPassword() {
@@ -147,5 +157,5 @@ public class MemberBean{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-
+	
 }

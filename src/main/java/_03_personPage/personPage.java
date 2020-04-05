@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import _01_register.dao.MemberDao;
-import _01_register.dao.impl.MemberDaoImpl_Jdbc;
+import _01_register.dao.impl.MemberDaoImpl_Hibernate;
 import _01_register.model.MemberBean;
 
 //測試用Servlet，session應該從登入取得
@@ -23,10 +23,11 @@ public class personPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		MemberDao memberService = (MemberDao) new MemberDaoImpl_Jdbc();
+		MemberDao memberService = (MemberDao) new MemberDaoImpl_Hibernate();
 		MemberBean mb = memberService.queryMember(1);
 		session.setAttribute("LoginOK", mb);
 		RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
 		rd.forward(request, response);
 	}
+	
 }

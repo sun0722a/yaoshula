@@ -151,8 +151,9 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			
+<%-- 				<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}"> --%>
 				<!-- 內容物=================================== -->
+<%-- 				<c:if test="${checkedMap.value=='y'}"> --%>
 				
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -186,33 +187,16 @@ a {
 								<!-- 如果沒有規格 就寫無 -->
 								<c:choose>
 									<c:when
-										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}"> 無 </c:when>
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
 									<c:otherwise>
-<%-- 										<select name="format" value="" id="newFmt${vs.index}" --%>
-<!-- 											style="max-width: 100%;" -->
-<%-- 											onchange="modifyFormat('${cartMap.key}',${vs.index})"> --%>
 											<c:choose>
 												<c:when test="${(orderMap.key.formatContent2=='')}">
-<%-- 													<c:forEach var="productSet" items="${orderMap.value}"> --%>
-<%-- 														<option value="${productSet.formatContent1}" --%>
-<%-- 															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)}"> selected </c:if>>${productSet.formatContent1}</option> --%>
-<%-- 															<option value="${productSet.formatContent1}" --%>
-<%-- 															>${productSet.formatContent1}</option> --%>
-<%-- 													</c:forEach> --%>
 													<span>${orderMap.key.formatContent1}</span>
 												</c:when>
 												<c:otherwise>
-<!-- 													<select> -->
-<!-- 														<option -->
-<%-- 															value="${productSet.formatContent1},${productSet.formatContent2}"  --%>
-<%-- 															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)&&(orderMap.key.formatContent2==productSet.formatContent2)}"> selected --%>
-<%-- 															 </c:if>>${productSet.formatContent1},${productSet.formatContent2} --%>
-<!-- 														</option> -->
-<!-- 													</select> -->
-													<span style="color:#5B616A;">${orderMap.key.formatContent1},${orderMap.key.formatContent2}</span>
+													<span style="color:#5B616A;">${orderMap.key.formatContent1} ${orderMap.key.formatContent2}</span>
 												</c:otherwise>
 											</c:choose>
-<!-- 										</select> -->
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -250,15 +234,18 @@ a {
 						</div>
 					</c:forEach>
 				</c:forEach>
-						
-
+<%-- 				</c:if>		 --%>
+<%-- 				</c:forEach> --%>
+				
 				<hr class="m-0" style="background: black;" />
 				<!-- 總金額================================================= -->
 				<div class="row p-2">
 					<div class="col-5"></div>
 					<div
 						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
-						總金額： $ <span id="totalPrice"></span>
+						總金額： $ <span id="totalPrice" class="mr-5"></span>
+						<span><a 
+						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i class="fas fa-arrow-left "></i></a></span>
 					</div>
 				</div>
 		</div>

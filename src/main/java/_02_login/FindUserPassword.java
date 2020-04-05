@@ -27,7 +27,7 @@ public class FindUserPassword implements Filter{
 			HttpServletRequest req = (HttpServletRequest) request;
 			
 			String cookieName = "";
-			String userId = "";
+			String memberId = "";
 			String password = "";
 			String rememberMe = "";
 			
@@ -36,8 +36,8 @@ public class FindUserPassword implements Filter{
 				for(int i = 0;i<cookies.length;i++) {
 					cookieName = cookies[i].getName();
 					
-					if(cookieName.equals("user")) {
-						userId = cookies[i].getValue();
+					if(cookieName.equals("memberId")) {
+						memberId = cookies[i].getValue();
 					}else if(cookieName.equals("password")) {
 //						String tmp = cookies[i].getValue();
 						 password = cookies[i].getValue();
@@ -57,10 +57,10 @@ public class FindUserPassword implements Filter{
 				;
 			}
 			System.out.println(rememberMe);
-			System.out.println(userId);
+			System.out.println(memberId);
 			System.out.println(password);
 			request.setAttribute("rememberMe",rememberMe);
-			request.setAttribute("user", userId);
+			request.setAttribute("memberId", memberId);
 			request.setAttribute("password", password);
 		}
 		chain.doFilter(request, response);

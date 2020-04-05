@@ -156,7 +156,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="<c:url value='/_04_order/checkOrder.jsp' />" >
+			<form action="<c:url value='/CartToCheckServlet' />" >
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -187,7 +187,7 @@ a {
 								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
 								<c:choose>
 									<c:when
-										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}"> 無 </c:when>
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
 									<c:otherwise>
 										<select name="format" value="" id="newFmt${vs.index}"
 											style="max-width: 100%;"

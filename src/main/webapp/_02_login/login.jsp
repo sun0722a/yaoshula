@@ -35,11 +35,11 @@
 		name="LoginForm">
 		<h2>登入</h2>
 		<div>
-			<input type="text" name="userId" placeholder="帳號"
-				value="${requestScope.user}${param.userId}">
+			<input type="text" name="memberId" placeholder="帳號"
+				value="${requestScope.memberId}${param.memberId}">
 			<p class="error">${ErrorMsgKey.AccountEmptyError}</p>
 			<input type="password" name="password" placeholder="密碼"
-				value="${requestScope.password}${param.pswd}">
+				value="${requestScope.password}${param.password}">
 			<p class="error">${ErrorMsgKey.PasswordEmptyError}</p>
 		</div>
 

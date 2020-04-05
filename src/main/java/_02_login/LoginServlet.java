@@ -43,11 +43,11 @@ public class LoginServlet extends HttpServlet {
 
 		request.setAttribute("ErrorMsgKey", errorMsgMap);
 
-		String userId = request.getParameter("userId");
+		String memberId = request.getParameter("memberId");
 		String password = request.getParameter("password");
 		String rm = request.getParameter("rememberMe");
 
-		if (userId == null || userId.trim().length() == 0) {
+		if (memberId == null || memberId.trim().length() == 0) {
 			errorMsgMap.put("AccountEmptyError", "帳號欄必須輸入");
 
 		}
@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 
 		// 如果記住帳密 打勾 rm字串裡面就不會是null
 		if (rm != null) {
-			cookieUser = new Cookie("user", userId);
+			cookieUser = new Cookie("memberId", memberId);
 			cookieUser.setMaxAge(30 * 24 * 60 * 60); // cookie存活期一個月
 			cookieUser.setPath(request.getContextPath());
 
@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 			cookieRememberMe.setPath(request.getContextPath());
 			// 如果使用者沒有按下記住帳密 就不會保存帳號密碼的cookie
 		} else {
-			cookieUser = new Cookie("user", userId);
+			cookieUser = new Cookie("memberId", memberId);
 			cookieUser.setMaxAge(0);
 			cookieUser.setPath(request.getContextPath());
 
@@ -107,7 +107,7 @@ public class LoginServlet extends HttpServlet {
 		MemberBean mb = null;
 
 		try {
-			mb = memberService.checkIdPassword(userId, password);
+			mb = memberService.checkIdPassword(memberId, password);
 			if (mb != null) {
 				session.setAttribute("LoginOK", mb);
 			} else {
