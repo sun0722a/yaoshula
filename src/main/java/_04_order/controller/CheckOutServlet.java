@@ -48,7 +48,7 @@ public class CheckOutServlet extends HttpServlet {
 //		}
 		ShoppingCart cart = new ShoppingCart();
 		session.setAttribute("ShoppingCart", cart);
-		
+
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
 		System.out.println(productIdStr);

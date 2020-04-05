@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,8 +19,10 @@ import javax.servlet.http.HttpSession;
 
 import _01_register.model.MemberBean;
 
-@WebFilter(urlPatterns = { "/*" }, initParams = { @WebInitParam(name = "url_1", value = "/_03_personPage/personPage.jsp"),
-		@WebInitParam(name = "url_2", value = "/order/*") })
+@WebFilter(urlPatterns = { "/*" }, initParams = {
+		@WebInitParam(name = "url_1", value = "/_03_personPage/personPage.jsp"),
+		@WebInitParam(name = "url_2", value = "/order/*"),
+		@WebInitParam(name = "url_3", value = "/article/AddArticle") })
 public class LoginFilter implements Filter {
 
 	List<String> url = new ArrayList<String>();
@@ -29,6 +30,7 @@ public class LoginFilter implements Filter {
 	String contextPath;
 //	String requestURI;
 	String queryString;
+
 	public LoginFilter() {
 
 	}
@@ -56,7 +58,7 @@ public class LoginFilter implements Filter {
 //			requestURI =req.getRequestURI();
 //			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
 //			queryString = req.getQueryString();
-			
+
 			if (mustLogin(servletPath)) {
 				if (checkLogin(req)) {
 					// 需要登入 但已經登入

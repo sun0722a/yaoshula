@@ -48,7 +48,7 @@ public class CartServlet extends HttpServlet {
 			cart = new ShoppingCart();
 			session.setAttribute("ShoppingCart", cart);
 		}
-		
+
 		// 取得瀏覽器傳來的資料
 		String productIdStr = session.getAttribute("productId").toString();
 		Integer productId = Integer.parseInt(productIdStr.trim());
@@ -76,10 +76,10 @@ public class CartServlet extends HttpServlet {
 			if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
 				// 正確規格，則把productFormatId存下來
 				productFormatId = pfb.getProductFormatId();
-				
+
 			}
 		}
-		
+
 		// 如果找不到規格相同的商品，就不做事
 		if (productFormatId == 0) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
@@ -92,8 +92,7 @@ public class CartServlet extends HttpServlet {
 
 		// 為了之後能抓選取的勾勾(預設為勾起來)[y, n]
 		cart.addToCart(productFormatId, oib, formats);
-		
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
 		return;

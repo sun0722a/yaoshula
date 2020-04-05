@@ -13,8 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 @WebFilter("/_02_login/login.jsp")
 public class FindUserPassword implements Filter{
 	String requestURI;
