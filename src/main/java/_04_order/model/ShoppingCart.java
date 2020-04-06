@@ -121,7 +121,25 @@ public class ShoppingCart {
 	public int getItemNumber() {
 		return cart.size();
 	}
-
+	
+	public int getFinalSubtotal() {
+		Integer finalTotal = 0;
+		Set<Integer> set = cart.keySet();
+		Set<Integer> checkedSet = checkedMap.keySet();
+		for (Integer n : set) {
+			for(Integer j : checkedSet) {
+				if(n.equals(j) && checkedMap.get(j).equals("y")) {
+			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = cart.get(n);
+			OrderItemBean oib = orderMap.keySet().iterator().next();
+			Integer price = oib.getUnitPrice();
+			Integer quantity = oib.getQuantity();
+			finalTotal += price * quantity;
+				}
+		}
+		}
+		return finalTotal;
+	}
+	
 	// 計算購物車內的商品價格加總
 	public int getSubtotal() {
 		Integer subTotal = 0;

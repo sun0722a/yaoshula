@@ -2,7 +2,7 @@ function doFirst() {
 	count = document.getElementsByClassName("count");
 	allCheck = document.getElementById("allCheck");
 	choose = document.getElementsByClassName("choose");
-
+	
 	for (let i = 0; i < choose.length; i++) {
 		choose[i].addEventListener("change", checkMoney);
 	}
@@ -14,7 +14,7 @@ function doFirst() {
 function checkMoney() {
 	singleTotal = document.getElementsByClassName("singleTotal");
 	totalPrice = document.getElementById("totalPrice");
-
+	subTotal = document.getElememtById("subTotal");
 	let totalMoney = 0;
 	for (let i = 0; i < choose.length; i++) {
 		if (choose[i].checked) {
@@ -22,7 +22,7 @@ function checkMoney() {
 		}
 	}
 	totalPrice.innerText = totalMoney;
-
+	subTotal = totalMoney;
 	// 檢查全選
 	allChecked = true;
 	for (let i = 0; i < choose.length; i++) {

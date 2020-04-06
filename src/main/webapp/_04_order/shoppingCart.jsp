@@ -156,7 +156,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="<c:url value='/CartToCheckServlet' />" >
+			<form action="<c:url value='/_04_order/checkOrder.jsp' />" >
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">

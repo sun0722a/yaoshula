@@ -93,6 +93,7 @@ public class CartServlet extends HttpServlet {
 		// 為了之後能抓選取的勾勾(預設為勾起來)[y, n]
 		cart.addToCart(productFormatId, oib, formats);
 		System.out.println("checkedMapKey:" + cart.getCheckedMap().keySet());
+		System.out.println("checkedMapValues:" + cart.getCheckedMap().values());
 		System.out.println("cartKey" + cart.getContent().keySet());
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
