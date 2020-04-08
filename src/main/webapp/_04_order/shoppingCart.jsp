@@ -22,6 +22,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <script type="text/javascript">
+var n;
+var key;
 	function deleteCart(n) {
 		document.forms[0].action = "<c:url value='/order/updateShoppingCart?cmd=DEL&productFormatId="
 				+ n + "' />";
