@@ -11,7 +11,7 @@
     
     <context:property-placeholder location="classpath:db.properties"/>
     
-    <context:component-scan base-package="_01_register _02_login _03_personPage _04_order _05_product _06_article" />
+    <context:component-scan base-package="_01_register, _02_login, _03_personPage, _04_order, _05_product, _06_article" />
    
     <bean id="dataSource" destroy-method='close' scope="prototype"
       class="com.mchange.v2.c3p0.ComboPooledDataSource" >

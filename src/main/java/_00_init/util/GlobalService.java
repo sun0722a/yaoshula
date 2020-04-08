@@ -323,7 +323,7 @@ public class GlobalService {
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				detail += line;
-				detail += "\n";
+				detail += "<br>";
 			}
 		}
 		return detail;

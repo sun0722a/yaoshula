@@ -1,12 +1,16 @@
-function doFirst(){
-    type = document.getElementById('type');
-    typeTitle = document.getElementById('typeTitle');
-    // select = false;
-    type.addEventListener('change',removeType);
-}
-function removeType(){
-    typeTitle.remove();
-    // select=true;
-}
+function doFirst() {
+  articlePicture = document.getElementById("articlePicture");
+  fileSelect = document.getElementById("fileSelect");
 
-window.addEventListener('load',doFirst);
+  fileSelect.addEventListener("change", function() {
+    readFile = new FileReader();
+    readFile.readAsDataURL(fileSelect.files[0]);
+    readFile.addEventListener("load", function() {
+      source = this.result;
+      articlePicture.src = source;
+      articlePicture.style.maxWidth = "200px";
+      articlePicture.style.maxHeight = "100px";
+    });
+  });
+}
+window.addEventListener("load", doFirst);

@@ -1,7 +1,6 @@
 package _01_register.dao.impl;
 
 import java.sql.Connection;
-
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -12,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import _00_init.util.HibernateUtils;
 import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 

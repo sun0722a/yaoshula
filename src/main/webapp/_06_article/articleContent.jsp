@@ -1,38 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>要抒啦--文章內容</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
 </head>
 <body>
 	<div class="w-75 border">
-        <div>
-            <p class="">檢舉</p>
-            <img class="rounded-circle border border-dark" style="float: left;height: 100px;width: 100px;">
-            <div class="ml-4 my-auto" style="float: left;height: 100px;">
-                <div>標題 版別</div>
-                <div>帳號</div>
-                <div>日期</div>
-            </div>
-            <div class="" style="clear: both;">內容</div>
-            <div class="d-flex">
-                愛心留言數
-            </div>
-        </div>
-        <div></div>
-    </div>
-    <form action="">
-        <div class="border w-75 d-flex" style="position: fixed;bottom: 2%;">
-            <img class="rounded-circle border-dark border my-auto" style="width: 50px;height: 50px;" src="" alt="">
-            <p>留言：</p>
-            <textarea class="w-75" name="" id="" cols="" rows="2"></textarea>
-            <input class="ml-1 my-auto" type="submit" style="height: 40px;" value="送出">
-        </div>
-    </form>
+		<div>
+			<a href="">檢舉</a> 
+			<img
+				src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
+				class="rounded-circle border border-dark"
+				style="float: left; height: 100px; width: 100px;">
+			<div class="ml-4 my-auto" style="float: left; height: 100px;">
+				<div>${article.title}${article.category.categoryName}</div>
+				<div>${article.authorName}</div>
+				<div>
+					<fmt:formatDate value="${article.publishTime}"
+						pattern="yyyy-MM-dd HH:mm" />
+				</div>
+			</div>
+			<img src="${pageContext.request.contextPath}/init/getArticleImage?id=${article.articleId}" style="max-width: 200px; max-height: 100px;">
+			<div class="" style="clear: both;">${content}</div>
+			<div class="d-flex">
+				愛心：${article.likes} 留言數：
+				<c:choose>
+					<c:when test="${not empty entry.value.articleComments}">
+						<c:forEach var="comments" items="${entry.value.articleComments}"
+							varStatus="number">
+							<c:if test="${number.last}">${number.count}</c:if>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>0</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+		<!-- 		留言區=========================================== -->
+		<c:forEach var="entry" varStatus="number" items="${comment_set}">
+			<hr>
+			<img
+				src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.authorId}"
+				class="rounded-circle border border-dark"
+				style="float: left; height: 100px; width: 100px;">
+			<div class="ml-4 my-auto" style="float: left; height: 100px;">
+				<div>${entry.authorName}</div>
+				<div>
+					B${number}
+					<fmt:formatDate value="${entry.publishTime}"
+						pattern="yyyy-MM-dd HH:mm" />
+				</div>
+			</div>
+			<div class="" style="clear: both;">${entry.content}</div>
+			<div class="d-flex">${entry.likes}</div>
+		</c:forEach>
+	</div>
+	<!-- 	可留言處============================ -->
+	<form method="POST" action="<c:url value='/article/AddComment'/>" >
+		<div class="border w-75 d-flex" style="position: fixed; bottom: 2%;">
+			<img class="rounded-circle border-dark border my-auto"
+				style="width: 50px; height: 50px;"
+				src="${pageContext.request.contextPath}/init/getUserImage?id=${LoginOK.id}">
+			<p>留言：</p>
+			<textarea class="w-75" name="content" id="" cols="" rows="2"></textarea>
+			<input class="ml-1 my-auto" type="submit" style="height: 40px;"
+				value="送出">
+		</div>
+	</form>
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
