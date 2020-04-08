@@ -63,13 +63,15 @@ public class ProcessOrderServlet extends HttpServlet {
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
 //		String totalPriceStr = request.getParameter("totalPrice").toString(); // 總金額
 		Integer totalPrice = cart.getFinalSubtotal();
+		String city = request.getParameter("county"); // 訂購人地址
+		String area = request.getParameter("district"); // 訂購人地址
 		String address = request.getParameter("address"); // 訂購人地址
 		String phone = request.getParameter("phone"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
 //		System.out.println("total:" + totalPrice);
-		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
-				"待出貨", null);
+		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, city + area + address, phone, note, today,
+				null, null, "待出貨", null);
 		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
 		Map<Integer, String> finalContent = cart.getCheckedMap();
 		Set<OrderItemBean> items = new LinkedHashSet<>();

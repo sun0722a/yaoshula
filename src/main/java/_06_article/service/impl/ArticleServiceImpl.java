@@ -12,6 +12,7 @@ import _06_article.dao.ArticleDao;
 import _06_article.dao.impl.ArticleDaoImpl_Hibernate;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
+import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
 
 public class ArticleServiceImpl implements ArticleService {
@@ -31,6 +32,22 @@ public class ArticleServiceImpl implements ArticleService {
 		try {
 			tx = session.beginTransaction();
 			dao.insertArticle(ab);
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+	}
+
+	@Override
+	public void insertComment(CommentBean cb) {
+		Session session = factory.getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			dao.insertComment(cb);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null)
