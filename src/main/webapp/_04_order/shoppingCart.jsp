@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,16 +77,25 @@ a {
 	<div class="top_area">
 
 		<div class="logo">
-			<a href="<c:url value='#' />"> <img
-				src="img/logo_transparent.png" style="width: 100px; height: 100px;"
-				alt="">
+			<a href="<c:url value='/index.jsp' />"> 
+			<img
+				src="${pageContext.request.contextPath}/image/logo.png"
+				 style="width: 100px; height: 100px;">
 			</a>
 		</div>
 		<div class="top-space"></div>
-		<a class="nav-link dropdown-toggle text-dark"
-			href="<c:url value='#' />" id="navbarDropdown" role="button"
-			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			登入 </a>
+		<c:choose>
+			<c:when test="${ ! empty LoginOK }">
+			   <a href="<c:url value='/_02_login/logout.jsp' />">
+  				登出 <i class="fas fa-sign-out-alt"></i>
+	           </a>
+			</c:when>
+			<c:otherwise>
+				<a href="<c:url value='/_02_login/login.jsp'/>">
+  				登入
+	           </a>
+			</c:otherwise>
+			</c:choose>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="#">Another action</a>
 			<div class="dropdown-divider"></div>
@@ -118,13 +127,14 @@ a {
 
 	<div class="cart-box p-2">
 		<h1>購物車</h1>
+		
 		<!-- 標題======================================== -->
 		<div class="items-menu border border-dark">
 			<!-- <hr style="background: black;" /> -->
 			<div class="row p-2">
 				<div
 					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
-					<input type="checkbox" id="allCheck" onchange="changeAll()"/>
+					<input type="checkbox" id="allCheck" onchange="changeAll()" />
 				</div>
 				<div
 					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
@@ -148,7 +158,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="">
+			<form action="<c:url value='/_04_order/checkOrder.jsp' />" >
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -157,7 +167,14 @@ a {
 						<div class="row p-2 cartItem">
 							<div
 								class="col-1 d-flex justify-content-center align-items-center">
-								<input type="checkbox" class="choose" <c:if test="${fn:startsWith(cartMap.key,'y')}"> checked </c:if> onchange="changeChoose(${cartMap.key},${vs.index})"/>
+								<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}">
+									<c:if test="${checkedMap.key==cartMap.key}">
+										<input type="checkbox" class="choose"
+											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
+											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
+											
+									</c:if>
+								</c:forEach>
 							</div>
 							<div
 								class="col-2 d-flex justify-content-center align-items-center">
@@ -172,17 +189,17 @@ a {
 								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
 								<c:choose>
 									<c:when
-										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}"> 無 </c:when>
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
 									<c:otherwise>
 										<select name="format" value="" id="newFmt${vs.index}"
 											style="max-width: 100%;"
-											onchange="modifyFormat(${cartMap.key},${vs.index})">
+											onchange="modifyFormat('${cartMap.key}',${vs.index})">
 											<c:choose>
 												<c:when test="${(orderMap.key.formatContent2=='')}">
-														<c:forEach var="productSet" items="${orderMap.value}">
-															<option value="${productSet.formatContent1}"
-																<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)}"> selected </c:if>>${productSet.formatContent1}</option>
-														</c:forEach>
+													<c:forEach var="productSet" items="${orderMap.value}">
+														<option value="${productSet.formatContent1}"
+															<c:if test="${(orderMap.key.formatContent1==productSet.formatContent1)}"> selected </c:if>>${productSet.formatContent1}</option>
+													</c:forEach>
 												</c:when>
 												<c:otherwise>
 													<c:forEach var="productSet" items="${orderMap.value}">
@@ -205,7 +222,7 @@ a {
 								style="padding: 0px;">
 								<select name="count" id="newQty${vs.index}"
 									style="max-width: 100%;"
-									onchange="modifyQuantity(${cartMap.key},${vs.index})">
+									onchange="modifyQuantity('${cartMap.key}',${vs.index})">
 									<c:forEach begin="1" end="10" var="number">
 										<option value="${number}"
 											<c:if test="${orderMap.key.quantity==number}"> selected </c:if>>${number}</option>
@@ -218,7 +235,8 @@ a {
 							</div>
 							<div
 								class="col-1 d-flex justify-content-center align-items-center">
-								<button class="cancel p-0" onclick="deleteCart(${cartMap.key})">
+								<button class="cancel p-0"
+									onclick="deleteCart('${cartMap.key}')">
 									<img
 										src="${pageContext.request.contextPath}/image/_04_order/trash.png"
 										style="max-width: 100%;" />
@@ -238,7 +256,9 @@ a {
 						總金額： $ <span id="totalPrice"></span>
 					</div>
 					<div class="col-3 d-flex justify-content-center align-items-center">
-						<input type="button" value="確認訂單" style="max-width: 100%;" />
+						<input type="submit" value="確認訂單" style="max-width: 100%;" class="mr-4"/>
+						<span><a 
+						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i class="fas fa-arrow-left"></i></a></span>
 					</div>
 				</div>
 			</form>

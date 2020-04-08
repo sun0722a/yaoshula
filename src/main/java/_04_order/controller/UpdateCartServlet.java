@@ -44,10 +44,14 @@ public class UpdateCartServlet extends HttpServlet {
 			return;
 		}
 
-		// cmd可能是DEL或是MOD
+		// cmd可能是DEL或是QTY或是FMT或是CHS或是CSA
 		String cmd = request.getParameter("cmd");
+		// productFormatId= 'y'or 'n' +productFormatId
 		String productFormatIdStr = request.getParameter("productFormatId");
-		int productFormatId = Integer.parseInt(productFormatIdStr.trim());
+		int productFormatId = 0;
+		if (productFormatIdStr != null) {
+			productFormatId = Integer.parseInt(productFormatIdStr);
+		}
 
 		if (cmd.equalsIgnoreCase("DEL")) {
 			// 刪除購物車內的某項商品
@@ -79,6 +83,18 @@ public class UpdateCartServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
 			rd.forward(request, response);
 			return;
+		} else if (cmd.equalsIgnoreCase("CHS")) {
+			String choose = request.getParameter("choose");
+			// 修改某項商品的選擇項
+			sc.changeChecked(productFormatId, choose);
+			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
+			rd.forward(request, response);
+		} else if (cmd.equalsIgnoreCase("CSA")) {
+			String chooseAll = request.getParameter("chooseAll");
+			// 修改全部商品的選擇項
+			sc.changeAllChecked(chooseAll);
+			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
+			rd.forward(request, response);
 		}
 	}
 }

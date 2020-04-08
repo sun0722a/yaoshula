@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,15 +19,18 @@ import javax.servlet.http.HttpSession;
 
 import _01_register.model.MemberBean;
 
-@WebFilter(urlPatterns = { "/*" }, initParams = { @WebInitParam(name = "url_1", value = "/_03_personPage/personPage.jsp"),
-		@WebInitParam(name = "url_2", value = "/order/*") })
+@WebFilter(urlPatterns = { "/*" }, initParams = {
+		@WebInitParam(name = "url_1", value = "/_03_personPage/personPage.jsp"),
+		@WebInitParam(name = "url_2", value = "/order/*"),
+		@WebInitParam(name = "url_3", value = "/article/AddArticle") })
 public class LoginFilter implements Filter {
 
 	List<String> url = new ArrayList<String>();
 //	String servletPath;
-//	String contextPath;
+	String contextPath;
 //	String requestURI;
 	String queryString;
+
 	public LoginFilter() {
 
 	}
@@ -39,8 +41,9 @@ public class LoginFilter implements Filter {
 			String name = e.nextElement();
 			String value = fConfig.getInitParameter(name);
 			url.add(value);
-//				String path = e.nextElement();
-//				url.add(fConfig.getInitParameter(path));
+			System.out.println(name);
+			System.out.println(value);
+
 		}
 	}
 
@@ -51,11 +54,11 @@ public class LoginFilter implements Filter {
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpServletResponse resp = (HttpServletResponse) response;
 			String servletPath = req.getServletPath();
-//			contextPath = req.getContextPath();
+			contextPath = req.getContextPath();
 //			requestURI =req.getRequestURI();
 //			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
 //			queryString = req.getQueryString();
-			
+
 			if (mustLogin(servletPath)) {
 				if (checkLogin(req)) {
 					// 需要登入 但已經登入
@@ -63,8 +66,8 @@ public class LoginFilter implements Filter {
 				} else {
 					HttpSession session = req.getSession();
 					session.setAttribute("target", servletPath);
-					RequestDispatcher rd = request.getRequestDispatcher("/_02_login/login.jsp");
-					rd.forward(req, resp);
+					resp.sendRedirect(contextPath + "/_02_login/login.jsp");
+					return;
 				}
 			} else { // 如果不用登入 就直接交棒給要執行的程式
 				chain.doFilter(request, response);

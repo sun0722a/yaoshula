@@ -70,8 +70,8 @@
 				<tr>
 					<td class="personalTitle"><font size="3" color="red">*</font>
 						帳號：&nbsp&nbsp</td>
-					<td class="tdInput"><input id="userName" name="userName"
-						value="${mb.name}" placeholder="不能含有特殊字元" required="required"
+					<td class="tdInput"><input id="userName" name="memberId"
+						value="${mb.memberId}" placeholder="不能含有特殊字元" required="required"
 						type="text" class="contentText"
 						onkeyup="value=value.replace(/[\W]/g,'')" /></td>
 					<td><input type="button" id="btUserName" value="檢查帳號" /></td>
@@ -130,7 +130,7 @@
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>
 					<td class="tdInput"><input name="phone"
-						placeholder="0912345678" value="${mb.cellphone}" type="text"
+						placeholder="0912345678" value="${mb.phone}" type="text"
 						class="contentText" maxlength="10"
 						onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
 				</tr>

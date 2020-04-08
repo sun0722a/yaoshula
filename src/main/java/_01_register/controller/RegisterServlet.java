@@ -50,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
 		Map<String, String> errorMsg = new HashMap<String, String>();
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
-		String userName = "";
+		String memberId = "";
 		String password = "";
 		String gender = "";
 		String address = "";
@@ -72,8 +72,8 @@ public class RegisterServlet extends HttpServlet {
 
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
-					if (fldName.equals("userName")) {
-						userName = value;
+					if (fldName.equals("memberId")) {
+						memberId = value;
 					} else if (fldName.equals("password")) {
 						password = value;
 					} else if (fldName.equals("gender")) {
@@ -116,8 +116,8 @@ public class RegisterServlet extends HttpServlet {
 		// 呼叫MemberDao的idExists方法(經由MemberService)
 		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
 		MemberService service = new MemberServiceImpl();
-		if (service.idExists(userName)) {
-			userName = "";
+		if (service.idExists(memberId)) {
+			memberId = "";
 			errorMsg.put("errorId", "此帳號已存在");
 		}
 		// 檢查信箱是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
@@ -134,7 +134,7 @@ public class RegisterServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
-			MemberBean mb = new MemberBean(null, userName, password, gender, birthday, email, phone, address, fileName,
+			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, address, fileName,
 					blob, ts, "正常", "一般會員");
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {

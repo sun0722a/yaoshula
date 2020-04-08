@@ -42,7 +42,7 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		
+
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
@@ -55,25 +55,36 @@ public class ProcessOrderServlet extends HttpServlet {
 //			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
 //			return;
 //		}
-		String memberId = mb.getName();
+		
+		Integer memberId = mb.getId();
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
-		Integer totalPrice = cart.getSubtotal(); // 總金額
+//		String totalPriceStr = request.getParameter("totalPrice").toString(); // 總金額
+		Integer totalPrice = cart.getFinalSubtotal();
 		String address = request.getParameter("address"); // 訂購人地址
 		String phone = request.getParameter("phone"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
-
+		System.out.println("total:" + totalPrice);
 		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
 				"待出貨", null);
 		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
-
+		Map<Integer,String> finalContent = cart.getCheckedMap();
 		Set<OrderItemBean> items = new LinkedHashSet<>();
+		
 		Set<Integer> set = content.keySet();
+		Set<Integer> checkedSet = cart.getCheckedMap().keySet();
+		
 		for (Integer i : set) {
-			Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
-			OrderItemBean oib = orderMap.keySet().iterator().next();
-			oib.setOrderBean(ob);
-			items.add(oib);
+			for(Integer j : checkedSet) {
+					if(i.equals(j) && finalContent.get(j).equals("y")) {
+
+						Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
+						OrderItemBean oib = orderMap.keySet().iterator().next();
+						oib.setOrderBean(ob);
+						items.add(oib);
+						}
+				}
+
 		}
 
 		ob.setOrderItems(items);

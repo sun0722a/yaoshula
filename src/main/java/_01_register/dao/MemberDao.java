@@ -12,9 +12,11 @@ public interface MemberDao {
 
 	public boolean emailExists(String email);
 
+//	public MemberBean queryMember(String id);
+	
 	public MemberBean queryMember(int id);
 
-	public MemberBean checkIdPassword(String userId, String password);
+	public MemberBean checkIdPassword(String memberId, String password);
 
 	public int updateMember(MemberBean mb);
 

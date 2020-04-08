@@ -12,7 +12,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/js/_04_order/cartCheck.js"></script>
+	src="${pageContext.request.contextPath}/js/_04_order/shoppingCart.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <link rel="stylesheet"
@@ -35,19 +35,24 @@ a {
 	<div class="top_area">
 
 		<div class="logo">
-			<a href=""> <img src="img/logo_transparent.png"
+			<a href="<c:url value='/index.jsp' />">
+			<img src="${pageContext.request.contextPath}/image/logo.png"
 				style="width: 100px; height: 100px;" alt="">
 			</a>
 		</div>
 		<div class="top-space"></div>
-		<a class="nav-link dropdown-toggle text-dark" href="#"
-			id="navbarDropdown" role="button" data-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false"> 登入 </a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="#">Another action</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="#">Something else here</a>
-		</div>
+		<c:choose>
+			<c:when test="${ ! empty LoginOK }">
+			   <a href="<c:url value='/_02_login/logout.jsp' />">
+  				登出 <i class="fas fa-sign-out-alt"></i>
+	           </a>
+			</c:when>
+			<c:otherwise>
+				<a href="<c:url value='/_02_login/login.jsp'/>">
+  				登入
+	           </a>
+			</c:otherwise>
+			</c:choose>
 	</div>
 	<ul id="a-style">
 		<div class="test">
@@ -69,58 +74,149 @@ a {
 		</div>
 	</ul>
 
-	<div class="cart-box">
-		<div>確認訂單</div>
-		<div class="items-menu">
-			<hr style="background: black;">
-			<div class="cart-text">
-				<div class="text-items">商品圖片</div>
-				<div class="text-items">商品名稱</div>
-				<div class="text-items">規格</div>
-				<div class="text-items">單價</div>
-				<div class="text-items">數量</div>
-				<div class="text-items">總價</div>
-			</div>
-			<hr style="background: black;">
-
-			<section>
-				<table>
-					<div class="d-flex justify-content-around align-items-center">
-						<div class="items-detail col-2" style="margin-bottom: 5px;">
-							<img class="col-12"
-								src="${pageContext.request.contextPath}/init/getProductImage?id=${productInfo.productId}">
-						</div>
-						<div class="items-detail col-2 text-center">${productName}</div>
-						<div class="items-detail col-2 text-center tx-sm"
-							style="font-size: small">${content1}${content2}</div>
-						<div class="items-detail col-2 text-center" id="cost">${price}</div>
-						<div class="amount items-detail col-2 text-center"
-							style="font-size: small;">${qty}</div>
-						<div class="total items-detail col-2 text-center">
-							<c:out value="${qty*price}" />
-						</div>
-					</div>
-				</table>
-			</section>
-
-
-			<hr style="background: black;">
-			<div class="check">
-				<div class="check-kid">總金額</div>
-				<div class="total">
-					<c:out value="${qty*price}" />
+	<div class="cart-box p-2">
+		<h1 class="m-0">確認訂單</h1>
+		<!-- 標題======================================== -->
+		<div class="items-menu border border-dark">
+			<!-- <hr style="background: black;" /> -->
+			<div class="row p-2">
+				<div
+					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
+					<input type="checkbox" id="allCheck" onchange="changeAll()" disabled />
 				</div>
+				<div
+					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
+					全選</div>
+				<div
+					class="col-2 h5 m-0 d-flex justify-content-center align-items-center">
+					商品名稱</div>
+				<div
+					class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+					規格</div>
+				<div
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					單價</div>
+				<div
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					數量</div>
+				<div
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					總價</div>
+				<div class="col-1 d-flex justify-content-center align-items-center"></div>
 			</div>
-			<hr style="background: black;">
+
+			<hr class="m-0" style="background: black;" />
+				
+				<!-- 內容物=================================== -->
+				
+				
+				<c:forEach var="cartMap" varStatus="vs"
+					items="${ShoppingCart.content}">
+					
+					<c:forEach var="orderMap" items="${cartMap.value}">
+						<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}">
+							<c:if test="${checkedMap.key==cartMap.key}">
+						
+								<c:if test="${checkedMap.value=='y'}">
+
+									<div class="row p-2 cartItem">
+									<div
+										class="col-1 d-flex justify-content-center align-items-center">
+											<input type="checkbox" class="choose" disabled
+											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
+											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
+									</div>
+							<div
+								class="col-2 d-flex justify-content-center align-items-center">
+								
+								<img
+									src="${pageContext.request.contextPath}/init/getProductImage?id=${orderMap.key.productId}"
+									style="max-width: 80%; max-height: 150px;" />
+								
+							</div>
+							<div
+								class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
+								${orderMap.key.productName}</div>
+							<div
+								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+								<!-- 如果沒有規格 就寫無 -->
+								<c:choose>
+									<c:when
+										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
+									<c:otherwise>
+											<c:choose>
+												<c:when test="${(orderMap.key.formatContent2=='')}">
+													<span>${orderMap.key.formatContent1}</span>
+												</c:when>
+												<c:otherwise>
+													<span style="color:#5B616A;">${orderMap.key.formatContent1} ${orderMap.key.formatContent2}</span>
+												</c:otherwise>
+											</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+								$ <span class="singlePrice">${orderMap.key.unitPrice}</span>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
+								style="padding: 0px;">
+
+										<!-- 無法更動數量 -->
+									<span style="color:#5B616A;">${orderMap.key.quantity}</span>
+							</div>
+							<div
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
+								$ <span class="singleTotal">${orderMap.key.unitPrice*orderMap.key.quantity}</span>
+								
+							</div>
+							<div
+								class="col-1 d-flex justify-content-center align-items-center">
+								<i class="fas fa-check"></i>
+			
+							</div>
+						
+						
+						</div>
+						</c:if>		
+						</c:if>
+						</c:forEach>
+					</c:forEach>
+				</c:forEach>
+				
+				
+				
+				<hr class="m-0" style="background: black;" />
+				<!-- 總金額================================================= -->
+				<div class="row p-2">
+					<div class="col-5"></div>
+					<div
+						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
+						總金額： $ <span id="totalPrice" class="mr-5">
+						</span>
+						
+						<span><a 
+						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i class="fas fa-arrow-left "></i></a></span>
+					</div>
+				</div>
 		</div>
+	</div>
 
 
+
+	
 		<form action="<c:url value='/order/orderCheck' />">
-			<div class="row">
+		
+		<div class="items-menu border border-dark p-2" style= "width:80%; margin:50px 10% 0 10%;">
+			<h2>訂單資訊</h2>
+			<hr style="background:black;">
+			<div class="row p-2">
+			
 				<div class="formBox col-7">
 
-					<label for="orderInfo" class="col-sm-6">訂單資訊</label>
-
+<!-- 					<label for="orderInfo" class="col-sm-6">訂單資訊</label> -->
+					
 					<div class="form-group row">
 						<label for="name" class="col-sm-3 ml-3">姓名</label> <input
 							type="text" class="form-control  col-6" name="name" 
@@ -144,31 +240,20 @@ a {
 					</div>
 
 					<button type="submit" class="btn btn-primary ml-3">Submit</button>
-
 				</div>
-				<div class="textAreaBox col-5">
-					<label for="">備註</label>
-					<textarea class="form-control w-75 h-50"></textarea>
+					<div class="textAreaBox col-3">
+							<label for="">備註</label>
+							<textarea class="form-control w-75 h-50" name="note"></textarea>
+					</div>
+				
 				</div>
+				
 			</div>
 		</form>
-	</div>
+			
 
 
 
 
-
-
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
 </body>
 </html>

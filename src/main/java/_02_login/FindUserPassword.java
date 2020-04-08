@@ -13,9 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-@WebFilter("/login/login.jsp")
+@WebFilter("/_02_login/login.jsp")
 public class FindUserPassword implements Filter{
 	String requestURI;
 	public FindUserPassword() {
@@ -29,7 +27,7 @@ public class FindUserPassword implements Filter{
 			HttpServletRequest req = (HttpServletRequest) request;
 			
 			String cookieName = "";
-			String userId = "";
+			String memberId = "";
 			String password = "";
 			String rememberMe = "";
 			
@@ -38,8 +36,8 @@ public class FindUserPassword implements Filter{
 				for(int i = 0;i<cookies.length;i++) {
 					cookieName = cookies[i].getName();
 					
-					if(cookieName.equals("user")) {
-						userId = cookies[i].getValue();
+					if(cookieName.equals("memberId")) {
+						memberId = cookies[i].getValue();
 					}else if(cookieName.equals("password")) {
 //						String tmp = cookies[i].getValue();
 						 password = cookies[i].getValue();
@@ -50,7 +48,7 @@ public class FindUserPassword implements Filter{
 //							
 //						}
 					}
-					else if(cookieName.equals("rm")) {
+					else if(cookieName.equals("rememberMe")) {
 						rememberMe = cookies[i].getValue();
 					}
 				}
@@ -58,9 +56,11 @@ public class FindUserPassword implements Filter{
 			}else {
 				;
 			}
-			
-			request.setAttribute("rm",rememberMe);
-			request.setAttribute("user", userId);
+			System.out.println(rememberMe);
+			System.out.println(memberId);
+			System.out.println(password);
+			request.setAttribute("rememberMe",rememberMe);
+			request.setAttribute("memberId", memberId);
 			request.setAttribute("password", password);
 		}
 		chain.doFilter(request, response);

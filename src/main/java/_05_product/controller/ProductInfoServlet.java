@@ -75,7 +75,6 @@ public class ProductInfoServlet extends HttpServlet {
 			for (ProductFormatBean pfb : formats) {
 				contentSet1.add(pfb.getFormatContent1());
 				contentSet2.add(pfb.getFormatContent2());
-				System.out.println("FormatContent1: " + pfb.getFormatContent1());
 			}
 
 			// 取得Clob

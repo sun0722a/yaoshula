@@ -29,15 +29,12 @@ import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialClob;
 import javax.xml.bind.DatatypeConverter;
 
-import _05_product.model.ProductBean;
-import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
-
 public class GlobalService {
 
 	public static final int RECORDS_PER_PAGE = 6;
 	public static final int RECORDS_PER_FAMOUS = 6;
 	public static final String[] PRODUCT_ARRANGE = { "time", "popular", "price" };
+	public static final String[] ARTICLE_ARRANGE = { "popular", "time" };
 	public static final String SYSTEM_NAME = "要抒拉";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
 
@@ -330,6 +327,11 @@ public class GlobalService {
 			}
 		}
 		return detail;
+	}
+
+	public static Clob stringToClob(String string) throws IOException, SQLException {
+		Clob clob = new SerialClob(string.toCharArray());
+		return clob;
 	}
 
 	public static String extractFileName(String pathName) throws IOException, SQLException {

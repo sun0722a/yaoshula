@@ -49,7 +49,7 @@ public class OrderDaoImpl implements OrderDao {
 		List<OrderBean> list = null;
 		Session session = factory.getCurrentSession();
 		String hql = "FROM OrderBean ob Where ob.memberId = :mid";
-		list = session.createQuery(hql).setParameter("mid", memberId.toString()).getResultList();
+		list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
 		return list;
 	}
 
