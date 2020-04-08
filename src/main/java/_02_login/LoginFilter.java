@@ -41,8 +41,8 @@ public class LoginFilter implements Filter {
 			String name = e.nextElement();
 			String value = fConfig.getInitParameter(name);
 			url.add(value);
-			System.out.println(name);
-			System.out.println(value);
+//			System.out.println(name);
+//			System.out.println(value);
 
 		}
 	}

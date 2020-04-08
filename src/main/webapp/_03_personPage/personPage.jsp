@@ -24,7 +24,7 @@
 	<div class="side_menu">
 		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
 	</div>
-	
+
 	<form action="<c:url value='/personPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
@@ -67,7 +67,8 @@
 				</tr>
 				<tr>
 					<td class="personalTitle">地址：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.address}</td>
+					<td class="personalUpdate"><span id="city">${LoginOK.city}</span><span
+						id="area">${LoginOK.area}</span><span id="address">${LoginOK.address}</span></td>
 				</tr>
 				<tr>
 					<td colspan="2">

@@ -52,6 +52,8 @@ public class UpdatePersonPageServlet extends HttpServlet {
 		MemberBean oldMember = (MemberBean) session.getAttribute("LoginOK");
 		int id = oldMember.getId();
 		String email = "";
+		String city = "";
+		String area = "";
 		String address = "";
 		String phone = "";
 		String fileName = oldMember.getFileName();
@@ -78,11 +80,11 @@ public class UpdatePersonPageServlet extends HttpServlet {
 					} else if (fldName.equals("phone")) {
 						phone = value;
 					} else if (fldName.equals("county")) {
-						address += value;
+						city = value;
 					} else if (fldName.equals("district")) {
-						address += value;
+						area = value;
 					} else if (fldName.equals("address")) {
-						address += value;
+						address = value;
 					}
 				} else { // p.getContentType() = application/octet-stream
 					// 如果有選擇圖片 => 取得檔名&inputStream
@@ -105,8 +107,13 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將可更改的會員資料封裝到MemberBean
+<<<<<<< HEAD
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, address, fileName, blob, null,
 					null, null,null);
+=======
+			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
+					blob, null, null, null);
+>>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 			// 呼叫MemberDao的updateMember方法(經由MemberService)
 //			MemberService service = new MemberServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

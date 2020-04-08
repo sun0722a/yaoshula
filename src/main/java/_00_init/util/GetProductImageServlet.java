@@ -35,16 +35,21 @@ public class GetProductImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
+<<<<<<< HEAD
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
 //			ProductService productService = new ProductServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			ProductService productService = ctx.getBean(ProductService.class);
+=======
+>>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 			int id = 0;
 			try {
 				id = Integer.parseInt(idStr);
 			} catch (NumberFormatException ex) {
 				;
 			}
+			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
+			ProductService productService = new ProductServiceImpl();
 			ProductBean bean = productService.getProduct(id);
 			if (bean != null) {
 				blob = bean.getImage();

@@ -1,6 +1,7 @@
 package _06_article.service;
 
 import java.util.Map;
+import java.util.Set;
 
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
@@ -19,6 +20,8 @@ public interface ArticleService {
 	
 	ArticleCategoryBean getCategory(String categoryTitle, String categoryName);
 
+	Set<String> getCategorys(String categoryTitle);
+	
 //	List<String> getCategory();
 
 //	String getCategoryTag();

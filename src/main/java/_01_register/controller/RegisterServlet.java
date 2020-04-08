@@ -55,6 +55,8 @@ public class RegisterServlet extends HttpServlet {
 		String memberId = "";
 		String password = "";
 		String gender = "";
+		String city = "";
+		String area = "";
 		String address = "";
 		Date birthday = null;
 		String email = "";
@@ -81,11 +83,11 @@ public class RegisterServlet extends HttpServlet {
 					} else if (fldName.equals("gender")) {
 						gender = value;
 					} else if (fldName.equals("county")) {
-						address += value;
+						city = value;
 					} else if (fldName.equals("district")) {
-						address += value;
+						area = value;
 					} else if (fldName.equals("address")) {
-						address += value;
+						address = value;
 					} else if (fldName.equals("birthday")) {
 						try {
 							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -138,8 +140,13 @@ public class RegisterServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
+<<<<<<< HEAD
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, address, fileName,
 					blob, ts, "正常", "一般會員",null);
+=======
+			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
+					address, fileName, blob, ts, "正常", "一般會員");
+>>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
 				request.setAttribute("mb", mb);

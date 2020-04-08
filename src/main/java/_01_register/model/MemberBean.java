@@ -1,6 +1,5 @@
 package _01_register.model;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -11,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
 @Entity
+<<<<<<< HEAD
 @Table(name="Members")
 public class MemberBean implements Serializable{
 	
@@ -37,6 +38,32 @@ public class MemberBean implements Serializable{
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
 			String permission,String token) {
+=======
+@Table(name = "Members")
+public class MemberBean {
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "native")
+	Integer id;
+	String memberId;
+	String password;
+	String gender;
+	Date birthday;
+	String email;
+	String phone;
+	String city;
+	String area;
+	String address;
+	String fileName;
+	Blob picture;
+	Timestamp createTime;
+	String status;
+	String permission;
+
+	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
+			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
+			String status, String permission) {
+>>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -45,6 +72,8 @@ public class MemberBean implements Serializable{
 		this.birthday = birthday;
 		this.email = email;
 		this.phone = phone;
+		this.city = city;
+		this.area = area;
 		this.address = address;
 		this.fileName = fileName;
 		this.picture = picture;
@@ -55,6 +84,7 @@ public class MemberBean implements Serializable{
 	}
 
 	public MemberBean() {
+		super();
 	}
 
 	public Integer getId() {
@@ -113,6 +143,22 @@ public class MemberBean implements Serializable{
 		this.phone = phone;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -161,6 +207,7 @@ public class MemberBean implements Serializable{
 		this.permission = permission;
 	}
 
+<<<<<<< HEAD
 	public String getToken() {
 		return token;
 	}
@@ -170,4 +217,6 @@ public class MemberBean implements Serializable{
 	}
 	
 	
+=======
+>>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 }
