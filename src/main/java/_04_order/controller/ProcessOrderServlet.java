@@ -57,7 +57,7 @@ public class ProcessOrderServlet extends HttpServlet {
 //			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
 //			return;
 //		}
-		
+
 		Integer memberId = mb.getId();
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
 //		String totalPriceStr = request.getParameter("totalPrice").toString(); // 總金額
@@ -66,26 +66,25 @@ public class ProcessOrderServlet extends HttpServlet {
 		String phone = request.getParameter("phone"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
-		System.out.println("total:" + totalPrice);
+//		System.out.println("total:" + totalPrice);
 		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, address, phone, note, today, null, null,
 				"待出貨", null);
 		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
-		Map<Integer,String> finalContent = cart.getCheckedMap();
+		Map<Integer, String> finalContent = cart.getCheckedMap();
 		Set<OrderItemBean> items = new LinkedHashSet<>();
-		
+
 		Set<Integer> set = content.keySet();
 		Set<Integer> checkedSet = cart.getCheckedMap().keySet();
-		
-		for (Integer i : set) {
-			for(Integer j : checkedSet) {
-					if(i.equals(j) && finalContent.get(j).equals("y")) {
 
-						Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
-						OrderItemBean oib = orderMap.keySet().iterator().next();
-						oib.setOrderBean(ob);
-						items.add(oib);
-						}
+		for (Integer i : set) {
+			for (Integer j : checkedSet) {
+				if (i.equals(j) && finalContent.get(j).equals("y")) {
+					Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
+					OrderItemBean oib = orderMap.keySet().iterator().next();
+					oib.setOrderBean(ob);
+					items.add(oib);
 				}
+			}
 
 		}
 

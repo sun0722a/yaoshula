@@ -53,7 +53,7 @@ public class CheckOutServlet extends HttpServlet {
 
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
-		System.out.println(productIdStr);
+//		System.out.println(productIdStr);
 		Integer productId = Integer.parseInt(productIdStr.trim());
 
 //		ProductService service = new ProductServiceImpl();
@@ -65,11 +65,11 @@ public class CheckOutServlet extends HttpServlet {
 		String content1 = request.getParameter("content1") == null ? "":request.getParameter("content1");
 		String content2 = request.getParameter("content2") == null ? "":request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
-		Integer price = pb.getPrice();
+//		Integer price = pb.getPrice();
 
-		System.out.println(price);
-		System.out.println(content1);
-		System.out.println(content2);
+//		System.out.println(price);
+//		System.out.println(content1);
+//		System.out.println(content2);
 		// 如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
