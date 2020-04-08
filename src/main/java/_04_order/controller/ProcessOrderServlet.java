@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -95,7 +96,9 @@ public class ProcessOrderServlet extends HttpServlet {
 			OrderService orderService = ctx.getBean(OrderService.class);
 			orderService.persistOrder(ob);
 			session.removeAttribute("ShoppingCart");
-			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
+//			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
+			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
+			rd.forward(request, response);
 			return;
 		} catch (RuntimeException ex) {
 			String message = ex.getMessage();
