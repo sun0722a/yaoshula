@@ -14,8 +14,6 @@ import _00_init.util.HibernateUtils;
 import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 
-
-
 public class MemberDaoImpl_Hibernate implements MemberDao {
 
 	SessionFactory factory;
@@ -32,7 +30,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		session.save(mb);
 		n++;
 		return n;
-		
+
 	}
 
 	// 判斷參數id(會員帳號)是否已經被現有客戶使用，如果是，傳回true，表示此id不能使用，
@@ -43,13 +41,11 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		String hql = "FROM MemberBean m Where m.memberId = :id";
 		Session session = factory.getCurrentSession();
 		try {
-			session.createQuery(hql)
-					.setParameter("id", id)
-					.getSingleResult();
+			session.createQuery(hql).setParameter("id", id).getSingleResult();
 			exist = true;
-		}catch(NonUniqueResultException e) {
+		} catch (NonUniqueResultException e) {
 			exist = true;
-		}catch(NoResultException e) {
+		} catch (NoResultException e) {
 			exist = false;
 		}
 		return exist;
@@ -63,16 +59,14 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		String hql = "FROM MemberBean m WHERE m.email = :email";
 		Session session = factory.getCurrentSession();
 		try {
-			session.createQuery(hql)
-				   .setParameter("email", email)
-				   .getSingleResult();
+			session.createQuery(hql).setParameter("email", email).getSingleResult();
 			exist = true;
-			
+
 		} catch (NoResultException ex) {
 			exist = false;
 		}
 		return exist;
-		
+
 	}
 
 	// 更新MemberBean物件，將參數mb新增到Memberinfo表格內。
@@ -97,21 +91,18 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 //		}
 //		return n;
 //	}
-	
+
 	@Override
 	public int updateMember(MemberBean mb) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		String hql0 = "UPDATE MemberBean m SET m.email = :email,m.phone = :phone,m.address = :address, "
-				+ "m.fileName = :fileName,m.picture = :picture WHERE m.id = :id";
-		session.createQuery(hql0)
-			   .setParameter("email", mb.getEmail())
-			   .setParameter("phone", mb.getPhone())
-			   .setParameter("address", mb.getAddress())
-			   .setParameter("fileName", mb.getFileName())
-			   .setParameter("picture", mb.getPicture())
-			   .setParameter("id", mb.getId())
-			   .executeUpdate();
+		String hql0 = "UPDATE MemberBean m SET m.email = :email, m.phone = :phone, m.city = :city, "
+				+ "m.area = :area, m.address = :address, m.fileName = :fileName, "
+				+ "m.picture = :picture WHERE m.id = :id";
+		session.createQuery(hql0).setParameter("email", mb.getEmail()).setParameter("phone", mb.getPhone())
+				.setParameter("city", mb.getCity()).setParameter("area", mb.getArea())
+				.setParameter("address", mb.getAddress()).setParameter("fileName", mb.getFileName())
+				.setParameter("picture", mb.getPicture()).setParameter("id", mb.getId()).executeUpdate();
 		n++;
 		return n;
 	}
@@ -133,7 +124,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 //		}
 //		return mb;
 //	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public MemberBean queryMember(int id) {
@@ -141,10 +132,8 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		String hql = "FROM MemberBean m WHERE m.id = :id";
 		Session session = factory.getCurrentSession();
 		List<MemberBean> beans = null;
-		beans = session.createQuery(hql)
-			   .setParameter("id", id)
-			   .getResultList();
-		if(beans.size() > 0) {
+		beans = session.createQuery(hql).setParameter("id", id).getResultList();
+		if (beans.size() > 0) {
 			mb = beans.get(0);
 		}
 		return mb;
@@ -159,11 +148,9 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		List<MemberBean> beans = null;
 		String hql = "FROM MemberBean m WHERE m.memberId = :id and m.password = :password";
 		Session session = factory.getCurrentSession();
-		beans =  session.createQuery(hql)
-						.setParameter("id", memberId)
-						.setParameter("password", password)
-						.getResultList();
-		if(beans.size() > 0) {
+		beans = session.createQuery(hql).setParameter("id", memberId).setParameter("password", password)
+				.getResultList();
+		if (beans.size() > 0) {
 			mb = beans.get(0);
 		}
 		return mb;

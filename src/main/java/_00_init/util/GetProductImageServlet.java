@@ -32,14 +32,14 @@ public class GetProductImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
-			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-			ProductService productService = new ProductServiceImpl();
 			int id = 0;
 			try {
 				id = Integer.parseInt(idStr);
 			} catch (NumberFormatException ex) {
 				;
 			}
+			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
+			ProductService productService = new ProductServiceImpl();
 			ProductBean bean = productService.getProduct(id);
 			if (bean != null) {
 				blob = bean.getImage();

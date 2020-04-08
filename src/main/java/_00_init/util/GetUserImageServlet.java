@@ -31,10 +31,16 @@ public class GetUserImageServlet extends HttpServlet {
 		Blob blob = null;
 		try {
 			// 讀取瀏覽器傳送來的主鍵
-			String id = request.getParameter("id");
+			String idStr = request.getParameter("id");
+			int id = 0;
+			try {
+				id = Integer.parseInt(idStr);
+			} catch (NumberFormatException ex) {
+				;
+			}
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
 			MemberService memberService = new MemberServiceImpl();
-			MemberBean bean = memberService.queryMember(Integer.valueOf(id));
+			MemberBean bean = memberService.queryMember(id);
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {
@@ -62,8 +68,7 @@ public class GetUserImageServlet extends HttpServlet {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			throw new RuntimeException(
-					"_00_init.util.RetrieveUserImageServlet#doGet()發生SQLException: " + ex.getMessage());
+			throw new RuntimeException("_00_init.util.GetUserImageServlet#doGet()發生SQLException: " + ex.getMessage());
 		} finally {
 			if (is != null)
 				is.close();

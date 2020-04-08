@@ -1,6 +1,8 @@
 package _06_article.controller;
 
 import java.io.IOException;
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import _00_init.util.GlobalService;
 import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
@@ -47,23 +50,35 @@ public class ArticleContentServlet extends HttpServlet {
 		// 利用getArticle取得該ID所擁有的資訊
 		ArticleService service = new ArticleServiceImpl();
 		ArticleBean ab = service.getArticle(articleId);
+		String content = "";
+		Clob clob = null;
 		if (ab != null) {
-		Set<CommentBean> comments = ab.getArticleComments();
+			Set<CommentBean> comments = ab.getArticleComments();
 
-		// 把大家暫存到請求物件內
-		request.setAttribute("article", ab);
-		request.setAttribute("comments_set", comments);
+			try {
+				clob = ab.getContent();
+				if (clob != null) {
+					content = GlobalService.clobToString(clob);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			// 把大家暫存到請求物件內
+			request.setAttribute("article", ab);
+			request.setAttribute("comments_set", comments);
+			request.setAttribute("content", content);
 
 //			request.setAttribute("content1", contentSet1);
 //			request.setAttribute("title2", title2);
 //			request.setAttribute("content2", contentSet2);
 //			request.setAttribute("detail", detail);
-		// 設成Session，為了讓CarServlet抓到
+			// 設成Session，為了讓CarServlet抓到
 //		request.setAttribute("articleId", articleId);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");
-		rd.forward(request, response);
-		return;
+			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");
+			rd.forward(request, response);
+			return;
 
 		} else { // 如果找不到Id，回商城首頁
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");

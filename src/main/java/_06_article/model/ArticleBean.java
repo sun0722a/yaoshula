@@ -28,6 +28,7 @@ public class ArticleBean implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer articleId;
 	private String title;
+	private Integer authorId;
 	private String authorName;
 	private Timestamp publishTime;
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -42,12 +43,13 @@ public class ArticleBean implements Serializable {
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 	Set<CommentBean> articleComments = new LinkedHashSet<>();
 
-	public ArticleBean(Integer articleId, String title, String authorName, Timestamp publishTime,
+	public ArticleBean(Integer articleId, String title, Integer authorId, String authorName, Timestamp publishTime,
 			ArticleCategoryBean category, Clob content, String fileName, Blob image, Integer likes, String status,
 			Set<CommentBean> articleComments) {
 		super();
 		this.articleId = articleId;
 		this.title = title;
+		this.authorId = authorId;
 		this.authorName = authorName;
 		this.publishTime = publishTime;
 		this.category = category;
@@ -77,6 +79,14 @@ public class ArticleBean implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Integer getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
 	}
 
 	public String getAuthorName() {

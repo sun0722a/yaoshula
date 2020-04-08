@@ -1,6 +1,5 @@
 package _01_register.model;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -11,30 +10,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name="Members")
-public class MemberBean{
-	
+@Table(name = "Members")
+public class MemberBean {
 	@Id
 	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name="increment", strategy = "native")
-	 Integer id;
-	 String memberId;
-	 String password;
-	 String gender;
-	 Date birthday;
-	 String email;
-	 String phone;
-	 String address;
-	 String fileName;
-	 Blob picture;
-	 Timestamp createTime;
-	 String status;
-	 String permission;
+	@GenericGenerator(name = "increment", strategy = "native")
+	Integer id;
+	String memberId;
+	String password;
+	String gender;
+	Date birthday;
+	String email;
+	String phone;
+	String city;
+	String area;
+	String address;
+	String fileName;
+	Blob picture;
+	Timestamp createTime;
+	String status;
+	String permission;
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
-			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
-			String permission) {
+			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
+			String status, String permission) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -43,6 +44,8 @@ public class MemberBean{
 		this.birthday = birthday;
 		this.email = email;
 		this.phone = phone;
+		this.city = city;
+		this.area = area;
 		this.address = address;
 		this.fileName = fileName;
 		this.picture = picture;
@@ -52,6 +55,7 @@ public class MemberBean{
 	}
 
 	public MemberBean() {
+		super();
 	}
 
 	public Integer getId() {
@@ -110,6 +114,22 @@ public class MemberBean{
 		this.phone = phone;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -157,5 +177,5 @@ public class MemberBean{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-	
+
 }

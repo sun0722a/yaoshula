@@ -1,7 +1,6 @@
 package _06_article.model;
 
 import java.io.Serializable;
-import java.sql.Clob;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -20,19 +19,21 @@ public class CommentBean implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer commentId;
+	private Integer authorId;
 	private String authorName;
 	private Timestamp publishTime;
-	private Clob content;
+	private String content;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_ArticleBean_Article")
 	private ArticleBean article;
 	private Integer likes;
 	private String status;
 
-	public CommentBean(Integer commentId, String authorName, Timestamp publishTime, Clob content, ArticleBean article,
-			Integer likes, String status) {
+	public CommentBean(Integer commentId, Integer authorId, String authorName, Timestamp publishTime, String content,
+			ArticleBean article, Integer likes, String status) {
 		super();
 		this.commentId = commentId;
+		this.authorId = authorId;
 		this.authorName = authorName;
 		this.publishTime = publishTime;
 		this.content = content;
@@ -53,6 +54,14 @@ public class CommentBean implements Serializable {
 		this.commentId = commentId;
 	}
 
+	public Integer getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
+	}
+
 	public String getAuthorName() {
 		return authorName;
 	}
@@ -69,11 +78,11 @@ public class CommentBean implements Serializable {
 		this.publishTime = publishTime;
 	}
 
-	public Clob getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(Clob content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
