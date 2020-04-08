@@ -63,13 +63,13 @@
 		</c:forEach>
 	</div>
 	<!-- 	可留言處============================ -->
-	<form action="">
+	<form method="POST" action="<c:url value='/article/AddComment'/>" >
 		<div class="border w-75 d-flex" style="position: fixed; bottom: 2%;">
 			<img class="rounded-circle border-dark border my-auto"
 				style="width: 50px; height: 50px;"
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${LoginOK.id}">
 			<p>留言：</p>
-			<textarea class="w-75" name="" id="" cols="" rows="2"></textarea>
+			<textarea class="w-75" name="content" id="" cols="" rows="2"></textarea>
 			<input class="ml-1 my-auto" type="submit" style="height: 40px;"
 				value="送出">
 		</div>

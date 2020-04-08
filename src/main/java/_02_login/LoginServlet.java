@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
-import _01_register.service.impl.MemberServiceImpl;
 
 /* 未完成: 記住我功能、LoginFilter 跳轉頁面提示 */
 
@@ -71,9 +73,9 @@ public class LoginServlet extends HttpServlet {
 			cookieUser.setMaxAge(30 * 24 * 60 * 60); // cookie存活期一個月
 			cookieUser.setPath(request.getContextPath());
 
-//			String encodePassword = GlobalService.encryptString(password);
-//			cookiePassword = new Cookie("password", encodePassword);
-			cookiePassword = new Cookie("password", password);
+			String encodePassword = GlobalService.encryptString(password);
+			cookiePassword = new Cookie("password", encodePassword);
+//			cookiePassword = new Cookie("password", password);
 			cookiePassword.setMaxAge(30 * 24 * 60 * 60);
 			cookiePassword.setPath(request.getContextPath());
 
@@ -86,9 +88,9 @@ public class LoginServlet extends HttpServlet {
 			cookieUser.setMaxAge(0);
 			cookieUser.setPath(request.getContextPath());
 
-//			String encodePassword = GlobalService.encryptString(password);
-//			cookiePassword = new Cookie("password",encodePassword);
-			cookiePassword = new Cookie("password", password);
+			String encodePassword = GlobalService.encryptString(password);
+			cookiePassword = new Cookie("password",encodePassword);
+//			cookiePassword = new Cookie("password", password);
 			cookiePassword.setMaxAge(0);
 			cookiePassword.setPath(request.getContextPath());
 
@@ -101,7 +103,9 @@ public class LoginServlet extends HttpServlet {
 		response.addCookie(cookiePassword);
 		response.addCookie(cookieRememberMe);
 
-		MemberService memberService = new MemberServiceImpl();
+//		MemberService memberService = new MemberServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		MemberService memberService = ctx.getBean(MemberService.class);
 
 		password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 		MemberBean mb = null;

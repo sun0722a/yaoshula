@@ -6,11 +6,15 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
@@ -39,8 +43,12 @@ public class GetArticleImageServlet extends HttpServlet {
 				;
 			}
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-			ArticleService articleService = new ArticleServiceImpl();
-			ArticleBean bean = articleService.getArticle(id);
+//			ArticleService articleService = new ArticleServiceImpl();
+			ServletContext sc = getServletContext();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
+			ArticleService service = ctx.getBean(ArticleService.class);
+
+			ArticleBean bean = service.getArticle(id);
 			if (bean != null) {
 				blob = bean.getImage();
 				if (blob != null) {

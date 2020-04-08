@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
 import _05_product.service.impl.ProductServiceImpl;
@@ -32,6 +35,12 @@ public class GetProductImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
+
+			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
+//			ProductService productService = new ProductServiceImpl();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			ProductService productService = ctx.getBean(ProductService.class);
+
 			int id = 0;
 			try {
 				id = Integer.parseInt(idStr);
@@ -39,7 +48,7 @@ public class GetProductImageServlet extends HttpServlet {
 				;
 			}
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-			ProductService productService = new ProductServiceImpl();
+//			ProductService productService = new ProductServiceImpl();
 			ProductBean bean = productService.getProduct(id);
 			if (bean != null) {
 				blob = bean.getImage();

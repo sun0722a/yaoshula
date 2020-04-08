@@ -11,13 +11,13 @@
 
 <script type="text/javascript">
 	//由<body>的onLoad事件處理函數觸發此函數
-	function setFocusToUserId() {
-		document.forms[0].userId.focus(); // 將游標放在userId欄位內
+	function setFocusToMemberId() {
+		document.forms[0].memberId.focus(); // 將游標放在userId欄位內
 	}
 </script>
 
 </head>
-<body onLoad="setFocusToUserId()">
+<body onLoad="setFocusToMemberId()">
 	<c:set var="funcName" value="LOG" scope="session" />
 	<jsp:include page="/fragment/topMenuTemp.jsp" />
 	<c:if test="${ ! empty sessionScope.timeOut }">
@@ -31,7 +31,7 @@
 		<span><a href="">登入</a></span> <span><a href="">註冊</a></span>
 	</div>
 
-	<form class="box" action="<c:url value='/login' />" method="post"
+	<form class="box" action="" method="post"
 		name="LoginForm">
 		<h2>登入</h2>
 		<div>
@@ -51,7 +51,8 @@
 				value="true">記住我
 		</div>
 		<div class="error">${ErrorMsgKey.LoginError}</div>
-		<input type="submit" name="" value="登入">
+		<input type="submit" name="" value="登入" onclick="LoginForm.action='<c:url value="/login"  />'; ">
+		<input type="submit" name="" value="忘記密碼" onclick="LoginForm.action='<c:url value="/_02_login/enterEmail.jsp"  />'; ">
 	</form>
 
 </body>

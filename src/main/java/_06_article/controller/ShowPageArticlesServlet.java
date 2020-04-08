@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
@@ -84,7 +88,11 @@ public class ShowPageArticlesServlet extends HttpServlet {
 //		if (pageNo == -1) {
 //			pageNo = 1;
 //		}
-		ArticleService service = new ArticleServiceImpl();
+//		ArticleService service = new ArticleServiceImpl();
+		ServletContext sc = getServletContext();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
+		ArticleService service = ctx.getBean(ArticleService.class);
+
 		Map<Integer, ArticleBean> articleMap = service.getArticles(arrange, searchStr, categoryTitle, categoryName);
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("arrange", arrange);

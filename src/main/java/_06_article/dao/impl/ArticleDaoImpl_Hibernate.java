@@ -8,30 +8,40 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import _00_init.util.GlobalService;
 import _00_init.util.HibernateUtils;
 import _06_article.dao.ArticleDao;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
+import _06_article.model.CommentBean;
 
 /* 查詢文章: 預設按讚數排列? */
 /* 查詢熱門文章: 是否要有 天使-時事 、熱門文章個數*/
 
+@Repository
 public class ArticleDaoImpl_Hibernate implements ArticleDao {
 
 	private int recordsPerFamous = GlobalService.RECORDS_PER_FAMOUS;
+	@Autowired
 	SessionFactory factory;
 
 	public ArticleDaoImpl_Hibernate() {
-		factory = HibernateUtils.getSessionFactory();
+//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	@Override
 	public void insertArticle(ArticleBean ab) {
 		Session session = factory.getCurrentSession();
 		session.save(ab);
+	}
 
+	@Override
+	public void insertComment(CommentBean cb) {
+		Session session = factory.getCurrentSession();
+		session.save(cb);
 	}
 
 	// 計算所有商品總共有幾頁

@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
 
 @WebServlet("/product/ShowFamousProducts")
 public class ShowFamousProductsServlet extends HttpServlet {
@@ -35,8 +37,10 @@ public class ShowFamousProductsServlet extends HttpServlet {
 			return;
 		}
 
-		ProductService service = new ProductServiceImpl();
-
+//		ProductService service = new ProductServiceImpl();
+		
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ProductService service = ctx.getBean(ProductService.class);
 		Map<Integer, ProductBean> angelProductMap = service.getFamousProducts("天使");
 		Map<Integer, ProductBean> evilProductMap = service.getFamousProducts("惡魔");
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件

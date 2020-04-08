@@ -21,10 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
-import _01_register.service.impl.MemberServiceImpl;
 
 /* 未完成: 網址列上顯示.jsp */
 
@@ -117,7 +119,9 @@ public class RegisterServlet extends HttpServlet {
 
 		// 呼叫MemberDao的idExists方法(經由MemberService)
 		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
-		MemberService service = new MemberServiceImpl();
+//		MemberService service = new MemberServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		MemberService service = ctx.getBean(MemberService.class);
 		if (service.idExists(memberId)) {
 			memberId = "";
 			errorMsg.put("errorId", "此帳號已存在");
@@ -136,8 +140,10 @@ public class RegisterServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
+
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "正常", "一般會員");
+					address, fileName, blob, ts, "正常", "一般會員",null);
+
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
 				request.setAttribute("mb", mb);
@@ -152,6 +158,7 @@ public class RegisterServlet extends HttpServlet {
 				response.sendRedirect(getServletContext().getContextPath() + "/_02_login/login.jsp");
 				return;
 			} else {
+				System.out.println(n);
 				System.out.println("更新此筆資料有誤(RegisterServlet)");
 				RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
 				rd.forward(request, response);

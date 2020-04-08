@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
 
 @WebServlet("/order/checkOrder")
 public class CheckOutServlet extends HttpServlet {
@@ -51,21 +53,23 @@ public class CheckOutServlet extends HttpServlet {
 
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
-		System.out.println(productIdStr);
+//		System.out.println(productIdStr);
 		Integer productId = Integer.parseInt(productIdStr.trim());
 
-		ProductService service = new ProductServiceImpl();
+//		ProductService service = new ProductServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ProductService service = ctx.getBean(ProductService.class);
 		ProductBean pb = service.getProduct(productId);
 
 		// 檢查有沒有取得選取規格的值
 		String content1 = request.getParameter("content1") == null ? "":request.getParameter("content1");
 		String content2 = request.getParameter("content2") == null ? "":request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
-		Integer price = pb.getPrice();
+//		Integer price = pb.getPrice();
 
-		System.out.println(price);
-		System.out.println(content1);
-		System.out.println(content2);
+//		System.out.println(price);
+//		System.out.println(content1);
+//		System.out.println(content2);
 		// 如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);

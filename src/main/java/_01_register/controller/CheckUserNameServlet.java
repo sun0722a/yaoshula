@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _01_register.service.MemberService;
-import _01_register.service.impl.MemberServiceImpl;
 
 @WebServlet("/register/checkUserName")
 public class CheckUserNameServlet extends HttpServlet {
@@ -23,7 +25,9 @@ public class CheckUserNameServlet extends HttpServlet {
 		os = response.getWriter();
 
 		String userName = request.getParameter("userName");
-		MemberService service = new MemberServiceImpl();
+//		MemberService service = new MemberServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		MemberService service = ctx.getBean(MemberService.class);
 		if (userName.trim().length() != 0) {
 			boolean exist = service.idExists(userName);
 			if (!exist) {

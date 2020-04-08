@@ -4,18 +4,22 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import _00_init.util.HibernateUtils;
 import _04_order.dao.OrderDao;
 import _04_order.model.OrderBean;
 
+@Repository
 public class OrderDaoImpl implements OrderDao {
 	private Integer memberId = null;
+	
+	@Autowired
 	SessionFactory factory;
 	int orderNo = 0;
 
 	public OrderDaoImpl() {
-		factory = HibernateUtils.getSessionFactory();
+//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	@Override

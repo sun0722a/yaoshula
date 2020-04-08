@@ -19,6 +19,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- 下拉式地址 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+
+<script>
+	new TwCitySelector();
+</script>
+<!-- 下拉式地址 -->
 </head>
 <style>
 a {
@@ -28,6 +36,12 @@ a {
 #a-style a {
 	text-decoration: none;
 }
+/*下拉式選單地址*/
+#address select {
+	font: 16px Tahoma;
+	height: 30px;
+	margin-right: 5px;
+}
 </style>
 
 <body class="bg-light">
@@ -35,24 +49,22 @@ a {
 	<div class="top_area">
 
 		<div class="logo">
-			<a href="<c:url value='/index.jsp' />">
-			<img src="${pageContext.request.contextPath}/image/logo.png"
+			<a href="<c:url value='/index.jsp' />"> <img
+				src="${pageContext.request.contextPath}/image/logo.png"
 				style="width: 100px; height: 100px;" alt="">
 			</a>
 		</div>
 		<div class="top-space"></div>
 		<c:choose>
 			<c:when test="${ ! empty LoginOK }">
-			   <a href="<c:url value='/_02_login/logout.jsp' />">
-  				登出 <i class="fas fa-sign-out-alt"></i>
-	           </a>
+				<a href="<c:url value='/_02_login/logout.jsp' />"> 登出 <i
+					class="fas fa-sign-out-alt"></i>
+				</a>
 			</c:when>
 			<c:otherwise>
-				<a href="<c:url value='/_02_login/login.jsp'/>">
-  				登入
-	           </a>
+				<a href="<c:url value='/_02_login/login.jsp'/>"> 登入 </a>
 			</c:otherwise>
-			</c:choose>
+		</c:choose>
 	</div>
 	<ul id="a-style">
 		<div class="test">
@@ -82,7 +94,8 @@ a {
 			<div class="row p-2">
 				<div
 					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
-					<input type="checkbox" id="allCheck" onchange="changeAll()" disabled />
+					<input type="checkbox" id="allCheck" onchange="changeAll()"
+						disabled />
 				</div>
 				<div
 					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
@@ -106,131 +119,136 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-				
-				<!-- 內容物=================================== -->
-				
-				
-				<c:forEach var="cartMap" varStatus="vs"
-					items="${ShoppingCart.content}">
-					
-					<c:forEach var="orderMap" items="${cartMap.value}">
-						<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}">
-							<c:if test="${checkedMap.key==cartMap.key}">
-						
-								<c:if test="${checkedMap.value=='y'}">
 
-									<div class="row p-2 cartItem">
+			<!-- 內容物=================================== -->
+
+
+			<c:forEach var="cartMap" varStatus="vs"
+				items="${ShoppingCart.content}">
+
+				<c:forEach var="orderMap" items="${cartMap.value}">
+					<c:forEach var="checkedMap" items="${ShoppingCart.checkedMap}">
+						<c:if test="${checkedMap.key==cartMap.key}">
+
+							<c:if test="${checkedMap.value=='y'}">
+
+								<div class="row p-2 cartItem">
 									<div
 										class="col-1 d-flex justify-content-center align-items-center">
-											<input type="checkbox" class="choose" disabled
+										<input type="checkbox" class="choose" disabled
 											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
 											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
 									</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center">
-								
-								<img
-									src="${pageContext.request.contextPath}/init/getProductImage?id=${orderMap.key.productId}"
-									style="max-width: 80%; max-height: 150px;" />
-								
-							</div>
-							<div
-								class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
-								${orderMap.key.productName}</div>
-							<div
-								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
-								<!-- 如果沒有規格 就寫無 -->
-								<c:choose>
-									<c:when
-										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
-									<c:otherwise>
-											<c:choose>
-												<c:when test="${(orderMap.key.formatContent2=='')}">
-													<span>${orderMap.key.formatContent1}</span>
-												</c:when>
-												<c:otherwise>
-													<span style="color:#5B616A;">${orderMap.key.formatContent1} ${orderMap.key.formatContent2}</span>
-												</c:otherwise>
-											</c:choose>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
-								$ <span class="singlePrice">${orderMap.key.unitPrice}</span>
-							</div>
-							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
-								style="padding: 0px;">
+									<div
+										class="col-2 d-flex justify-content-center align-items-center">
+
+										<img
+											src="${pageContext.request.contextPath}/init/getProductImage?id=${orderMap.key.productId}"
+											style="max-width: 80%; max-height: 150px;" />
+
+									</div>
+									<div
+										class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
+										${orderMap.key.productName}</div>
+									<div
+										class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+										<!-- 如果沒有規格 就寫無 -->
+										<c:choose>
+											<c:when
+												test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
+											<c:otherwise>
+												<c:choose>
+													<c:when test="${(orderMap.key.formatContent2=='')}">
+														<span>${orderMap.key.formatContent1}</span>
+													</c:when>
+													<c:otherwise>
+														<span style="color: #5B616A;">${orderMap.key.formatContent1}
+															${orderMap.key.formatContent2}</span>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div
+										class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+										$ <span class="singlePrice">${orderMap.key.unitPrice}</span>
+									</div>
+									<div
+										class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
+										style="padding: 0px;">
 
 										<!-- 無法更動數量 -->
-									<span style="color:#5B616A;">${orderMap.key.quantity}</span>
-							</div>
-							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
-								$ <span class="singleTotal">${orderMap.key.unitPrice*orderMap.key.quantity}</span>
-								
-							</div>
-							<div
-								class="col-1 d-flex justify-content-center align-items-center">
-								<i class="fas fa-check"></i>
-			
-							</div>
-						
-						
-						</div>
-						</c:if>		
+										<span style="color: #5B616A;">${orderMap.key.quantity}</span>
+									</div>
+									<div
+										class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
+										$ <span class="singleTotal">${orderMap.key.unitPrice*orderMap.key.quantity}</span>
+
+									</div>
+									<div
+										class="col-1 d-flex justify-content-center align-items-center">
+										<i class="fas fa-check"></i>
+
+									</div>
+
+
+								</div>
+							</c:if>
 						</c:if>
-						</c:forEach>
 					</c:forEach>
 				</c:forEach>
-				
-				
-				
-				<hr class="m-0" style="background: black;" />
-				<!-- 總金額================================================= -->
-				<div class="row p-2">
-					<div class="col-5"></div>
-					<div
-						class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
-						總金額： $ <span id="totalPrice" class="mr-5">
-						</span>
-						
-						<span><a 
-						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i class="fas fa-arrow-left "></i></a></span>
-					</div>
+			</c:forEach>
+
+
+
+			<hr class="m-0" style="background: black;" />
+			<!-- 總金額================================================= -->
+			<div class="row p-2">
+				<div class="col-5"></div>
+				<div
+					class="col-4 h4 m-0 d-flex justify-content-center align-items-center">
+					總金額： $ <span id="totalPrice" class="mr-5"> </span> <span><a
+						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i
+							class="fas fa-arrow-left "></i></a></span>
 				</div>
+			</div>
 		</div>
 	</div>
 
 
 
-	
-		<form action="<c:url value='/order/orderCheck' />">
-		
-		<div class="items-menu border border-dark p-2" style= "width:80%; margin:50px 10% 0 10%;">
+
+	<form action="<c:url value='/order/orderCheck' />">
+
+		<div class="items-menu border border-dark p-2"
+			style="width: 80%; margin: 50px 10% 0 10%;">
 			<h2>訂單資訊</h2>
-			<hr style="background:black;">
+			<hr style="background: black;">
 			<div class="row p-2">
-			
+
 				<div class="formBox col-7">
 
-<!-- 					<label for="orderInfo" class="col-sm-6">訂單資訊</label> -->
-					
+					<!-- 					<label for="orderInfo" class="col-sm-6">訂單資訊</label> -->
+
 					<div class="form-group row">
 						<label for="name" class="col-sm-3 ml-3">姓名</label> <input
-							type="text" class="form-control  col-6" name="name" 
-							placeholder="Name">
+							type="text" class="form-control  col-6" name="name" value=""
+							placeholder="Name" required="required">
 					</div>
 					<div class="form-group row">
-						<label for="address" class="col-sm-3 ml-3">地址</label> <input
-							type="text" class="form-control col-6" name="address"
-							placeholder="Address">
+						<label for="address" class="col-sm-3 ml-3">地址</label>
+						<div role="tw-city-selector" id="address" class="col-4"
+							data-county-value="${LoginOK.city}"
+							data-district-value="${LoginOK.area}"></div>
+						<input name="address" value="${LoginOK.address}" type="text"
+							class="contentText form-control col-3" placeholder="Address"
+							required="required" />
 					</div>
 					<div class="form-group row">
 						<label for="address" class="col-sm-3 ml-3">電話</label> <input
 							type="text" class="form-control col-6" name="phone"
-							placeholder="Phone">
+							value="${LoginOK.phone}" placeholder="Phone" maxlength="10"
+							onkeyup="value=value.replace(/[^\d]/g,'')" required="required">
 					</div>
 					<div class="form-group row">
 						<label for="payment" class="col-sm-3 ml-3">付款方式</label> <select
@@ -239,18 +257,18 @@ a {
 						</select>
 					</div>
 
-					<button type="submit" class="btn btn-primary ml-3">Submit</button>
+					<button type="submit" class="btn btn-primary ml-3">送出</button>
 				</div>
-					<div class="textAreaBox col-3">
-							<label for="">備註</label>
-							<textarea class="form-control w-75 h-50" name="note"></textarea>
-					</div>
-				
+				<div class="textAreaBox col-3">
+					<label for="">備註</label>
+					<textarea class="form-control w-75 h-50" name="note"></textarea>
 				</div>
-				
+
 			</div>
-		</form>
-			
+
+		</div>
+	</form>
+
 
 
 

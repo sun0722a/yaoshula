@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
 
 // 把商品裝入購物車的部分
 @WebServlet("/order/shoppingCart")
@@ -67,7 +69,9 @@ public class CartServlet extends HttpServlet {
 //		Map<Integer, ProductBean> productMap = (Map<Integer, ProductBean>) session.getAttribute("products_map");
 //		ProductBean bean = productMap.get(productId);
 		// 透過 service & productId 取得商品資訊
-		ProductService productService = new ProductServiceImpl();
+//		ProductService productService = new ProductServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ProductService productService = ctx.getBean(ProductService.class);
 		ProductBean pb = productService.getProduct(productId);
 		// 取得商品的productFormat，進行比對
 		Set<ProductFormatBean> formats = pb.getProductFormat();
@@ -92,9 +96,9 @@ public class CartServlet extends HttpServlet {
 
 		// 為了之後能抓選取的勾勾(預設為勾起來)[y, n]
 		cart.addToCart(productFormatId, oib, formats);
-		System.out.println("checkedMapKey:" + cart.getCheckedMap().keySet());
-		System.out.println("checkedMapValues:" + cart.getCheckedMap().values());
-		System.out.println("cartKey" + cart.getContent().keySet());
+//		System.out.println("checkedMapKey:" + cart.getCheckedMap().keySet());
+//		System.out.println("checkedMapValues:" + cart.getCheckedMap().values());
+//		System.out.println("cartKey" + cart.getContent().keySet());
 		RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 		rd.forward(request, response);
 		return;

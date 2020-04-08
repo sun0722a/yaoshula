@@ -6,10 +6,9 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.service.ArticleService;
-import _06_article.service.impl.ArticleServiceImpl;
 
 /* hibernate save的回傳值? */
 /* category如何轉成categoryTitle、categoryName */
@@ -115,7 +116,12 @@ public class AddArticleServlet extends HttpServlet {
 //				return;
 //			}
 			// 呼叫ArticleDao的insertArticle方法
-			ArticleService service = new ArticleServiceImpl();
+			
+//			ArticleService service = new ArticleServiceImpl();
+			ServletContext sc = getServletContext();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
+			ArticleService service = ctx.getBean(ArticleService.class);
+			
 			ArticleCategoryBean acb = service.getCategory(categoryTitle, categoryName);
 			// 將所有文章資料封裝到ArticleBean(類別的)物件
 			ArticleBean ab = new ArticleBean(null, title, authorId, authorName, ts, acb, clob, fileName, blob, 0, "正常",
@@ -128,7 +134,7 @@ public class AddArticleServlet extends HttpServlet {
 //				return;
 //			} else {
 //				System.out.println("更新此筆資料有誤(RegisterServlet)");
-			RequestDispatcher rd = request.getRequestDispatcher("/article/ShowArticleContent?articleId="+ab.getArticleId()+"&filter=false");
+			RequestDispatcher rd = request.getRequestDispatcher("/article/ShowArticleContent?articleId="+ab.getArticleId());
 			rd.forward(request, response);
 			return;
 //			}

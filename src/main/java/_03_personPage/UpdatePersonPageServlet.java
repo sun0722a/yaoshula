@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
-import _01_register.service.impl.MemberServiceImpl;
 
 /* 待測試: 連線逾時 */
 
@@ -105,10 +107,14 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將可更改的會員資料封裝到MemberBean
+
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
-					blob, null, null, null);
+					blob, null, null, null,null);
+
 			// 呼叫MemberDao的updateMember方法(經由MemberService)
-			MemberService service = new MemberServiceImpl();
+//			MemberService service = new MemberServiceImpl();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			MemberService service = ctx.getBean(MemberService.class);
 			int n = service.updateMember(mem);
 			// 更新session內的使用者資料
 			MemberBean mb = service.queryMember(id);

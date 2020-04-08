@@ -32,10 +32,12 @@ public class MemberBean {
 	Timestamp createTime;
 	String status;
 	String permission;
-
+	String token;
+	
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
-			String status, String permission) {
+			String status, String permission,String token) {
+
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -52,6 +54,7 @@ public class MemberBean {
 		this.createTime = createTime;
 		this.status = status;
 		this.permission = permission;
+		this.token = token;
 	}
 
 	public MemberBean() {
@@ -178,4 +181,14 @@ public class MemberBean {
 		this.permission = permission;
 	}
 
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	
 }

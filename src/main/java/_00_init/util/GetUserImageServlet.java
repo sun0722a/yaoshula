@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _01_register.service.impl.MemberServiceImpl;
@@ -39,8 +42,15 @@ public class GetUserImageServlet extends HttpServlet {
 				;
 			}
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-			MemberService memberService = new MemberServiceImpl();
-			MemberBean bean = memberService.queryMember(id);
+
+//			MemberService memberService = new MemberServiceImpl();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			MemberService memberService = ctx.getBean(MemberService.class);
+			MemberBean bean = memberService.queryMember(Integer.valueOf(id));
+
+//			MemberService memberService = new MemberServiceImpl();
+//			MemberBean bean = memberService.queryMember(id);
+
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {

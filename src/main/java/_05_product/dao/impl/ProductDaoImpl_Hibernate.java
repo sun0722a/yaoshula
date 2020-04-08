@@ -7,15 +7,17 @@ import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import _00_init.util.GlobalService;
-import _00_init.util.HibernateUtils;
 import _05_product.dao.ProductDao;
 import _05_product.model.ProductBean;
 
 /* 問問問: hql使用count + join 會報錯 */
 /* 刪除 : implements Serializable，不知道會不會出事 */
 
+@Repository
 public class ProductDaoImpl_Hibernate implements ProductDao {
 
 	// 預設值：每頁九筆
@@ -24,10 +26,11 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 
 	String selected = "";
 	int nowTotalPages = -1;
+	@Autowired
 	SessionFactory factory;
 
 	public ProductDaoImpl_Hibernate() {
-		factory = HibernateUtils.getSessionFactory();
+//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	// 計算所有商品總共有幾頁
