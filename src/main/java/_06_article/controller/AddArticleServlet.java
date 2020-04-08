@@ -61,6 +61,7 @@ public class AddArticleServlet extends HttpServlet {
 		InputStream is = null;
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+		Integer authorId = mb.getId();
 		String authorName = mb.getMemberId();
 
 		// 取出HTTP multipart request內所有的parts
@@ -116,7 +117,8 @@ public class AddArticleServlet extends HttpServlet {
 			ArticleService service = new ArticleServiceImpl();
 			ArticleCategoryBean acb = service.getCategory(categoryTitle, categoryName);
 			// 將所有文章資料封裝到ArticleBean(類別的)物件
-			ArticleBean ab = new ArticleBean(null, title, authorName, ts, acb, clob, fileName, blob, 0, "正常", null);
+			ArticleBean ab = new ArticleBean(null, title, authorId, authorName, ts, acb, clob, fileName, blob, 0, "正常",
+					null);
 			// 如果有錯誤
 			service.insertArticle(ab);
 //			int n = service.insertArticle(ab);

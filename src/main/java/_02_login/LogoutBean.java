@@ -1,6 +1,7 @@
 package _02_login;
 
 import javax.servlet.http.HttpSession;
+
 // 登出時需要做的事寫在這裡，如session.invalidate()
 public class LogoutBean {
    

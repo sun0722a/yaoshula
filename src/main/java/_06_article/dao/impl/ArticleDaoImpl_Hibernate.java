@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -109,7 +110,6 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return map;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArticleCategoryBean getCategory(String categoryTitle, String categoryName) {
 		String hql = "FROM ArticleCategoryBean acb " + "WHERE acb.categoryTitle like :categoryTitle "
@@ -119,6 +119,21 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		bean = (ArticleCategoryBean) session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
 				.setParameter("categoryName", categoryName).getSingleResult();
 		return bean;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Set<String> getCategorys(String categoryTitle) {
+		String hql = "FROM ArticleCategoryBean acb WHERE acb.categoryTitle like :categoryTitle ";
+		Session session = factory.getCurrentSession();
+		List<ArticleCategoryBean> beans = null;
+		Set<String> categorySet = null;
+		beans = (List<ArticleCategoryBean>) session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
+				.getResultList();
+		for (ArticleCategoryBean bean : beans) {
+			categorySet.add(bean.getCategoryName());
+		}
+		return categorySet;
 	}
 
 //	@SuppressWarnings("unchecked")

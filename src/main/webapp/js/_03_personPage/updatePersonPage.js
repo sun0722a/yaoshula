@@ -6,6 +6,10 @@ function doFirst() {
 	btSubmit = document.getElementById("btSubmit");
 	btCancel = document.getElementById("btCancel");
 	emailTitle = document.getElementsByClassName("personalTitle")[3];
+	city = document.getElementById("city");
+	area = document.getElementById("area");
+	address = document.getElementById("address");
+
 
 	edit.addEventListener("click", update);
 
@@ -46,7 +50,7 @@ function update() {
 	// 抓原本表格上的值
 	oldemail = personalUpdates[0].innerText;
 	oldphone = personalUpdates[1].innerText;
-	oldaddress = personalUpdates[2].innerText;
+	oldaddress = address.innerText;
 
 	// 清空td裡的字
 	for (let i = 0; i < personalUpdates.length; i++) {
@@ -56,8 +60,8 @@ function update() {
 	// 動態新增下拉式地址
 	let addressSelect = document.createElement("div");
 	addressSelect.setAttribute("role", "tw-city-selector");
-	addressSelect.setAttribute("data-county-value", "台北市");
-	addressSelect.setAttribute("data-district-value", "中正區");
+	addressSelect.setAttribute("data-county-value", city.innerText);
+	addressSelect.setAttribute("data-district-value", area.innerText);
 	addressSelect.id = "address";
 	personalUpdates[2].appendChild(addressSelect);
 

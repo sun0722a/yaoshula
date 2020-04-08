@@ -56,9 +56,9 @@ public class FindUserPassword implements Filter{
 			}else {
 				;
 			}
-			System.out.println(rememberMe);
-			System.out.println(memberId);
-			System.out.println(password);
+//			System.out.println(rememberMe);
+//			System.out.println(memberId);
+//			System.out.println(password);
 			request.setAttribute("rememberMe",rememberMe);
 			request.setAttribute("memberId", memberId);
 			request.setAttribute("password", password);
