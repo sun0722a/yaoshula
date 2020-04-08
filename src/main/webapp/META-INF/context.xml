@@ -2,7 +2,7 @@
 <Context displayName="JSP Exercise" docBase="jspExercise" path="/jspExercise" reloadable="true">
   	<!-- MySQL(範例程式會用到的DataSource) -->
 	<Resource name="jdbc/MemberDB" type="javax.sql.DataSource" 
-		username="root" password=""
+		username="root" password="00000000"
 		driverClassName="com.mysql.cj.jdbc.Driver" 
 		url="jdbc:mysql:///speakitup"
 		connectionProperties=

@@ -1,16 +1,20 @@
 package _04_order.dao.impl;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import _00_init.util.HibernateUtils;
 import _04_order.dao.OrderItemDao;
 import _04_order.model.OrderItemBean;
 
+@Repository
 public class OrderItemDaoImpl implements OrderItemDao {
+	@Autowired
 	SessionFactory factory;
 
 	public OrderItemDaoImpl() {
-		factory = HibernateUtils.getSessionFactory();
+//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	@Override

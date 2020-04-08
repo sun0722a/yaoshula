@@ -9,19 +9,23 @@ import javax.persistence.NoResultException;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import _00_init.util.HibernateUtils;
 import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 
 
-
+@Repository
 public class MemberDaoImpl_Hibernate implements MemberDao {
-
+	
+	@Autowired
 	SessionFactory factory;
 
 	public MemberDaoImpl_Hibernate() {
-		factory = HibernateUtils.getSessionFactory();
+//		factory = HibernateUtils.getSessionFactory();
+		
 	}
 
 	// 儲存MemberBean物件，將參數mb新增到Memberinfo表格內。

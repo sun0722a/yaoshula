@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
 
 @WebServlet("/order/checkOrder")
 public class CheckOutServlet extends HttpServlet {
@@ -54,7 +56,9 @@ public class CheckOutServlet extends HttpServlet {
 		System.out.println(productIdStr);
 		Integer productId = Integer.parseInt(productIdStr.trim());
 
-		ProductService service = new ProductServiceImpl();
+//		ProductService service = new ProductServiceImpl();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ProductService service = ctx.getBean(ProductService.class);
 		ProductBean pb = service.getProduct(productId);
 
 		// 檢查有沒有取得選取規格的值

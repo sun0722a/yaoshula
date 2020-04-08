@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _01_register.model.MemberBean;
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _04_order.service.OrderService;
-import _04_order.service.impl.OrderServiceImpl;
 import _05_product.model.ProductFormatBean;
 
 // 儲存會員的訂單
@@ -89,7 +91,9 @@ public class ProcessOrderServlet extends HttpServlet {
 
 		ob.setOrderItems(items);
 		try {
-			OrderService orderService = new OrderServiceImpl();
+//			OrderService orderService = new OrderServiceImpl();
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			OrderService orderService = ctx.getBean(OrderService.class);
 			orderService.persistOrder(ob);
 			session.removeAttribute("ShoppingCart");
 			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));

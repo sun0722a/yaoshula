@@ -13,6 +13,10 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import _00_init.util.GlobalService;
 import _00_init.util.HibernateUtils;
@@ -29,14 +33,20 @@ public class EDMTableResetHibernate {
 
 	public static void main(String args[]) {
 		String line = "";
-		SessionFactory factory = HibernateUtils.getSessionFactory();
+//		SessionFactory factory = HibernateUtils.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		SessionFactory factory = ctx.getBean(SessionFactory.class);
+//		Session session = factory.openSession();
 		Session session = factory.getCurrentSession();
-		Transaction tx = null;
-
 		// 商品類(product)一起新增
-		session = factory.getCurrentSession();
-		tx = session.beginTransaction();
+
+		Transaction tx = null;
 		// 1. ProductCategory
+		try {
+			tx = session.beginTransaction();			
+		
 		try (FileReader fr1 = new FileReader("data/product/productCategory.dat");
 				BufferedReader br1 = new BufferedReader(fr1);) {
 			while ((line = br1.readLine()) != null) {
@@ -124,12 +134,21 @@ public class EDMTableResetHibernate {
 			}
 			System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
 		}
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+		}
 
 		// 訂單類(order)一起新增
 		session = factory.getCurrentSession();
-		tx = session.beginTransaction();
+		tx = null;
 		// 1. Orders
-		try (FileReader fr1 = new FileReader("data/order/orders.dat"); BufferedReader br1 = new BufferedReader(fr1);) {
+		try {
+			tx = session.beginTransaction();			
+		
+		try (
+				FileReader fr1 = new FileReader("data/order/orders.dat"); BufferedReader br1 = new BufferedReader(fr1);) {
 			while ((line = br1.readLine()) != null) {
 				if (line.startsWith(UTF8_BOM)) {
 					line = line.substring(1);
@@ -199,6 +218,12 @@ public class EDMTableResetHibernate {
 			}
 			System.err.println("新建Orders表格時發生IO例外: " + e.getMessage());
 		}
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+		}
+		((ConfigurableApplicationContext)ctx).close();
 	}
 
 }

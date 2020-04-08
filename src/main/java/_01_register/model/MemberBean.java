@@ -13,28 +13,30 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="Members")
-public class MemberBean{
+public class MemberBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name="increment", strategy = "native")
-	 Integer id;
-	 String memberId;
-	 String password;
-	 String gender;
-	 Date birthday;
-	 String email;
-	 String phone;
-	 String address;
-	 String fileName;
-	 Blob picture;
-	 Timestamp createTime;
-	 String status;
-	 String permission;
+	 private Integer id;
+	 private String memberId;
+	 private String password;
+	 private String gender;
+	 private Date birthday;
+	 private String email;
+	 private String phone;
+	 private String address;
+	 private String fileName;
+	 private Blob picture;
+	 private Timestamp createTime;
+	 private String status;
+	 private String permission;
+	 private String token;
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String address, String fileName, Blob picture, Timestamp createTime, String status,
-			String permission) {
+			String permission,String token) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -49,6 +51,7 @@ public class MemberBean{
 		this.createTime = createTime;
 		this.status = status;
 		this.permission = permission;
+		this.token = token;
 	}
 
 	public MemberBean() {
@@ -157,5 +160,14 @@ public class MemberBean{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 	
 }

@@ -13,6 +13,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import _00_init.util.GlobalService;
+
 @WebFilter("/_02_login/login.jsp")
 public class FindUserPassword implements Filter{
 	String requestURI;
@@ -39,14 +41,14 @@ public class FindUserPassword implements Filter{
 					if(cookieName.equals("memberId")) {
 						memberId = cookies[i].getValue();
 					}else if(cookieName.equals("password")) {
-//						String tmp = cookies[i].getValue();
-						 password = cookies[i].getValue();
+						String tmp = cookies[i].getValue();
+//						 password = cookies[i].getValue();
 						
-//						if(tmp != null) {
-//							password = GlobalService.decryptString(GlobalService.KEY, tmp); 
-//							password = MemberServiceImpl
-//							
-//						}
+						if(tmp != null) {
+							password = GlobalService.decryptString(GlobalService.KEY, tmp); 
+							
+							
+						}
 					}
 					else if(cookieName.equals("rememberMe")) {
 						rememberMe = cookies[i].getValue();
