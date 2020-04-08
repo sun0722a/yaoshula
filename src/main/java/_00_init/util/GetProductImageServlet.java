@@ -50,7 +50,7 @@ public class GetProductImageServlet extends HttpServlet {
 			}
 			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.png)
 			if (is == null) {
-				fileName = "NoImage.png";
+				fileName = "NoImage.jpg";
 				is = getServletContext().getResourceAsStream("/image/_03_personPage/" + fileName);
 			}
 

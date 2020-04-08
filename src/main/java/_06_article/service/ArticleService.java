@@ -39,5 +39,7 @@ public interface ArticleService {
 //	void setRecordsPerPage(int recordsPerPage);
 
 	ArticleBean getArticle(int articleId);
+	
+	ArticleBean getArticleByTransaction(int articleId);
 
 }

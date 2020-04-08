@@ -11,44 +11,72 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
+<script
+	src="${pageContext.request.contextPath}/js/_06_article/articlePage.js"></script>
 </head>
 <body>
 	<div class="w-75 m-auto">
-		<form action="" id="searchForm">
+		天使板 <a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=天使' />">全部</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=天使&categoryName=工作' />">工作</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=天使&categoryName=感情' />">感情</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=天使&categoryName=生活' />">生活</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=天使&categoryName=時事' />">時事</a>
+		惡魔板 <a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=惡魔' />">全部</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=惡魔&categoryName=工作' />">工作</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=惡魔&categoryName=感情' />">感情</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=惡魔&categoryName=生活' />">生活</a>
+		<a
+			href="<c:url value='/article/ShowPageArticles?categoryTitle=惡魔&categoryName=時事' />">時事</a>
+
+		<!-- 		搜尋======================================== -->
+		<form action="<c:url value='/article/ShowPageArticles' />"
+			id="searchForm">
+			<input type="hidden" value="${categoryTitle}" name="categoryTitle">
+			<input type="hidden" value="${categoryName}" name="categoryName">
 			<div id="searchTop" class="row">
 				<div class="input-group my-3 col-9 ">
 					<div class="input-group-prepend">
 						<span class="input-group-text"><img
-							src="${pageContext.request.contextPath}/image/_05_product/search.png"
-							class="productImg" /></span>
+							src="${pageContext.request.contextPath}/image/_05_product/search.png" /></span>
 					</div>
-					<input type="search" class="form-control" placeholder="關鍵字搜尋"
+					<input type="search" class="form-control" placeholder="搜尋: 文章標題"
 						name="search" aria-label="Sizing example input"
-						aria-describedby="inputGroup-sizing-default" />
+						aria-describedby="inputGroup-sizing-default" value="${searchStr}" />
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button"
-							id="button-addon2">搜尋</button>
+						<button class="btn btn-outline-secondary" id="button-addon2">搜尋</button>
 					</div>
 				</div>
 				<div id="arrange"
 					class="col-3 my-3 d-flex justify-content-end align-items-center">
 					<span style="font-size: 10px;">排序：</span> <select name="arrange">
-						<option value="time">最新</option>
-						<option value="popular">熱門</option>
+						<option value="time"
+							<c:if test="${arrange=='time'}"> selected </c:if>>最新</option>
+						<option value="popular"
+							<c:if test="${arrange=='popular'}"> selected </c:if>>熱門</option>
 					</select>
 				</div>
 			</div>
 		</form>
+		<hr>
+		<!-- 		文章列========================================= -->
 		<c:forEach var="entry" items="${articles_map}">
-			<a href="">
-				<div class="rounded-pill border">
+			<a
+				href="<c:url value='/article/ShowArticleContent?articleId=${entry.value.articleId}'/>">
+				<div class="rounded-pill border m-4">
 					<div
 						class="d-flex mx-auto justify-content-center align-items-center"
 						style="text-align: center;">
-						<a href="">檢舉</a> 
-						<img src=""
-							style="max-width: 200px; max-height: 100px;" /> 
-							<img
+						<img src="${pageContext.request.contextPath}/init/getArticleImage?id=${entry.value.articleId}" style="max-width: 200px; max-height: 100px;" /> 
+						<img
 							src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.value.authorId}"
 							class="rounded-circle border border-dark"
 							style="height: 100px; width: 100px;" />
@@ -62,10 +90,18 @@
 							</div>
 						</div>
 						<div class="d-flex">
-							愛心：${article.likes} 留言數：
-							<c:forEach var="entry" items="${entry.value.articleComments}" varStatus="number">
-								<c:if test="number.last">${number}</c:if>
-							</c:forEach>
+							愛心：${entry.value.likes} 留言數：
+							<c:choose>
+								<c:when test="${not empty entry.value.articleComments}">
+									<c:forEach var="comments"
+										items="${entry.value.articleComments}" varStatus="number">
+										<c:if test="${number.last}">
+											${number.count}
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>0</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>

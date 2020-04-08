@@ -33,6 +33,8 @@
 		<span class="option"> <a
 			href="<c:url value='/_03_personPage/personPage.jsp' />">個人頁面</a>
 		</span><span class="option"> <a
+			href="<c:url value='/_06_article/addArticle.jsp' />">新增文章</a>
+		</span><span class="option"> <a
 			href="<c:url value='/product/ShowPageProducts' />">購物區</a>
 		</span><span class="option"> <a
 			href="<c:url value='/product/ShowFamousProducts' />">熱門商品區</a>
@@ -46,7 +48,7 @@
 	</div>
 	<div class="main-menu">
 		<div class="menu">
-			<a href="">論壇</a>
+			<a href="<c:url value='/article/ShowPageArticles' />">論壇</a>
 		</div>
 		<div class="menu">
 			<a href="">商城</a>

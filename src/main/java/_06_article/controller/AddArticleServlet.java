@@ -48,10 +48,9 @@ public class AddArticleServlet extends HttpServlet {
 		}
 
 		// 準備存放錯誤訊息的Map物件
-		Map<String, String> errorMsg = new HashMap<String, String>();
-		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
+//		Map<String, String> errorMsg = new HashMap<String, String>();
+//		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
-		String category = "";
 		String categoryTitle = "";
 		String categoryName = "";
 		String title = "";
@@ -75,9 +74,11 @@ public class AddArticleServlet extends HttpServlet {
 
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
-					if (fldName.equals("category")) {
-						category = value;
-					} else if (fldName.equals("title")) {
+					if (fldName.equals("categoryTitle")) {
+						categoryTitle = value;
+					}else if (fldName.equals("categoryName")) {
+						categoryName = value;
+					}else if (fldName.equals("title")) {
 						title = value;
 					} else if (fldName.equals("content")) {
 						content = value;
@@ -106,13 +107,13 @@ public class AddArticleServlet extends HttpServlet {
 			}
 
 			Clob clob = GlobalService.stringToClob(content);
-			if (!errorMsg.isEmpty()) {
-//				request.setAttribute("mb", mb);
-				// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
-				RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
-				rd.forward(request, response);
-				return;
-			}
+//			if (!errorMsg.isEmpty()) {
+////				request.setAttribute("mb", mb);
+//				// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
+//				RequestDispatcher rd = request.getRequestDispatcher("/_06_article/addArticle.jsp");
+//				rd.forward(request, response);
+//				return;
+//			}
 			// 呼叫ArticleDao的insertArticle方法
 			ArticleService service = new ArticleServiceImpl();
 			ArticleCategoryBean acb = service.getCategory(categoryTitle, categoryName);
@@ -127,13 +128,13 @@ public class AddArticleServlet extends HttpServlet {
 //				return;
 //			} else {
 //				System.out.println("更新此筆資料有誤(RegisterServlet)");
-			RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/article/ShowArticleContent?articleId="+ab.getArticleId()+"&filter=false");
 			rd.forward(request, response);
 			return;
 //			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/_06_article/addArticle.jsp");
 			rd.forward(request, response);
 			return;
 		}

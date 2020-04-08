@@ -45,11 +45,17 @@ public class ArticleContentServlet extends HttpServlet {
 
 		// 從jsp取得所點取的商品的productId為何
 		String articleIdStr = request.getParameter("articleId");
+		String filter = request.getParameter("filter")==null?"":request.getParameter("filter");
 		Integer articleId = Integer.parseInt(articleIdStr);
 
 		// 利用getArticle取得該ID所擁有的資訊
 		ArticleService service = new ArticleServiceImpl();
-		ArticleBean ab = service.getArticle(articleId);
+		ArticleBean ab=null;
+		if(filter.equals("false")) {
+			ab = service.getArticleByTransaction(articleId);
+		}else {
+			ab = service.getArticle(articleId);
+		}
 		String content = "";
 		Clob clob = null;
 		if (ab != null) {
@@ -65,7 +71,7 @@ public class ArticleContentServlet extends HttpServlet {
 			}
 
 			// 把大家暫存到請求物件內
-			request.setAttribute("article", ab);
+			session.setAttribute("article", ab);
 			request.setAttribute("comments_set", comments);
 			request.setAttribute("content", content);
 
@@ -76,7 +82,7 @@ public class ArticleContentServlet extends HttpServlet {
 			// 設成Session，為了讓CarServlet抓到
 //		request.setAttribute("articleId", articleId);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/_06_article/articleContent.jsp");
 			rd.forward(request, response);
 			return;
 

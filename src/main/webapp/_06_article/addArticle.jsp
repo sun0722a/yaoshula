@@ -13,7 +13,7 @@
 <script src="${pageContext.request.contextPath}/js/_06_article/addArticle.js"></script>
 </head>
 <body>
-	<form action="">
+	<form method="POST" action="<c:url value='/article/AddArticle'/>" enctype="multipart/form-data">
 		<div class="w-75 border p-3">
 			<h1>發表新文章</h1>
 			主板： <select class="m-2" style="width: 150px;" name="categoryTitle">

@@ -109,7 +109,7 @@ public class ShowPageArticlesServlet extends HttpServlet {
 //		}
 		// -----------------------
 		// 交由productList.jsp來顯示某頁的商品資料，同時準備『第一頁』、『前一頁』、『當前頁』、『下一頁』、『最末頁』等資料
-		RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productList.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_06_article/articlePage.jsp");
 		rd.forward(request, response);
 		return;
 

@@ -33,6 +33,9 @@
 		<mapping class="_05_product.model.CategoryBean"></mapping>
 		<mapping class="_05_product.model.ProductBean"></mapping>
 		<mapping class="_05_product.model.ProductFormatBean"></mapping>
+		<mapping class="_06_article.model.ArticleBean"></mapping>
+		<mapping class="_06_article.model.ArticleCategoryBean"></mapping>
+		<mapping class="_06_article.model.CommentBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>

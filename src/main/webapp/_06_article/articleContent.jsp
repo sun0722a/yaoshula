@@ -15,7 +15,8 @@
 <body>
 	<div class="w-75 border">
 		<div>
-			<a href="">檢舉</a> <img
+			<a href="">檢舉</a> 
+			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
 				class="rounded-circle border border-dark"
 				style="float: left; height: 100px; width: 100px;">
@@ -27,15 +28,22 @@
 						pattern="yyyy-MM-dd HH:mm" />
 				</div>
 			</div>
-			<img src="" style="max-width: 200px; max-height: 100px;">
+			<img src="${pageContext.request.contextPath}/init/getArticleImage?id=${article.articleId}" style="max-width: 200px; max-height: 100px;">
 			<div class="" style="clear: both;">${content}</div>
-			<div class="d-flex">愛心：${article.likes} 留言數：<c:forEach var="entry"
-					items="${comment_set}" varStatus="number">
-					<c:if test="number.last">${number}</c:if>
-				</c:forEach>
+			<div class="d-flex">
+				愛心：${article.likes} 留言數：
+				<c:choose>
+					<c:when test="${not empty entry.value.articleComments}">
+						<c:forEach var="comments" items="${entry.value.articleComments}"
+							varStatus="number">
+							<c:if test="${number.last}">${number.count}</c:if>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>0</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-<!-- 		留言區=========================================== -->
+		<!-- 		留言區=========================================== -->
 		<c:forEach var="entry" varStatus="number" items="${comment_set}">
 			<hr>
 			<img
@@ -54,7 +62,7 @@
 			<div class="d-flex">${entry.likes}</div>
 		</c:forEach>
 	</div>
-<!-- 	可留言處============================ -->
+	<!-- 	可留言處============================ -->
 	<form action="">
 		<div class="border w-75 d-flex" style="position: fixed; bottom: 2%;">
 			<img class="rounded-circle border-dark border my-auto"
