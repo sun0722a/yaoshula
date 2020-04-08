@@ -16,11 +16,9 @@ import _00_init.util.HibernateUtils;
 import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 
-<<<<<<< HEAD
+
 
 @Repository
-=======
->>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
 public class MemberDaoImpl_Hibernate implements MemberDao {
 	
 	@Autowired

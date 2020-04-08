@@ -107,13 +107,10 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將可更改的會員資料封裝到MemberBean
-<<<<<<< HEAD
-			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, address, fileName, blob, null,
-					null, null,null);
-=======
+
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
-					blob, null, null, null);
->>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
+					blob, null, null, null,null);
+
 			// 呼叫MemberDao的updateMember方法(經由MemberService)
 //			MemberService service = new MemberServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

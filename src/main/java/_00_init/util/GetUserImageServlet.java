@@ -42,15 +42,15 @@ public class GetUserImageServlet extends HttpServlet {
 				;
 			}
 			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-<<<<<<< HEAD
+
 //			MemberService memberService = new MemberServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			MemberService memberService = ctx.getBean(MemberService.class);
 			MemberBean bean = memberService.queryMember(Integer.valueOf(id));
-=======
-			MemberService memberService = new MemberServiceImpl();
-			MemberBean bean = memberService.queryMember(id);
->>>>>>> 0a7174dbef47ecde1bdd9044712098a7cf287096
+
+//			MemberService memberService = new MemberServiceImpl();
+//			MemberBean bean = memberService.queryMember(id);
+
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {
