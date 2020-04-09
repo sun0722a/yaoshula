@@ -33,11 +33,11 @@ public class MemberBean {
 	String status;
 	String permission;
 	String token;
-	
+	String likeArticles;
+
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
-			String status, String permission,String token) {
-
+			String status, String permission, String token, String likeArticles) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -55,6 +55,7 @@ public class MemberBean {
 		this.status = status;
 		this.permission = permission;
 		this.token = token;
+		this.likeArticles = likeArticles;
 	}
 
 	public MemberBean() {
@@ -181,7 +182,6 @@ public class MemberBean {
 		this.permission = permission;
 	}
 
-
 	public String getToken() {
 		return token;
 	}
@@ -189,6 +189,13 @@ public class MemberBean {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
+
+	public String getLikeArticles() {
+		return likeArticles;
+	}
+
+	public void setLikeArticles(String likeArticles) {
+		this.likeArticles = likeArticles;
+	}
+
 }

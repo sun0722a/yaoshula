@@ -28,7 +28,7 @@ prefix="c"%>
     </div>
 
     <form
-      action="<c:url value='/personPage' />"
+      action="<c:url value='/personPage/updatePersonPage' />"
       method="POST"
       enctype="multipart/form-data"
       id="personForm"
