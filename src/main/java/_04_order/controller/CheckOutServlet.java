@@ -58,7 +58,8 @@ public class CheckOutServlet extends HttpServlet {
 //			session.setAttribute("ShoppingCart", cart);
 //		}
 		ShoppingCart cart = new ShoppingCart();
-		session.setAttribute("ShoppingCart", cart);
+		// EL會依序從Page、Request、Session、Application範圍查詢
+		request.setAttribute("ShoppingCart", cart);
 
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
@@ -95,8 +96,8 @@ public class CheckOutServlet extends HttpServlet {
 					productFormatId = pfb.getProductFormatId();
 					// 檢查庫存
 					if (pfb.getStock() - qty < 0) {
-						errorMsg.put("stock", pfb.getFormatContent1() + "  " + pfb.getFormatContent2() + " 庫存量不足!<br>庫存："
-								+ pfb.getStock());
+						errorMsg.put("stock", pfb.getFormatContent1() + "  " + pfb.getFormatContent2()
+								+ " 庫存量不足!<br>庫存：" + pfb.getStock());
 						RequestDispatcher rd = request
 								.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 						rd.forward(request, response);

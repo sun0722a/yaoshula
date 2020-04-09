@@ -22,10 +22,10 @@
 	<jsp:include page="/fragment/topMenuTemp.jsp" />
 
 	<div class="side_menu">
-		<span><a href="">個人頁面</a></span> <span><a href="">我的文章</a></span>
+		<span><a href="">個人頁面</a></span> <span><a href="<c:url value='/personPage/showMyArticles' />">我的文章</a></span>
 	</div>
 
-	<form action="<c:url value='/personPage' />" method="POST"
+	<form action="<c:url value='/personPage/updatePersonPage' />" method="POST"
 		enctype='multipart/form-data' id="personForm">
 		<div id="personPage">
 			<div>

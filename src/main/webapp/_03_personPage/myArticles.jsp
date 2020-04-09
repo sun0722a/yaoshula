@@ -18,10 +18,8 @@
 	<div class="w-75 m-auto">
 
 		<!-- 		搜尋======================================== -->
-		<form action="<c:url value='/article/ShowPageArticles' />"
+		<form action="<c:url value='/personPage/showMyArticles' />"
 			id="searchForm">
-			<input type="hidden" value="${categoryTitle}" name="categoryTitle">
-			<input type="hidden" value="${categoryName}" name="categoryName">
 			<div id="searchTop" class="row">
 				<div class="input-group my-3 col-9 ">
 					<div class="input-group-prepend">
@@ -77,7 +75,7 @@
 									<c:forEach var="comments"
 										items="${entry.value.articleComments}" varStatus="number">
 										<c:if test="${number.last}">
-											${number.count}
+										${number.count} 
 										</c:if>
 									</c:forEach>
 								</c:when>
@@ -87,7 +85,7 @@
 					</div>
 				</div>
 			</a>
-f
+
 		</c:forEach>
 	</div>
 
