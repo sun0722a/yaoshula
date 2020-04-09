@@ -125,6 +125,8 @@ public class ProcessOrderServlet extends HttpServlet {
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			OrderService orderService = ctx.getBean(OrderService.class);
 			orderService.persistOrder(ob);
+			System.out.println("orderNo:" + ob.getOrderNo());
+			session.setAttribute("orderNo", ob.getOrderNo());
 			session.removeAttribute("ShoppingCart");
 //			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
 			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
