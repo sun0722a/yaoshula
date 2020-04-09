@@ -25,7 +25,7 @@ div a {
 <body>
 	<div class="w-75 my-5 mx-auto">
 		<h1>天使熱門榜</h1>
-		<c:forEach var="entry" items="${angel_products_map}">
+		<c:forEach var="entry" items="${angel_articles_map}">
 			<a
 				href="<c:url value='/article/ShowArticleContent?articleId=${entry.value.articleId}'/>">
 				<div class="rounded-pill border m-4">
@@ -69,8 +69,8 @@ div a {
 
 
 	<div class="w-75 my-5 mx-auto">
-		<h1>天使熱門榜</h1>
-		<c:forEach var="entry" items="${angel_products_map}">
+		<h1>惡魔熱門榜</h1>
+		<c:forEach var="entry" items="${evil_articles_map}">
 			<a
 				href="<c:url value='/article/ShowArticleContent?articleId=${entry.value.articleId}'/>">
 				<div class="rounded-pill border m-4">
