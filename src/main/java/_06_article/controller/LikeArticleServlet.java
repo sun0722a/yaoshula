@@ -2,7 +2,6 @@ package _06_article.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 
@@ -40,16 +40,23 @@ public class LikeArticleServlet extends HttpServlet {
 		}
 		ArticleBean ab = (ArticleBean) session.getAttribute("article");
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+		String login = (String) request.getParameter("login");
+
+		if (login == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/article/ShowArticleContent?articleId="
+					+ ab.getArticleId());
+			return;
+		}
 		WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		MemberService memberService = ctx.getBean(MemberService.class);
 		ArticleService articleService = ctx.getBean(ArticleService.class);
 
 		articleService.likeArticle(ab, mb);
+		MemberBean newMb = memberService.queryMember(mb.getId());
+		session.setAttribute("LoginOK", newMb);
 
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/article/ShowArticleContent?articleId=" + ab.getArticleId());
-		rd.forward(request, response);
-//		response.sendRedirect(
-//				getServletContext().getContextPath() + "/article/ShowArticleContent?articleId=" + ab.getArticleId());
+		response.sendRedirect(
+				getServletContext().getContextPath() + "/article/ShowArticleContent?articleId=" + ab.getArticleId());
 		return;
 	}
 }

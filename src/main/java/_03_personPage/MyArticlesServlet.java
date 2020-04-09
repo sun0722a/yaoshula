@@ -3,6 +3,7 @@ package _03_personPage;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,7 +55,8 @@ public class MyArticlesServlet extends HttpServlet {
 		request.setAttribute("articles_map", articleMap);
 
 		// 轉換頁面
-		response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/myArticles.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/myArticles.jsp");
+		rd.forward(request, response);
 		return;
 
 	}

@@ -120,7 +120,8 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 			}
 		}
 		// 只取此頁的商品
-		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		list = session.createQuery(hql).setParameter("memberId", mb.getMemberId())
+				.setParameter("searchStr", "%" + searchStr + "%").getResultList();
 		for (ArticleBean bean : list) {
 			map.put(bean.getArticleId(), bean);
 		}
@@ -177,17 +178,18 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		Session session = factory.getCurrentSession();
 		// 更新文章愛心數
 		String hql1 = "UPDATE ArticleBean ab SET ab.likes = likes + 1 WHERE ab.articleId = :articleId";
-		n = session.createQuery(hql1).executeUpdate();
+		n = session.createQuery(hql1).setParameter("articleId", ab.getArticleId()).executeUpdate();
 		// 更新會員喜歡文章
 		String hql2 = "SELECT mb.likeArticles FROM MemberBean mb WHERE mb.id = :id";
-		String oldLikeArticles = (String) session.createQuery(hql2).getSingleResult();
-		if (oldLikeArticles == "") {
+		String oldLikeArticles = (String) session.createQuery(hql2).setParameter("id", mb.getId()).getSingleResult();
+		if (oldLikeArticles == null) {
 			oldLikeArticles = ab.getArticleId().toString();
 		} else {
 			oldLikeArticles += "," + ab.getArticleId().toString();
 		}
 		String hql3 = "UPDATE MemberBean mb SET mb.likeArticles = :likeArticles WHERE mb.id = :id";
-		session.createQuery(hql3).setParameter("likeArticles", oldLikeArticles).executeUpdate();
+		session.createQuery(hql3).setParameter("likeArticles", oldLikeArticles).setParameter("id", mb.getId())
+				.executeUpdate();
 
 		return n;
 	}

@@ -34,7 +34,12 @@ public class GetArticleImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
-			int id = Integer.parseInt(idStr);
+			int id = 0;
+			try {
+				id = Integer.parseInt(idStr);
+			} catch (NumberFormatException e) {
+				;
+			}
 
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			ArticleService articleService = ctx.getBean(ArticleService.class);

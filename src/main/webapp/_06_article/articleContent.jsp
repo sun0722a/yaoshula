@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,14 @@
 			<div class="" style="clear: both;">${content}</div>
 
 			<div class="d-flex">
-				愛心：${article.likes} 留言數：
+				<c:set var="articleIds"
+					value="${fn:split(LoginOK.likeArticles, ',')}"></c:set>
+				<a href="<c:url value='/article/LikeArticle?login=true'/>"><input
+					type="button" value="愛心"
+					<c:forEach var="entry" items="${articleIds}">${entry}
+					<c:if test="${entry==''+article.articleId}"> disabled="disabled" style="border:1px solid red;color: red;" </c:if>
+				</c:forEach>></a>${article.likes}
+				留言數：
 				<c:choose>
 					<c:when test="${not empty comments_set}">
 						<c:forEach var="comments" items="${comments_set}"
