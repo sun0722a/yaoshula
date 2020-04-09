@@ -2,6 +2,7 @@ package _04_order.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +23,11 @@ import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.model.ShoppingCart;
 import _04_order.service.OrderService;
+import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
+import _05_product.service.ProductService;
+
+/* 不考慮兩個商品庫存都不夠>< */
 
 // 儲存會員的訂單
 @WebServlet("/order/orderCheck")
@@ -45,6 +50,10 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
+
+		// 準備存放錯誤訊息的Map物件
+		Map<String, String> errorMsg = new HashMap<String, String>();
+		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
@@ -84,14 +93,33 @@ public class ProcessOrderServlet extends HttpServlet {
 				if (i.equals(j) && finalContent.get(j).equals("y")) {
 					Map<OrderItemBean, Set<ProductFormatBean>> orderMap = content.get(i);
 					OrderItemBean oib = orderMap.keySet().iterator().next();
+					// 檢查庫存
+					WebApplicationContext ctx = WebApplicationContextUtils
+							.getWebApplicationContext(getServletContext());
+					ProductService productService = ctx.getBean(ProductService.class);
+					ProductBean pb = productService.getProduct(oib.getProductId());
+					Set<ProductFormatBean> formats = pb.getProductFormat();
+					for (ProductFormatBean pfb : formats) {
+						if (pfb.getFormatContent1().equals(oib.getFormatContent1())
+								&& pfb.getFormatContent2().equals(oib.getFormatContent2())) {
+							if (pfb.getStock() - oib.getQuantity() < 0) {
+								errorMsg.put("stock", pb.getProductName() + "的" + pfb.getFormatContent1() + " "
+										+ pfb.getFormatContent2() + " 庫存量不足!<br>庫存：" + pfb.getStock());
+								RequestDispatcher rd = request.getRequestDispatcher("/_04_order/shoppingCart.jsp");
+								rd.forward(request, response);
+								return;
+							}
+						}
+					}
+
 					oib.setOrderBean(ob);
 					items.add(oib);
 				}
 			}
 
 		}
-
 		ob.setOrderItems(items);
+
 		try {
 //			OrderService orderService = new OrderServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

@@ -17,7 +17,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
-import _01_register.service.impl.MemberServiceImpl;
 
 /* 未完成: 預設圖片--register.jsp */
 
@@ -35,22 +34,13 @@ public class GetUserImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
-			int id = 0;
-			try {
-				id = Integer.parseInt(idStr);
-			} catch (NumberFormatException ex) {
-				;
-			}
-			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
+			int id = Integer.parseInt(idStr);
 
-//			MemberService memberService = new MemberServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			MemberService memberService = ctx.getBean(MemberService.class);
-			MemberBean bean = memberService.queryMember(Integer.valueOf(id));
 
-//			MemberService memberService = new MemberServiceImpl();
-//			MemberBean bean = memberService.queryMember(id);
-
+			// 利用主鍵取得bean物件及其內容
+			MemberBean bean = memberService.queryMember(id);
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {

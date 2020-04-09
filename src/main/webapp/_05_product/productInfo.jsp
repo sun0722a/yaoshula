@@ -23,81 +23,85 @@
 </head>
 
 <body class="bg-light">
-	
+
 	<jsp:include page="/fragment/topForLogin.jsp" />
-	
-		<div class="productBox col-10">
-			<form action="" name="buyForm">
-				<div class="topProductBox">
 
-					<div class="productImg col-5">
-						<img
-							src="${pageContext.request.contextPath}/init/getProductImage?id=${product.productId}"
-							class="img-thumbnail">
-					</div>
-					<div class="itemSelect col-lg-6 col-sm-3 m-2">
-						<div class="mt-2">
-							商品名稱: ${product.productName} <span style="float: right;"><i
-								class="fas fa-external-link-alt ml-5"></i></span>
-						</div>
-						<div class="mt-2">商品價格: ${product.price}</div>
-						<div class="mt-3"></div>
+	<div class="productBox col-10">
+		<form action="" name="buyForm">
+			<div class="topProductBox">
 
-						<c:if test="${title1!=''}">
-							<div class="btn-group-vertical btn-group-toggle mb-5"
-								data-toggle="buttons">${title1}
-								<c:forEach var="entry" items="${content1}">
-									<div
-										class="btn btn-outline-secondary text-monospace mt-2 active">
-										<input type="radio" name="content1" required="required"
-											value="${entry}">${entry}
-									</div>
-								</c:forEach>
-							</div>
-						</c:if>
-						<c:if test="${title2!=''}">
-							<div class="btn-group-vertical btn-group-toggle"
-								data-toggle="buttons">${title2}
-								<c:forEach var="entry2" items="${content2}">
-									<div
-										class="btn btn-outline-secondary text-monospace mt-2 active">
-										<input type="radio" name="content2" required="required"
-											value="${entry2}">${entry2}
-									</div>
-								</c:forEach>
-							</div>
-						</c:if>
-
-						<div class="mt-2">
-							數量<input type="number" name="qty" value="1" min="1" max="9"
-								class="ml-6 mt-2">
-						</div>
-						<div class="btn-group-sm ml-3 mb-3" role="group"
-							aria-label="Basic example">
-							<input type="submit" class="btn btn-dark mt-3" role="button"
-								value="立即購買 "
-								onclick="buyForm.action='<c:url value="/order/checkOrder" />';">
-							<input type="submit" class="btn btn-dark mt-3" role="button" id="joinCart"
-								value="加入購物車"
-								onclick="buyForm.action='<c:url value="/order/shoppingCart" />'; ">
-							<a type="button" class="btn btn-dark mt-3" role="button"
-								
-								href="<c:url value="/product/ShowPageProducts" /> ">返回商品列表</a>
-						</div>
-						
-								
-					</div>
-					<!-- topProduct結束標前 -->
+				<div class="productImg col-5">
+					<img
+						src="${pageContext.request.contextPath}/init/getProductImage?id=${product.productId}"
+						class="img-thumbnail">
 				</div>
-			</form>
-			<div class="productDesc">
-				<p style="text-align: center;">
-					<span>商品介紹</span>
-				</p>
-				<span>${detail}</span>
-			</div>
+				<div class="itemSelect col-lg-6 col-sm-3 m-2">
+					<div class="mt-2">
+						商品名稱: ${product.productName} <span style="float: right;"><i
+							class="fas fa-external-link-alt ml-5"></i></span>
+					</div>
+					<div class="mt-2">商品價格: ${product.price}</div>
+					<div class="mt-3"></div>
 
+					<c:if test="${title1!=''}">
+						<div class="btn-group-vertical btn-group-toggle mb-5"
+							data-toggle="buttons">${title1}
+							<c:forEach var="entry" items="${content1}">
+								<div
+									class="btn btn-outline-secondary text-monospace mt-2 active">
+									<input type="radio" name="content1" required="required"
+										value="${entry}">${entry}
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
+					<c:if test="${title2!=''}">
+						<div class="btn-group-vertical btn-group-toggle"
+							data-toggle="buttons">${title2}
+							<c:forEach var="entry2" items="${content2}">
+								<div
+									class="btn btn-outline-secondary text-monospace mt-2 active">
+									<input type="radio" name="content2" required="required"
+										value="${entry2}">${entry2}
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
+
+					<div class="mt-2">
+						數量<input type="number" name="qty" value="1" min="1"
+							class="ml-6 mt-2">
+					</div>
+					<div class="mt-2">
+						<c:forEach var="entry" items="${errorMsg}">
+							<font color="red">${entry.value}</font>
+						</c:forEach>
+					</div>
+					<div class="btn-group-sm ml-3 mb-3" role="group"
+						aria-label="Basic example">
+						<input type="submit" class="btn btn-dark mt-3" role="button"
+							value="立即購買 "
+							onclick="buyForm.action='<c:url value="/order/checkOrder" />';">
+						<input type="submit" class="btn btn-dark mt-3" role="button"
+							id="joinCart" value="加入購物車"
+							onclick="buyForm.action='<c:url value="/order/shoppingCart" />'; ">
+						<a type="button" class="btn btn-dark mt-3" role="button"
+							href="<c:url value="/product/ShowPageProducts" /> ">返回商品列表</a>
+					</div>
+
+
+				</div>
+				<!-- topProduct結束標前 -->
+			</div>
+		</form>
+		<div class="productDesc">
+			<p style="text-align: center;">
+				<span>商品介紹</span>
+			</p>
+			<span>${detail}</span>
 		</div>
+
+	</div>
 
 	</div>
 

@@ -19,11 +19,15 @@ import _01_register.model.MemberBean;
 import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
-import _06_article.service.impl.ArticleServiceImpl;
 
 @WebServlet("/article/AddComment")
 public class AddCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,8 +42,15 @@ public class AddCommentServlet extends HttpServlet {
 		}
 
 		String content = request.getParameter("content");
-
 		ArticleBean ab = (ArticleBean) session.getAttribute("article");
+
+		if (content == null) {
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/article/ShowArticleContent?articleId=" + ab.getArticleId());
+			rd.forward(request, response);
+			return;
+		}
+
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		Integer authorId = mb.getId();
@@ -50,14 +61,14 @@ public class AddCommentServlet extends HttpServlet {
 		ServletContext sc = getServletContext();
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
 		ArticleService service = ctx.getBean(ArticleService.class);
-		
+
 		// 將所有文章資料封裝到CommentBean(類別的)物件
-		CommentBean cb = new CommentBean(null, authorId, authorName, ts, content, ab, 0, "正常");
-		// 如果有錯誤
+		CommentBean cb = new CommentBean(null, authorId, authorName, ts, content, ab, "正常");
 		service.insertComment(cb);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/article/ShowArticleContent?articleId="+ab.getArticleId());
-		rd.forward(request, response);
+
+		// 需轉址才會直接更新留言
+		response.sendRedirect(
+				getServletContext().getContextPath() + "/article/ShowArticleContent?articleId=" + ab.getArticleId());
 		return;
 
 	}

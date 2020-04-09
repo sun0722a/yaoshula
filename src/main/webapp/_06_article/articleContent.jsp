@@ -15,8 +15,7 @@
 <body>
 	<div class="w-75 border">
 		<div>
-			<a href="">檢舉</a> 
-			<img
+			<a href="">檢舉</a> <img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
 				class="rounded-circle border border-dark"
 				style="float: left; height: 100px; width: 100px;">
@@ -28,13 +27,16 @@
 						pattern="yyyy-MM-dd HH:mm" />
 				</div>
 			</div>
-			<img src="${pageContext.request.contextPath}/init/getArticleImage?id=${article.articleId}" style="max-width: 200px; max-height: 100px;">
+			<img
+				src="${pageContext.request.contextPath}/init/getArticleImage?id=${article.articleId}"
+				style="max-width: 200px; max-height: 100px;">
 			<div class="" style="clear: both;">${content}</div>
+
 			<div class="d-flex">
 				愛心：${article.likes} 留言數：
 				<c:choose>
-					<c:when test="${not empty entry.value.articleComments}">
-						<c:forEach var="comments" items="${entry.value.articleComments}"
+					<c:when test="${not empty comments_set}">
+						<c:forEach var="comments" items="${comments_set}"
 							varStatus="number">
 							<c:if test="${number.last}">${number.count}</c:if>
 						</c:forEach>
@@ -44,7 +46,7 @@
 			</div>
 		</div>
 		<!-- 		留言區=========================================== -->
-		<c:forEach var="entry" varStatus="number" items="${comment_set}">
+		<c:forEach var="entry" varStatus="number" items="${comments_set}">
 			<hr>
 			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.authorId}"
@@ -53,17 +55,16 @@
 			<div class="ml-4 my-auto" style="float: left; height: 100px;">
 				<div>${entry.authorName}</div>
 				<div>
-					B${number}
+					B${number.index+1}
 					<fmt:formatDate value="${entry.publishTime}"
 						pattern="yyyy-MM-dd HH:mm" />
 				</div>
 			</div>
 			<div class="" style="clear: both;">${entry.content}</div>
-			<div class="d-flex">${entry.likes}</div>
 		</c:forEach>
 	</div>
 	<!-- 	可留言處============================ -->
-	<form method="POST" action="<c:url value='/article/AddComment'/>" >
+	<form method="POST" action="<c:url value='/article/AddComment'/>">
 		<div class="border w-75 d-flex" style="position: fixed; bottom: 2%;">
 			<img class="rounded-circle border-dark border my-auto"
 				style="width: 50px; height: 50px;"

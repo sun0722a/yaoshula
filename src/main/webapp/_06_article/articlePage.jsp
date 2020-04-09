@@ -58,10 +58,10 @@
 				<div id="arrange"
 					class="col-3 my-3 d-flex justify-content-end align-items-center">
 					<span style="font-size: 10px;">排序：</span> <select name="arrange">
-						<option value="time"
-							<c:if test="${arrange=='time'}"> selected </c:if>>最新</option>
 						<option value="popular"
 							<c:if test="${arrange=='popular'}"> selected </c:if>>熱門</option>
+						<option value="time"
+							<c:if test="${arrange=='time'}"> selected </c:if>>最新</option>
 					</select>
 				</div>
 			</div>
@@ -75,8 +75,9 @@
 					<div
 						class="d-flex mx-auto justify-content-center align-items-center"
 						style="text-align: center;">
-						<img src="${pageContext.request.contextPath}/init/getArticleImage?id=${entry.value.articleId}" style="max-width: 200px; max-height: 100px;" /> 
 						<img
+							src="${pageContext.request.contextPath}/init/getArticleImage?id=${entry.value.articleId}"
+							style="max-width: 200px; max-height: 100px;" /> <img
 							src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.value.authorId}"
 							class="rounded-circle border border-dark"
 							style="height: 100px; width: 100px;" />

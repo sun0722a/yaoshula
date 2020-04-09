@@ -26,11 +26,10 @@ public class CommentBean implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_ArticleBean_Article")
 	private ArticleBean article;
-	private Integer likes;
 	private String status;
 
 	public CommentBean(Integer commentId, Integer authorId, String authorName, Timestamp publishTime, String content,
-			ArticleBean article, Integer likes, String status) {
+			ArticleBean article, String status) {
 		super();
 		this.commentId = commentId;
 		this.authorId = authorId;
@@ -38,7 +37,6 @@ public class CommentBean implements Serializable {
 		this.publishTime = publishTime;
 		this.content = content;
 		this.article = article;
-		this.likes = likes;
 		this.status = status;
 	}
 
@@ -92,14 +90,6 @@ public class CommentBean implements Serializable {
 
 	public void setArticle(ArticleBean article) {
 		this.article = article;
-	}
-
-	public Integer getLikes() {
-		return likes;
-	}
-
-	public void setLikes(Integer likes) {
-		this.likes = likes;
 	}
 
 	public String getStatus() {

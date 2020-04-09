@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import _00_init.util.GlobalService;
+import _04_order.model.OrderBean;
+import _04_order.model.OrderItemBean;
 import _05_product.dao.ProductDao;
 import _05_product.model.ProductBean;
 
@@ -223,6 +226,21 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 //		n++;
 //		return n;
 //	}
+
+	@Override
+	public int addSales(OrderBean ob) {
+		int n = 0;
+		Session session = factory.getCurrentSession();
+		Set<OrderItemBean> orderItems = ob.getOrderItems();
+		for (OrderItemBean oib : orderItems) {
+			ProductBean pb = getProduct(oib.getProductId());
+			String hql = "UPDATE ProductBean pb SET pb.sales = :sales WHERE pb.productId = :productId";
+			session.createQuery(hql).setParameter("sales", pb.getProductId())
+					.setParameter("productId", pb.getSales() + 1).executeUpdate();
+			n++;
+		}
+		return n;
+	}
 
 	@Override
 	public void setSelected(String selected) {

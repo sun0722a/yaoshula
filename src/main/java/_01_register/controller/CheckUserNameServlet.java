@@ -18,16 +18,24 @@ import _01_register.service.MemberService;
 public class CheckUserNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
+		
 		Writer os = null;
 		os = response.getWriter();
 
-		String userName = request.getParameter("userName");
-//		MemberService service = new MemberServiceImpl();
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		MemberService service = ctx.getBean(MemberService.class);
+
+		String userName = request.getParameter("userName");
 		if (userName.trim().length() != 0) {
 			boolean exist = service.idExists(userName);
 			if (!exist) {

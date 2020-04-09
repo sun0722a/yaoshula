@@ -77,25 +77,22 @@ a {
 	<div class="top_area">
 
 		<div class="logo">
-			<a href="<c:url value='/index.jsp' />"> 
-			<img
+			<a href="<c:url value='/index.jsp' />"> <img
 				src="${pageContext.request.contextPath}/image/logo.png"
-				 style="width: 100px; height: 100px;">
+				style="width: 100px; height: 100px;">
 			</a>
 		</div>
 		<div class="top-space"></div>
 		<c:choose>
 			<c:when test="${ ! empty LoginOK }">
-			   <a href="<c:url value='/_02_login/logout.jsp' />">
-  				登出 <i class="fas fa-sign-out-alt"></i>
-	           </a>
+				<a href="<c:url value='/_02_login/logout.jsp' />"> 登出 <i
+					class="fas fa-sign-out-alt"></i>
+				</a>
 			</c:when>
 			<c:otherwise>
-				<a href="<c:url value='/_02_login/login.jsp'/>">
-  				登入
-	           </a>
+				<a href="<c:url value='/_02_login/login.jsp'/>"> 登入 </a>
 			</c:otherwise>
-			</c:choose>
+		</c:choose>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="#">Another action</a>
 			<div class="dropdown-divider"></div>
@@ -127,7 +124,13 @@ a {
 
 	<div class="cart-box p-2">
 		<h1>購物車</h1>
-		
+
+		<div class="mt-2">
+			<c:forEach var="entry" items="${errorMsg}">
+				<font color="red">${entry.value}</font>
+			</c:forEach>
+		</div>
+
 		<!-- 標題======================================== -->
 		<div class="items-menu border border-dark">
 			<!-- <hr style="background: black;" /> -->
@@ -158,7 +161,7 @@ a {
 			</div>
 
 			<hr class="m-0" style="background: black;" />
-			<form action="<c:url value='/_04_order/checkOrder.jsp' />" >
+			<form action="<c:url value='/_04_order/checkOrder.jsp' />">
 				<!-- 內容物=================================== -->
 				<c:forEach var="cartMap" varStatus="vs"
 					items="${ShoppingCart.content}">
@@ -172,7 +175,7 @@ a {
 										<input type="checkbox" class="choose"
 											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
 											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
-											
+
 									</c:if>
 								</c:forEach>
 							</div>
@@ -220,14 +223,10 @@ a {
 							<div
 								class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
 								style="padding: 0px;">
-								<select name="count" id="newQty${vs.index}"
+								<input type="number" name="count" id="newQty${vs.index}"
 									style="max-width: 100%;"
-									onchange="modifyQuantity('${cartMap.key}',${vs.index})">
-									<c:forEach begin="1" end="10" var="number">
-										<option value="${number}"
-											<c:if test="${orderMap.key.quantity==number}"> selected </c:if>>${number}</option>
-									</c:forEach>
-								</select>
+									onchange="modifyQuantity('${cartMap.key}',${vs.index})"
+									value="${orderMap.key.quantity}" min="1" class="ml-6 mt-2">
 							</div>
 							<div
 								class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
@@ -256,9 +255,10 @@ a {
 						總金額： $ <span id="totalPrice"></span>
 					</div>
 					<div class="col-3 d-flex justify-content-center align-items-center">
-						<input type="submit" value="確認訂單" style="max-width: 100%;" class="mr-4"/>
-						<span><a 
-						href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i class="fas fa-arrow-left"></i></a></span>
+						<input type="submit" value="確認訂單" style="max-width: 100%;"
+							class="mr-4" /> <span><a
+							href="<c:url value='/product/ShowProductInfo?productId=${productId}' /> ">返回<i
+								class="fas fa-arrow-left"></i></a></span>
 					</div>
 				</div>
 			</form>

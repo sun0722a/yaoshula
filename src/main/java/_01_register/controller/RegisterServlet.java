@@ -37,6 +37,12 @@ public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -72,8 +78,6 @@ public class RegisterServlet extends HttpServlet {
 			for (Part p : parts) {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
-//				System.out.println("fldName= " + fldName + "value= " + value);
-
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
 					if (fldName.equals("memberId")) {
@@ -116,10 +120,8 @@ public class RegisterServlet extends HttpServlet {
 		} else {
 			System.out.println("此表單不是上傳檔案的表單(RegisterServlet)");
 		}
-
 		// 呼叫MemberDao的idExists方法(經由MemberService)
 		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
-//		MemberService service = new MemberServiceImpl();
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		MemberService service = ctx.getBean(MemberService.class);
 		if (service.idExists(memberId)) {
@@ -142,7 +144,7 @@ public class RegisterServlet extends HttpServlet {
 			// 將所有會員資料封裝到MemberBean(類別的)物件
 
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "正常", "一般會員",null);
+					address, fileName, blob, ts, "正常", "一般會員", null);
 
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
