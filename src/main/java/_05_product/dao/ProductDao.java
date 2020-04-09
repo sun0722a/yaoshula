@@ -2,6 +2,7 @@ package _05_product.dao;
 
 import java.util.Map;
 
+import _04_order.model.OrderBean;
 import _05_product.model.ProductBean;
 
 public interface ProductDao {
@@ -24,6 +25,8 @@ public interface ProductDao {
 //	int deleteBook(int no);
 //
 //	int saveBook(BookBean bean);
+
+	int addSales(OrderBean pb);
 
 	void setSelected(String selected);
 

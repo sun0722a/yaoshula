@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import _00_init.util.HibernateUtils;
+import _01_register.model.MemberBean;
 import _06_article.dao.ArticleDao;
 import _06_article.dao.impl.ArticleDaoImpl_Hibernate;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
+
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -37,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			dao.insertArticle(ab);
+		dao.insertArticle(ab);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -54,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			dao.insertComment(cb);
+		dao.insertComment(cb);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -109,13 +111,32 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional
 	@Override
+	public Map<Integer, ArticleBean> getPersonArticles(String arrange, String searchStr, MemberBean mb) {
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = null;
+		Map<Integer, ArticleBean> map = null;
+//		try {
+//			tx = session.beginTransaction();
+		map = dao.getPersonArticles(arrange, searchStr, mb);
+//			tx.commit();
+//		} catch (Exception ex) {
+//			if (tx != null)
+//				tx.rollback();
+//			ex.printStackTrace();
+//			throw new RuntimeException(ex);
+//		}
+		return map;
+	}
+
+	@Transactional
+	@Override
 	public Map<Integer, ArticleBean> getFamousArticles(String categoryTitle) {
 //		Session session = factory.getCurrentSession();
 //		Transaction tx = null;
 		Map<Integer, ArticleBean> map = null;
 //		try {
 //			tx = session.beginTransaction();
-			map = dao.getFamousArticles(categoryTitle);
+		map = dao.getFamousArticles(categoryTitle);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -134,7 +155,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ArticleCategoryBean bean = null;
 //		try {
 //			tx = session.beginTransaction();
-			bean = dao.getCategory(categoryTitle, categoryName);
+		bean = dao.getCategory(categoryTitle, categoryName);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -153,7 +174,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Set<String> categorySet = null;
 //		try {
 //			tx = session.beginTransaction();
-			categorySet = dao.getCategorys(categoryTitle);
+		categorySet = dao.getCategorys(categoryTitle);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -162,6 +183,25 @@ public class ArticleServiceImpl implements ArticleService {
 //			throw new RuntimeException(ex);
 //		}
 		return categorySet;
+	}
+
+	@Transactional
+	@Override
+	public Integer likeArticle(ArticleBean ab, MemberBean mb) {
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = null;
+		int n = 0;
+//		try {
+//			tx = session.beginTransaction();
+		n = dao.likeArticle(ab, mb);
+//			tx.commit();
+//		} catch (Exception ex) {
+//			if (tx != null)
+//				tx.rollback();
+//			ex.printStackTrace();
+//			throw new RuntimeException(ex);
+//		}
+		return n;
 	}
 
 //	@Override

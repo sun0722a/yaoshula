@@ -17,7 +17,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
-import _05_product.service.impl.ProductServiceImpl;
 
 /* 未完成: 預設圖片  */
 
@@ -35,20 +34,12 @@ public class GetProductImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
+			int id = Integer.parseInt(idStr);
 
-			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-//			ProductService productService = new ProductServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			ProductService productService = ctx.getBean(ProductService.class);
 
-			int id = 0;
-			try {
-				id = Integer.parseInt(idStr);
-			} catch (NumberFormatException ex) {
-				;
-			}
-			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-//			ProductService productService = new ProductServiceImpl();
+			// 利用主鍵取得bean物件及其內容
 			ProductBean bean = productService.getProduct(id);
 			if (bean != null) {
 				blob = bean.getImage();

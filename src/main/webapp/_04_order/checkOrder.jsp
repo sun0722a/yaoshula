@@ -188,10 +188,7 @@ a {
 									<div
 										class="col-1 d-flex justify-content-center align-items-center">
 										<i class="fas fa-check"></i>
-
 									</div>
-
-
 								</div>
 							</c:if>
 						</c:if>

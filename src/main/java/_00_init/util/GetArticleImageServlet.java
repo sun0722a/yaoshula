@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
-import _06_article.service.impl.ArticleServiceImpl;
 
 /* 未完成: 預設圖片  */
 
@@ -36,19 +34,13 @@ public class GetArticleImageServlet extends HttpServlet {
 		try {
 			// 讀取瀏覽器傳送來的主鍵
 			String idStr = request.getParameter("id");
-			int id = 0;
-			try {
-				id = Integer.parseInt(idStr);
-			} catch (NumberFormatException ex) {
-				;
-			}
-			// 讀取瀏覽器傳送來的type，以分辨要處理哪個表格
-//			ArticleService articleService = new ArticleServiceImpl();
-			ServletContext sc = getServletContext();
-			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
-			ArticleService service = ctx.getBean(ArticleService.class);
+			int id = Integer.parseInt(idStr);
 
-			ArticleBean bean = service.getArticle(id);
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			ArticleService articleService = ctx.getBean(ArticleService.class);
+
+			// 利用主鍵取得bean物件及其內容
+			ArticleBean bean = articleService.getArticle(id);
 			if (bean != null) {
 				blob = bean.getImage();
 				if (blob != null) {

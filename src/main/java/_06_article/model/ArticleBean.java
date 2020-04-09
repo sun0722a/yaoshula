@@ -17,8 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/* 留言數使用articleComments.size() */
-/* 新增: 圖片 */
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name = "Articles")
@@ -41,6 +40,7 @@ public class ArticleBean implements Serializable {
 	private String status;
 
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+	@OrderBy(clause = "publishTime")
 	Set<CommentBean> articleComments = new LinkedHashSet<>();
 
 	public ArticleBean(Integer articleId, String title, Integer authorId, String authorName, Timestamp publishTime,

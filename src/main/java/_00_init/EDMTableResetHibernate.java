@@ -17,10 +17,8 @@ import org.hibernate.Transaction;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import _00_init.util.GlobalService;
-import _00_init.util.HibernateUtils;
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _05_product.model.CategoryBean;
@@ -46,6 +44,7 @@ public class EDMTableResetHibernate {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+
 			// 1. ProductCategory
 			try (FileReader fr1 = new FileReader("data/product/productCategory.dat");
 					BufferedReader br1 = new BufferedReader(fr1);) {
@@ -69,7 +68,6 @@ public class EDMTableResetHibernate {
 							}
 							String[] token2 = line.split("\\|");
 							String productName = token2[0];
-
 							for (String str : categoryProducts) {
 								if (str.equals(productName)) {
 									CategoryBean cb = categoryBean;
@@ -146,6 +144,7 @@ public class EDMTableResetHibernate {
 		tx = null;
 		try {
 			tx = session.beginTransaction();
+
 			// 1. Orders
 			try (FileReader fr1 = new FileReader("data/order/orders.dat");
 					BufferedReader br1 = new BufferedReader(fr1);) {
@@ -190,12 +189,12 @@ public class EDMTableResetHibernate {
 								Integer unitPrice = Integer.parseInt(token2[4].trim());
 								Integer quantity = Integer.parseInt(token2[5].trim());
 								totalPrice += unitPrice * quantity;
+
 								orderItemBean = new OrderItemBean(null, productId, productName, formatContent1,
 										formatContent2, unitPrice, quantity, orderBean);
 								orderItems.add(orderItemBean);
 							}
 						}
-
 					} catch (Exception e) {
 						if (tx != null) {
 							tx.rollback();
@@ -226,6 +225,7 @@ public class EDMTableResetHibernate {
 		tx = null;
 		try {
 			tx = session.beginTransaction();
+
 			// 1. ArticleCategory
 			try (FileReader fr1 = new FileReader("data/article/articleCategory.dat");
 					BufferedReader br1 = new BufferedReader(fr1);) {
@@ -249,7 +249,6 @@ public class EDMTableResetHibernate {
 							}
 							String[] token2 = line.split("\\|");
 							String articleCategoryCkeck = token2[8];
-
 							if (token1[2].equals(articleCategoryCkeck)) {
 								String title = token2[1];
 								Integer authorId = Integer.parseInt(token2[2].trim());
@@ -273,18 +272,16 @@ public class EDMTableResetHibernate {
 											line = line.substring(1);
 										}
 										String[] token3 = line.split("\\|");
-										String articleNoCheck = token3[5];
-										if (token2[0].equals(articleNoCheck)) {
+										String articleIdCheck = token3[4];
+										if (token2[0].equals(articleIdCheck)) {
 											Integer commentAuthorId = Integer.parseInt(token3[0].trim());
 											String commentAuthorName = token3[1];
 											Timestamp commentPublishTime = Timestamp.valueOf(token3[2].trim());
 											String commentContent = token3[3];
 											ArticleBean ab = articleBean;
-											Integer commentLikes = Integer.parseInt(token3[4].trim());
 
 											CommentBean commentBean = new CommentBean(null, commentAuthorId,
-													commentAuthorName, commentPublishTime, commentContent, ab,
-													commentLikes, "正常");
+													commentAuthorName, commentPublishTime, commentContent, ab, "正常");
 											comments.add(commentBean);
 										}
 									}
@@ -318,7 +315,6 @@ public class EDMTableResetHibernate {
 				}
 				System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
 			}
-
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
@@ -326,5 +322,4 @@ public class EDMTableResetHibernate {
 		}
 		((ConfigurableApplicationContext) ctx).close();
 	}
-
 }

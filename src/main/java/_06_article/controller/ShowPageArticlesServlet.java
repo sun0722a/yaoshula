@@ -17,7 +17,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
-import _06_article.service.impl.ArticleServiceImpl;
 
 /* 無pageNo不能用cookie記之前瀏覽到哪些文章 */
 

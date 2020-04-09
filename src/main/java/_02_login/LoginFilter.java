@@ -22,8 +22,8 @@ import _01_register.model.MemberBean;
 @WebFilter(urlPatterns = { "/*" }, initParams = {
 		@WebInitParam(name = "url_1", value = "/_03_personPage/personPage.jsp"),
 		@WebInitParam(name = "url_2", value = "/order/*"),
-		@WebInitParam(name = "url_3", value = "/article/AddArticle"),
-		@WebInitParam(name = "url_4", value = "/_06_article/addArticle.jsp")})
+		@WebInitParam(name = "url_3", value = "/_06_article/addArticle.jsp"),
+		@WebInitParam(name = "url_4", value = "/article/AddComment")})
 public class LoginFilter implements Filter {
 
 	List<String> url = new ArrayList<String>();

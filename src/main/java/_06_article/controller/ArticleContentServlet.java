@@ -21,7 +21,6 @@ import _00_init.util.GlobalService;
 import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
-import _06_article.service.impl.ArticleServiceImpl;
 
 @WebServlet("/article/ShowArticleContent")
 public class ArticleContentServlet extends HttpServlet {
@@ -32,7 +31,6 @@ public class ArticleContentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +47,6 @@ public class ArticleContentServlet extends HttpServlet {
 
 		// 從jsp取得所點取的商品的productId為何
 		String articleIdStr = request.getParameter("articleId");
-		String filter = request.getParameter("filter") == null ? "" : request.getParameter("filter");
 		Integer articleId = Integer.parseInt(articleIdStr);
 
 		// 利用getArticle取得該ID所擁有的資訊
@@ -68,7 +65,6 @@ public class ArticleContentServlet extends HttpServlet {
 		Clob clob = null;
 		if (ab != null) {
 			Set<CommentBean> comments = ab.getArticleComments();
-
 			try {
 				clob = ab.getContent();
 				if (clob != null) {

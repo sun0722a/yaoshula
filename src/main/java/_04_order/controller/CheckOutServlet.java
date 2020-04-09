@@ -1,6 +1,8 @@
 package _04_order.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -19,6 +21,9 @@ import _04_order.model.ShoppingCart;
 import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
+
+/* new shoppingCart會被洗掉 */
+/* 未完成: 未將errormsg放入JSP(productinfo)  */
 
 @WebServlet("/order/checkOrder")
 public class CheckOutServlet extends HttpServlet {
@@ -41,6 +46,10 @@ public class CheckOutServlet extends HttpServlet {
 			return;
 		}
 
+		// 準備存放錯誤訊息的Map物件
+		Map<String, String> errorMsg = new HashMap<String, String>();
+		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
+
 //		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 
 		// 如果session內沒有購物車物件 就新建一個session物件
@@ -49,7 +58,8 @@ public class CheckOutServlet extends HttpServlet {
 //			session.setAttribute("ShoppingCart", cart);
 //		}
 		ShoppingCart cart = new ShoppingCart();
-		session.setAttribute("ShoppingCart", cart);
+		// EL會依序從Page、Request、Session、Application範圍查詢
+		request.setAttribute("ShoppingCart", cart);
 
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
@@ -62,8 +72,8 @@ public class CheckOutServlet extends HttpServlet {
 		ProductBean pb = service.getProduct(productId);
 
 		// 檢查有沒有取得選取規格的值
-		String content1 = request.getParameter("content1") == null ? "":request.getParameter("content1");
-		String content2 = request.getParameter("content2") == null ? "":request.getParameter("content2");
+		String content1 = request.getParameter("content1") == null ? "" : request.getParameter("content1");
+		String content2 = request.getParameter("content2") == null ? "" : request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
 //		Integer price = pb.getPrice();
 
@@ -84,8 +94,18 @@ public class CheckOutServlet extends HttpServlet {
 				if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
 					// 正確規格，則把productFormatId存下來
 					productFormatId = pfb.getProductFormatId();
+					// 檢查庫存
+					if (pfb.getStock() - qty < 0) {
+						errorMsg.put("stock", pfb.getFormatContent1() + "  " + pfb.getFormatContent2()
+								+ " 庫存量不足!<br>庫存：" + pfb.getStock());
+						RequestDispatcher rd = request
+								.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
+						rd.forward(request, response);
+						return;
+					}
 				}
 			}
+
 			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2,
 					pb.getPrice(), qty, null);
 			cart.addToCart(productFormatId, oib, formats);

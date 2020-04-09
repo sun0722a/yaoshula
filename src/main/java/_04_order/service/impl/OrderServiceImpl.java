@@ -3,7 +3,6 @@ package _04_order.service.impl;
 import java.util.List;
 import java.util.Set;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,7 @@ import _04_order.dao.OrderItemDao;
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.service.OrderService;
+import _05_product.dao.ProductDao;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -22,13 +22,15 @@ public class OrderServiceImpl implements OrderService {
 	private OrderItemDao oidao;
 	@Autowired
 	private OrderDao odao;
+	@Autowired
+	private ProductDao pdao;
 
 	public OrderServiceImpl() {
 //		factory = HibernateUtils.getSessionFactory();
 //		oidao = new OrderItemDaoImpl();
 //		odao = new OrderDaoImpl();
 	}
-	
+
 	@Transactional
 	@Override
 	public void persistOrder(OrderBean ob) {
@@ -36,8 +38,9 @@ public class OrderServiceImpl implements OrderService {
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			checkStock(ob);
-			odao.insertOrder(ob);
+		odao.insertOrder(ob);
+		pdao.addSales(ob);
+		checkStock(ob);
 //			tx.commit();
 //		} catch (Exception e) {
 //			if (tx != null) {
@@ -48,14 +51,12 @@ public class OrderServiceImpl implements OrderService {
 //		}
 
 	}
-	
-	
+
 	private void checkStock(OrderBean ob) {
 		Set<OrderItemBean> items = ob.getOrderItems();
 		for (OrderItemBean oib : items) {
 			oidao.updateProductStock(oib);
 		}
-
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
 		bean = odao.getOrder(orderNo);
 		return bean;
 	}
-	
+
 	@Transactional
 	@Override
 	public List<OrderBean> getAllOrders() {
@@ -73,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			list = odao.getAllOrders();
+		list = odao.getAllOrders();
 //			tx.commit();
 //		} catch (Exception e) {
 //			if (tx != null) {
@@ -83,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 //		}
 		return list;
 	}
-	
+
 	@Transactional
 	@Override
 	public List<OrderBean> getMemberOrders(Integer memberId) {
@@ -102,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
 //		}
 		return list;
 	}
-	
+
 	@Transactional
 	public String checkOrderStatus(Integer orderNo) {
 		String status = null;
@@ -110,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
 //		Transaction tx = null;
 //		try {
 //			tx = session.beginTransaction();
-			status = checkOrderStatus(orderNo);
+		status = checkOrderStatus(orderNo);
 //			tx.commit();
 //		} catch (Exception e) {
 //			if (tx != null) {

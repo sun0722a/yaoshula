@@ -12,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import _00_init.util.GlobalService;
-import _00_init.util.HibernateUtils;
+import _01_register.model.MemberBean;
 import _06_article.dao.ArticleDao;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
 
-/* 查詢文章: 預設按讚數排列? */
 /* 查詢熱門文章: 是否要有 天使-時事 、熱門文章個數*/
 
 @Repository
@@ -103,6 +102,31 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return map;
 	}
 
+	// 查詢個人文章
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, ArticleBean> getPersonArticles(String arrange, String searchStr, MemberBean mb) {
+		// 預設的搜尋
+		String hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr ORDER BY ab.articleId DESC";
+		Session session = factory.getCurrentSession();
+		String[] arranges = GlobalService.ARTICLE_ARRANGE; // "popular", "time"
+		Map<Integer, ArticleBean> map = new LinkedHashMap<Integer, ArticleBean>();
+		List<ArticleBean> list = new ArrayList<ArticleBean>();
+
+		// 判斷要如何排列
+		if (arrange != "") {
+			if (arrange.equals(arranges[0])) {
+				hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr ORDER BY ab.likes DESC";
+			}
+		}
+		// 只取此頁的商品
+		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		for (ArticleBean bean : list) {
+			map.put(bean.getArticleId(), bean);
+		}
+		return map;
+	}
+
 	// 查詢熱門文章(天使or惡魔)
 	@SuppressWarnings("unchecked")
 	@Override
@@ -144,6 +168,28 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 			categorySet.add(bean.getCategoryName());
 		}
 		return categorySet;
+	}
+
+	// 喜歡文章
+	@Override
+	public Integer likeArticle(ArticleBean ab, MemberBean mb) {
+		int n = 0;
+		Session session = factory.getCurrentSession();
+		// 更新文章愛心數
+		String hql1 = "UPDATE ArticleBean ab SET ab.likes = likes + 1 WHERE ab.articleId = :articleId";
+		n = session.createQuery(hql1).executeUpdate();
+		// 更新會員喜歡文章
+		String hql2 = "SELECT mb.likeArticles FROM MemberBean mb WHERE mb.id = :id";
+		String oldLikeArticles = (String) session.createQuery(hql2).getSingleResult();
+		if (oldLikeArticles == "") {
+			oldLikeArticles = ab.getArticleId().toString();
+		} else {
+			oldLikeArticles += "," + ab.getArticleId().toString();
+		}
+		String hql3 = "UPDATE MemberBean mb SET mb.likeArticles = :likeArticles WHERE mb.id = :id";
+		session.createQuery(hql3).setParameter("likeArticles", oldLikeArticles).executeUpdate();
+
+		return n;
 	}
 
 //	@SuppressWarnings("unchecked")
