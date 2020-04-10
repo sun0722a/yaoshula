@@ -15,9 +15,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "Members")
 public class MemberBean implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")

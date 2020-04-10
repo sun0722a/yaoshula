@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,17 +19,16 @@ import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
 
+// 新增留言
 @WebServlet("/article/AddComment")
 public class AddCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -44,7 +42,7 @@ public class AddCommentServlet extends HttpServlet {
 
 		String content = request.getParameter("content");
 		ArticleBean ab = (ArticleBean) session.getAttribute("article");
-
+		// 如果經過loginFilter
 		if (content == null) {
 			RequestDispatcher rd = request
 					.getRequestDispatcher("/article/ShowArticleContent?articleId=" + ab.getArticleId());
@@ -57,15 +55,12 @@ public class AddCommentServlet extends HttpServlet {
 		Integer authorId = mb.getId();
 		String authorName = mb.getMemberId();
 
-		// 呼叫ArticleDao的insertComment方法
-//		ArticleService service = new ArticleServiceImpl();
-		ServletContext sc = getServletContext();
-		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
-		ArticleService service = ctx.getBean(ArticleService.class);
-
 		// 將所有文章資料封裝到CommentBean(類別的)物件
 		CommentBean cb = new CommentBean(null, authorId, authorName, ts, content, ab, "正常");
-		service.insertComment(cb);
+
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ArticleService articleService = ctx.getBean(ArticleService.class);
+		articleService.insertComment(cb);
 
 		// 需轉址才會直接更新留言
 		response.sendRedirect(

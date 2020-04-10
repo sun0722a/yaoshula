@@ -27,16 +27,14 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	private int recordsPerPage = GlobalService.RECORDS_PER_PAGE;
 	private int recordsPerFamous = GlobalService.RECORDS_PER_FAMOUS;
 
-	String selected = "";
 	int nowTotalPages = -1;
 	@Autowired
 	SessionFactory factory;
 
 	public ProductDaoImpl_Hibernate() {
-//		factory = HibernateUtils.getSessionFactory();
 	}
 
-	// 計算所有商品總共有幾頁
+	// 計算搜尋的商品總共有幾頁
 	@Override
 	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
 		if (searchStr == "" && categoryTitle == "" && categoryName == "") {
@@ -92,17 +90,6 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		}
 		// 不是找全部的商品=>計算找到的商品個數
 		if (searchStr != "" || categoryTitle != "" || categoryName != "") {
-			// 計算此次搜尋共有多少商品
-//			String hqlCal = "SELECT count(*) FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
-//					+ "AND pb.productName LIKE :searchStr" + "AND cb.categoryTitle LIKE :categoryTitle "
-//					+ "AND cb.categoryName LIKE :categoryName ";
-//			long count = 0;
-//			List<Long> listCal = session.createQuery(hqlCal).setParameter("searchStr", "%" + searchStr + "%")
-//					.setParameter("categoryTitle", "%" + categoryTitle + "%")
-//					.setParameter("categoryName", "%" + categoryName + "%").getResultList();
-//			if (listCal.size() > 0) {
-//				count = listCal.get(0);
-//			}
 			int count = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
 					.setParameter("categoryTitle", "%" + categoryTitle + "%")
 					.setParameter("categoryName", "%" + categoryName + "%").getResultList().size();
@@ -227,6 +214,7 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 //		return n;
 //	}
 
+	// 更新銷售量
 	@Override
 	public int addSales(OrderBean ob) {
 		int n = 0;
@@ -242,21 +230,7 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return n;
 	}
 
-	@Override
-	public void setSelected(String selected) {
-		this.selected = selected;
-	}
-
-	@Override
-	public int getRecordsPerPage() {
-		return recordsPerPage;
-	}
-
-	@Override
-	public void setRecordsPerPage(int recordsPerPage) {
-		this.recordsPerPage = recordsPerPage;
-	}
-
+	// 取得商品資料
 	@Override
 	public ProductBean getProduct(int productId) {
 		Session session = factory.getCurrentSession();

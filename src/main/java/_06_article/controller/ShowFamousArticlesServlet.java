@@ -28,20 +28,20 @@ public class ShowFamousArticlesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 先取出session物件
-		HttpSession session = request.getSession(false);
+		request.setCharacterEncoding("UTF-8");
 
 		// 使用逾時，回首頁
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
 
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		ArticleService service = ctx.getBean(ArticleService.class);
-		Map<Integer, ArticleBean> angelArticleMap = service.getFamousArticles("天使");
-		Map<Integer, ArticleBean> evilArticleMap = service.getFamousArticles("惡魔");
-		// 將讀到的一頁資料放入request物件內，成為它的屬性物件
+		ArticleService articleService = ctx.getBean(ArticleService.class);
+		Map<Integer, ArticleBean> angelArticleMap = articleService.getFamousArticles("天使");
+		Map<Integer, ArticleBean> evilArticleMap = articleService.getFamousArticles("惡魔");
+
 		request.setAttribute("angel_articles_map", angelArticleMap);
 		request.setAttribute("evil_articles_map", evilArticleMap);
 

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +21,7 @@ import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
 
+// 查詢文章內容
 @WebServlet("/article/ShowArticleContent")
 public class ArticleContentServlet extends HttpServlet {
 
@@ -45,22 +45,15 @@ public class ArticleContentServlet extends HttpServlet {
 			return;
 		}
 
-		// 從jsp取得所點取的商品的productId為何
+		// 從瀏覽器取得所選商品的articleId
 		String articleIdStr = request.getParameter("articleId");
 		Integer articleId = Integer.parseInt(articleIdStr);
 
-		// 利用getArticle取得該ID所擁有的資訊
-//		ArticleService service = new ArticleServiceImpl();
-		ServletContext sc = getServletContext();
-		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
+		// 取得文章資料(ArticleBean)
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ArticleService service = ctx.getBean(ArticleService.class);
+		ArticleBean ab = service.getArticle(articleId);
 
-		ArticleBean ab = null;
-//		if(filter.equals("false")) {
-//			ab = service.getArticleByTransaction(articleId);
-//		}else {
-		ab = service.getArticle(articleId);
-//		}
 		String content = "";
 		Clob clob = null;
 		if (ab != null) {
@@ -74,23 +67,15 @@ public class ArticleContentServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// 把大家暫存到請求物件內
 			session.setAttribute("article", ab);
 			request.setAttribute("comments_set", comments);
 			request.setAttribute("content", content);
-
-//			request.setAttribute("content1", contentSet1);
-//			request.setAttribute("title2", title2);
-//			request.setAttribute("content2", contentSet2);
-//			request.setAttribute("detail", detail);
-			// 設成Session，為了讓CarServlet抓到
-//		request.setAttribute("articleId", articleId);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/_06_article/articleContent.jsp");
 			rd.forward(request, response);
 			return;
 
-		} else { // 如果找不到Id，回商城首頁
+		} else {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}

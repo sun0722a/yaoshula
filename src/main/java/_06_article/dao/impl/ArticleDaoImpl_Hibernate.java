@@ -30,27 +30,30 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	SessionFactory factory;
 
 	public ArticleDaoImpl_Hibernate() {
-//		factory = HibernateUtils.getSessionFactory();
 	}
 
+	// 新增文章資料
 	@Override
 	public void insertArticle(ArticleBean ab) {
 		Session session = factory.getCurrentSession();
 		session.save(ab);
 	}
 
+	// 新增留言資料
 	@Override
 	public void insertComment(CommentBean cb) {
 		Session session = factory.getCurrentSession();
 		session.save(cb);
 	}
 
+	// 新增檢舉文章資料
 	@Override
 	public void insertReportArticle(ReportArticleBean rab) {
 		Session session = factory.getCurrentSession();
 		session.save(rab);
 	}
 
+	// 新增檢舉留言資料
 	@Override
 	public void insertReportComment(ReportCommentBean rcb) {
 		Session session = factory.getCurrentSession();
@@ -159,6 +162,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return map;
 	}
 
+	// 查詢文章類別
 	@Override
 	public ArticleCategoryBean getCategory(String categoryTitle, String categoryName) {
 		String hql = "FROM ArticleCategoryBean acb " + "WHERE acb.categoryTitle like :categoryTitle "
@@ -170,6 +174,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return bean;
 	}
 
+	// 查詢文章(天使or惡魔)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<String> getCategorys(String categoryTitle) {
@@ -204,7 +209,6 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		String hql3 = "UPDATE MemberBean mb SET mb.likeArticles = :likeArticles WHERE mb.id = :id";
 		session.createQuery(hql3).setParameter("likeArticles", oldLikeArticles).setParameter("id", mb.getId())
 				.executeUpdate();
-
 		return n;
 	}
 
@@ -298,21 +302,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 //		return n;
 //	}
 
-//	@Override
-//	public void setSelected(String selected) {
-//		this.selected = selected;
-//	}
-
-//	@Override
-//	public int getRecordsPerPage() {
-//		return recordsPerPage;
-//	}
-
-//	@Override
-//	public void setRecordsPerPage(int recordsPerPage) {
-//		this.recordsPerPage = recordsPerPage;
-//	}
-
+	// 取得文章資料
 	@Override
 	public ArticleBean getArticle(int articleId) {
 		Session session = factory.getCurrentSession();
@@ -321,6 +311,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return bean;
 	}
 
+	// 取得留言資料
 	@Override
 	public CommentBean getComment(int commentId) {
 		Session session = factory.getCurrentSession();

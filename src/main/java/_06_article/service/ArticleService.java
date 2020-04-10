@@ -46,12 +46,6 @@ public interface ArticleService {
 
 //	int saveBook(BookBean bean);
 
-//	void setSelected(String selected);
-
-//	int getRecordsPerPage();
-
-//	void setRecordsPerPage(int recordsPerPage);
-
 	ArticleBean getArticle(int articleId);
 
 	CommentBean getComment(int commentId);

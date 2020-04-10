@@ -2,6 +2,7 @@ package _05_product.service;
 
 import java.util.Map;
 
+import _04_order.model.OrderBean;
 import _05_product.model.ProductBean;
 
 public interface ProductService {
@@ -24,12 +25,6 @@ public interface ProductService {
 //	int deleteBook(int no);
 //
 //	int saveBook(BookBean bean);
-
-	void setSelected(String selected);
-
-	int getRecordsPerPage();
-
-	void setRecordsPerPage(int recordsPerPage);
 
 	ProductBean getProduct(int productId);
 

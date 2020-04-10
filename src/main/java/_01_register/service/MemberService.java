@@ -10,10 +10,10 @@ public interface MemberService {
 
 	public boolean emailExists(String email);
 
-	public MemberBean getMember(int id);
+	public int updateMember(MemberBean mb);
 
 	public MemberBean checkIdPassword(String memberId, String password);
 
-	public int updateMember(MemberBean mb);
+	public MemberBean getMember(int id);
 
 }

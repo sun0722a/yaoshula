@@ -28,12 +28,6 @@ public interface ProductDao {
 
 	int addSales(OrderBean pb);
 
-	void setSelected(String selected);
-
-	int getRecordsPerPage();
-
-	void setRecordsPerPage(int recordsPerPage);
-
 	ProductBean getProduct(int productId);
 
 }

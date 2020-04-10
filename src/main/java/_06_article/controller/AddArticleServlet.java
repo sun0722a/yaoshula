@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -27,19 +26,18 @@ import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.service.ArticleService;
 
+// 新增文章
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/article/AddArticle")
 public class AddArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	@Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -50,10 +48,6 @@ public class AddArticleServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-
-		// 準備存放錯誤訊息的Map物件
-//		Map<String, String> errorMsg = new HashMap<String, String>();
-//		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
 		String categoryTitle = "";
 		String categoryName = "";
@@ -67,22 +61,20 @@ public class AddArticleServlet extends HttpServlet {
 		Integer authorId = mb.getId();
 		String authorName = mb.getMemberId();
 
-		// 取出HTTP multipart request內所有的parts
 		Collection<Part> parts = request.getParts();
 		// 由parts != null來判斷此上傳資料是否為HTTP multipart request
-		if (parts != null) { // 如果這是一個上傳資料的表單
+		if (parts != null) {
 			for (Part p : parts) {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
-//				System.out.println("fldName= " + fldName + "value= " + value);
 
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
 					if (fldName.equals("categoryTitle")) {
 						categoryTitle = value;
-					}else if (fldName.equals("categoryName")) {
+					} else if (fldName.equals("categoryName")) {
 						categoryName = value;
-					}else if (fldName.equals("title")) {
+					} else if (fldName.equals("title")) {
 						title = value;
 					} else if (fldName.equals("content")) {
 						content = value;
@@ -109,38 +101,21 @@ public class AddArticleServlet extends HttpServlet {
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
-
 			Clob clob = GlobalService.stringToClob(content);
-//			if (!errorMsg.isEmpty()) {
-////				request.setAttribute("mb", mb);
-//				// 導向原來輸入資料的畫面，這次會顯示錯誤訊息
-//				RequestDispatcher rd = request.getRequestDispatcher("/_06_article/addArticle.jsp");
-//				rd.forward(request, response);
-//				return;
-//			}
-			// 呼叫ArticleDao的insertArticle方法
-			
-//			ArticleService service = new ArticleServiceImpl();
-			ServletContext sc = getServletContext();
-			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
-			ArticleService service = ctx.getBean(ArticleService.class);
-			
-			ArticleCategoryBean acb = service.getCategory(categoryTitle, categoryName);
-			// 將所有文章資料封裝到ArticleBean(類別的)物件
+
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			ArticleService articleService = ctx.getBean(ArticleService.class);
+			ArticleCategoryBean acb = articleService.getCategory(categoryTitle, categoryName);
+
+			// 將所有文章資料封裝到ArticleBean
 			ArticleBean ab = new ArticleBean(null, title, authorId, authorName, ts, acb, clob, fileName, blob, 0, "正常",
 					null);
-			// 如果有錯誤
-			service.insertArticle(ab);
-//			int n = service.insertArticle(ab);
-//			if (n == 1) {
-//				response.sendRedirect(getServletContext().getContextPath() + "/_02_login/login.jsp");
-//				return;
-//			} else {
-//				System.out.println("更新此筆資料有誤(RegisterServlet)");
-			RequestDispatcher rd = request.getRequestDispatcher("/article/ShowArticleContent?articleId="+ab.getArticleId());
+			articleService.insertArticle(ab);
+
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/article/ShowArticleContent?articleId=" + ab.getArticleId());
 			rd.forward(request, response);
 			return;
-//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher rd = request.getRequestDispatcher("/_06_article/addArticle.jsp");

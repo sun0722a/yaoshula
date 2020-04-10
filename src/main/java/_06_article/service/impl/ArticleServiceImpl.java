@@ -22,79 +22,32 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	ArticleDao dao;
-//	SessionFactory factory;
 
 	public ArticleServiceImpl() {
-//		dao = new ArticleDaoImpl_Hibernate();
-//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	@Transactional
 	@Override
 	public void insertArticle(ArticleBean ab) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		dao.insertArticle(ab);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 	}
 
 	@Transactional
 	@Override
 	public void insertComment(CommentBean cb) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		dao.insertComment(cb);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 	}
 
 	@Transactional
 	@Override
 	public void insertReportArticle(ReportArticleBean rab) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		dao.insertReportArticle(rab);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 	}
 
 	@Transactional
 	@Override
 	public void insertReportComment(ReportCommentBean rcb) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		dao.insertReportComment(rcb);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 	}
 
 //	@Override
@@ -124,114 +77,48 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Map<Integer, ArticleBean> getArticles(String arrange, String searchStr, String categoryTitle,
 			String categoryName) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Map<Integer, ArticleBean> map = null;
-//		try {
-//			tx = session.beginTransaction();
 		map = dao.getArticles(arrange, searchStr, categoryTitle, categoryName);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return map;
 	}
 
 	@Transactional
 	@Override
 	public Map<Integer, ArticleBean> getPersonArticles(String arrange, String searchStr, MemberBean mb) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Map<Integer, ArticleBean> map = null;
-//		try {
-//			tx = session.beginTransaction();
 		map = dao.getPersonArticles(arrange, searchStr, mb);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return map;
 	}
 
 	@Transactional
 	@Override
 	public Map<Integer, ArticleBean> getFamousArticles(String categoryTitle) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Map<Integer, ArticleBean> map = null;
-//		try {
-//			tx = session.beginTransaction();
 		map = dao.getFamousArticles(categoryTitle);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return map;
 	}
 
 	@Transactional
 	@Override
 	public ArticleCategoryBean getCategory(String categoryTitle, String categoryName) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		ArticleCategoryBean bean = null;
-//		try {
-//			tx = session.beginTransaction();
 		bean = dao.getCategory(categoryTitle, categoryName);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return bean;
 	}
 
 	@Transactional
 	@Override
 	public Set<String> getCategorys(String categoryTitle) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Set<String> categorySet = null;
-//		try {
-//			tx = session.beginTransaction();
 		categorySet = dao.getCategorys(categoryTitle);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return categorySet;
 	}
 
 	@Transactional
 	@Override
 	public Integer likeArticle(ArticleBean ab, MemberBean mb) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		int n = 0;
-//		try {
-//			tx = session.beginTransaction();
 		n = dao.likeArticle(ab, mb);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
 		return n;
 	}
 
@@ -323,21 +210,6 @@ public class ArticleServiceImpl implements ArticleService {
 //			throw new RuntimeException(ex);
 //		}
 //		return n;
-//	}
-
-//	@Override
-//	public void setSelected(String category) {
-//		dao.setSelected(category);
-//	}
-
-//	@Override
-//	public int getRecordsPerPage() {
-//		return dao.getRecordsPerPage();
-//	}
-
-//	@Override
-//	public void setRecordsPerPage(int recordsPerPage) {
-//		dao.setRecordsPerPage(recordsPerPage);
 //	}
 
 	@Transactional

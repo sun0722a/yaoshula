@@ -80,15 +80,6 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		return n;
 	}
 
-	// 查詢某個會員
-	@Override
-	public MemberBean getMember(int id) {
-		Session session = factory.getCurrentSession();
-		MemberBean mb = null;
-		mb = session.get(MemberBean.class, id);
-		return mb;
-	}
-
 	// 檢查使用者在登入時輸入的帳號與密碼是否正確
 	@SuppressWarnings("unchecked")
 	@Override
@@ -102,6 +93,15 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		if (beans.size() > 0) {
 			mb = beans.get(0);
 		}
+		return mb;
+	}
+
+	// 取得會員資料
+	@Override
+	public MemberBean getMember(int id) {
+		Session session = factory.getCurrentSession();
+		MemberBean mb = null;
+		mb = session.get(MemberBean.class, id);
 		return mb;
 	}
 

@@ -35,7 +35,6 @@ public class ProductInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -97,7 +96,6 @@ public class ProductInfoServlet extends HttpServlet {
 			request.setAttribute("title2", title2);
 			request.setAttribute("content2", contentSet2);
 			request.setAttribute("detail", detail);
-			// 設成Session，為了讓CarServlet抓到
 			session.setAttribute("productId", productId);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");

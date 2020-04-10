@@ -11,80 +11,42 @@ import _05_product.dao.ProductDao;
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
 
-
 @Service
 public class ProductServiceImpl implements ProductService {
-	
+
 	@Autowired
 	ProductDao dao;
-//	SessionFactory factory;
 
 	public ProductServiceImpl() {
-//		dao = new ProductDaoImpl_Hibernate();
-//		factory = HibernateUtils.getSessionFactory();
 	}
-	
+
 	@Transactional
 	@Override
 	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		int n = 0;
-//		try {
-//			tx = session.beginTransaction();
-			n = dao.getTotalPages(searchStr, categoryTitle, categoryName);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
+		n = dao.getTotalPages(searchStr, categoryTitle, categoryName);
 		return n;
 	}
-	
-	
+
 	@Override
 	public long getRecordCounts() {
 		return dao.getRecordCounts();
 	}
-	
+
 	@Transactional
 	@Override
 	public Map<Integer, ProductBean> getPageProducts(int pageNo, String arrange, String searchStr, String categoryTitle,
 			String categoryName) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Map<Integer, ProductBean> map = null;
-//		try {
-//			tx = session.beginTransaction();
-			map = dao.getPageProducts(pageNo, arrange, searchStr, categoryTitle, categoryName);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
+		map = dao.getPageProducts(pageNo, arrange, searchStr, categoryTitle, categoryName);
 		return map;
 	}
-	
+
 	@Transactional
 	@Override
 	public Map<Integer, ProductBean> getFamousProducts(String categoryTitle) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
 		Map<Integer, ProductBean> map = null;
-//		try {
-//			tx = session.beginTransaction();
-			map = dao.getFamousProducts(categoryTitle);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
+		map = dao.getFamousProducts(categoryTitle);
 		return map;
 	}
 
@@ -178,22 +140,6 @@ public class ProductServiceImpl implements ProductService {
 //		return n;
 //	}
 
-	@Override
-	public void setSelected(String category) {
-		dao.setSelected(category);
-	}
-
-	@Override
-	public int getRecordsPerPage() {
-		return dao.getRecordsPerPage();
-	}
-
-	@Override
-	public void setRecordsPerPage(int recordsPerPage) {
-		dao.setRecordsPerPage(recordsPerPage);
-	}
-
-	// 避免LazyLoading
 	@Transactional
 	@Override
 	public ProductBean getProduct(int productId) {

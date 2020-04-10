@@ -11,19 +11,14 @@ import _05_product.model.ProductFormatBean;
 
 @Repository
 public class OrderItemDaoImpl implements OrderItemDao {
+
 	@Autowired
 	SessionFactory factory;
 
 	public OrderItemDaoImpl() {
-//		factory = HibernateUtils.getSessionFactory();
 	}
 
-	@Override
-	public Integer findItemsTotalPrice(OrderItemBean oib) {
-		Integer total = oib.getQuantity() * oib.getUnitPrice();
-		return total;
-	}
-
+	// 更新庫存量
 	@Override
 	public Integer updateProductStock(OrderItemBean oib) {
 		int n = 0;
@@ -32,7 +27,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
 		ProductFormatBean pfb = (ProductFormatBean) session.createQuery(hql1)
 				.setParameter("formatContent1", oib.getFormatContent1())
 				.setParameter("formatContent1", oib.getFormatContent2()).getSingleResult();
-		
+
 		String hql2 = "UPDATE ProductFormatBean pfb SET pfb.stock = stock - :orderQuantity WHERE productFormatId = :productFormatId";
 		n = session.createQuery(hql2).setParameter("productFormatId", pfb.getProductFormatId())
 				.setParameter("orderAmount", oib.getQuantity()).executeUpdate();

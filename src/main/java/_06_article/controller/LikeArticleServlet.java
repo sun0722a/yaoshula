@@ -17,6 +17,7 @@ import _01_register.service.MemberService;
 import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 
+// 更新文章按讚數
 @WebServlet("/article/LikeArticle")
 public class LikeArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +39,7 @@ public class LikeArticleServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
+
 		ArticleBean ab = (ArticleBean) session.getAttribute("article");
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		String login = (String) request.getParameter("login");
@@ -47,11 +49,13 @@ public class LikeArticleServlet extends HttpServlet {
 					+ ab.getArticleId());
 			return;
 		}
+
 		WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		MemberService memberService = ctx.getBean(MemberService.class);
 		ArticleService articleService = ctx.getBean(ArticleService.class);
-
 		articleService.likeArticle(ab, mb);
+
+		// 更新session內的使用者資料
 		MemberBean newMb = memberService.getMember(mb.getId());
 		session.setAttribute("LoginOK", newMb);
 

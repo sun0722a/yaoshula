@@ -17,7 +17,7 @@ import _05_product.dao.ProductDao;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-//	private SessionFactory factory;
+
 	@Autowired
 	private OrderItemDao oidao;
 	@Autowired
@@ -26,32 +26,20 @@ public class OrderServiceImpl implements OrderService {
 	private ProductDao pdao;
 
 	public OrderServiceImpl() {
-//		factory = HibernateUtils.getSessionFactory();
-//		oidao = new OrderItemDaoImpl();
-//		odao = new OrderDaoImpl();
 	}
 
 	@Transactional
 	@Override
 	public void persistOrder(OrderBean ob) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
+		// 儲存訂單資料
 		odao.insertOrder(ob);
+		// 更新銷售量
 		pdao.addSales(ob);
+		// 更新庫存量
 		checkStock(ob);
-//			tx.commit();
-//		} catch (Exception e) {
-//			if (tx != null) {
-//				tx.rollback();
-//				System.out.println("發生異常" + e.getMessage());
-//				throw new RuntimeException(e);
-//			}
-//		}
-
 	}
 
+	// 更新庫存量
 	private void checkStock(OrderBean ob) {
 		Set<OrderItemBean> items = ob.getOrderItems();
 		for (OrderItemBean oib : items) {
@@ -59,67 +47,34 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	@Override
-	public OrderBean getOrder(int orderNo) {
-		OrderBean bean = null;
-		bean = odao.getOrder(orderNo);
-		return bean;
-	}
-
-	@Transactional
-	@Override
-	public List<OrderBean> getAllOrders() {
-		List<OrderBean> list = null;
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
-		list = odao.getAllOrders();
-//			tx.commit();
-//		} catch (Exception e) {
-//			if (tx != null) {
-//				tx.rollback();
-//				throw new RuntimeException(e);
-//			}
-//		}
-		return list;
-	}
-
 	@Transactional
 	@Override
 	public List<OrderBean> getMemberOrders(Integer memberId) {
 		List<OrderBean> list = null;
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		list = odao.getMemberOrders(memberId);
-//			tx.commit();
-//		}catch(Exception e) {
-//			if(tx != null) {
-//				tx.rollback();
-//				throw new RuntimeException(e);
-//			}
-//		}
 		return list;
 	}
 
 	@Transactional
 	public String checkOrderStatus(Integer orderNo) {
 		String status = null;
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
 		status = checkOrderStatus(orderNo);
-//			tx.commit();
-//		} catch (Exception e) {
-//			if (tx != null) {
-//				tx.rollback();
-//				throw new RuntimeException(e);
-//			}
-//		}
 		return status;
+	}
+
+//	@Transactional
+//	@Override
+//	public List<OrderBean> getAllOrders() {
+//		List<OrderBean> list = null;
+//		list = odao.getAllOrders();
+//		return list;
+//	}
+
+	@Override
+	public OrderBean getOrder(int orderNo) {
+		OrderBean bean = null;
+		bean = odao.getOrder(orderNo);
+		return bean;
 	}
 
 }

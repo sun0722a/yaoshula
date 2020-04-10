@@ -12,39 +12,21 @@ import _04_order.model.OrderBean;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
-	private Integer memberId = null;
-	
+
 	@Autowired
 	SessionFactory factory;
-	int orderNo = 0;
 
 	public OrderDaoImpl() {
 	}
 
+	// 新增訂單資料
 	@Override
 	public void insertOrder(OrderBean ob) {
 		Session session = factory.getCurrentSession();
 		session.save(ob);
 	}
 
-	@Override
-	public OrderBean getOrder(int orderNo) {
-		OrderBean ob = null;
-		Session session = factory.getCurrentSession();
-		ob = session.get(OrderBean.class, orderNo);
-		return ob;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<OrderBean> getAllOrders() {
-		List<OrderBean> list = null;
-		String hql = "FROM OrderBean";
-		Session session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
-		return list;
-	}
-
+	// 取得某個會員的訂單資料
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderBean> getMemberOrders(Integer memberId) {
@@ -55,14 +37,7 @@ public class OrderDaoImpl implements OrderDao {
 		return list;
 	}
 
-	public Integer getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
-	}
-
+	// 查詢訂單狀態
 	public String checkOrderStatus(Integer orderNo) {
 		OrderBean orderBean = null;
 		String status = null;
@@ -77,6 +52,26 @@ public class OrderDaoImpl implements OrderDao {
 			status = "完成";
 		}
 		return status;
+	}
+
+	// 取得所有訂單
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<OrderBean> getAllOrders() {
+//		List<OrderBean> list = null;
+//		String hql = "FROM OrderBean";
+//		Session session = factory.getCurrentSession();
+//		list = session.createQuery(hql).getResultList();
+//		return list;
+//	}
+
+	// 取得訂單資料
+	@Override
+	public OrderBean getOrder(int orderNo) {
+		OrderBean ob = null;
+		Session session = factory.getCurrentSession();
+		ob = session.get(OrderBean.class, orderNo);
+		return ob;
 	}
 
 }

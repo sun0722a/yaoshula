@@ -45,10 +45,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	@Override
-	public MemberBean getMember(int id) {
-		MemberBean mb = null;
-		mb = dao.getMember(id);
-		return mb;
+	public int updateMember(MemberBean mb) {
+		int count = 0;
+		dao.updateMember(mb);
+		count++;
+		return count;
 	}
 
 	@Transactional
@@ -61,11 +62,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	@Override
-	public int updateMember(MemberBean mb) {
-		int count = 0;
-		dao.updateMember(mb);
-		count++;
-		return count;
+	public MemberBean getMember(int id) {
+		MemberBean mb = null;
+		mb = dao.getMember(id);
+		return mb;
 	}
 
 }
