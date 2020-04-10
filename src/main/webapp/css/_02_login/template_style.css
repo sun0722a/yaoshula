@@ -1,48 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap');
-
-
-*{
-    box-sizing: border-box;
-    font-family: 'Noto Sans TC', sans-serif !important; 
-}
-
-body {
-    position: relative;
-  }
-#header{
-    border-bottom: white 1px solid;
-    
-}
-
-.errorText {
-  font-size: 10px;
-  color: red;
-}
-.main{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 700px;
-    /* border:blue 2px solid; */
-    background: url(https://i.imgur.com/nUm6nx0.png);
-    background-size: cover;
-    /* background-position: center; */
-}
-.content{
-    background-color:rgba(255, 255, 255, 0.5);
-    width: 450px;
-    height: 350px;
-    margin-right: 150px;
-}
-
-#boxHeadPicture img{
-    width: 120px;
-}
-
-/* #address select{
-    color: red;
-} */
-
 /*!
  * Start Bootstrap - SB Admin 2 v4.0.7 (https://startbootstrap.com/template-overviews/sb-admin-2)
  * Copyright 2013-2019 Start Bootstrap
@@ -9649,12 +9604,12 @@ a:focus {
   }
 }
 .bg-login-image {
-  background: url(https://source.unsplash.com/K4mSJ7kc0As/600x800);
+  background: url(https://images.unsplash.com/photo-1521424159246-e4a66f267e4b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80);
   background-position: center;
   background-size: cover;
 }
 .bg-register-image {
-  background: url(https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?ixlib=rb-1.2.1&auto=format&fit=crop&w=653&q=80);
+  background: url(https://source.unsplash.com/Mv9hjnEUHR4/600x800);
   background-position: center;
   background-size: cover;
 }
@@ -9668,7 +9623,7 @@ form.user .custom-checkbox.small label {
 }
 form.user .form-control-user {
   font-size: 0.8rem;
-  /* border-radius: 10rem; */
+  border-radius: 10rem;
   padding: 1.5rem 1rem;
 }
 form.user .btn-user {

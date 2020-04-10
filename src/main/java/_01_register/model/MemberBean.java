@@ -1,5 +1,6 @@
 package _01_register.model;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -13,31 +14,37 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "Members")
-public class MemberBean {
+public class MemberBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "native")
-	Integer id;
-	String memberId;
-	String password;
-	String gender;
-	Date birthday;
-	String email;
-	String phone;
-	String city;
-	String area;
-	String address;
-	String fileName;
-	Blob picture;
-	Timestamp createTime;
-	String status;
-	String permission;
-	String token;
-	String likeArticles;
+	private Integer id;
+	private String memberId;
+	private String password;
+	private String gender;
+	private Date birthday;
+	private String email;
+	private String phone;
+	private String city;
+	private String area;
+	private String address;
+	private String fileName;
+	private Blob picture;
+	private Timestamp createTime;
+	private String status;
+	private String permission;
+	private String likeArticles;
+	private String authToken;
+	private String checkAuthSuccess;
+	
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
-			String status, String permission, String token, String likeArticles) {
+			String status, String permission,  String likeArticles,String authToken,String checkAuthSuccess) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -54,8 +61,10 @@ public class MemberBean {
 		this.createTime = createTime;
 		this.status = status;
 		this.permission = permission;
-		this.token = token;
 		this.likeArticles = likeArticles;
+		this.authToken = authToken;
+		this.checkAuthSuccess = checkAuthSuccess;
+		
 	}
 
 	public MemberBean() {
@@ -182,14 +191,6 @@ public class MemberBean {
 		this.permission = permission;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public String getLikeArticles() {
 		return likeArticles;
 	}
@@ -197,5 +198,23 @@ public class MemberBean {
 	public void setLikeArticles(String likeArticles) {
 		this.likeArticles = likeArticles;
 	}
+	
+	
+	public String getAuthToken() {
+		return authToken;
+	}
 
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
+	public String getCheckAuthSuccess() {
+		return checkAuthSuccess;
+	}
+
+	public void setCheckAuthSuccess(String checkAuthSuccess) {
+		this.checkAuthSuccess = checkAuthSuccess;
+	}
+	
+	
 }

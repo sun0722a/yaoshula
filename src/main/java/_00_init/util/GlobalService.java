@@ -40,6 +40,8 @@ public class GlobalService {
 
 	public static final String KEY = "KittySnoopyGarfieldMicky"; // 16, 24, 32
 	public static final int ORDER_AMOUNT_LIMIT = 10000;
+	public static final String NOREPLY_EMAIL = "speakitup002@gmail.com";
+	protected static final String NOREPLY_EMAIL_PASSWORD = "Do!ng123";
 
 	public String getSystemName() { // systemName ${SYSTEM.systemName}
 		return SYSTEM_NAME;

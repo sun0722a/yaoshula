@@ -109,7 +109,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			// 將可更改的會員資料封裝到MemberBean
 
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
-					blob, null, null, null, null, null);
+					blob, null, null, null, null, null,null);
 
 			// 呼叫MemberDao的updateMember方法(經由MemberService)
 //			MemberService service = new MemberServiceImpl();
