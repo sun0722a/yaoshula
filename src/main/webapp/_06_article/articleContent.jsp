@@ -16,7 +16,11 @@
 <body>
 	<div class="w-75 border">
 		<div>
-			<a href="">檢舉</a> <img
+			<div style="text-align: right;">
+				<input type="button" class="report" value="檢舉"
+					onclick="showReportModal('')" />
+			</div>
+			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
 				class="rounded-circle border border-dark"
 				style="float: left; height: 100px; width: 100px;">
@@ -56,6 +60,10 @@
 		<!-- 		留言區=========================================== -->
 		<c:forEach var="entry" varStatus="number" items="${comments_set}">
 			<hr>
+			<div style="text-align: right;">
+				<input type="button" class="report" value="檢舉"
+					onclick="showReportModal('${entry.commentId}')" />
+			</div>
 			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.authorId}"
 				class="rounded-circle border border-dark"
@@ -84,6 +92,34 @@
 		</div>
 	</form>
 
+	<!-- 檢舉 浮動視窗========== -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="reportModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="reportModalLabel">檢舉</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="radio" name="reportItem" value="惡意洗版" />惡意洗版<br /> <input
+						type="radio" name="reportItem" value="惡意攻擊他人" />惡意攻擊他人<br /> <input
+						type="radio" name="reportItem" value="包含色情、血腥等，令人不舒服之內容" />包含色情、血腥等，令人不舒服之內容<br />
+					<input type="radio" name="reportItem" value="包含廣告、商業宣傳之內容" />包含廣告、商業宣傳之內容<br />
+					<input type="radio" name="reportItem" value="與本板主題無關" />與本板主題無關
+				</div>
+				<input type="hidden" id="commentIdInput" value="">
+				<div class="modal-footer">
+					<input type="button" class="btn btn-primary" value="送出"
+						id="sendReport" />
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -96,5 +132,8 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
 		crossorigin="anonymous"></script>
+	<script
+		src="${pageContext.request.contextPath}/js/_06_article/articleContext.js"></script>
+
 </body>
 </html>

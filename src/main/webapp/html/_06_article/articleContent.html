@@ -10,36 +10,50 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
+
   </head>
   <body>
     <div class="w-75 border">
+      <!-- 文章============================= -->
       <div>
-        <a href="">檢舉</a><br />
+        <div style="text-align: right;">
+          <input type="button" class="report" onclick="showReportModal('')" value="檢舉" />
+        </div>
         <img
           class="rounded-circle border border-dark"
-          style="float: left;height: 100px;width: 100px;"
+          style="float: left; height: 100px; width: 100px;"
         />
-        <div class="ml-4 my-auto" style="float: left;height: 100px;">
+        <div class="ml-4 my-auto" style="float: left; height: 100px;">
           <div>標題 版別</div>
           <div>帳號</div>
           <div>日期</div>
         </div>
         <img
           src="../../image/logo.png"
-          style="max-width: 200px;max-height: 100px;"
+          style="max-width: 200px; max-height: 100px;"
         />
         <div class="" style="clear: both;">內容</div>
         <div class="d-flex">
-          <input type="button" value="愛心" disabled="disabled" style="border:1px solid red;color: red;"> 愛心留言數
+          <input
+            type="button"
+            value="愛心"
+            disabled="disabled"
+            style="border: 1px solid red; color: red;"
+          />
+          愛心留言數
         </div>
       </div>
       <hr />
+      <!-- 留言區===================== -->
       <div>
+        <div style="text-align: right;">
+          <input type="button" class="report" onclick="showReportModal('1')" value="檢舉" />
+        </div>
         <img
           class="rounded-circle border border-dark"
-          style="float: left;height: 100px;width: 100px;"
+          style="float: left; height: 100px; width: 100px;"
         />
-        <div class="ml-4 my-auto" style="float: left;height: 100px;">
+        <div class="ml-4 my-auto" style="float: left; height: 100px;">
           <div>帳號</div>
           <div>B1 日期</div>
         </div>
@@ -49,11 +63,12 @@
         </div>
       </div>
     </div>
+    <!-- 可留言=========================== -->
     <form action="">
-      <div class="border w-75 d-flex" style="position: fixed;bottom: 2%;">
+      <div class="border w-75 d-flex" style="position: fixed; bottom: 2%;">
         <img
           class="rounded-circle border-dark border my-auto"
-          style="width: 50px;height: 50px;"
+          style="width: 50px; height: 50px;"
           src=""
           alt=""
         />
@@ -67,6 +82,63 @@
         />
       </div>
     </form>
+
+    <!-- 檢舉 浮動視窗========== -->
+      <div
+        class="modal fade"
+        id="reportModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="reportModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reportModalLabel">檢舉</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="radio"
+                name="reportItem"
+                value="惡意洗版"
+              />惡意洗版<br />
+              <input
+                type="radio"
+                name="reportItem"
+                value="惡意攻擊他人"
+              />惡意攻擊他人<br />
+              <input
+                type="radio"
+                name="reportItem"
+                value="包含色情、血腥等，令人不舒服之內容"
+              />包含色情、血腥等，令人不舒服之內容<br />
+              <input
+                type="radio"
+                name="reportItem"
+                value="包含廣告、商業宣傳之內容"
+              />包含廣告、商業宣傳之內容<br />
+              <input
+                type="radio"
+                name="reportItem"
+                value="與本板主題無關"
+              />與本板主題無關
+            </div>
+            <input type="hidden" id="commentIdInput" value="">
+            <div class="modal-footer">
+              <input type="button" class="btn btn-primary" value="送出" id="sendReport"/>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -83,5 +155,6 @@
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"
     ></script>
+    <script src="../../js/_06_article/articleContext.js"></script>
   </body>
 </html>
