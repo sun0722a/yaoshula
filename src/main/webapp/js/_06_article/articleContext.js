@@ -17,7 +17,7 @@ $("#sendReport").on("click", function () {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/yaoshula/article/Report?commentId=" + commentIdInput.value + "&reportItem=" + reportItem,
+      "/yaoshula/article/Report?commentId=" + commentIdInput.value + "&reportItem=" + reportItem ,
       false
     );
     xhr.send();

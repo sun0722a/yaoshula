@@ -17,8 +17,10 @@
 	<div class="w-75 border">
 		<div>
 			<div style="text-align: right;">
+			<c:if test="${not empty LoginOK}">
 				<input type="button" class="report" value="檢舉"
 					onclick="showReportModal('')" />
+			</c:if>
 			</div>
 			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
@@ -61,8 +63,10 @@
 		<c:forEach var="entry" varStatus="number" items="${comments_set}">
 			<hr>
 			<div style="text-align: right;">
-				<input type="button" class="report" value="檢舉"
-					onclick="showReportModal('${entry.commentId}')" />
+				<c:if test="${not empty LoginOK}">
+					<input type="button" class="report" value="檢舉"
+						onclick="showReportModal('${entry.commentId}')" />
+				</c:if>
 			</div>
 			<img
 				src="${pageContext.request.contextPath}/init/getUserImage?id=${entry.authorId}"
@@ -105,9 +109,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input type="radio" name="reportItem" value="惡意洗版" />惡意洗版<br /> <input
-						type="radio" name="reportItem" value="惡意攻擊他人" />惡意攻擊他人<br /> <input
-						type="radio" name="reportItem" value="包含色情、血腥等，令人不舒服之內容" />包含色情、血腥等，令人不舒服之內容<br />
+					<input type="radio" name="reportItem" value="惡意洗版" checked />惡意洗版<br />
+					<input type="radio" name="reportItem" value="惡意攻擊他人" />惡意攻擊他人<br />
+					<input type="radio" name="reportItem" value="包含色情、血腥等，令人不舒服之內容" />包含色情、血腥等，令人不舒服之內容<br />
 					<input type="radio" name="reportItem" value="包含廣告、商業宣傳之內容" />包含廣告、商業宣傳之內容<br />
 					<input type="radio" name="reportItem" value="與本板主題無關" />與本板主題無關
 				</div>
