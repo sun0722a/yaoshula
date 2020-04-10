@@ -26,7 +26,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
 		String hql1 = "FROM ProductFormatBean pfb WHERE pfb.formatContent1 = :formatContent1 AND pfb.formatContent2 = :formatContent2";
 		ProductFormatBean pfb = (ProductFormatBean) session.createQuery(hql1)
 				.setParameter("formatContent1", oib.getFormatContent1())
-				.setParameter("formatContent1", oib.getFormatContent2()).getSingleResult();
+				.setParameter("formatContent2", oib.getFormatContent2()).getSingleResult();
 
 		String hql2 = "UPDATE ProductFormatBean pfb SET pfb.stock = stock - :orderQuantity WHERE productFormatId = :productFormatId";
 		n = session.createQuery(hql2).setParameter("productFormatId", pfb.getProductFormatId())

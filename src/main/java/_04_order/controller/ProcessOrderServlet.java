@@ -55,11 +55,16 @@ public class ProcessOrderServlet extends HttpServlet {
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
-		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
+		ShoppingCart cart2 = (ShoppingCart) session.getAttribute("ShoppingCart");
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+
 		if (cart == null) {
-			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
-			return;
+			cart = cart2;
+			// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
+			if (cart == null) {
+				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+				return;
+			}
 		}
 
 		// 從瀏覽器取得訂購資料
@@ -123,18 +128,19 @@ public class ProcessOrderServlet extends HttpServlet {
 
 			session.setAttribute("orderNo", ob.getOrderNo());
 			session.removeAttribute("ShoppingCart");
-			
+			session.removeAttribute("cart");
+
 			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
 //			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
 //			rd.forward(request, response);
 			return;
 		} catch (RuntimeException ex) {
+			ex.printStackTrace();
 			String message = ex.getMessage();
 			String shortMessage = "";
 			shortMessage = message.substring(message.indexOf(":") + 1);
-			
 			session.setAttribute("OrderErrorMsg", "訂單發生異常" + shortMessage + "請更正訂單內容");
-			
+
 			response.sendRedirect(response.encodeRedirectURL(""));
 			return;
 		}
