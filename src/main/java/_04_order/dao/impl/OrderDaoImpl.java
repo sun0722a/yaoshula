@@ -19,14 +19,12 @@ public class OrderDaoImpl implements OrderDao {
 	int orderNo = 0;
 
 	public OrderDaoImpl() {
-//		factory = HibernateUtils.getSessionFactory();
 	}
 
 	@Override
 	public void insertOrder(OrderBean ob) {
 		Session session = factory.getCurrentSession();
 		session.save(ob);
-
 	}
 
 	@Override

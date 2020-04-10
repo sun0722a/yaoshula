@@ -5,19 +5,16 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import _00_init.util.HibernateUtils;
 import _01_register.model.MemberBean;
 import _06_article.dao.ArticleDao;
-import _06_article.dao.impl.ArticleDaoImpl_Hibernate;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
+import _06_article.model.ReportArticleBean;
+import _06_article.model.ReportCommentBean;
 import _06_article.service.ArticleService;
 
 @Service
@@ -57,6 +54,40 @@ public class ArticleServiceImpl implements ArticleService {
 //		try {
 //			tx = session.beginTransaction();
 		dao.insertComment(cb);
+//			tx.commit();
+//		} catch (Exception ex) {
+//			if (tx != null)
+//				tx.rollback();
+//			ex.printStackTrace();
+//			throw new RuntimeException(ex);
+//		}
+	}
+
+	@Transactional
+	@Override
+	public void insertReportArticle(ReportArticleBean rab) {
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = null;
+//		try {
+//			tx = session.beginTransaction();
+		dao.insertReportArticle(rab);
+//			tx.commit();
+//		} catch (Exception ex) {
+//			if (tx != null)
+//				tx.rollback();
+//			ex.printStackTrace();
+//			throw new RuntimeException(ex);
+//		}
+	}
+
+	@Transactional
+	@Override
+	public void insertReportComment(ReportCommentBean rcb) {
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = null;
+//		try {
+//			tx = session.beginTransaction();
+		dao.insertReportComment(rcb);
 //			tx.commit();
 //		} catch (Exception ex) {
 //			if (tx != null)
@@ -309,7 +340,6 @@ public class ArticleServiceImpl implements ArticleService {
 //		dao.setRecordsPerPage(recordsPerPage);
 //	}
 
-	// 避免LazyLoading
 	@Transactional
 	@Override
 	public ArticleBean getArticle(int articleId) {
@@ -318,22 +348,11 @@ public class ArticleServiceImpl implements ArticleService {
 		return bean;
 	}
 
-//	@Override
-//	public ArticleBean getArticleByTransaction(int articleId) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		ArticleBean bean = null;
-//		try {
-//			tx = session.beginTransaction();
-//			bean = dao.getArticle(articleId);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
-//		return bean;
-//	}
-
+	@Transactional
+	@Override
+	public CommentBean getComment(int commentId) {
+		CommentBean bean = null;
+		bean = dao.getComment(commentId);
+		return bean;
+	}
 }

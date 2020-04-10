@@ -290,7 +290,7 @@ public class EDMTableResetHibernate {
 									if (tx != null) {
 										tx.rollback();
 									}
-									System.err.println("新建ProductFormat表格時發生例外: " + e.getMessage());
+									System.err.println("新建Comments表格時發生例外: " + e.getMessage());
 								}
 								articleBean.setArticleComments(comments);
 								articles.add(articleBean);
@@ -301,19 +301,19 @@ public class EDMTableResetHibernate {
 						if (tx != null) {
 							tx.rollback();
 						}
-						System.err.println("新建Products表格時發生例外: " + e.getMessage());
+						System.err.println("新建Articles表格時發生例外: " + e.getMessage());
 					}
 					articleCategoryBean.setArticles(articles);
 					session.save(articleCategoryBean);
 					session.flush();
-					System.out.println("ProductCategory表格新增成功");
+					System.out.println("ArticleCategory表格新增成功");
 				}
 				tx.commit();
 			} catch (IOException e) {
 				if (tx != null) {
 					tx.rollback();
 				}
-				System.err.println("新建ProductCategory表格時發生IO例外: " + e.getMessage());
+				System.err.println("新建ArticleCategory表格時發生IO例外: " + e.getMessage());
 			}
 		} catch (Exception ex) {
 			if (tx != null) {

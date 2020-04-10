@@ -27,14 +27,17 @@ import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.service.ArticleService;
 
-/* hibernate save的回傳值? */
-/* category如何轉成categoryTitle、categoryName */
-
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/article/AddArticle")
 public class AddArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

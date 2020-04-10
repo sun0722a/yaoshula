@@ -24,17 +24,14 @@ import _01_register.model.MemberBean;
 		@WebInitParam(name = "url_2", value = "/order/*"),
 		@WebInitParam(name = "url_3", value = "/_06_article/addArticle.jsp"),
 		@WebInitParam(name = "url_4", value = "/article/AddComment"),
-		@WebInitParam(name = "url_5", value = "/article/LikeArticle")})
+		@WebInitParam(name = "url_5", value = "/article/LikeArticle") })
 public class LoginFilter implements Filter {
 
 	List<String> url = new ArrayList<String>();
-//	String servletPath;
 	String contextPath;
-//	String requestURI;
 	String queryString;
 
 	public LoginFilter() {
-
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
@@ -43,24 +40,16 @@ public class LoginFilter implements Filter {
 			String name = e.nextElement();
 			String value = fConfig.getInitParameter(name);
 			url.add(value);
-//			System.out.println(name);
-//			System.out.println(value);
-
 		}
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-//		boolean isRequestedSessionIdValid = false;
 		if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpServletResponse resp = (HttpServletResponse) response;
 			String servletPath = req.getServletPath();
 			contextPath = req.getContextPath();
-//			requestURI =req.getRequestURI();
-//			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
-//			queryString = req.getQueryString();
-
 			if (mustLogin(servletPath)) {
 				if (checkLogin(req)) {
 					// 需要登入 但已經登入
@@ -112,7 +101,5 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void destroy() {
-
 	}
-
 }

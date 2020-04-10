@@ -21,12 +21,16 @@ public class ArticleCategoryBean implements Serializable {
 	private Integer categoryId;
 	private String categoryTitle;
 	private String categoryName;
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	private Set<ArticleBean> articles = new LinkedHashSet<>();
 
-	public ArticleCategoryBean(Integer categoryId, String categoryTitle, String categoryName) {
+	public ArticleCategoryBean(Integer categoryId, String categoryTitle, String categoryName,
+			Set<ArticleBean> articles) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryTitle = categoryTitle;
 		this.categoryName = categoryName;
+		this.articles = articles;
 	}
 
 	public ArticleCategoryBean() {
@@ -57,6 +61,12 @@ public class ArticleCategoryBean implements Serializable {
 		this.categoryName = categoryName;
 	}
 
+	public Set<ArticleBean> getArticles() {
+		return articles;
+	}
 
+	public void setArticles(Set<ArticleBean> articles) {
+		this.articles = articles;
+	}
 
 }

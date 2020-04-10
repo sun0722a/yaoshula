@@ -17,6 +17,8 @@ import _06_article.dao.ArticleDao;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
+import _06_article.model.ReportArticleBean;
+import _06_article.model.ReportCommentBean;
 
 /* 查詢熱門文章: 是否要有 天使-時事 、熱門文章個數*/
 
@@ -41,6 +43,18 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	public void insertComment(CommentBean cb) {
 		Session session = factory.getCurrentSession();
 		session.save(cb);
+	}
+
+	@Override
+	public void insertReportArticle(ReportArticleBean rab) {
+		Session session = factory.getCurrentSession();
+		session.save(rab);
+	}
+
+	@Override
+	public void insertReportComment(ReportCommentBean rcb) {
+		Session session = factory.getCurrentSession();
+		session.save(rcb);
 	}
 
 	// 計算所有商品總共有幾頁
@@ -304,6 +318,14 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		Session session = factory.getCurrentSession();
 		ArticleBean bean = null;
 		bean = session.get(ArticleBean.class, articleId);
+		return bean;
+	}
+
+	@Override
+	public CommentBean getComment(int commentId) {
+		Session session = factory.getCurrentSession();
+		CommentBean bean = null;
+		bean = session.get(CommentBean.class, commentId);
 		return bean;
 	}
 

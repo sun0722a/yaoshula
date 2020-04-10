@@ -20,14 +20,18 @@ import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 
-/* 未完成: 記住我功能、LoginFilter 跳轉頁面提示 */
+/* 未完成: 跳轉頁面提示 */
 
 //進入登入畫面前會先去LoginFilter看該網頁需不需要登入　再來去FindUserPassword找有沒有cookie留的帳密
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -39,58 +43,57 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		
-		
-		Map<String, String> errorMsgMap = new HashMap<String, String>();
 
-		request.setAttribute("ErrorMsgKey", errorMsgMap);
+		// 準備存放錯誤訊息的Map物件
+		Map<String, String> errorMsgMap = new HashMap<String, String>();
+		request.setAttribute("ErrorMsgKey", errorMsgMap); // 顯示錯誤訊息
 
 		String memberId = request.getParameter("memberId");
 		String password = request.getParameter("password");
 		String rm = request.getParameter("rememberMe");
 
+		// 檢查不可為空值
 		if (memberId == null || memberId.trim().length() == 0) {
 			errorMsgMap.put("AccountEmptyError", "帳號欄必須輸入");
-
 		}
-
 		if (password == null || password.trim().length() == 0) {
 			errorMsgMap.put("PasswordEmptyError", "密碼欄必須輸入");
 		}
+		
+		// 如果有錯誤
 		if (!errorMsgMap.isEmpty()) {
 			RequestDispatcher rd = request.getRequestDispatcher("/_02_login/login.jsp");
 			rd.forward(request, response);
 			return;
 		}
 
+		// 加入Cookie
 		Cookie cookieUser = null;
 		Cookie cookiePassword = null;
 		Cookie cookieRememberMe = null;
 
-		// 如果記住帳密 打勾 rm字串裡面就不會是null
 		if (rm != null) {
+			// 如果記住帳密打勾，rm字串裡面就不會是null
 			cookieUser = new Cookie("memberId", memberId);
 			cookieUser.setMaxAge(30 * 24 * 60 * 60); // cookie存活期一個月
 			cookieUser.setPath(request.getContextPath());
 
 			String encodePassword = GlobalService.encryptString(password);
 			cookiePassword = new Cookie("password", encodePassword);
-//			cookiePassword = new Cookie("password", password);
 			cookiePassword.setMaxAge(30 * 24 * 60 * 60);
 			cookiePassword.setPath(request.getContextPath());
 
 			cookieRememberMe = new Cookie("rememberMe", "true");
 			cookieRememberMe.setMaxAge(30 * 24 * 60 * 60);
 			cookieRememberMe.setPath(request.getContextPath());
-			// 如果使用者沒有按下記住帳密 就不會保存帳號密碼的cookie
 		} else {
+			// 如果使用者沒有按下記住帳密 就不會保存帳號密碼的cookie
 			cookieUser = new Cookie("memberId", memberId);
 			cookieUser.setMaxAge(0);
 			cookieUser.setPath(request.getContextPath());
 
 			String encodePassword = GlobalService.encryptString(password);
-			cookiePassword = new Cookie("password",encodePassword);
-//			cookiePassword = new Cookie("password", password);
+			cookiePassword = new Cookie("password", encodePassword);
 			cookiePassword.setMaxAge(0);
 			cookiePassword.setPath(request.getContextPath());
 
@@ -103,13 +106,13 @@ public class LoginServlet extends HttpServlet {
 		response.addCookie(cookiePassword);
 		response.addCookie(cookieRememberMe);
 
-//		MemberService memberService = new MemberServiceImpl();
+
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		MemberService memberService = ctx.getBean(MemberService.class);
-
 		password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 		MemberBean mb = null;
 
+		// 檢查帳號密碼是否正確
 		try {
 			mb = memberService.checkIdPassword(memberId, password);
 			if (mb != null) {
@@ -121,9 +124,11 @@ public class LoginServlet extends HttpServlet {
 			errorMsgMap.put("LoginError", ex.getMessage());
 		}
 
+		
 		if (errorMsgMap.isEmpty()) {
 			String contextPath = getServletContext().getContextPath();
 			String target = (String) session.getAttribute("target");
+			// 如果是從別的地方來的就回去
 			if (target != null) {
 				response.sendRedirect(response.encodeRedirectURL(contextPath + target));
 			} else {

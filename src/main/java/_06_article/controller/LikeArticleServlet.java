@@ -52,7 +52,7 @@ public class LikeArticleServlet extends HttpServlet {
 		ArticleService articleService = ctx.getBean(ArticleService.class);
 
 		articleService.likeArticle(ab, mb);
-		MemberBean newMb = memberService.queryMember(mb.getId());
+		MemberBean newMb = memberService.getMember(mb.getId());
 		session.setAttribute("LoginOK", newMb);
 
 		response.sendRedirect(

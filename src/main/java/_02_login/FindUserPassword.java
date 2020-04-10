@@ -16,70 +16,59 @@ import javax.servlet.http.HttpServletResponse;
 import _00_init.util.GlobalService;
 
 @WebFilter("/_02_login/login.jsp")
-public class FindUserPassword implements Filter{
+public class FindUserPassword implements Filter {
 	String requestURI;
+
 	public FindUserPassword() {
-		
+
 	}
-	
-	@Override   //在畫面還沒產生的時候 先執行過濾器 去找有沒有cookie傳來的帳號及密碼
+
+	// 在畫面還沒產生的時候，先執行過濾器，去找有沒有cookie傳來的帳號及密碼
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if(request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
+		if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
 			HttpServletRequest req = (HttpServletRequest) request;
-			
+
 			String cookieName = "";
 			String memberId = "";
 			String password = "";
 			String rememberMe = "";
-			
-			Cookie[] cookies = req.getCookies();  //讀取cookie
-			if(cookies != null) {
-				for(int i = 0;i<cookies.length;i++) {
+
+			Cookie[] cookies = req.getCookies(); // 讀取cookie
+			if (cookies != null) {
+				for (int i = 0; i < cookies.length; i++) {
 					cookieName = cookies[i].getName();
-					
-					if(cookieName.equals("memberId")) {
+
+					if (cookieName.equals("memberId")) {
 						memberId = cookies[i].getValue();
-					}else if(cookieName.equals("password")) {
+					} else if (cookieName.equals("password")) {
 						String tmp = cookies[i].getValue();
-//						 password = cookies[i].getValue();
-						
-						if(tmp != null) {
-							password = GlobalService.decryptString(GlobalService.KEY, tmp); 
-							
-							
+						if (tmp != null) {
+							password = GlobalService.decryptString(GlobalService.KEY, tmp);
 						}
-					}
-					else if(cookieName.equals("rememberMe")) {
+					} else if (cookieName.equals("rememberMe")) {
 						rememberMe = cookies[i].getValue();
 					}
 				}
-				
-			}else {
-				;
+
 			}
-//			System.out.println(rememberMe);
-//			System.out.println(memberId);
-//			System.out.println(password);
-			request.setAttribute("rememberMe",rememberMe);
+
+			request.setAttribute("rememberMe", rememberMe);
 			request.setAttribute("memberId", memberId);
 			request.setAttribute("password", password);
 		}
 		chain.doFilter(request, response);
 	}
-	
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
-		
-	}
 
-	
+	}
 
 	@Override
 	public void destroy() {
-		
-		
+
 	}
-	
+
 }

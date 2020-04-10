@@ -22,6 +22,7 @@ import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.service.OrderService;
 
+// 查詢歷史訂單
 @WebServlet("/order/showHistoryOrder")
 public class historyOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,23 +34,24 @@ public class historyOrderServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 先取出session物件
-		HttpSession session = request.getSession(false);
+		request.setCharacterEncoding("UTF-8");
 
 		// 使用逾時，回首頁
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-
+		
+		// 取得使用者資料(MemberBean)
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		Integer memberId = mb.getId();
-
-//		OrderService service = new OrderServiceImpl();
+		// 取得使用者的訂單資料(OrderBean)
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		OrderService service = ctx.getBean(OrderService.class);
 		List<OrderBean> orders = service.getMemberOrders(memberId);
 
+		// 取出訂單詳細資料(OrderItemBean)
 		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
 		for (int i = 0; i < orders.size(); i++) {
 			int orderNo = orders.get(i).getOrderNo();

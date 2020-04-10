@@ -4,18 +4,16 @@ import _01_register.model.MemberBean;
 
 public interface MemberService {
 
-	int saveMember(MemberBean mb);
+	public int saveMember(MemberBean mb);
 
-	boolean idExists(String id);
+	public boolean idExists(String id);
 
-	boolean emailExists(String email);
+	public boolean emailExists(String email);
 
-//	MemberBean queryMember(String id);
+	public MemberBean getMember(int id);
 
-	MemberBean queryMember(int id);
+	public MemberBean checkIdPassword(String memberId, String password);
 
-	MemberBean checkIdPassword(String memberId, String password);
-
-	int updateMember(MemberBean mb);
+	public int updateMember(MemberBean mb);
 
 }

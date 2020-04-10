@@ -22,9 +22,7 @@ import _05_product.model.ProductBean;
 import _05_product.model.ProductFormatBean;
 import _05_product.service.ProductService;
 
-/* new shoppingCart會被洗掉 */
-/* 未完成: 未將errormsg放入JSP(productinfo)  */
-
+// 直接購買(加入新購物車)
 @WebServlet("/order/checkOrder")
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,23 +48,15 @@ public class CheckOutServlet extends HttpServlet {
 		Map<String, String> errorMsg = new HashMap<String, String>();
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
-//		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
-
-		// 如果session內沒有購物車物件 就新建一個session物件
-//		if (cart == null) {
-//			cart = new ShoppingCart();
-//			session.setAttribute("ShoppingCart", cart);
-//		}
-		ShoppingCart cart = new ShoppingCart();
 		// EL會依序從Page、Request、Session、Application範圍查詢
+		ShoppingCart cart = new ShoppingCart();
 		request.setAttribute("ShoppingCart", cart);
 
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
-//		System.out.println(productIdStr);
 		Integer productId = Integer.parseInt(productIdStr.trim());
 
-//		ProductService service = new ProductServiceImpl();
+		// 透過 service & productId 取得商品資訊
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ProductService service = ctx.getBean(ProductService.class);
 		ProductBean pb = service.getProduct(productId);
@@ -75,45 +65,41 @@ public class CheckOutServlet extends HttpServlet {
 		String content1 = request.getParameter("content1") == null ? "" : request.getParameter("content1");
 		String content2 = request.getParameter("content2") == null ? "" : request.getParameter("content2");
 		String qtytr = request.getParameter("qty");
-//		Integer price = pb.getPrice();
 
-//		System.out.println(price);
-//		System.out.println(content1);
-//		System.out.println(content2);
 		// 如果沒有的話要再回去商品詳細的頁面
 		if (qtytr == null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
 			rd.forward(request, response);
 			return;
-		} else {
-			Integer qty = Integer.parseInt(qtytr.trim());
+		}
+		Integer qty = Integer.parseInt(qtytr.trim());
 
-			Set<ProductFormatBean> formats = pb.getProductFormat();
-			Integer productFormatId = 0;
-			for (ProductFormatBean pfb : formats) {
-				if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
-					// 正確規格，則把productFormatId存下來
-					productFormatId = pfb.getProductFormatId();
-					// 檢查庫存
-					if (pfb.getStock() - qty < 0) {
-						errorMsg.put("stock", pfb.getFormatContent1() + "  " + pfb.getFormatContent2()
-								+ " 庫存量不足!<br>庫存：" + pfb.getStock());
-						RequestDispatcher rd = request
-								.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
-						rd.forward(request, response);
-						return;
-					}
+		Set<ProductFormatBean> formats = pb.getProductFormat();
+		Integer productFormatId = 0;
+		for (ProductFormatBean pfb : formats) {
+			if (pfb.getFormatContent1().equals(content1) && pfb.getFormatContent2().equals(content2)) {
+				// 正確規格，則把productFormatId存下來
+				productFormatId = pfb.getProductFormatId();
+				// 檢查庫存(不夠=>return)
+				if (pfb.getStock() - qty < 0) {
+					errorMsg.put("stock", pfb.getFormatContent1() + "  " + pfb.getFormatContent2() + " 庫存量不足!<br>庫存："
+							+ pfb.getStock());
+					RequestDispatcher rd = request
+							.getRequestDispatcher("/product/ShowProductInfo?productId=" + productId);
+					rd.forward(request, response);
+					return;
 				}
 			}
-
-			OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2,
-					pb.getPrice(), qty, null);
-			cart.addToCart(productFormatId, oib, formats);
-
-			RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");
-			rd.forward(request, response);
-			return;
 		}
+
+		// 加入此購物車(request)
+		OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
+				qty, null);
+		cart.addToCart(productFormatId, oib, formats);
+
+		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");
+		rd.forward(request, response);
+		return;
 
 	}
 

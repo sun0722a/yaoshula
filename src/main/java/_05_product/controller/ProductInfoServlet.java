@@ -25,6 +25,7 @@ import _05_product.service.ProductService;
 
 /* 未完成: 如果找不到Id，回商城首頁  */
 
+// 查詢商品詳細資料
 @WebServlet("/product/ShowProductInfo")
 public class ProductInfoServlet extends HttpServlet {
 
@@ -39,7 +40,6 @@ public class ProductInfoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		request.setCharacterEncoding("UTF-8");
 
 		// 使用逾時，回首頁
@@ -49,25 +49,26 @@ public class ProductInfoServlet extends HttpServlet {
 			return;
 		}
 
-		// 從jsp取得所點取的商品的productId為何
+		// 從瀏覽器取得所選商品的productId
 		String productIdStr = request.getParameter("productId");
-		Integer productId = Integer.parseInt(productIdStr);
+		Integer productId = Integer.parseInt(productIdStr.trim());
 
 		Clob clob = null;
 		String detail = "";
 		ProductFormatBean firstProductFormat = null;
 
-		// 利用getProduct取得該ID所擁有的資訊
-//		ProductService service = new ProductServiceImpl();
+		// 取得商品資料(ProductBean)
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ProductService service = ctx.getBean(ProductService.class);
 		ProductBean pb = service.getProduct(productId);
+
+		// 取出規格
 		Set<String> contentSet1 = new HashSet<String>();
 		Set<String> contentSet2 = new HashSet<String>();
-
 		if (pb != null) {
-			// 使用iterator取出set裡的值
+			// 取得商品詳細資料(ProductFormatBean)
 			Set<ProductFormatBean> formats = pb.getProductFormat();
+			// 使用iterator取出第一筆規格資料
 			Iterator<ProductFormatBean> iterator = formats.iterator();
 			if (iterator.hasNext()) {
 				firstProductFormat = iterator.next();
@@ -75,23 +76,21 @@ public class ProductInfoServlet extends HttpServlet {
 			// 取得第一項的titles
 			String title1 = firstProductFormat.getFormatTitle1();
 			String title2 = firstProductFormat.getFormatTitle2();
-			// 利用set不重複性存入formatContents
 			for (ProductFormatBean pfb : formats) {
+				// 利用set不重複性存入商品規格
 				contentSet1.add(pfb.getFormatContent1());
 				contentSet2.add(pfb.getFormatContent2());
 			}
-
-			// 取得Clob
+			// 取得detail並轉成字串輸出
 			try {
 				clob = pb.getDetail();
 				if (clob != null) {
 					detail = GlobalService.clobToString(clob);
 				}
-
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
-			// 把大家暫存到請求物件內
+
 			request.setAttribute("product", pb);
 			request.setAttribute("title1", title1);
 			request.setAttribute("content1", contentSet1);
@@ -104,7 +103,6 @@ public class ProductInfoServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/_05_product/productInfo.jsp");
 			rd.forward(request, response);
 			return;
-
 		} else { // 如果找不到Id，回商城首頁
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;

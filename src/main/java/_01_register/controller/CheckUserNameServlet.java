@@ -14,21 +14,20 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _01_register.service.MemberService;
 
+// 檢查帳號是否已被註冊
 @WebServlet("/register/checkUserName")
 public class CheckUserNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
-	@Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
-		
+
 		Writer os = null;
 		os = response.getWriter();
 

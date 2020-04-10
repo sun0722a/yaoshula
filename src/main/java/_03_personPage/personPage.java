@@ -24,7 +24,7 @@ public class personPage extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		MemberDao memberService = (MemberDao) new MemberDaoImpl_Hibernate();
-		MemberBean mb = memberService.queryMember(1);
+		MemberBean mb = memberService.getMember(1);
 		session.setAttribute("LoginOK", mb);
 		RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/personPage.jsp");
 		rd.forward(request, response);

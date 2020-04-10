@@ -41,10 +41,9 @@ public class ProcessOrderServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		request.setCharacterEncoding("UTF-8");
 
-//		String finalDecision = request.getParameter("finalDecision");
+		// 使用逾時，回首頁
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
@@ -62,15 +61,10 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-//		if (finalDecision.equals("Cancel")) {
-//			session.removeAttribute("ShoppingCart");
-//			response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
-//			return;
-//		}
 
+		// 從瀏覽器取得訂購資料
 		Integer memberId = mb.getId();
 		String memberName = request.getParameter("name"); // 訂購人姓名 跟資料庫的不一樣
-//		String totalPriceStr = request.getParameter("totalPrice").toString(); // 總金額
 		Integer totalPrice = cart.getFinalSubtotal();
 		String city = request.getParameter("county"); // 訂購人地址
 		String area = request.getParameter("district"); // 訂購人地址
@@ -78,16 +72,17 @@ public class ProcessOrderServlet extends HttpServlet {
 		String phone = request.getParameter("phone"); // 訂購人電話
 		String note = request.getParameter("note"); // 訂單備註
 		Date today = new Date();
-//		System.out.println("total:" + totalPrice);
+		// 封裝進OrderBean
 		OrderBean ob = new OrderBean(null, memberId, memberName, totalPrice, city + area + address, phone, note, today,
 				null, null, "待出貨", null);
+
 		Map<Integer, Map<OrderItemBean, Set<ProductFormatBean>>> content = cart.getContent();
 		Map<Integer, String> finalContent = cart.getCheckedMap();
-		Set<OrderItemBean> items = new LinkedHashSet<>();
-
 		Set<Integer> set = content.keySet();
 		Set<Integer> checkedSet = cart.getCheckedMap().keySet();
 
+		// 篩選有被勾選的OrderItemBean裝入set內
+		Set<OrderItemBean> items = new LinkedHashSet<>();
 		for (Integer i : set) {
 			for (Integer j : checkedSet) {
 				if (i.equals(j) && finalContent.get(j).equals("y")) {
@@ -111,33 +106,37 @@ public class ProcessOrderServlet extends HttpServlet {
 							}
 						}
 					}
-
 					oib.setOrderBean(ob);
 					items.add(oib);
 				}
 			}
 
 		}
+		// 裝入OrderBean
 		ob.setOrderItems(items);
 
 		try {
-//			OrderService orderService = new OrderServiceImpl();
+			// 儲存OrderBean
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			OrderService orderService = ctx.getBean(OrderService.class);
 			orderService.persistOrder(ob);
-			System.out.println("orderNo:" + ob.getOrderNo());
+
 			session.setAttribute("orderNo", ob.getOrderNo());
 			session.removeAttribute("ShoppingCart");
-//			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
-			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
-			rd.forward(request, response);
+			
+			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
+//			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
+//			rd.forward(request, response);
 			return;
 		} catch (RuntimeException ex) {
 			String message = ex.getMessage();
 			String shortMessage = "";
 			shortMessage = message.substring(message.indexOf(":") + 1);
+			
 			session.setAttribute("OrderErrorMsg", "訂單發生異常" + shortMessage + "請更正訂單內容");
+			
 			response.sendRedirect(response.encodeRedirectURL(""));
+			return;
 		}
 	}
 

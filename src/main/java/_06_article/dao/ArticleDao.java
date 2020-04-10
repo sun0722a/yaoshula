@@ -7,12 +7,18 @@ import _01_register.model.MemberBean;
 import _06_article.model.ArticleBean;
 import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
+import _06_article.model.ReportArticleBean;
+import _06_article.model.ReportCommentBean;
 
 public interface ArticleDao {
 
 	void insertArticle(ArticleBean ab);
 
 	void insertComment(CommentBean cb);
+
+	void insertReportArticle(ReportArticleBean rab);
+
+	void insertReportComment(ReportCommentBean rcb);
 
 //	int getTotalPages(String searchStr, String categoryTitle, String categoryName);
 
@@ -47,5 +53,7 @@ public interface ArticleDao {
 //	void setRecordsPerPage(int recordsPerPage);
 
 	ArticleBean getArticle(int articleId);
+
+	CommentBean getComment(int commentId);
 
 }

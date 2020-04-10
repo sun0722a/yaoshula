@@ -45,7 +45,7 @@ public class GetUserImageServlet extends HttpServlet {
 			MemberService memberService = ctx.getBean(MemberService.class);
 
 			// 利用主鍵取得bean物件及其內容
-			MemberBean bean = memberService.queryMember(id);
+			MemberBean bean = memberService.getMember(id);
 			if (bean != null) {
 				blob = bean.getPicture();
 				if (blob != null) {

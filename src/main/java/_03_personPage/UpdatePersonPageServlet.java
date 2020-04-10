@@ -23,6 +23,7 @@ import _01_register.service.MemberService;
 
 /* 待測試: 連線逾時 */
 
+// 更新個人資料
 /* MultipartConfig的屬性說明: */
 //location: 上傳之表單資料與檔案暫時存放在Server端之路徑，此路徑必須存在，否則Web Container將丟出例外。
 //fileSizeThreshold: 上傳檔案的大小臨界值，超過此臨界值，上傳檔案會用存放在硬碟，否則存放在主記憶體。
@@ -30,12 +31,15 @@ import _01_register.service.MemberService;
 //maxRequestSize: 上傳所有檔案之總長度限制，如果超過此數值，Web Container會丟出例外
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
-
 @WebServlet("/personPage/updatePersonPage")
 public class UpdatePersonPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -106,28 +110,19 @@ public class UpdatePersonPageServlet extends HttpServlet {
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
-			// 將可更改的會員資料封裝到MemberBean
-
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
-					blob, null, null, null, null, null,null);
+					blob, null, null, null, null, null, null);
 
-			// 呼叫MemberDao的updateMember方法(經由MemberService)
-//			MemberService service = new MemberServiceImpl();
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			MemberService service = ctx.getBean(MemberService.class);
-			int n = service.updateMember(mem);
-			// 更新session內的使用者資料
-			MemberBean mb = service.queryMember(id);
-			session.setAttribute("LoginOK", mb);
-			// 如果更新列數不為1(updateMember的傳回值) => 失敗
-			if (n != 1) {
-				System.out.println("更新此筆資料有誤(UpdatePersonPageServlet)");
-			}
+			service.updateMember(mem);
 
-			// 轉換頁面
+			// 更新session內的使用者資料
+			MemberBean mb = service.getMember(id);
+			session.setAttribute("LoginOK", mb);
+
 			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");
 			return;
-
 		} catch (Exception e) {
 			System.out.println("UpdatePersonPageServlet類別的#fileToBlob()例外: " + e.getMessage());
 			response.sendRedirect(getServletContext().getContextPath() + "/_03_personPage/personPage.jsp");

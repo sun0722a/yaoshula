@@ -17,6 +17,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
 
+// 查詢熱門商品
 @WebServlet("/product/ShowFamousProducts")
 public class ShowFamousProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,13 +38,11 @@ public class ShowFamousProductsServlet extends HttpServlet {
 			return;
 		}
 
-//		ProductService service = new ProductServiceImpl();
-		
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ProductService service = ctx.getBean(ProductService.class);
 		Map<Integer, ProductBean> angelProductMap = service.getFamousProducts("天使");
 		Map<Integer, ProductBean> evilProductMap = service.getFamousProducts("惡魔");
-		// 將讀到的一頁資料放入request物件內，成為它的屬性物件
+		
 		request.setAttribute("angel_products_map", angelProductMap);
 		request.setAttribute("evil_products_map", evilProductMap);
 

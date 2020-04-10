@@ -23,13 +23,11 @@ import _06_article.service.ArticleService;
 public class MyArticlesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -48,13 +46,12 @@ public class MyArticlesServlet extends HttpServlet {
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ArticleService service = ctx.getBean(ArticleService.class);
-
 		Map<Integer, ArticleBean> articleMap = service.getPersonArticles(arrange, searchStr, mb);
+
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("arrange", arrange);
 		request.setAttribute("articles_map", articleMap);
 
-		// 轉換頁面
 		RequestDispatcher rd = request.getRequestDispatcher("/_03_personPage/myArticles.jsp");
 		rd.forward(request, response);
 		return;
