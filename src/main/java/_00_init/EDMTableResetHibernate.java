@@ -19,6 +19,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import _00_init.util.GlobalService;
+import _01_register.model.MemberBean;
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _05_product.model.CategoryBean;
@@ -29,6 +30,7 @@ import _06_article.model.ArticleCategoryBean;
 import _06_article.model.CommentBean;
 
 /* 未完成: data未製作完成(only 測試版) */
+/* member: likeArticles、authToken、checkAuthSuccess設定? */
 
 public class EDMTableResetHibernate {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
@@ -75,9 +77,10 @@ public class EDMTableResetHibernate {
 									String fileName = GlobalService.extractFileName(token2[2].trim());
 									Blob image = GlobalService.fileToBlob(token2[2].trim());
 									Clob detail = GlobalService.fileToClob(token2[3]);
+									Integer sales = Integer.parseInt(token2[4].trim());
 
 									ProductBean product = new ProductBean(null, productName, cb, price, fileName, image,
-											detail, 0, null);
+											detail, sales, null);
 
 									// 3. ProductFormat
 									Set<ProductFormatBean> productFormats = new LinkedHashSet<>();
@@ -160,15 +163,21 @@ public class EDMTableResetHibernate {
 					String phoneNumber = token1[3];
 					String orderNote = token1[4];
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-					java.util.Date date = simpleDateFormat.parse(token1[5].trim());
-					Date orderDate = new Date(date.getTime());
-					date = simpleDateFormat.parse(token1[6].trim());
-					Date shippingDate = new Date(date.getTime());
-					date = simpleDateFormat.parse(token1[7].trim());
-					Date arriveDate = new Date(date.getTime());
-
+					Date orderDate = null;
+					if (!token1[5].equals("")) {
+						orderDate = new Date(simpleDateFormat.parse(token1[5].trim()).getTime());
+					}
+					Date shippingDate = null;
+					if (!token1[6].equals("")) {
+						shippingDate = new Date(simpleDateFormat.parse(token1[6].trim()).getTime());
+					}
+					Date arriveDate = null;
+					if (!token1[7].equals("")) {
+						arriveDate = new Date(simpleDateFormat.parse(token1[7].trim()).getTime());
+					}
+					String status = token1[8];
 					OrderBean orderBean = new OrderBean(null, memberId, memberName, totalPrice, address, phoneNumber,
-							orderNote, orderDate, shippingDate, arriveDate, "待出貨", null);
+							orderNote, orderDate, shippingDate, arriveDate, status, null);
 
 					// 2. OrderItems
 					Set<OrderItemBean> orderItems = new LinkedHashSet<>();
@@ -181,7 +190,7 @@ public class EDMTableResetHibernate {
 							}
 							String[] token2 = line.split("\\|");
 							String orderNoCheck = token2[6];
-							if (token1[8].equals(orderNoCheck)) {
+							if (token1[9].equals(orderNoCheck)) {
 								Integer productId = Integer.parseInt(token2[0].trim());
 								String productName = token2[1];
 								String formatContent1 = token2[2];
@@ -220,6 +229,7 @@ public class EDMTableResetHibernate {
 				tx.rollback();
 			}
 		}
+
 		// 文章類(article)一起新增
 		session = factory.getCurrentSession();
 		tx = null;
@@ -248,7 +258,7 @@ public class EDMTableResetHibernate {
 								line = line.substring(1);
 							}
 							String[] token2 = line.split("\\|");
-							String articleCategoryCkeck = token2[8];
+							String articleCategoryCkeck = token2[9];
 							if (token1[2].equals(articleCategoryCkeck)) {
 								String title = token2[1];
 								Integer authorId = Integer.parseInt(token2[2].trim());
@@ -259,9 +269,10 @@ public class EDMTableResetHibernate {
 								String fileName = GlobalService.extractFileName(token2[6].trim());
 								Blob image = GlobalService.fileToBlob(token2[6].trim());
 								Integer likes = Integer.parseInt(token2[7].trim());
+								String status = token2[8];
 
 								ArticleBean articleBean = new ArticleBean(null, title, authorId, authorName,
-										publishTime, acb, content, fileName, image, likes, "正常", null);
+										publishTime, acb, content, fileName, image, likes, status, null);
 
 								// 3. Comments
 								Set<CommentBean> comments = new LinkedHashSet<>();
@@ -272,16 +283,18 @@ public class EDMTableResetHibernate {
 											line = line.substring(1);
 										}
 										String[] token3 = line.split("\\|");
-										String articleIdCheck = token3[4];
+										String articleIdCheck = token3[5];
 										if (token2[0].equals(articleIdCheck)) {
 											Integer commentAuthorId = Integer.parseInt(token3[0].trim());
 											String commentAuthorName = token3[1];
 											Timestamp commentPublishTime = Timestamp.valueOf(token3[2].trim());
 											String commentContent = token3[3];
+											String commentStatus = token3[4];
 											ArticleBean ab = articleBean;
 
 											CommentBean commentBean = new CommentBean(null, commentAuthorId,
-													commentAuthorName, commentPublishTime, commentContent, ab, "正常");
+													commentAuthorName, commentPublishTime, commentContent, ab,
+													commentStatus);
 											comments.add(commentBean);
 										}
 									}
@@ -320,6 +333,60 @@ public class EDMTableResetHibernate {
 				tx.rollback();
 			}
 		}
+
+		// 會員(member)新增
+		session = factory.getCurrentSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+
+			// 1. Members
+			try (FileReader fr1 = new FileReader("data/member/members.dat");
+					BufferedReader br1 = new BufferedReader(fr1);) {
+				while ((line = br1.readLine()) != null) {
+					if (line.startsWith(UTF8_BOM)) {
+						line = line.substring(1);
+					}
+					String[] token = line.split("\\|");
+
+					String memberId = token[0];
+					String password = token[1];
+					password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
+					String gender = token[2];
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date date = simpleDateFormat.parse(token[3]);
+					Date birthday = new Date(date.getTime());
+					String email = token[4];
+					String phone = token[5];
+					String city = token[6];
+					String area = token[7];
+					String address = token[8];
+					String fileName = GlobalService.extractFileName(token[9].trim());
+					Blob picture = GlobalService.fileToBlob(token[9].trim());
+					Timestamp createTime = Timestamp.valueOf(token[10].trim());
+					String status = token[11];
+					String permission = token[12];
+
+					MemberBean memberBean = new MemberBean(null, memberId, password, gender, birthday, email, phone,
+							city, area, address, fileName, picture, createTime, status, permission, null, null, null);
+
+					session.save(memberBean);
+					session.flush();
+					System.out.println("Members表格新增成功");
+				}
+				tx.commit();
+			} catch (IOException e) {
+				if (tx != null) {
+					tx.rollback();
+				}
+				System.err.println("新建Members表格時發生IO例外: " + e.getMessage());
+			}
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+		}
+
 		((ConfigurableApplicationContext) ctx).close();
 	}
 }
