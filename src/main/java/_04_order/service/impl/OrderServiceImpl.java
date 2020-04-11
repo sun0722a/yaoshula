@@ -14,6 +14,7 @@ import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.service.OrderService;
 import _05_product.dao.ProductDao;
+import _05_product.model.ProductBean;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -43,7 +44,8 @@ public class OrderServiceImpl implements OrderService {
 	private void checkStock(OrderBean ob) {
 		Set<OrderItemBean> items = ob.getOrderItems();
 		for (OrderItemBean oib : items) {
-			oidao.updateProductStock(oib);
+			ProductBean pb = pdao.getProduct(oib.getProductId());
+			oidao.updateProductStock(oib, pb);
 		}
 	}
 
