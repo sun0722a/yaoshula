@@ -52,8 +52,8 @@ Java | JDBC | JSP | Spring MVC | Hirbernate | Javascript | jQuery | AJAX | CSS3 
 ---
 - [x] 前期規劃
 - [x] 會員系統
-- [ ] 商城系統
-- [ ] 論壇系統
+- [x] 商城系統
+- [x] 論壇系統
 - [ ] 後台系統
 - [ ] 測試階段
 - [ ] 正式發表
