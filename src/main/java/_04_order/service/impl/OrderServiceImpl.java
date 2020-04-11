@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _04_order.dao.OrderDao;
 import _04_order.dao.OrderItemDao;
-
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
+import _04_order.model.ShoppingCart;
 import _04_order.service.OrderService;
 import _05_product.dao.ProductDao;
 import _05_product.model.ProductBean;
@@ -29,6 +29,19 @@ public class OrderServiceImpl implements OrderService {
 	public OrderServiceImpl() {
 	}
 
+	// 儲存從購物車來的訂單
+	@Transactional
+	@Override
+	public void persistOrder(OrderBean ob, ShoppingCart cart) {
+		// 儲存訂單資料
+		odao.insertOrder(ob);
+		// 更新銷售量
+		pdao.addSales(ob);
+		// 更新庫存量
+		checkStock(ob, cart);
+	}
+
+	// 儲存從直接購買來的訂單
 	@Transactional
 	@Override
 	public void persistOrder(OrderBean ob) {
@@ -38,6 +51,15 @@ public class OrderServiceImpl implements OrderService {
 		pdao.addSales(ob);
 		// 更新庫存量
 		checkStock(ob);
+	}
+
+	// 更新庫存量、移除已加入訂單的購物車內商品
+	private void checkStock(OrderBean ob, ShoppingCart cart) {
+		Set<OrderItemBean> items = ob.getOrderItems();
+		for (OrderItemBean oib : items) {
+			ProductBean pb = pdao.getProduct(oib.getProductId());
+			oidao.updateProductStock(oib, pb, cart);
+		}
 	}
 
 	// 更新庫存量

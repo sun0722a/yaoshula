@@ -253,9 +253,7 @@ a {
 							<option>信用卡付款</option>
 						</select>
 					</div>
-					<%
-						session.setAttribute("cart", request.getAttribute("ShoppingCart"));
-					%>
+					<input type="hidden" name="buyCartStr" value="${buyCartStr}">
 					<button type="submit" class="btn btn-primary ml-3">送出</button>
 				</div>
 				<div class="textAreaBox col-3">

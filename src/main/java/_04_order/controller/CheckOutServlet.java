@@ -48,6 +48,9 @@ public class CheckOutServlet extends HttpServlet {
 		Map<String, String> errorMsg = new HashMap<String, String>();
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
+		// 準備新購物車
+		ShoppingCart cart = new ShoppingCart();
+
 		// 透過productInfoServlet取得product的session
 		String productIdStr = session.getAttribute("productId").toString();
 		Integer productId = Integer.parseInt(productIdStr.trim());
@@ -91,10 +94,11 @@ public class CheckOutServlet extends HttpServlet {
 		// 加入此購物車(request)
 		OrderItemBean oib = new OrderItemBean(null, productId, pb.getProductName(), content1, content2, pb.getPrice(),
 				qty, null);
-		// EL會依序從Page、Request、Session、Application範圍查詢
-		ShoppingCart cart = new ShoppingCart();
+
 		cart.addToCart(productFormatId, oib, formats);
 		request.setAttribute("ShoppingCart", cart);
+		request.setAttribute("buyCartStr", "true");
+		session.setAttribute("buyCart", cart);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/checkOrder.jsp");
 		rd.forward(request, response);

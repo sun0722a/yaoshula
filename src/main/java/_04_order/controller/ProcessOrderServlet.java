@@ -55,16 +55,18 @@ public class ProcessOrderServlet extends HttpServlet {
 		request.setAttribute("errorMsg", errorMsg); // 顯示錯誤訊息
 
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		ShoppingCart cart2 = (ShoppingCart) session.getAttribute("ShoppingCart");
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		String buyCartStr = request.getParameter("buyCartStr");
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("ShoppingCart");
 
+		// 篩選cart，如果是按直接購買
+		if (buyCartStr.equals("true")) {
+			cart = (ShoppingCart) session.getAttribute("buyCart");
+		}
+
+		// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
 		if (cart == null) {
-			cart = cart2;
-			// 如果購物車是空的 跳轉回首頁 但到時候可能在刪除時直接跳轉首頁
-			if (cart == null) {
-				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
-				return;
-			}
+			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+			return;
 		}
 
 		// 從瀏覽器取得訂購資料
@@ -124,11 +126,17 @@ public class ProcessOrderServlet extends HttpServlet {
 			// 儲存OrderBean
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			OrderService orderService = ctx.getBean(OrderService.class);
-			orderService.persistOrder(ob);
+			orderService.persistOrder(ob, cart);
 
 			session.setAttribute("orderNo", ob.getOrderNo());
-			session.removeAttribute("ShoppingCart");
-			session.removeAttribute("cart");
+
+			// 刪除cart，如果是按直接購買不刪除購物車
+			if (buyCartStr.equals("true")) {
+				orderService.persistOrder(ob);
+				session.removeAttribute("buyCart");
+			} else {
+				orderService.persistOrder(ob, cart);
+			}
 
 			response.sendRedirect(response.encodeRedirectURL("../_04_order/orderSuccess.jsp"));
 //			RequestDispatcher rd = request.getRequestDispatcher("/order/creditCard");
