@@ -104,5 +104,32 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		mb = session.get(MemberBean.class, id);
 		return mb;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public MemberBean getEmailValid(String emailCode) {
+		
+		MemberBean mb = null;
+		List<MemberBean> beans = null;
+		String hql = "FROM MemberBean m WHERE m.authToken = :emailCode";
+		Session session = factory.getCurrentSession();
+		
+		beans = session.createQuery(hql).setParameter("emailCode", emailCode).getResultList();
+		if(beans.size() > 0) {
+			mb = beans.get(0);
+		}
+		System.out.println(beans.size());
+		return mb;
+	}
+	
+	@Override
+	public int updateMemberPassword(String memberId, String passwordNew) {
+		int n = 0;
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean m SET m.password = :password WHERE m.memberId = :memberId";
+		session.createQuery(hql).setParameter("memberId", memberId).setParameter("password", passwordNew).executeUpdate();
+		n++;
+		return n;
+	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,13 +45,13 @@
 </script>
 <body>
     <div class="resetBox">
-        <div>請重設密碼</div>
-        <form>
+        <div>請重設密碼，重設完需要重新登入</div>
+        <form action="<c:url value='ChangePswdServlet'  />" method="POST">
             <div class="form-group">
-              <input type="password" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
+              <input type="password" name="password" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
             </div>
             <div class="checkPswd input-group mb-3">
-              <input type="password" class="form-control checked" id="exampleInputPassword1" placeholder="Check Password"  >
+              <input type="password" name="password" class="form-control checked" id="exampleInputPassword1" placeholder="Check Password"  >
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-addon"><i class="fas fa-unlock"></i></button>
               </div>

@@ -15,5 +15,8 @@ public interface MemberDao {
 	public MemberBean checkIdPassword(String memberId, String password);
 
 	public MemberBean getMember(int id);
-
+	
+	public MemberBean getEmailValid(String emailCode);
+	
+	public int updateMemberPassword(String memberId, String  passwordNew);
 }

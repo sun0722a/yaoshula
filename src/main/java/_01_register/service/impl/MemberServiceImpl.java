@@ -67,5 +67,21 @@ public class MemberServiceImpl implements MemberService {
 		mb = dao.getMember(id);
 		return mb;
 	}
+	
+	@Transactional
+	@Override
+	public MemberBean getEmailValid(String emailCode) {
+		MemberBean mb = null;
+		mb = dao.getEmailValid(emailCode);
+		return mb;
+	}
 
+	@Transactional
+	@Override
+	public int updateMemberPassword(String memberId, String passwordNew) {
+		int count = 0;
+		dao.updateMemberPassword(memberId,passwordNew);
+		count++;
+		return count;
+	}
 }

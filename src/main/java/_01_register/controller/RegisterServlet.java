@@ -25,23 +25,25 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import _00_init.util.GlobalService;
+import _00_init.util.SendEmail;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 
 /* 未完成: 網址列上顯示.jsp */
 
-// 新增會員資料
 @MultipartConfig(location = "", fileSizeThreshold = 5 * 1024 * 1024, maxFileSize = 1024 * 1024
 		* 500, maxRequestSize = 1024 * 1024 * 500 * 5)
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -93,7 +95,6 @@ public class RegisterServlet extends HttpServlet {
 						address = value;
 					} else if (fldName.equals("birthday")) {
 						try {
-							// 符合datePicker格式
 							SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 							java.util.Date date = simpleDateFormat.parse(value);
 							birthday = new Date(date.getTime());
@@ -120,32 +121,34 @@ public class RegisterServlet extends HttpServlet {
 		} else {
 			System.out.println("此表單不是上傳檔案的表單(RegisterServlet)");
 		}
-		
-		// 檢查帳號是否已經存在，已存在的帳號不能使用
+		// 呼叫MemberDao的idExists方法(經由MemberService)
+		// 檢查帳號是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		MemberService service = ctx.getBean(MemberService.class);
 		if (service.idExists(memberId)) {
 			memberId = "";
 			errorMsg.put("errorId", "此帳號已存在");
 		}
-		// 檢查信箱是否已經存在，已存在的信箱不能使用
+		// 檢查信箱是否已經存在，已存在的帳號不能使用，回傳相關訊息通知使用者修改
 		if (service.emailExists(email)) {
 			email = "";
 			errorMsg.put("errorEmail", "此信箱已被註冊");
 		}
-		
 		try {
 			// 為了配合Hibernate的版本。要在此加密，不要在 dao.saveMember(mem)進行加密
 			password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 			Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+			
+			String authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(email));
+			String checkAuthSuccess = "n";
 			Blob blob = null;
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
-			
 			// 將所有會員資料封裝到MemberBean(類別的)物件
+
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "正常", "一般會員", null, null, null);
+					address, fileName, blob, ts, "正常", "一般會員", null, authToken,checkAuthSuccess);
 
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
@@ -155,16 +158,26 @@ public class RegisterServlet extends HttpServlet {
 				rd.forward(request, response);
 				return;
 			}
-			
-			// 會員資料存入資料庫
+			// 呼叫MemberDao的saveMember方法
 			int n = service.saveMember(mb);
+			
 			if (n == 1) {
-				response.sendRedirect(getServletContext().getContextPath() + "/_02_login/login.jsp");
-				return;
+				String subject = null;
+				StringBuilder content = new StringBuilder();
+				String[] memberEmail = {mb.getEmail()};
+				subject = "歡迎你加入要抒啦的會員";
+				content.setLength(0);
+				content.append("<p>" + "請點選以下連結" + "</p>" + "<br>" + 
+				GlobalService.DOMAIN_PATTERN + "/EmailVerify" + "?" + "emailCode=" + authToken  +"<br>"
+				+"<p>" + "進入連結後即認證成功，可以去抒發一下了!" + "</p>");
+							
+				Thread sendEmail = new SendEmail(memberEmail, subject,content.toString(),"");
+				System.out.println(memberEmail[0]);
+				sendEmail.start();
+				
 			} else {
 				System.out.println(n);
 				System.out.println("更新此筆資料有誤(RegisterServlet)");
-				
 				RequestDispatcher rd = request.getRequestDispatcher("/_01_register/register.jsp");
 				rd.forward(request, response);
 				return;

@@ -33,8 +33,8 @@ public class SendEmail extends Thread {
 
 	public void run() {
 		for (String to : reciver) {
-			// Recipient's email ID needs to be mentioned.
-//			String to = "收件者";
+//			 Recipient's email ID needs to be mentioned.
+//			String to = "";
 			// Sender's email ID needs to be mentioned
 			String from = GlobalService.NOREPLY_EMAIL;
 			// Assuming you are sending email from through gmails smtp
@@ -81,16 +81,16 @@ public class SendEmail extends Thread {
 					}
 				} else {
 					// Set the actual message
-//					message.setText("This is actual message");
+					message.setText("This is actual message");
 					// Send the actual HTML message.
 					message.setContent(content, "text/html;charset=utf-8");
 				}
 				// Set Date:
 				message.setSentDate(new Date());
-//				System.out.println("sending...");
+				System.out.println("sending...");
 				// Send message
 				Transport.send(message);
-//				System.out.println("Sent message successfully....");
+				System.out.println("Sent message successfully....");
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {

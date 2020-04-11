@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +26,11 @@
         }
     </style>
 <body>
-	<form action="/enterNewPassword" method="post">
+	<form action="<c:url value='findPassword' />" method="POST">
     <div class="enterBox">
         <div style="text-align: center;">請輸入註冊時的email</div>
         <div class="input-group-sm text-center">
-            <input type="text" class="form-control-sm mt-3" placeholder="Email" aria-label="Username">
+            <input type="text" name="email" class="form-control-sm mt-3" placeholder="Email" aria-label="Username"  >
           </div>
           <div class="d-flex justify-content-center">
           <input type="submit" class="btn-sm btn-primary mt-3" role="button" >
