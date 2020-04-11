@@ -23,10 +23,11 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public Integer updateProductStock(OrderItemBean oib) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		String hql1 = "FROM ProductFormatBean pfb WHERE pfb.formatContent1 = :formatContent1 AND pfb.formatContent2 = :formatContent2";
+		String hql1 = "FROM ProductFormatBean pfb WHERE pfb.formatContent1 = :formatContent1 AND pfb.formatContent2 = :formatContent2 AND pfb.product= :productId";
 		ProductFormatBean pfb = (ProductFormatBean) session.createQuery(hql1)
 				.setParameter("formatContent1", oib.getFormatContent1())
-				.setParameter("formatContent2", oib.getFormatContent2()).getSingleResult();
+				.setParameter("formatContent2", oib.getFormatContent2()).setParameter("productId", oib.getProductId())
+				.getSingleResult();
 
 		String hql2 = "UPDATE ProductFormatBean pfb SET pfb.stock = stock - :orderQuantity WHERE productFormatId = :productFormatId";
 		n = session.createQuery(hql2).setParameter("productFormatId", pfb.getProductFormatId())
