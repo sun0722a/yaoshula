@@ -11,7 +11,7 @@
     
     <context:property-placeholder location="classpath:db.properties"/>
     
-    <context:component-scan base-package="_01_register, _02_login, _03_personPage, _04_order, _05_product, _06_article" />
+    <context:component-scan base-package="_01_register, _02_login, _03_personPage, _04_order, _05_product, _06_article, _07_letter" />
    
     <bean id="dataSource" destroy-method='close' scope="prototype"
       class="com.mchange.v2.c3p0.ComboPooledDataSource" >
@@ -27,7 +27,7 @@
         class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         							<!-- 對應 id="dataSource"-->
         <property name="dataSource" ref='dataSource' />
-        <property name="packagesToScan" value='_01_register.model, _04_order.model, _05_product.model, _06_article.model' />
+        <property name="packagesToScan" value='_01_register.model, _04_order.model, _05_product.model, _06_article.model, _07_letter.model' />
         <property name="configLocation"
             value='classpath:hibernate.cfg.xml' />
     </bean>

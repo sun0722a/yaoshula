@@ -31,6 +31,7 @@ import _06_article.model.CommentBean;
 
 /* 未完成: data未製作完成(only 測試版) */
 /* member: likeArticles、authToken、checkAuthSuccess設定? */
+//					這個預設我是給會員email加密          這個我給y(代表認證成功)    
 
 public class EDMTableResetHibernate {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
@@ -366,9 +367,11 @@ public class EDMTableResetHibernate {
 					Timestamp createTime = Timestamp.valueOf(token[10].trim());
 					String status = token[11];
 					String permission = token[12];
-
+					String authToken = token[13];
+					authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(email));
+					String checkAuthSuccess = token[14];
 					MemberBean memberBean = new MemberBean(null, memberId, password, gender, birthday, email, phone,
-							city, area, address, fileName, picture, createTime, status, permission, null, null, null);
+							city, area, address, fileName, picture, createTime, status, permission, null, authToken, checkAuthSuccess);
 
 					session.save(memberBean);
 					session.flush();

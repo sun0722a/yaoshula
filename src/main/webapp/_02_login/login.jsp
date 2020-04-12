@@ -135,7 +135,7 @@
                     <a class="small" href='<c:url value="/_02_login/enterEmail.jsp"  />' >忘記密碼了？幫你找找</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="..">還沒有帳號？前往註冊</a>
+                    <a class="small" href='<c:url value="/_01_register/register.jsp"  />'>還沒有帳號？前往註冊</a>
                   </div>
                   </form>
                 </div>

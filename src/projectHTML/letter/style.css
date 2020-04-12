@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap');
+
+
+.content{
+    height: 800px;
+}
+
+.heaven{
+    background: #fdc822;
+    height: 100%;
+    border-right: 1px solid black;
+}
+
+.evil{
+    background: #012640;
+    height: 100%;
+    border: 1px solid black;
+}
+
+#send{
+    font-size: large;
+    font-family: 'Noto Sans TC', sans-serif;
+
+}
+
+#reply{
+    font-size: large;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: aliceblue;
+    
+}
+
+#buttonSend{
+    margin-top: 20%;
+    
+}
+
+#buttonReply{
+    margin-top: 20%;
+   
+}
