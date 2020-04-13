@@ -46,7 +46,7 @@
 <body>
     <div class="resetBox">
         <div>請重設密碼，重設完需要重新登入</div>
-        <form action="<c:url value='ChangePswdServlet'  />" method="POST">
+        <form action="<c:url value='/changepswd'  />" method="POST">
             <div class="form-group">
               <input type="password" name="password" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
             </div>

@@ -116,7 +116,12 @@ public class LoginServlet extends HttpServlet {
 		try {
 			mb = memberService.checkIdPassword(memberId, password);
 			if (mb != null) {
-				session.setAttribute("LoginOK", mb);
+					if(mb.getCheckAuthSuccess().equals("n")) {
+						errorMsgMap.put("memberNotAuthError", "會員尚未驗證成功!請先透過email去認證!");
+						session.setAttribute("LoginOK", mb);
+					}else {
+						session.setAttribute("LoginOK", mb);
+				}
 			} else {
 				errorMsgMap.put("LoginError", "帳號或密碼錯誤唷");
 			}
