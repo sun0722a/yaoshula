@@ -47,6 +47,10 @@
 		<span class="option"> <a
 			href="<c:url value='/order/showHistoryOrder' />">歷史訂單</a>
 		</span>
+		<span class="option"> <a
+			href="<c:url value='/_07_letter/driftLetter.jsp' />">漂流信</a>
+		</span>
+		
 	</div>
 	<div class="main-menu">
 		<div class="menu">

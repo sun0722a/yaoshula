@@ -26,27 +26,31 @@ public class LetterBean implements Serializable{
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "native")
 	private Integer letterNo;
-	private String 	letterName;
-	private String 	letterAuthor;
+	private String 	letterTitle;
+	private String 	letterWriter;
 	private Timestamp sendTime;
 	private Clob letterContent;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "FK_LetterCategory_CategoryId")
-	private ArticleCategoryBean categoryName;
+	private String letterCategory;
+	private String letterReplier;
+	private Clob ReplyContent;
 	private String status;
+	private String feedBack;
 	
 	
 	
-	public LetterBean(Integer letterNo, String letterName, String letterAuthor, Timestamp sendTime, Clob letterContent,
-			ArticleCategoryBean categoryName, String status) {
+	public LetterBean(Integer letterNo, String letterTitle, String letterWriter, Timestamp sendTime, Clob letterContent,
+			String letterCategory, String letterReplier, Clob replyContent, String status, String feedBack) {
 		super();
 		this.letterNo = letterNo;
-		this.letterName = letterName;
-		this.letterAuthor = letterAuthor;
+		this.letterTitle = letterTitle;
+		this.letterWriter = letterWriter;
 		this.sendTime = sendTime;
 		this.letterContent = letterContent;
-		this.categoryName = categoryName;
+		this.letterCategory = letterCategory;
+		this.letterReplier = letterReplier;
+		ReplyContent = replyContent;
 		this.status = status;
+		this.feedBack = feedBack;
 	}
 	public Integer getLetterNo() {
 		return letterNo;
@@ -54,17 +58,17 @@ public class LetterBean implements Serializable{
 	public void setLetterNo(Integer letterNo) {
 		this.letterNo = letterNo;
 	}
-	public String getLetterName() {
-		return letterName;
+	public String getLetterTitle() {
+		return letterTitle;
 	}
-	public void setLetterName(String letterName) {
-		this.letterName = letterName;
+	public void setLetterTitle(String letterTitle) {
+		this.letterTitle = letterTitle;
 	}
-	public String getLetterAuthor() {
-		return letterAuthor;
+	public String getLetterWriter() {
+		return letterWriter;
 	}
-	public void setLetterAuthor(String letterAuthor) {
-		this.letterAuthor = letterAuthor;
+	public void setLetterWriter(String letterWriter) {
+		this.letterWriter = letterWriter;
 	}
 	public Timestamp getSendTime() {
 		return sendTime;
@@ -78,11 +82,23 @@ public class LetterBean implements Serializable{
 	public void setLetterContent(Clob letterContent) {
 		this.letterContent = letterContent;
 	}
-	public ArticleCategoryBean getCategoryName() {
-		return categoryName;
+	public String getLetterCategory() {
+		return letterCategory;
 	}
-	public void setCategoryName(ArticleCategoryBean categoryName) {
-		this.categoryName = categoryName;
+	public void setLetterCategory(String letterCategory) {
+		this.letterCategory = letterCategory;
+	}
+	public String getLetterReplier() {
+		return letterReplier;
+	}
+	public void setLetterReplier(String letterReplier) {
+		this.letterReplier = letterReplier;
+	}
+	public Clob getReplyContent() {
+		return ReplyContent;
+	}
+	public void setReplyContent(Clob replyContent) {
+		ReplyContent = replyContent;
 	}
 	public String getStatus() {
 		return status;
@@ -90,6 +106,15 @@ public class LetterBean implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getFeedBack() {
+		return feedBack;
+	}
+	public void setFeedBack(String feedBack) {
+		this.feedBack = feedBack;
+	}
+	
+	
+	
 	
 	
 	
