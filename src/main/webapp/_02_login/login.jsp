@@ -22,11 +22,12 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </head>
 <script type="text/javascript">
-	$(document).ready(function(){
-		
+	$(document).ready(function() {
+
 		$('.toast').toast('show')
 	})
 </script>
@@ -37,7 +38,7 @@
 		<c:set var="msg"
 			value="<font color='red'>${sessionScope.timeOut}</font>" />
 	</c:if>
-	
+
 	<!-- ==============Header =================-->
 	<div id="header">
 		<nav class="navbar navbar-expand-lg navbar-light bg-danger">
@@ -113,30 +114,31 @@
 										<h1 class="h4 text-gray-900 mb-4">歡迎回來，要抒啦！</h1>
 									</div>
 									<form class="box" action="" method="post" name="LoginForm">
-									<c:if test="${! empty ErrorMsgKey.memberNotAuthError}">
-		<div aria-live="polite" aria-atomic="true"
-			class="d-flex justify-content-center align-items-center w-5"
-			style="min-height: 200px;">
+										<c:if test="${! empty ErrorMsgKey.memberNotAuthError}">
+											<div aria-live="polite" aria-atomic="true"
+												class="d-flex justify-content-center align-items-center w-5"
+												style="min-height: 200px;">
 
-			<!-- Then put toasts within -->
-			<div class="toast w-75" role="alert" aria-live="assertive"
-				aria-atomic="true" data-autohide="false">
-				<div class="toast-header">
-					<i class="fas fa-exclamation-triangle"></i> <strong
-						class="mr-auto">Warning</strong>
-					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="toast-body" style="font-size: large;">請先完成Email認證
-					<a href="<c:url value='/_02_login/enterEmailForAuth.jsp' />">點此進入</a>
-				</div>
-			</div>
-		</div>
+												<!-- Then put toasts within -->
+												<div class="toast w-75" role="alert" aria-live="assertive"
+													aria-atomic="true" data-autohide="false">
+													<div class="toast-header">
+														<i class="fas fa-exclamation-triangle"></i> <strong
+															class="mr-auto">Warning</strong>
+														<button type="button" class="ml-2 mb-1 close"
+															data-dismiss="toast" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body" style="font-size: large;">
+														請先完成Email認證 <a
+															href="<c:url value='/_02_login/enterEmail.jsp' />">點此進入</a>
+													</div>
+												</div>
+											</div>
 
-	</c:if>
-	
+										</c:if>
+
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 												name="memberId" placeholder="輸入您的帳號"
