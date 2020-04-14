@@ -122,6 +122,30 @@ public class ArticleServiceImpl implements ArticleService {
 		return n;
 	}
 
+	@Transactional
+	@Override
+	public Map<Integer, ArticleBean> getReportArticles(String searchStr) {
+		Map<Integer, ArticleBean> map = null;
+		map = dao.getReportArticles(searchStr);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<Integer, CommentBean> getReportComments(String searchStr) {
+		Map<Integer, CommentBean> map = null;
+		map = dao.getReportComments(searchStr);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Integer getReportItemCount(String cmd, Integer id, String item) {
+		int n = 0;
+		n = dao.getReportItemCount(cmd, id, item);
+		return n;
+	}
+
 //	@Override
 //	public List<String> getCategory() {
 //		Session session = factory.getCurrentSession();

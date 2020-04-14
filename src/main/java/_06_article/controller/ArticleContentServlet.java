@@ -3,6 +3,7 @@ package _06_article.controller;
 import java.io.IOException;
 import java.sql.Clob;
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -57,7 +58,15 @@ public class ArticleContentServlet extends HttpServlet {
 		String content = "";
 		Clob clob = null;
 		if (ab != null) {
-			Set<CommentBean> comments = ab.getArticleComments();
+			// 篩選未被刪除的留言
+			Set<CommentBean> allComments = ab.getArticleComments();
+			Set<CommentBean> comments = new LinkedHashSet<>();
+			for (CommentBean bean : allComments) {
+				if (bean.getStatus().equals("正常")) {
+					comments.add(bean);
+				}
+			}
+			// 將clob轉為字串
 			try {
 				clob = ab.getContent();
 				if (clob != null) {

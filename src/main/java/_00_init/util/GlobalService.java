@@ -35,16 +35,16 @@ public class GlobalService {
 	public static final int RECORDS_PER_FAMOUS = 6;
 	public static final String[] PRODUCT_ARRANGE = { "time", "popular", "price" };
 	public static final String[] ARTICLE_ARRANGE = { "popular", "time" };
+	public static final String[] REPORT_ITEM = { "惡意洗版", "惡意攻擊他人", "包含色情、血腥等，令人不舒服之內容", "包含廣告、商業宣傳之內容", "與本板主題無關" };
 	public static final String SYSTEM_NAME = "要抒拉";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
 
 	public static final String KEY = "KittySnoopyGarfieldMicky"; // 16, 24, 32
 	public static final int ORDER_AMOUNT_LIMIT = 10000;
 	public static final String NOREPLY_EMAIL = "speakitup002@gmail.com";
-	public static final String DOMAIN_PATTERN= "http://localhost:8080/yaoshula";
+	public static final String DOMAIN_PATTERN = "http://localhost:8080/yaoshula";
 	public static final String NOREPLY_EMAIL_PASSWORD = "Do!ng123";
-	
-	
+
 	public String getSystemName() { // systemName ${SYSTEM.systemName}
 		return SYSTEM_NAME;
 	}

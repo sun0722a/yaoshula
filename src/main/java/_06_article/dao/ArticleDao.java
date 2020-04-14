@@ -35,6 +35,12 @@ public interface ArticleDao {
 	Set<String> getCategorys(String categoryTitle);
 
 	Integer likeArticle(ArticleBean ab, MemberBean mb);
+	
+	Map<Integer, ArticleBean> getReportArticles(String searchStr);
+	
+	Map<Integer, CommentBean> getReportComments(String searchStr);
+	
+	Integer getReportItemCount(String cmd, Integer id, String item);
 
 //	List<String> getCategory();
 
