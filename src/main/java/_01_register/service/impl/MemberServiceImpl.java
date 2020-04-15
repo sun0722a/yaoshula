@@ -8,6 +8,7 @@ import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 
+@Transactional
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -17,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
 	public MemberServiceImpl() {
 	}
 
-	@Transactional
+	
 	@Override
 	public int saveMember(MemberBean mb) {
 		int count = 0;
@@ -26,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
 		return count;
 	}
 
-	@Transactional
+	
 	@Override
 	public boolean idExists(String id) {
 		boolean result;
@@ -34,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	@Transactional
+	
 	@Override
 	public boolean emailExists(String email) {
 		boolean result;
@@ -43,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-	@Transactional
+	
 	@Override
 	public int updateMember(MemberBean mb) {
 		int count = 0;
@@ -52,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 		return count;
 	}
 
-	@Transactional
+	
 	@Override
 	public MemberBean checkIdPassword(String memberId, String password) {
 		MemberBean mb = null;
@@ -60,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
 		return mb;
 	}
 
-	@Transactional
+	
 	@Override
 	public MemberBean getMember(int id) {
 		MemberBean mb = null;
@@ -68,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
 		return mb;
 	}
 	
-	@Transactional
+	
 	@Override
 	public MemberBean getEmailValid(String emailCode) {
 		MemberBean mb = null;
@@ -76,12 +77,39 @@ public class MemberServiceImpl implements MemberService {
 		return mb;
 	}
 
-	@Transactional
+	
 	@Override
 	public int updateMemberPassword(String memberId, String passwordNew) {
 		int count = 0;
 		dao.updateMemberPassword(memberId,passwordNew);
 		count++;
 		return count;
+	}
+	
+	@Override
+	public void updateSendDate(String memberId, String sendDate) {
+		dao.updateSendDate(memberId, sendDate);
+		
+	}
+	
+	@Override
+	public void updateReplyDate(String memberId, String replyDate) {
+		dao.updateReplyDate(memberId, replyDate);
+	}
+
+
+	@Override
+	public boolean checkSendable(String memberId, String today) {
+		boolean isSendOK = true;
+		isSendOK = dao.checkSendable(memberId, today);
+		return isSendOK;
+	}
+
+
+	@Override
+	public boolean checkReplyable(String memberId, String today) {
+		boolean isReplyOK = true;
+		isReplyOK = dao.checkReplyable(memberId, today);
+		return isReplyOK;
 	}
 }

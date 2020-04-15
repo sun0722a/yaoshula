@@ -8,9 +8,11 @@
 <title>要抒啦--首頁</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/angel.css" />
-
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
+
 <body>
+	
 	<div class="top">
 		<div class="logo"></div>
 		<span class="option"> <a
@@ -18,7 +20,7 @@
 		</span> 
 		<span class="option"> 
 			<c:choose>
-			<c:when test="${ ! empty LoginOK && LoginOK.checkAuthSuccess == 'y' }">
+			<c:when test="${ ! empty LoginOK || LoginOK.checkAuthSuccess == 'y' }">
 			   <a href="<c:url value='/_02_login/logout.jsp' />">
   				登出 <i class="fas fa-sign-out-alt"></i>
 	           </a>

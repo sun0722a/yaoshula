@@ -71,11 +71,14 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		Session session = factory.getCurrentSession();
 		String hql0 = "UPDATE MemberBean m SET m.email = :email, m.phone = :phone, m.city = :city, "
 				+ "m.area = :area, m.address = :address, m.fileName = :fileName, "
-				+ "m.picture = :picture WHERE m.id = :id";
+				+ "m.picture = :picture ,m.lastSendDate = :sendDate,"
+				+ "m.lastReplyDate = :replyDate  WHERE m.id = :id";
 		session.createQuery(hql0).setParameter("email", mb.getEmail()).setParameter("phone", mb.getPhone())
 				.setParameter("city", mb.getCity()).setParameter("area", mb.getArea())
 				.setParameter("address", mb.getAddress()).setParameter("fileName", mb.getFileName())
-				.setParameter("picture", mb.getPicture()).setParameter("id", mb.getId()).executeUpdate();
+				.setParameter("picture", mb.getPicture()).setParameter("id", mb.getId())
+				.setParameter("sendDate", mb.getLastSendDate()).setParameter("replyDate", mb.getLastReplyDate())
+				.executeUpdate();
 		n++;
 		return n;
 	}
@@ -130,6 +133,50 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		session.createQuery(hql).setParameter("memberId", memberId).setParameter("password", passwordNew).executeUpdate();
 		n++;
 		return n;
+	}
+
+	@Override
+	public void updateSendDate(String memberId, String sendDate) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean m SET m.lastSendDate = :sendDate WHERE m.memberId = :memberId";
+		session.createQuery(hql).setParameter("sendDate", sendDate).setParameter("memberId", memberId).executeUpdate();
+	}
+
+	@Override
+	public void updateReplyDate(String memberId, String replyDate) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean m SET m.lastReplyDate = :replyDate WHERE m.memberId = :memberId";
+		session.createQuery(hql).setParameter("replyDate", replyDate).setParameter("memberId", memberId).executeUpdate();
+		
+	}
+
+	@Override
+	public boolean checkSendable(String memberId,  String today) {
+		boolean isSendOK = true;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastSendDate = :lastSendDate";
+		try {
+			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastSendDate", today).getResultList();
+			isSendOK = false;
+		} catch (NoResultException ex) {
+			isSendOK = true;
+		}
+		return isSendOK;
+	}
+
+	@Override
+	public boolean checkReplyable(String memberId, String today) {
+		boolean isReplyOK = true;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastReplyDate = :lastReplyDate";
+		try {
+			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastReplyDate", today).getResultList();
+			isReplyOK = false;
+		} catch (NoResultException ex) {
+			isReplyOK = true;
+		}
+		return isReplyOK;
+		
 	}
 
 }

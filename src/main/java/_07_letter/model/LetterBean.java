@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.sql.Clob;
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import _06_article.model.ArticleCategoryBean;
+
 
 
 @Entity
@@ -25,7 +24,7 @@ public class LetterBean implements Serializable{
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "native")
-	private Integer letterNo;
+	private Integer letterId;
 	private String 	letterTitle;
 	private String 	letterWriter;
 	private Timestamp sendTime;
@@ -37,26 +36,53 @@ public class LetterBean implements Serializable{
 	private String feedBack;
 	
 	
-	
-	public LetterBean(Integer letterNo, String letterTitle, String letterWriter, Timestamp sendTime, Clob letterContent,
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Timestamp sendTime, Clob letterContent,
 			String letterCategory, String letterReplier, Clob replyContent, String status, String feedBack) {
 		super();
-		this.letterNo = letterNo;
+		this.letterId = letterId;
 		this.letterTitle = letterTitle;
 		this.letterWriter = letterWriter;
 		this.sendTime = sendTime;
 		this.letterContent = letterContent;
 		this.letterCategory = letterCategory;
 		this.letterReplier = letterReplier;
-		ReplyContent = replyContent;
+		this.ReplyContent = replyContent;
 		this.status = status;
 		this.feedBack = feedBack;
 	}
-	public Integer getLetterNo() {
-		return letterNo;
+	
+	
+	
+
+
+	
+
+	public LetterBean(Integer letterId,String letterReplier, Clob replyContent, String status) {
+		super();
+		this.letterId = letterId;
+		this.letterReplier = letterReplier;
+		this.ReplyContent = replyContent;
+		this.status = status;
 	}
-	public void setLetterNo(Integer letterNo) {
-		this.letterNo = letterNo;
+
+
+
+
+
+
+
+	public LetterBean() {
+		
+	}
+
+
+
+
+	public Integer getLetterId() {
+		return letterId;
+	}
+	public void setLetterId(Integer letterId) {
+		this.letterId = letterId;
 	}
 	public String getLetterTitle() {
 		return letterTitle;
@@ -112,7 +138,6 @@ public class LetterBean implements Serializable{
 	public void setFeedBack(String feedBack) {
 		this.feedBack = feedBack;
 	}
-	
 	
 	
 	

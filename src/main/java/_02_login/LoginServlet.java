@@ -118,6 +118,7 @@ public class LoginServlet extends HttpServlet {
 			if (mb != null) {
 					if(mb.getCheckAuthSuccess().equals("n")) {
 						errorMsgMap.put("memberNotAuthError", "會員尚未驗證成功!請先透過email去認證!");
+						//先暫時這樣 如果會員認證欄位是N 一樣先給LoginOK 只是要完成認證
 						session.setAttribute("LoginOK", mb);
 					}else {
 						session.setAttribute("LoginOK", mb);
