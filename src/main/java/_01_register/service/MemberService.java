@@ -19,9 +19,6 @@ public interface MemberService {
 	public MemberBean checkIdPassword(String memberId, String password);
 
 	public MemberBean getEmailValid(String emailCode);
-<<<<<<< HEAD
-	
-	public int updateMemberPassword(String memberId, String  passwordNew);
 	
 	public void updateSendDate(String memberId,String sendDate);
 	
@@ -30,10 +27,10 @@ public interface MemberService {
 	public boolean checkSendable(String memberId,String today);
 	
 	public boolean checkReplyable(String memberId,String today);
-=======
+
 
 	public int updateMemberPassword(String memberId, String passwordNew);
 
 	public MemberBean getMember(int id);
->>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
+
 }

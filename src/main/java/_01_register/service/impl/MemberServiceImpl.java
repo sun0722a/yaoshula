@@ -73,17 +73,6 @@ public class MemberServiceImpl implements MemberService {
 
 	
 	@Override
-<<<<<<< HEAD
-	public MemberBean getMember(int id) {
-		MemberBean mb = null;
-		mb = dao.getMember(id);
-		return mb;
-	}
-	
-	
-	@Override
-=======
->>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
 	public MemberBean getEmailValid(String emailCode) {
 		MemberBean mb = null;
 		mb = dao.getEmailValid(emailCode);
@@ -98,8 +87,7 @@ public class MemberServiceImpl implements MemberService {
 		count++;
 		return count;
 	}
-<<<<<<< HEAD
-	
+
 	@Override
 	public void updateSendDate(String memberId, String sendDate) {
 		dao.updateSendDate(memberId, sendDate);
@@ -126,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
 		isReplyOK = dao.checkReplyable(memberId, today);
 		return isReplyOK;
 	}
-=======
+
 
 	@Transactional
 	@Override
@@ -136,5 +124,5 @@ public class MemberServiceImpl implements MemberService {
 		return mb;
 	}
 
->>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
+
 }

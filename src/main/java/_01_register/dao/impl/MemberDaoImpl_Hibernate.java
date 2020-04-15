@@ -155,7 +155,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		return n;
 	}
 
-<<<<<<< HEAD
+
 	@Override
 	public void updateSendDate(String memberId, String sendDate) {
 		Session session = factory.getCurrentSession();
@@ -197,8 +197,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 			isReplyOK = true;
 		}
 		return isReplyOK;
-		
-=======
+	}
 	// 取得會員資料
 	@Override
 	public MemberBean getMember(int id) {
@@ -206,7 +205,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		MemberBean mb = null;
 		mb = session.get(MemberBean.class, id);
 		return mb;
->>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
+
 	}
 
 }
