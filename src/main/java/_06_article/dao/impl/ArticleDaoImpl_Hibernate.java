@@ -62,6 +62,22 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		session.save(rcb);
 	}
 
+	// 刪除檢舉文章資料
+	@Override
+	public void deleteReportArticle(Integer articleId) {
+		String hql = "DELETE rab FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("articleId", articleId).executeUpdate();
+	}
+
+	// 刪除檢舉留言資料
+	@Override
+	public void deleteReportComment(Integer commentId) {
+		String hql = "DELETE rcb FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("commentId", commentId).executeUpdate();
+	}
+
 	// 計算所有商品總共有幾頁
 //	@Override
 //	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {

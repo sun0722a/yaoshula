@@ -20,6 +20,10 @@ public interface ArticleService {
 
 	void insertReportComment(ReportCommentBean rcb);
 
+	void deleteReportArticle(Integer articleId);
+
+	void deleteReportComment(Integer commentId);
+
 //	int getTotalPages(String searchStr, String categoryTitle, String categoryName);
 
 //	long getRecordCounts();
@@ -39,7 +43,7 @@ public interface ArticleService {
 	Map<Integer, ArticleBean> getReportArticles(String searchStr);
 
 	Map<Integer, CommentBean> getReportComments(String searchStr);
-	
+
 	Integer getReportItemCount(String cmd, Integer id, String item);
 
 //	List<String> getCategory();
