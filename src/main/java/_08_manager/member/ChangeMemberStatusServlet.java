@@ -1,8 +1,6 @@
-package _08_manager.controller;
+package _08_manager.member;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,15 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _06_article.model.ArticleBean;
-import _06_article.model.CommentBean;
-import _06_article.service.ArticleService;
+import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
 
-/* 是否可直接使用insert方法? */
-
-// 刪除被檢舉文章or留言
-@WebServlet("/manager/deleteArticle")
-public class DeleteArticleServlet extends HttpServlet {
+// 封鎖帳號or解除封鎖
+@WebServlet("/ChangeMemberStatusServlet")
+public class ChangeMemberStatusServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,31 +35,31 @@ public class DeleteArticleServlet extends HttpServlet {
 			return;
 		}
 
-		String cmd = request.getParameter("cmd");
+		String memberLock = request.getParameter("memberLock");
 		String idStr = request.getParameter("id");
+		String reportTimes = request.getParameter("reportTimes");
 		int id = 0;
 		try {
 			id = Integer.parseInt(idStr);
 		} catch (NumberFormatException e) {
 			;
 		}
-		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		ArticleService articleService = ctx.getBean(ArticleService.class);
 
-		// 更新狀態
-		if (cmd.equals("article")) {
-			ArticleBean ab = articleService.getArticle(id);
-			ab.setStatus("刪除");
-			articleService.insertArticle(ab);
-		} else if (cmd.equals("comment")) {
-			CommentBean cb = articleService.getComment(id);
-			cb.setStatus("刪除");
-			articleService.insertComment(cb);
+		WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		MemberService memberService = ctx.getBean(MemberService.class);
+		MemberBean mb = memberService.getMember(id);
+
+		if (memberLock.equals("封鎖帳號")) {
+			mb.setStatus("封鎖");
+			memberService.saveMember(mb);
+		} else if (memberLock.equals("解除封鎖")) {
+			mb.setStatus("正常");
+			memberService.saveMember(mb);
 		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/manager/showReports");
-		rd.forward(request, response);
+
+		response.sendRedirect(getServletContext().getContextPath() + "/manager/showMemberInfo?id=" + id
+				+ "&reportTimes=" + reportTimes);
 		return;
-		
 	}
+
 }

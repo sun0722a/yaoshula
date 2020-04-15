@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="w-75 my-5 mx-auto">
-		<form action="<c:url value='/manager/showReports'/>">
+		<form action="<c:url value='/manager/showMembers'/>">
 			<div class="input-group my-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text"><img
@@ -35,31 +35,31 @@
 			style="border: 1px solid rgba(0, 0, 0, 0.575);">
 			<div class="row">
 				<div
-					class="col-2 d-flex justify-content-center align-items-center my-2">
+					class="col-4 d-flex justify-content-center align-items-center my-2">
 					帳號</div>
 				<div
-					class="col-3 d-flex justify-content-center align-items-center my-2">權限</div>
+					class="col-2 d-flex justify-content-center align-items-center my-2">權限</div>
 				<div
-					class="col-2 d-flex justify-content-center align-items-center my-2">刪除文章/留言</div>
+					class="col-3 d-flex justify-content-center align-items-center my-2">刪除文章/留言</div>
 				<div
 					class="col-3 d-flex justify-content-center align-items-center my-2">
 					帳號狀態</div>
 			</div>
-			<c:forEach var="entry" items="${}">
-				<a href="<c:url value=''/>" style="text-decoration: none; color: black;">
+			<c:forEach var="entry" items="${member_map}">
+				<a href="<c:url value='/manager/showMemberInfo?id=${entry.key.id}&reportTimes=${entry.value}'/>" style="text-decoration: none; color: black;">
 				<div class="row">
 					<div
-						class="col-3 d-flex justify-content-center align-items-center my-2">
-						aa</div>
+						class="col-4 d-flex justify-content-center align-items-center my-2">
+						${entry.key.memberId}</div>
 					<div
 						class="col-2 d-flex justify-content-center align-items-center my-2">
-						一般用戶</div>
+						${entry.key.permission}</div>
 					<div
 						class="col-3 d-flex justify-content-center align-items-center my-2">
-						5</div>
+						${entry.value}</div>
 					<div
-						class="col-2 d-flex justify-content-center align-items-center my-2">
-						正常</div>
+						class="col-3 d-flex justify-content-center align-items-center my-2">
+						${entry.key.status}</div>
 				</div>
 			</a>
 			</c:forEach>

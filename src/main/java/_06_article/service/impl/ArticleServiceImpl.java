@@ -158,6 +158,38 @@ public class ArticleServiceImpl implements ArticleService {
 		return n;
 	}
 
+	@Transactional
+	@Override
+	public Map<ArticleBean, Integer> getPersonArticle(Integer id) {
+		Map<ArticleBean, Integer> map = null;
+		map = dao.getPersonArticle(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<CommentBean, Integer> getPersonComment(Integer id) {
+		Map<CommentBean, Integer> map = null;
+		map = dao.getPersonComment(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<ArticleBean, Integer> getPersonDeleteArticle(Integer id) {
+		Map<ArticleBean, Integer> map = null;
+		map = dao.getPersonDeleteArticle(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<CommentBean, Integer> getPersonDeleteComment(Integer id) {
+		Map<CommentBean, Integer> map = null;
+		map = dao.getPersonDeleteComment(id);
+		return map;
+	}
+
 //	@Override
 //	public List<String> getCategory() {
 //		Session session = factory.getCurrentSession();

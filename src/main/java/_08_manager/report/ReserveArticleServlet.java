@@ -1,4 +1,4 @@
-package _08_manager.controller;
+package _08_manager.report;
 
 import java.io.IOException;
 

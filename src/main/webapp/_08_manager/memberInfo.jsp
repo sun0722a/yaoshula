@@ -12,38 +12,60 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
+<style>
+.scroll::-webkit-scrollbar {
+	display: none;
+}
+</style>
 </head>
 <body>
 	<div class="w-75 border my-5 mx-auto p-4">
 		<div class="my-4 border border-dark p-4">
 			<div class="d-flex">
 				<img
-					src="${pageContext.request.contextPath}/init/getUserImage?id=${article.authorId}"
+					src="${pageContext.request.contextPath}/init/getUserImage?id=${mb.id}"
 					style="max-width: 200px; max-height: 100px;" />
 				<div class="ml-4 my-auto" style="height: 100px;">
-					<div>帳號 性別</div>
-					<div>一般用戶</div>
-					<div>刪除文章/留言：5</div>
+					<div>${mb.memberId}${mb.gender}</div>
+					<div>${mb.permission}</div>
+					<div>刪除文章/留言：${reportTimes}</div>
 				</div>
 				<div class="ml-5">
-					<a href=""><input type="button" value="封鎖帳號"></a> <a
-						href=""><input type="button" value="解除封鎖"></a>
+					<c:choose>
+						<c:when test="${mb.status=='正常'}">
+							<a
+								href="<c:url value='/ChangeMemberStatusServlet?memberLock=封鎖帳號&id=${id}&reportTimes=${reportTimes}'/>"><input
+								type="button" value="封鎖帳號"></a>
+						</c:when>
+						<c:otherwise>
+							<a
+								href="<c:url value='/ChangeMemberStatusServlet?memberLock=解除封鎖&id=${id}&reportTimes=${reportTimes}'/>"><input
+								type="button" value="解除封鎖"></a>
+						</c:otherwise>
+					</c:choose>
+
 				</div>
 			</div>
-			<div>電話：</div>
-			<div>地址：</div>
-			<div>E-mail：</div>
+			<div>電話：${mb.phone}</div>
+			<div>
+				地址：<span>${mb.city}</span><span>${mb.area}</span><span>${mb.address}</span>
+			</div>
+			<div>E-mail：${mb.email}</div>
 		</div>
 		<!-- 標頭============================= -->
 		<div class="my-4 border border-dark p-4">
 			<ul class="nav nav-tabs nav-justified">
-				<li class="nav-item"><a class="nav-link" href=""
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value='/manager/showMemberInfo?cmd=article&id=${id}&reportTimes=${reportTimes}'/>"
 					style="text-decoration: none; color: black;">文章</a></li>
-				<li class="nav-item"><a class="nav-link" href=""
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value='/manager/showMemberInfo?cmd=comment&id=${id}&reportTimes=${reportTimes}'/>"
 					style="text-decoration: none; color: black;">留言</a></li>
-				<li class="nav-item"><a class="nav-link" href=""
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value='/manager/showMemberInfo?cmd=deleteArticle&id=${id}&reportTimes=${reportTimes}'/>"
 					style="text-decoration: none; color: black;">被刪除文章</a></li>
-				<li class="nav-item"><a class="nav-link" href=""
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value='/manager/showMemberInfo?cmd=deleteComment&id=${id}&reportTimes=${reportTimes}'/>"
 					style="text-decoration: none; color: black;">被刪除留言</a></li>
 			</ul>
 
@@ -65,25 +87,55 @@
 			</div>
 
 			<div class="scroll"
-				style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
-				<c:forEach var="entry" items="${}">
-					<a href="" style="text-decoration: none; color: black;">
-						<div class="row">
-							<div
-								class="col-2 d-flex justify-content-center align-items-center my-2">
-								1</div>
-							<div
-								class="col-4 d-flex justify-content-center align-items-center my-2">
-								2020-03-27</div>
-							<div
-								class="col-4 d-flex justify-content-center align-items-center my-2">
-								人生好難</div>
-							<div
-								class="col-2 d-flex justify-content-center align-items-center my-2">
-								5</div>
-						</div>
-					</a>
-				</c:forEach>
+				style="height: 300px; overflow-y: scroll;">
+				<c:choose>
+					<c:when test="${not empty article_map}">
+						<c:forEach var="entry" items="${article_map}">
+							<a href="<c:url value='/manager/showReportInfo?cmd=article&id=${entry.key.articleId}'/>" style="text-decoration: none; color: black;">
+								<div class="row">
+									<div
+										class="col-2 d-flex justify-content-center align-items-center my-2">
+										${entry.key.articleId}</div>
+									<div
+										class="col-4 d-flex justify-content-center align-items-center my-2">
+										<fmt:formatDate value="${entry.key.publishTime}"
+											pattern="yyyy-MM-dd HH:mm" />
+									</div>
+									<div
+										class="col-4 d-flex justify-content-center align-items-center my-2">
+										${entry.key.title}</div>
+									<div
+										class="col-2 d-flex justify-content-center align-items-center my-2">
+										${entry.value}</div>
+								</div>
+							</a>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="entry" items="${comment_map}">
+							<a href="<c:url value='/manager/showReportInfo?cmd=comment&id=${entry.key.commentId}'/>" style="text-decoration: none; color: black;">
+								<div class="row">
+									<div
+										class="col-2 d-flex justify-content-center align-items-center my-2">
+										${entry.key.commentId}</div>
+									<div
+										class="col-4 d-flex justify-content-center align-items-center my-2">
+										<fmt:formatDate value="${entry.key.publishTime}"
+											pattern="yyyy-MM-dd HH:mm" />
+									</div>
+									<div
+										class="col-4 d-flex justify-content-center align-items-center my-2">
+										${entry.key.content}</div>
+									<div
+										class="col-2 d-flex justify-content-center align-items-center my-2">
+										${entry.value}</div>
+								</div>
+							</a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+
+
 			</div>
 		</div>
 	</div>

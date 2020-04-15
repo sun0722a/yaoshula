@@ -1,8 +1,6 @@
-package _08_manager.controller;
+package _08_manager.report;
 
 import java.io.IOException;
-import java.sql.Clob;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,14 +13,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _00_init.util.GlobalService;
 import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
 import _06_article.service.ArticleService;
 
-// 查詢被檢舉文章or留言詳細資料
-@WebServlet("/manager/showReportInfo")
-public class ReportInfoServlet extends HttpServlet {
+/* 是否可直接使用insert方法? */
+
+// 刪除被檢舉文章or留言
+@WebServlet("/manager/deleteArticle")
+public class DeleteArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,43 +48,23 @@ public class ReportInfoServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			;
 		}
-		String[] reportItems = GlobalService.REPORT_ITEM;
-
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ArticleService articleService = ctx.getBean(ArticleService.class);
 
-		// ("item0", 5)
-		for (Integer i = 0; i < reportItems.length; i++) {
-			int count = articleService.getReportItemCount(cmd, id, reportItems[i]);
-			request.setAttribute("item" + i, count);
-		}
+		// 更新狀態
 		if (cmd.equals("article")) {
 			ArticleBean ab = articleService.getArticle(id);
-			String content = "";
-			Clob clob = null;
-			if (ab != null) {
-				try {
-					clob = ab.getContent();
-					if (clob != null) {
-						content = GlobalService.clobToString(clob);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-			request.setAttribute("article", ab);
-			request.setAttribute("content", content);
+			ab.setStatus("刪除");
+			articleService.insertArticle(ab);
 		} else if (cmd.equals("comment")) {
 			CommentBean cb = articleService.getComment(id);
-			request.setAttribute("comment", cb);
+			cb.setStatus("刪除");
+			articleService.insertComment(cb);
 		}
-		request.setAttribute("cmd", cmd);
-		request.setAttribute("id", idStr);
-
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/reportInfo.jsp");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/manager/showReports");
 		rd.forward(request, response);
 		return;
+		
 	}
-
 }
