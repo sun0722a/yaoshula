@@ -20,6 +20,10 @@ public interface ArticleService {
 
 	void insertReportComment(ReportCommentBean rcb);
 
+	void deleteReportArticle(Integer articleId);
+
+	void deleteReportComment(Integer commentId);
+
 //	int getTotalPages(String searchStr, String categoryTitle, String categoryName);
 
 //	long getRecordCounts();

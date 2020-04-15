@@ -107,7 +107,7 @@
 				</div>
 				<div
 					class="col-2 d-flex justify-content-center align-items-center my-2">
-					<a><input type="button" value="保留"></a>
+					<a href="<c:url value='/manager/reserveArticle?cmd=${cmd}&id=${id}'/>"><input type="button" value="保留"></a>
 				</div>
 			</div>
 		</div>

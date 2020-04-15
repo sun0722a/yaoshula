@@ -50,6 +50,18 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.insertReportComment(rcb);
 	}
 
+	@Transactional
+	@Override
+	public void deleteReportArticle(Integer articleId) {
+		dao.deleteReportArticle(articleId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteReportComment(Integer commentId) {
+		dao.deleteReportComment(commentId);
+	}
+
 //	@Override
 //	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
 //		Session session = factory.getCurrentSession();
