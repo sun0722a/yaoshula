@@ -50,6 +50,18 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.insertReportComment(rcb);
 	}
 
+	@Transactional
+	@Override
+	public void deleteReportArticle(Integer articleId) {
+		dao.deleteReportArticle(articleId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteReportComment(Integer commentId) {
+		dao.deleteReportComment(commentId);
+	}
+
 //	@Override
 //	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
 //		Session session = factory.getCurrentSession();
@@ -120,6 +132,62 @@ public class ArticleServiceImpl implements ArticleService {
 		int n = 0;
 		n = dao.likeArticle(ab, mb);
 		return n;
+	}
+
+	@Transactional
+	@Override
+	public Map<ArticleBean, Integer> getReportArticles(String searchStr) {
+		Map<ArticleBean, Integer> map = null;
+		map = dao.getReportArticles(searchStr);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<CommentBean, Integer> getReportComments(String searchStr) {
+		Map<CommentBean, Integer> map = null;
+		map = dao.getReportComments(searchStr);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Integer getReportItemCount(String cmd, Integer id, String item) {
+		int n = 0;
+		n = dao.getReportItemCount(cmd, id, item);
+		return n;
+	}
+
+	@Transactional
+	@Override
+	public Map<ArticleBean, Integer> getPersonArticle(Integer id) {
+		Map<ArticleBean, Integer> map = null;
+		map = dao.getPersonArticle(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<CommentBean, Integer> getPersonComment(Integer id) {
+		Map<CommentBean, Integer> map = null;
+		map = dao.getPersonComment(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<ArticleBean, Integer> getPersonDeleteArticle(Integer id) {
+		Map<ArticleBean, Integer> map = null;
+		map = dao.getPersonDeleteArticle(id);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Map<CommentBean, Integer> getPersonDeleteComment(Integer id) {
+		Map<CommentBean, Integer> map = null;
+		map = dao.getPersonDeleteComment(id);
+		return map;
 	}
 
 //	@Override

@@ -1,5 +1,7 @@
 package _01_register.service.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	@Override
+	public Map<MemberBean, Integer> getMembers(String searchStr) {
+		Map<MemberBean, Integer> map = null;
+		map = dao.getMembers(searchStr);
+		return map;
+	}
+
+	@Transactional
 	@Override
 	public boolean idExists(String id) {
 		boolean result;
@@ -63,6 +73,7 @@ public class MemberServiceImpl implements MemberService {
 
 	
 	@Override
+<<<<<<< HEAD
 	public MemberBean getMember(int id) {
 		MemberBean mb = null;
 		mb = dao.getMember(id);
@@ -71,6 +82,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	@Override
+=======
+>>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
 	public MemberBean getEmailValid(String emailCode) {
 		MemberBean mb = null;
 		mb = dao.getEmailValid(emailCode);
@@ -81,10 +94,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMemberPassword(String memberId, String passwordNew) {
 		int count = 0;
-		dao.updateMemberPassword(memberId,passwordNew);
+		dao.updateMemberPassword(memberId, passwordNew);
 		count++;
 		return count;
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public void updateSendDate(String memberId, String sendDate) {
@@ -112,4 +126,15 @@ public class MemberServiceImpl implements MemberService {
 		isReplyOK = dao.checkReplyable(memberId, today);
 		return isReplyOK;
 	}
+=======
+
+	@Transactional
+	@Override
+	public MemberBean getMember(int id) {
+		MemberBean mb = null;
+		mb = dao.getMember(id);
+		return mb;
+	}
+
+>>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
 }

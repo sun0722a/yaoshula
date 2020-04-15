@@ -1,6 +1,9 @@
 package _01_register.dao.impl;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.NoResultException;
 
@@ -29,6 +32,31 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		session.save(mb);
 		n++;
 		return n;
+	}
+
+	// 查詢全部會員
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<MemberBean, Integer> getMembers(String searchStr) {
+		Session session = factory.getCurrentSession();
+		Map<MemberBean, Integer> map = new LinkedHashMap<>();
+		List<MemberBean> list = new ArrayList<MemberBean>();
+
+		String hql1 = "FROM MemberBean mb WHERE mb.memberId LIKE :searchStr " + " OR  mb.permission LIKE :searchStr "
+				+ " OR  mb.status LIKE :searchStr ";
+		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+
+		for (MemberBean bean : list) {
+			String hql2 = "FROM ArticleBean ab WHERE ab.authorId= :authorId " + " AND ab.status= :status";
+			int count1 = session.createQuery(hql2).setParameter("authorId", bean.getId()).setParameter("status", "刪除")
+					.getResultList().size();
+			String hql3 = "FROM CommentBean cb WHERE cb.authorId= :authorId " + " AND cb.status= :status";
+			int count2 = session.createQuery(hql3).setParameter("authorId", bean.getId()).setParameter("status", "刪除")
+					.getResultList().size();
+			int totalCount = count1 + count2;
+			map.put(bean, totalCount);
+		}
+		return map;
 	}
 
 	// 判斷帳號是否已經被使用，如果是傳回true， 否則傳回false
@@ -99,42 +127,35 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		return mb;
 	}
 
-	// 取得會員資料
-	@Override
-	public MemberBean getMember(int id) {
-		Session session = factory.getCurrentSession();
-		MemberBean mb = null;
-		mb = session.get(MemberBean.class, id);
-		return mb;
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public MemberBean getEmailValid(String emailCode) {
-		
+
 		MemberBean mb = null;
 		List<MemberBean> beans = null;
 		String hql = "FROM MemberBean m WHERE m.authToken = :emailCode";
 		Session session = factory.getCurrentSession();
-		
+
 		beans = session.createQuery(hql).setParameter("emailCode", emailCode).getResultList();
-		if(beans.size() > 0) {
+		if (beans.size() > 0) {
 			mb = beans.get(0);
 		}
 		System.out.println(beans.size());
 		return mb;
 	}
-	
+
 	@Override
 	public int updateMemberPassword(String memberId, String passwordNew) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE MemberBean m SET m.password = :password WHERE m.memberId = :memberId";
-		session.createQuery(hql).setParameter("memberId", memberId).setParameter("password", passwordNew).executeUpdate();
+		session.createQuery(hql).setParameter("memberId", memberId).setParameter("password", passwordNew)
+				.executeUpdate();
 		n++;
 		return n;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public void updateSendDate(String memberId, String sendDate) {
 		Session session = factory.getCurrentSession();
@@ -177,6 +198,15 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		}
 		return isReplyOK;
 		
+=======
+	// 取得會員資料
+	@Override
+	public MemberBean getMember(int id) {
+		Session session = factory.getCurrentSession();
+		MemberBean mb = null;
+		mb = session.get(MemberBean.class, id);
+		return mb;
+>>>>>>> 701e0f4fb581c9cf3ee62d42a34147887876e6dc
 	}
 
 }
