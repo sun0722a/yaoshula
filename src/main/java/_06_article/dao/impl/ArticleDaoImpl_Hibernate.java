@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -218,36 +217,37 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	// 查詢被檢舉文章
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<Integer, ArticleBean> getReportArticles(String searchStr) {
+	public Map<ArticleBean, Integer> getReportArticles(String searchStr) {
 		Session session = factory.getCurrentSession();
-		Map<Integer, ArticleBean> map = new TreeMap<Integer, ArticleBean>();
+		Map<ArticleBean, Integer> map = new LinkedHashMap<>();
 		List<ArticleBean> list = new ArrayList<ArticleBean>();
 
-		String hql1 = "FROM ArticleBean ab WHERE ab.title LIKE :searchStr";
-		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		String hql1 = "FROM ArticleBean ab WHERE ab.title LIKE :searchStr" + " AND ab.status= :status ";
+		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").setParameter("status", "正常")
+				.getResultList();
 		for (ArticleBean bean : list) {
 			String hql2 = "FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
 			int count = session.createQuery(hql2).setParameter("articleId", bean.getArticleId()).getResultList().size();
-			map.put(count, bean);
+			map.put(bean, count);
 		}
-
 		return map;
 	}
 
 	// 查詢被檢舉留言
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<Integer, CommentBean> getReportComments(String searchStr) {
+	public Map<CommentBean, Integer> getReportComments(String searchStr) {
 		Session session = factory.getCurrentSession();
-		Map<Integer, CommentBean> map = new LinkedHashMap<Integer, CommentBean>();
+		Map<CommentBean, Integer> map = new LinkedHashMap<>();
 		List<CommentBean> list = new ArrayList<CommentBean>();
 
-		String hql1 = "FROM CommentBean cb WHERE cb.content LIKE :searchStr";
-		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		String hql1 = "FROM CommentBean cb WHERE cb.content LIKE :searchStr" + " AND cb.status= :status ";
+		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").setParameter("status", "正常")
+				.getResultList();
 		for (CommentBean bean : list) {
 			String hql2 = "FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
-			int count = session.createQuery(hql2).setParameter("articleId", bean.getCommentId()).getResultList().size();
-			map.put(count, bean);
+			int count = session.createQuery(hql2).setParameter("commentId", bean.getCommentId()).getResultList().size();
+			map.put(bean, count);
 		}
 		return map;
 	}

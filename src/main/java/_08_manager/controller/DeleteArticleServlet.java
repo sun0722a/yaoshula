@@ -2,6 +2,7 @@ package _08_manager.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +61,10 @@ public class DeleteArticleServlet extends HttpServlet {
 			cb.setStatus("刪除");
 			articleService.insertComment(cb);
 		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/manager/showReports");
+		rd.forward(request, response);
+		return;
 		
 	}
 }

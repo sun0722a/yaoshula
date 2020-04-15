@@ -124,16 +124,16 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional
 	@Override
-	public Map<Integer, ArticleBean> getReportArticles(String searchStr) {
-		Map<Integer, ArticleBean> map = null;
+	public Map<ArticleBean, Integer> getReportArticles(String searchStr) {
+		Map<ArticleBean, Integer> map = null;
 		map = dao.getReportArticles(searchStr);
 		return map;
 	}
 
 	@Transactional
 	@Override
-	public Map<Integer, CommentBean> getReportComments(String searchStr) {
-		Map<Integer, CommentBean> map = null;
+	public Map<CommentBean, Integer> getReportComments(String searchStr) {
+		Map<CommentBean, Integer> map = null;
 		map = dao.getReportComments(searchStr);
 		return map;
 	}

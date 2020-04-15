@@ -36,10 +36,10 @@ public interface ArticleService {
 
 	Integer likeArticle(ArticleBean ab, MemberBean mb);
 
-	Map<Integer, ArticleBean> getReportArticles(String searchStr);
+	Map<ArticleBean, Integer> getReportArticles(String searchStr);
 
-	Map<Integer, CommentBean> getReportComments(String searchStr);
-	
+	Map<CommentBean, Integer> getReportComments(String searchStr);
+
 	Integer getReportItemCount(String cmd, Integer id, String item);
 
 //	List<String> getCategory();

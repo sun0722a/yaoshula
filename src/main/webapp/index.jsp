@@ -50,6 +50,9 @@
 		<span class="option"> <a
 			href="<c:url value='/_07_letter/driftLetter.jsp' />">漂流信</a>
 		</span>
+		<span class="option"> <a
+			href="<c:url value='/manager/showReports' />">管理員_檢舉專區</a>
+		</span>
 		
 	</div>
 	<div class="main-menu">

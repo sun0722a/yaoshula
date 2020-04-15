@@ -54,10 +54,10 @@ public class ReportInfoServlet extends HttpServlet {
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ArticleService articleService = ctx.getBean(ArticleService.class);
 
-		// ("惡意洗版", 5)
-		for (String item : reportItems) {
-			int count = articleService.getReportItemCount(cmd, id, item);
-			request.setAttribute(item, count);
+		// ("item0", 5)
+		for (Integer i = 0; i < reportItems.length; i++) {
+			int count = articleService.getReportItemCount(cmd, id, reportItems[i]);
+			request.setAttribute("item" + i, count);
 		}
 		if (cmd.equals("article")) {
 			ArticleBean ab = articleService.getArticle(id);
@@ -80,8 +80,10 @@ public class ReportInfoServlet extends HttpServlet {
 			CommentBean cb = articleService.getComment(id);
 			request.setAttribute("comment", cb);
 		}
+		request.setAttribute("cmd", cmd);
+		request.setAttribute("id", idStr);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/historyOrder.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/reportInfo.jsp");
 		rd.forward(request, response);
 		return;
 	}
