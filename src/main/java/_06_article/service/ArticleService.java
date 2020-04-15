@@ -46,6 +46,14 @@ public interface ArticleService {
 
 	Integer getReportItemCount(String cmd, Integer id, String item);
 
+	Map<ArticleBean, Integer> getPersonArticle(Integer id);
+
+	Map<CommentBean, Integer> getPersonComment(Integer id);
+
+	Map<ArticleBean, Integer> getPersonDeleteArticle(Integer id);
+
+	Map<CommentBean, Integer> getPersonDeleteComment(Integer id);
+
 //	List<String> getCategory();
 
 //	String getCategoryTag();

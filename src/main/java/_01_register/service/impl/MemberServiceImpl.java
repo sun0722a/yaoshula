@@ -1,5 +1,7 @@
 package _01_register.service.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,14 @@ public class MemberServiceImpl implements MemberService {
 		dao.saveMember(mb);
 		count++;
 		return count;
+	}
+
+	@Transactional
+	@Override
+	public Map<MemberBean, Integer> getMembers(String searchStr) {
+		Map<MemberBean, Integer> map = null;
+		map = dao.getMembers(searchStr);
+		return map;
 	}
 
 	@Transactional
@@ -62,14 +72,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	@Override
-	public MemberBean getMember(int id) {
-		MemberBean mb = null;
-		mb = dao.getMember(id);
-		return mb;
-	}
-	
-	@Transactional
-	@Override
 	public MemberBean getEmailValid(String emailCode) {
 		MemberBean mb = null;
 		mb = dao.getEmailValid(emailCode);
@@ -80,8 +82,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMemberPassword(String memberId, String passwordNew) {
 		int count = 0;
-		dao.updateMemberPassword(memberId,passwordNew);
+		dao.updateMemberPassword(memberId, passwordNew);
 		count++;
 		return count;
 	}
+
+	@Transactional
+	@Override
+	public MemberBean getMember(int id) {
+		MemberBean mb = null;
+		mb = dao.getMember(id);
+		return mb;
+	}
+
 }
