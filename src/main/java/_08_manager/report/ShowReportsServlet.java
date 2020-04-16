@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import _06_article.model.ArticleBean;
 import _06_article.model.CommentBean;
@@ -90,7 +87,7 @@ public class ShowReportsServlet extends HttpServlet {
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("cmd", cmd);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/allReports.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/report/allReports.jsp");
 		rd.forward(request, response);
 		return;
 	}

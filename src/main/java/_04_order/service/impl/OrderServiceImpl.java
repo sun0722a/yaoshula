@@ -29,6 +29,12 @@ public class OrderServiceImpl implements OrderService {
 	public OrderServiceImpl() {
 	}
 
+	@Transactional
+	@Override
+	public void insertOrder(OrderBean ob) {
+		odao.insertOrder(ob);
+	}
+
 	// 儲存從購物車來的訂單
 	@Transactional
 	@Override
@@ -86,13 +92,13 @@ public class OrderServiceImpl implements OrderService {
 		return status;
 	}
 
-//	@Transactional
-//	@Override
-//	public List<OrderBean> getAllOrders() {
-//		List<OrderBean> list = null;
-//		list = odao.getAllOrders();
-//		return list;
-//	}
+	@Transactional
+	@Override
+	public List<OrderBean> getAllOrders(String searchStr) {
+		List<OrderBean> list = null;
+		list = odao.getAllOrders(searchStr);
+		return list;
+	}
 
 	@Override
 	public OrderBean getOrder(int orderNo) {

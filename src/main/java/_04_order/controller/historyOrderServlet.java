@@ -22,8 +22,6 @@ import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.service.OrderService;
 
-/* 用session傳?? */
-
 // 查詢歷史訂單
 @WebServlet("/order/showHistoryOrder")
 public class historyOrderServlet extends HttpServlet {
@@ -44,7 +42,7 @@ public class historyOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
 		}
-		
+
 		// 取得使用者資料(MemberBean)
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		Integer memberId = mb.getId();
@@ -55,14 +53,14 @@ public class historyOrderServlet extends HttpServlet {
 
 		// 取出訂單詳細資料(OrderItemBean)
 		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
-		for (int i = 0; i < orders.size(); i++) {
-			int orderNo = orders.get(i).getOrderNo();
-			Set<OrderItemBean> OrderItemBeans = orders.get(i).getOrderItems();
+		for (OrderBean ob : orders) {
+			int orderNo = ob.getOrderNo();
+			Set<OrderItemBean> OrderItemBeans = ob.getOrderItems();
 			orderItemGroup.put(orderNo, OrderItemBeans);
 		}
 
-		session.setAttribute("order_list", orders);
-		session.setAttribute("orderItem_map", orderItemGroup);
+		request.setAttribute("order_list", orders);
+		request.setAttribute("orderItem_map", orderItemGroup);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/_04_order/historyOrder.jsp");
 		rd.forward(request, response);
