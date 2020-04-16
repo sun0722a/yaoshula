@@ -133,7 +133,7 @@ public class MemberInfoServlet extends HttpServlet {
 		request.setAttribute("mb", mb);
 		request.setAttribute("reportTimes", reportTimes);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/memberInfo.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/member/memberInfo.jsp");
 		rd.forward(request, response);
 		return;
 	}

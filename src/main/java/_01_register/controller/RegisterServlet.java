@@ -148,7 +148,7 @@ public class RegisterServlet extends HttpServlet {
 			// 將所有會員資料封裝到MemberBean(類別的)物件
 
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "正常", "一般會員", null, authToken,checkAuthSuccess);
+					address, fileName, blob, ts, "正常", "一般會員", null, authToken,checkAuthSuccess,null,null);
 
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
@@ -174,6 +174,9 @@ public class RegisterServlet extends HttpServlet {
 				Thread sendEmail = new SendEmail(memberEmail, subject,content.toString(),"");
 				System.out.println(memberEmail[0]);
 				sendEmail.start();
+				
+//				response.getWriter().append("請前往信箱查看認證訊息");
+//				response.setHeader("即將跳轉首頁", 5 + ";URL=/index.jsp");
 				
 			} else {
 				System.out.println(n);

@@ -64,7 +64,7 @@ public class ShowMembersServlet extends HttpServlet {
 		request.setAttribute("searchStr", searchStr);
 		request.setAttribute("member_map", membersNum);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/allMembers.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/member/allMembers.jsp");
 		rd.forward(request, response);
 		return;
 	}

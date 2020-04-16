@@ -33,7 +33,7 @@
     });
 </script>
 <body>
-    <form action="<c:url value='/letter/sendDriftLetter' />" method="POST">
+    <form action="<c:url value='/letter/sendLetter' />" method="POST">
         <div class="form-column">
           <div class="form-group col-md-4">
             <label for="inputEmail4">信件標題</label>

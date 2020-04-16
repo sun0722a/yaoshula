@@ -40,10 +40,8 @@ function select(e) {
   }
 
   if (e.target.id == "waitShip") {
-    for (let i = 0; i <= orderWaitShip.length; i++) {
-      if (orderWaitShip[i]) {
-        orderWaitShip[i].style.display = "";
-      }
+    for (let i = 0; i < orderWaitShip.length; i++) {
+      orderWaitShip[i].style.display = "";
     }
   } else if (e.target.id == "alreadyShip") {
     for (let i = 0; i < orderAlreadyShip.length; i++) {
