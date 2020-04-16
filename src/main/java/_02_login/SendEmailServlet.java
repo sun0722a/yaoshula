@@ -20,6 +20,8 @@ import _01_register.model.MemberBean;
 public class SendEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	//會員認證用的
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -57,7 +59,8 @@ public class SendEmailServlet extends HttpServlet {
 		
 			
 	}
-
+	
+	//忘記密碼用的
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 			request.setCharacterEncoding("UTF-8");

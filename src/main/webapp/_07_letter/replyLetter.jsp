@@ -16,7 +16,7 @@
     
     <p class="card-text">${content}</p>
     <a href="<c:url value='/_07_letter/goToReply.jsp' />" class="card-link">我要回覆</a>
-    <a href="<c:url value='/letter/replyLetter?type=${type}' />" class="card-link">再來一封</a>
+<%--     <a href="<c:url value='/letter/replyLetter?type=${type}' />" class="card-link">再來一封</a> --%>
   </div>
 </div>
 </body>

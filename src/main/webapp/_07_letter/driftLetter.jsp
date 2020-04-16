@@ -32,15 +32,19 @@ body {
 </script>
 <body class="bg-light">
 	<div class="row justify-content-center content">
-
+		
+		
 		<div class="heaven col-5">
 			<p id="send" class="text-center">我要寄信</p>
 
 			<a type="button" class="btn btn-primary btn-lg btn-block"
 				id="buttonSend" href='<c:url value="/letter/sendLetter"  />'>Send</a>
-
+				
+			<a type="button" class="btn btn-primary btn-lg btn-block"
+				id="buttonSend" href='<c:url value="/letter/getReply"  />'>查看信件回覆</a>
+			
 		</div>
-
+		
 		<div class="evil col-5">
 			<form action="<c:url value='/letter/replyLetter' /> ">
 				<p id="reply" class="text-center">我要回信</p>
@@ -54,27 +58,6 @@ body {
 			</form>
 		</div>
 		
-<%-- 		<c:if test="${! empty lb}" > --%>
-<!-- 		<div class="modal fade" id="content" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!-- 		    <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!-- 		      <div class="modal-content"> -->
-<!-- 		        <div class="modal-header"> -->
-<!-- 		          <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5> -->
-<!-- 		          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 		            <span aria-hidden="true">&times;</span> -->
-<!-- 		          </button> -->
-<!-- 		        </div> -->
-<!-- 		        <div class="modal-body"> -->
-<!-- 		          ... -->
-<!-- 		        </div> -->
-<!-- 		        <div class="modal-footer"> -->
-<!-- 		          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!-- 		          <button type="button" class="btn btn-primary">Save changes</button> -->
-<!-- 		        </div> -->
-<!-- 		      </div> -->
-<!-- 		    </div> -->
-<!--   </div> -->
-<%-- 		</c:if> --%>
 		
 	</div>
 

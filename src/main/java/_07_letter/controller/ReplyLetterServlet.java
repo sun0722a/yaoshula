@@ -77,43 +77,37 @@ public class ReplyLetterServlet extends HttpServlet {
 			
 			Integer mapSize = letterMap.size();
 			Set<Integer> letterNo = letterMap.keySet();
-
+			
 			//隨機取得信件編號的index值
-			int randomNo = (int)(Math.random() * mapSize);
-			Integer letterId = (Integer)letterNo.toArray()[randomNo];
-//			List<Integer> markLetter = new ArrayList<Integer>();
-//			letterMap.remove(letterId);
-//			
-//			
-//			if(markLetter != null && markLetter.contains(letterId)) {
-//				mapSize = letterMap.size();
-//				System.out.println("刪掉後的map size" + letterMap.size());
-//				randomNo = (int)(Math.random() * mapSize);
-//				letterId = (Integer)letterNo.toArray()[randomNo];
-//			}
-			System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
-			lb = letterService.getLetter(letterId);
-			Clob clob = lb.getLetterContent();
-			String content="";
-			
 			try {
+				int randomNo = (int)(Math.random() * mapSize);
+				Integer letterId = (Integer)letterNo.toArray()[randomNo];
+				
+				System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
+				lb = letterService.getLetter(letterId);
+				Clob clob = lb.getLetterContent();
+				String content="";
 				content = GlobalService.clobToString(clob);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			String title = lb.getLetterTitle();
-			
-			session.setAttribute("letter", lb);
-			session.setAttribute("content", content);
-			session.setAttribute("title", title);
-			session.setAttribute("type", replyType);
+				String title = lb.getLetterTitle();
+				
+				session.setAttribute("letter", lb);
+				session.setAttribute("content", content);
+				session.setAttribute("title", title);
+				session.setAttribute("type", replyType);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/replyLetter.jsp");
-			
-			rd.forward(request, response);
-			return;
-			
+				RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/replyLetter.jsp");
+				
+				rd.forward(request, response);
+				return;
+			}catch(ArrayIndexOutOfBoundsException e) {
+					System.out.println("無天使信可回");
+					RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
+					rd.forward(request, response);
+					return;
+						}catch (Exception e) {
+							e.printStackTrace();
+						}		
+					
 			//惡魔回覆
 			}else {
 				System.out.println("回覆類型: " + replyType);
@@ -122,32 +116,36 @@ public class ReplyLetterServlet extends HttpServlet {
 				Set<Integer> letterNo = letterMap.keySet();
 				System.out.println("有" + mapSize + " 封" + "信件編號為" + letterNo);
 				//隨機取得信件編號的index值
-				int randomNo = (int)(Math.random() * mapSize);
-				Integer letterId = (Integer)letterNo.toArray()[randomNo];
-				System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
-				lb = letterService.getLetter(letterId);
-				Clob clob = lb.getLetterContent();
-				String content="";
-				
 				try {
+					int randomNo = (int)(Math.random() * mapSize);
+					Integer letterId = (Integer)letterNo.toArray()[randomNo];
+					System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
+					lb = letterService.getLetter(letterId);
+					Clob clob = lb.getLetterContent();
+					String content="";
 					content = GlobalService.clobToString(clob);
-				} catch (Exception e) {
+					String title = lb.getLetterTitle();
+					
+					session.setAttribute("lb", lb.getLetterId());
+					session.setAttribute("content", content);
+					session.setAttribute("title", title);
+					session.setAttribute("type", replyType);
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/replyLetter.jsp");
+					rd.forward(request, response);
+					return;
+				}catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("無惡魔信可回");
+						RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
+						rd.forward(request, response);
+						return;
+				}catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				String title = lb.getLetterTitle();
-				
-				session.setAttribute("lb", lb.getLetterId());
-				session.setAttribute("content", content);
-				session.setAttribute("title", title);
-				session.setAttribute("type", replyType);
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/replyLetter.jsp");
-				rd.forward(request, response);
-				return;
+			
 			}
-		
-		
+			
 	}
 
 }

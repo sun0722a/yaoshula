@@ -14,6 +14,6 @@ public interface LetterService {
 	
 	public void updateReply(LetterBean lb);
 	
-	
+	public Map<Integer,LetterBean> getAllLettersByMember(String memberId,String status);
 	
 }
