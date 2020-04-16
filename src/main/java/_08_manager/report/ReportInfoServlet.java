@@ -83,7 +83,7 @@ public class ReportInfoServlet extends HttpServlet {
 		request.setAttribute("cmd", cmd);
 		request.setAttribute("id", idStr);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/reportInfo.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/report/reportInfo.jsp");
 		rd.forward(request, response);
 		return;
 	}

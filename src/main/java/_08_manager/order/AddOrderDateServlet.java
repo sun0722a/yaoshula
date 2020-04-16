@@ -1,13 +1,7 @@
-package _08_manager.member;
+package _08_manager.order;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,12 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _01_register.model.MemberBean;
-import _01_register.service.MemberService;
+import _04_order.model.OrderBean;
+import _04_order.service.OrderService;
 
-// 查詢帳號
-@WebServlet("/manager/showMembers")
-public class ShowMembersServlet extends HttpServlet {
+// 新增出貨日期or到貨日期
+@WebServlet("/manager/addOrderDate")
+public class AddOrderDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,25 +40,32 @@ public class ShowMembersServlet extends HttpServlet {
 
 		// 必須是空字串
 		String searchStr = request.getParameter("searchStr") == null ? "" : request.getParameter("searchStr");
-
-		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		MemberService memberService = ctx.getBean(MemberService.class);
-		Map<MemberBean, Integer> membersTime = memberService.getMembers(searchStr);
-		Map<MemberBean, Integer> membersNum = new LinkedHashMap<>();
-		List<Entry<MemberBean, Integer>> list = new ArrayList<Map.Entry<MemberBean, Integer>>(membersTime.entrySet());
-		Collections.sort(list, new Comparator<Map.Entry<MemberBean, Integer>>() {
-			public int compare(Map.Entry<MemberBean, Integer> o1, Map.Entry<MemberBean, Integer> o2) {
-				return (o2.getValue() - o1.getValue());
-			}
-		});
-		for (Map.Entry<MemberBean, Integer> t : list) {
-			membersNum.put(t.getKey(), t.getValue());
+		String cmd = request.getParameter("cmd");
+		String idStr = request.getParameter("id");
+		int id = 0;
+		try {
+			id = Integer.parseInt(idStr);
+		} catch (NumberFormatException e) {
+			;
 		}
 
-		request.setAttribute("searchStr", searchStr);
-		request.setAttribute("member_map", membersNum);
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		OrderService orderService = ctx.getBean(OrderService.class);
+		OrderBean ob = orderService.getOrder(id);
+		Date today = new Date();
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/member/allMembers.jsp");
+		// 更新狀態
+		if (cmd.equals("shippingDate")) {
+			ob.setShippingDate(today);
+			ob.setStatus("已出貨");
+			orderService.insertOrder(ob);
+		} else if (cmd.equals("arriveDate")) {
+			ob.setArriveDate(today);
+			ob.setStatus("完成");
+			orderService.insertOrder(ob);
+		}
+
+		RequestDispatcher rd = request.getRequestDispatcher("/manager/showOrders?searchStr=" + searchStr);
 		rd.forward(request, response);
 		return;
 	}

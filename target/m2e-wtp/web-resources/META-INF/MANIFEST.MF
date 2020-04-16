@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: Student
+=======
+Built-By: NTUT
+>>>>>>> efa6b2b7b2f261e4b850f9a135c106f8472310bb
 Build-Jdk: 1.8.0_232
 Created-By: Maven Integration for Eclipse
 

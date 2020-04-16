@@ -12,7 +12,7 @@ public interface OrderDao {
 
 	String checkOrderStatus(Integer orderNo);
 
-//	List<OrderBean> getAllOrders();
+	List<OrderBean> getAllOrders(String searchStr);
 
 	OrderBean getOrder(int orderNo);
 

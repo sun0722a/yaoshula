@@ -7,6 +7,8 @@ import _04_order.model.ShoppingCart;
 
 public interface OrderService {
 
+	void insertOrder(OrderBean ob);
+
 	void persistOrder(OrderBean ob);
 
 	void persistOrder(OrderBean ob, ShoppingCart cart);
@@ -15,7 +17,7 @@ public interface OrderService {
 
 	String checkOrderStatus(Integer orderNo);
 
-//	List<OrderBean> getAllOrders();
+	List<OrderBean> getAllOrders(String searchStr);
 
 	OrderBean getOrder(int orderNo);
 

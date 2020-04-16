@@ -55,15 +55,15 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	// 取得所有訂單
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public List<OrderBean> getAllOrders() {
-//		List<OrderBean> list = null;
-//		String hql = "FROM OrderBean";
-//		Session session = factory.getCurrentSession();
-//		list = session.createQuery(hql).getResultList();
-//		return list;
-//	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderBean> getAllOrders(String searchStr) {
+		List<OrderBean> list = null;
+		String hql = "FROM OrderBean ob WHERE ob.orderNo LIKE :searchStr";
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		return list;
+	}
 
 	// 取得訂單資料
 	@Override
