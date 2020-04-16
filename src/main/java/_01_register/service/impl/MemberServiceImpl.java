@@ -1,5 +1,7 @@
 package _01_register.service.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,7 @@ import _01_register.dao.MemberDao;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 
+@Transactional
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -17,13 +20,21 @@ public class MemberServiceImpl implements MemberService {
 	public MemberServiceImpl() {
 	}
 
-	@Transactional
+	
 	@Override
 	public int saveMember(MemberBean mb) {
 		int count = 0;
 		dao.saveMember(mb);
 		count++;
 		return count;
+	}
+
+	
+	@Override
+	public Map<MemberBean, Integer> getMembers(String searchStr) {
+		Map<MemberBean, Integer> map = null;
+		map = dao.getMembers(searchStr);
+		return map;
 	}
 
 	@Transactional
@@ -34,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	@Transactional
+	
 	@Override
 	public boolean emailExists(String email) {
 		boolean result;
@@ -43,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-	@Transactional
+	
 	@Override
 	public int updateMember(MemberBean mb) {
 		int count = 0;
@@ -52,13 +63,58 @@ public class MemberServiceImpl implements MemberService {
 		return count;
 	}
 
-	@Transactional
+	
 	@Override
 	public MemberBean checkIdPassword(String memberId, String password) {
 		MemberBean mb = null;
 		mb = dao.checkIdPassword(memberId, password);
 		return mb;
 	}
+
+	
+	@Override
+	public MemberBean getEmailValid(String emailCode) {
+		MemberBean mb = null;
+		mb = dao.getEmailValid(emailCode);
+		return mb;
+	}
+
+	
+	@Override
+	public int updateMemberPassword(String memberId, String passwordNew) {
+		int count = 0;
+		dao.updateMemberPassword(memberId, passwordNew);
+		count++;
+		return count;
+	}
+
+	@Override
+	public void updateSendDate(String memberId, String sendDate) {
+		dao.updateSendDate(memberId, sendDate);
+		
+	}
+	
+	@Override
+	public void updateReplyDate(String memberId, String replyDate) {
+		dao.updateReplyDate(memberId, replyDate);
+	}
+
+
+	@Override
+	public boolean checkSendable(String memberId, String today) {
+		boolean isSendOK = true;
+		isSendOK = dao.checkSendable(memberId, today);
+		return isSendOK;
+	}
+
+
+	@Override
+	public boolean checkReplyable(String memberId, String today) {
+		boolean isReplyOK = true;
+		isReplyOK = dao.checkReplyable(memberId, today);
+		return isReplyOK;
+	}
+
 
 	@Transactional
 	@Override
@@ -67,21 +123,6 @@ public class MemberServiceImpl implements MemberService {
 		mb = dao.getMember(id);
 		return mb;
 	}
-	
-	@Transactional
-	@Override
-	public MemberBean getEmailValid(String emailCode) {
-		MemberBean mb = null;
-		mb = dao.getEmailValid(emailCode);
-		return mb;
-	}
 
-	@Transactional
-	@Override
-	public int updateMemberPassword(String memberId, String passwordNew) {
-		int count = 0;
-		dao.updateMemberPassword(memberId,passwordNew);
-		count++;
-		return count;
-	}
+
 }

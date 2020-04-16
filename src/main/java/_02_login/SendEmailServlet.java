@@ -15,13 +15,16 @@ import _01_register.model.MemberBean;
 
 
 
-//忘記密碼第一步 先輸入email 並去信箱點取連結
+//第一步 先輸入email 並去信箱點取連結
 @WebServlet("/findPassword")
 public class SendEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+<<<<<<< HEAD
 	
 	//會員認證用的
+=======
+>>>>>>> 005812fa982f69e15f06857b8b7ed2d9fa74c4f1
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");

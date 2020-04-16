@@ -94,10 +94,14 @@
 							愛心：${entry.value.likes} 留言數：
 							<c:choose>
 								<c:when test="${not empty entry.value.articleComments}">
+									<c:set var="i" value="0"></c:set>
 									<c:forEach var="comments"
 										items="${entry.value.articleComments}" varStatus="number">
+										<c:if test="${comments.status=='正常'}">
+											<c:set var="i" value="${i+1}"></c:set>
+										</c:if>
 										<c:if test="${number.last}">
-											${number.count}
+											${i}
 										</c:if>
 									</c:forEach>
 								</c:when>

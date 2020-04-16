@@ -35,7 +35,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-danger">
 			<!-- logo和標題 -->
 			<nav class="navbar navbar-light bg-danger">
-				<a class="navbar-brand text-white" href='<c:url value="index.jsp" />'> <!-- <img src="https://github.com/sun0722a/yaoshula/blob/master/src/logo/logo_trans_250px.png?raw=true" width="50" height="50" class="d-inline-block align-top" alt=""> -->
+				<a class="navbar-brand text-white" href='<c:url value="/index.jsp" />'> <!-- <img src="https://github.com/sun0722a/yaoshula/blob/master/src/logo/logo_trans_250px.png?raw=true" width="50" height="50" class="d-inline-block align-top" alt=""> -->
 					要抒啦！
 				</a>
 			</nav>

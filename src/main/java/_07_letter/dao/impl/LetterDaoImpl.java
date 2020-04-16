@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import _07_letter.dao.LetterDao;
 import _07_letter.model.LetterBean;
 
 @Repository
@@ -17,8 +18,6 @@ public class LetterDaoImpl implements LetterDao {
 	
 	@Autowired
 	SessionFactory factory;
-	
-	
 	
 	public LetterDaoImpl() {
 		
@@ -33,8 +32,12 @@ public class LetterDaoImpl implements LetterDao {
 	}
 
 	@Override
-	public LetterBean getLetter(LetterBean lb) {
-		
+	public LetterBean getLetter(int letterId) {
+		LetterBean lb = null;
+//		String hql = "FROM LetterBean l WHERE l.letterId = :letterId";
+		Session session = factory.getCurrentSession(); 
+//		lb = session.createQuery(hql).setParameter("letterId", letterId).getSingleResult();
+		lb = session.get(LetterBean.class, letterId);
 		return lb;
 	}
 
@@ -43,13 +46,26 @@ public class LetterDaoImpl implements LetterDao {
 	public Map<Integer,LetterBean> getUnfinishedLetter(String category,String status) {
 		Map<Integer,LetterBean> letterMap = new LinkedHashMap<Integer, LetterBean>();
 		Session session = factory.getCurrentSession();
-		String hql = "FROM LetterBean l Where l.letterCategory = :category AND l.status = :status";
+		String hql = "FROM LetterBean l WHERE l.letterCategory = :category AND l.status = :status";
 		List<LetterBean> beans = new ArrayList<LetterBean>();
-		beans = session.createQuery(hql).setParameter("letterCategory", category).setParameter("status", status).getResultList();
+		beans = session.createQuery(hql).setParameter("category", category).setParameter("status", status).getResultList();
 		for(LetterBean lb : beans) {
-			letterMap.put(lb.getLetterNo(), lb);
+			letterMap.put(lb.getLetterId(), lb);
 		}
 		return letterMap;
+	}
+
+	@Override
+	public void updateReply(LetterBean lb) {
+		
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE LetterBean l SET l.ReplyContent=:reply, l.letterReplier=:replier,l.status =:status WHERE letterId = :letterId";
+		session.createQuery(hql)
+			   .setParameter("reply", lb.getReplyContent())
+			   .setParameter("replier", lb.getLetterReplier())
+			   .setParameter("status", lb.getStatus())
+			   .setParameter("letterId", lb.getLetterId()).executeUpdate();
+		
 	}
 	
 }

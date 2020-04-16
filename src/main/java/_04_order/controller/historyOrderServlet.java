@@ -22,6 +22,8 @@ import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _04_order.service.OrderService;
 
+/* 用session傳?? */
+
 // 查詢歷史訂單
 @WebServlet("/order/showHistoryOrder")
 public class historyOrderServlet extends HttpServlet {

@@ -2,6 +2,7 @@ package _06_article.dao.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +61,22 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		session.save(rcb);
 	}
 
+	// 刪除檢舉文章資料
+	@Override
+	public void deleteReportArticle(Integer articleId) {
+		String hql = "DELETE FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("articleId", articleId).executeUpdate();
+	}
+
+	// 刪除檢舉留言資料
+	@Override
+	public void deleteReportComment(Integer commentId) {
+		String hql = "DELETE FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("commentId", commentId).executeUpdate();
+	}
+
 	// 計算所有商品總共有幾頁
 //	@Override
 //	public int getTotalPages(String searchStr, String categoryTitle, String categoryName) {
@@ -95,7 +112,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		// 預設的搜尋
 		String hql = "SELECT ab FROM ArticleBean ab, ArticleCategoryBean acb WHERE ab.category=acb.categoryId "
 				+ "AND ab.title LIKE :searchStr " + "AND acb.categoryTitle LIKE :categoryTitle "
-				+ "AND acb.categoryName LIKE :categoryName " + "ORDER BY ab.likes DESC";
+				+ "AND acb.categoryName LIKE :categoryName " + "AND ab.status= :status " + "ORDER BY ab.likes DESC";
 		Session session = factory.getCurrentSession();
 		String[] arranges = GlobalService.ARTICLE_ARRANGE; // "popular", "time"
 		Map<Integer, ArticleBean> map = new LinkedHashMap<Integer, ArticleBean>();
@@ -106,13 +123,14 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 			if (arrange.equals(arranges[1])) {
 				hql = "SELECT ab FROM ArticleBean ab, ArticleCategoryBean acb WHERE ab.category=acb.categoryId "
 						+ "AND ab.title LIKE :searchStr " + "AND acb.categoryTitle LIKE :categoryTitle "
-						+ "AND acb.categoryName LIKE :categoryName " + "ORDER BY ab.publishTime DESC";
+						+ "AND acb.categoryName LIKE :categoryName " + "AND ab.status= :status "
+						+ "ORDER BY ab.publishTime DESC";
 			}
 		}
 		// 只取此頁的商品
 		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
 				.setParameter("categoryTitle", "%" + categoryTitle + "%")
-				.setParameter("categoryName", "%" + categoryName + "%").getResultList();
+				.setParameter("categoryName", "%" + categoryName + "%").setParameter("status", "正常").getResultList();
 		for (ArticleBean bean : list) {
 			map.put(bean.getArticleId(), bean);
 		}
@@ -124,7 +142,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	@Override
 	public Map<Integer, ArticleBean> getPersonArticles(String arrange, String searchStr, MemberBean mb) {
 		// 預設的搜尋
-		String hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr ORDER BY ab.articleId DESC";
+		String hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr AND ab.status= :status ORDER BY ab.articleId DESC";
 		Session session = factory.getCurrentSession();
 		String[] arranges = GlobalService.ARTICLE_ARRANGE; // "popular", "time"
 		Map<Integer, ArticleBean> map = new LinkedHashMap<Integer, ArticleBean>();
@@ -133,12 +151,12 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		// 判斷要如何排列
 		if (arrange != "") {
 			if (arrange.equals(arranges[0])) {
-				hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr ORDER BY ab.likes DESC";
+				hql = "FROM ArticleBean ab WHERE ab.authorName = :memberId AND ab.title LIKE :searchStr AND ab.status= :status ORDER BY ab.likes DESC";
 			}
 		}
 		// 只取此頁的商品
 		list = session.createQuery(hql).setParameter("memberId", mb.getMemberId())
-				.setParameter("searchStr", "%" + searchStr + "%").getResultList();
+				.setParameter("searchStr", "%" + searchStr + "%").setParameter("status", "正常").getResultList();
 		for (ArticleBean bean : list) {
 			map.put(bean.getArticleId(), bean);
 		}
@@ -149,13 +167,15 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, ArticleBean> getFamousArticles(String categoryTitle) {
-		String hql = "SELECT ab FROM ArticleBean ab,ArticleCategoryBean acb WHERE ab.category=acb.categoryId AND acb.categoryTitle= :categoryTitle ORDER BY ab.likes DESC";
+		String hql = "SELECT ab FROM ArticleBean ab,ArticleCategoryBean acb "
+				+ "WHERE ab.category=acb.categoryId AND acb.categoryTitle= :categoryTitle "
+				+ "AND ab.status= :status ORDER BY ab.likes DESC";
 		Session session = factory.getCurrentSession();
 
 		Map<Integer, ArticleBean> map = new LinkedHashMap<Integer, ArticleBean>();
 		List<ArticleBean> list = new ArrayList<ArticleBean>();
-		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setMaxResults(recordsPerFamous)
-				.getResultList();
+		list = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).setParameter("status", "正常")
+				.setMaxResults(recordsPerFamous).getResultList();
 		for (ArticleBean bean : list) {
 			map.put(bean.getArticleId(), bean);
 		}
@@ -174,14 +194,14 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		return bean;
 	}
 
-	// 查詢文章(天使or惡魔)
+	// 查詢文章副板(天使or惡魔)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<String> getCategorys(String categoryTitle) {
 		String hql = "FROM ArticleCategoryBean acb WHERE acb.categoryTitle like :categoryTitle ";
 		Session session = factory.getCurrentSession();
 		List<ArticleCategoryBean> beans = null;
-		Set<String> categorySet = null;
+		Set<String> categorySet = new LinkedHashSet<>();
 		beans = (List<ArticleCategoryBean>) session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
 				.getResultList();
 		for (ArticleCategoryBean bean : beans) {
@@ -210,6 +230,132 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 		session.createQuery(hql3).setParameter("likeArticles", oldLikeArticles).setParameter("id", mb.getId())
 				.executeUpdate();
 		return n;
+	}
+
+	// 查詢被檢舉文章
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<ArticleBean, Integer> getReportArticles(String searchStr) {
+		Session session = factory.getCurrentSession();
+		Map<ArticleBean, Integer> map = new LinkedHashMap<>();
+		List<ArticleBean> list = new ArrayList<ArticleBean>();
+
+		String hql1 = "FROM ArticleBean ab WHERE ab.title LIKE :searchStr" + " AND ab.status= :status ";
+		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").setParameter("status", "正常")
+				.getResultList();
+		for (ArticleBean bean : list) {
+			String hql2 = "FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
+			int count = session.createQuery(hql2).setParameter("articleId", bean.getArticleId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
+	}
+
+	// 查詢被檢舉留言
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<CommentBean, Integer> getReportComments(String searchStr) {
+		Session session = factory.getCurrentSession();
+		Map<CommentBean, Integer> map = new LinkedHashMap<>();
+		List<CommentBean> list = new ArrayList<CommentBean>();
+
+		String hql1 = "FROM CommentBean cb WHERE cb.content LIKE :searchStr" + " AND cb.status= :status ";
+		list = session.createQuery(hql1).setParameter("searchStr", "%" + searchStr + "%").setParameter("status", "正常")
+				.getResultList();
+		for (CommentBean bean : list) {
+			String hql2 = "FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
+			int count = session.createQuery(hql2).setParameter("commentId", bean.getCommentId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
+	}
+
+	// 查詢被檢舉項目個數
+	@Override
+	public Integer getReportItemCount(String cmd, Integer id, String item) {
+		String hql = "";
+		Session session = factory.getCurrentSession();
+		int count = 0;
+		if (cmd.equals("article")) {
+			hql = "FROM ReportArticleBean rab WHERE rab.articleId= :id AND reportItem= :item";
+		} else if (cmd.equals("comment")) {
+			hql = "FROM ReportCommentBean rcb WHERE rcb.commentId= :id AND reportItem= :item";
+		}
+		count = session.createQuery(hql).setParameter("id", id).setParameter("item", item).getResultList().size();
+
+		return count;
+	}
+
+	// 查詢個人文章(含檢舉數)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<ArticleBean, Integer> getPersonArticle(Integer id) {
+		Session session = factory.getCurrentSession();
+		Map<ArticleBean, Integer> map = new LinkedHashMap<>();
+		List<ArticleBean> list = new ArrayList<ArticleBean>();
+
+		String hql1 = "FROM ArticleBean ab WHERE ab.authorId= :authorId" + " AND ab.status= :status ";
+		list = session.createQuery(hql1).setParameter("authorId", id).setParameter("status", "正常").getResultList();
+		for (ArticleBean bean : list) {
+			String hql2 = "FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
+			int count = session.createQuery(hql2).setParameter("articleId", bean.getArticleId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
+	}
+
+	// 查詢個人留言(含檢舉數)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<CommentBean, Integer> getPersonComment(Integer id) {
+		Session session = factory.getCurrentSession();
+		Map<CommentBean, Integer> map = new LinkedHashMap<>();
+		List<CommentBean> list = new ArrayList<CommentBean>();
+
+		String hql1 = "FROM CommentBean cb WHERE cb.authorId= :authorId" + " AND cb.status= :status ";
+		list = session.createQuery(hql1).setParameter("authorId", id).setParameter("status", "正常").getResultList();
+		for (CommentBean bean : list) {
+			String hql2 = "FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
+			int count = session.createQuery(hql2).setParameter("commentId", bean.getCommentId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
+	}
+
+	// 查詢個人被刪除文章(含檢舉數)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<ArticleBean, Integer> getPersonDeleteArticle(Integer id) {
+		Session session = factory.getCurrentSession();
+		Map<ArticleBean, Integer> map = new LinkedHashMap<>();
+		List<ArticleBean> list = new ArrayList<ArticleBean>();
+
+		String hql1 = "FROM ArticleBean ab WHERE ab.authorId= :authorId" + " AND ab.status= :status ";
+		list = session.createQuery(hql1).setParameter("authorId", id).setParameter("status", "刪除").getResultList();
+		for (ArticleBean bean : list) {
+			String hql2 = "FROM ReportArticleBean rab WHERE rab.articleId= :articleId";
+			int count = session.createQuery(hql2).setParameter("articleId", bean.getArticleId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
+	}
+
+	// 查詢個人被刪除留言(含檢舉數)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<CommentBean, Integer> getPersonDeleteComment(Integer id) {
+		Session session = factory.getCurrentSession();
+		Map<CommentBean, Integer> map = new LinkedHashMap<>();
+		List<CommentBean> list = new ArrayList<CommentBean>();
+
+		String hql1 = "FROM CommentBean cb WHERE cb.authorId= :authorId" + " AND cb.status= :status ";
+		list = session.createQuery(hql1).setParameter("authorId", id).setParameter("status", "刪除").getResultList();
+		for (CommentBean bean : list) {
+			String hql2 = "FROM ReportCommentBean rcb WHERE rcb.commentId= :commentId";
+			int count = session.createQuery(hql2).setParameter("commentId", bean.getCommentId()).getResultList().size();
+			map.put(bean, count);
+		}
+		return map;
 	}
 
 //	@SuppressWarnings("unchecked")
