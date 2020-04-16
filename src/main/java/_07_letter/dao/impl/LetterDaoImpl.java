@@ -67,5 +67,19 @@ public class LetterDaoImpl implements LetterDao {
 			   .setParameter("letterId", lb.getLetterId()).executeUpdate();
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, LetterBean> getAllLettersByMember(String memberId,String status) {
+		Session session = factory.getCurrentSession();
+		Map<Integer, LetterBean> beanMap = new LinkedHashMap<Integer, LetterBean>();
+		List<LetterBean> list = null;
+		String hql = "FROM LetterBean l WHERE l.letterWriter = :memberId AND l.status = :status";
+		list = session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
+		for(LetterBean lb : list) {
+			beanMap.put(lb.getLetterId(), lb);
+		}
+		return beanMap;
+	}
 	
 }

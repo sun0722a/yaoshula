@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,6 +37,7 @@ public class LetterBean implements Serializable{
 	private String feedBack;
 	
 	
+	
 	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Timestamp sendTime, Clob letterContent,
 			String letterCategory, String letterReplier, Clob replyContent, String status, String feedBack) {
 		super();
@@ -53,9 +55,21 @@ public class LetterBean implements Serializable{
 	
 	
 	
-
-
 	
+
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Clob letterContent,
+			Clob replyContent) {
+		super();
+		this.letterId = letterId;
+		this.letterTitle = letterTitle;
+		this.letterWriter = letterWriter;
+		this.letterContent = letterContent;
+		ReplyContent = replyContent;
+	}
+
+
+
+
 
 	public LetterBean(Integer letterId,String letterReplier, Clob replyContent, String status) {
 		super();

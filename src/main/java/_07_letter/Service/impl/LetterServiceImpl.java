@@ -49,4 +49,13 @@ public class LetterServiceImpl implements LetterService{
 		
 	}
 
+
+
+	@Override
+	public Map<Integer, LetterBean> getAllLettersByMember(String memberId,String status) {
+		Map<Integer,LetterBean> letters = null;
+		letters = dao.getAllLettersByMember(memberId,status);
+		return letters;
+	}
+
 }

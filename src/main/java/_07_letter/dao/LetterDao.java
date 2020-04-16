@@ -13,4 +13,6 @@ public interface LetterDao {
 	public Map<Integer,LetterBean> getUnfinishedLetter(String category,String status);
 	
 	public void updateReply(LetterBean lb);
+	
+	public Map<Integer,LetterBean> getAllLettersByMember(String memberId,String status);
 }
