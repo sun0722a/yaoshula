@@ -29,17 +29,17 @@ public class LetterBean implements Serializable{
 	private String 	letterTitle;
 	private String 	letterWriter;
 	private Timestamp sendTime;
-	private Clob letterContent;
+	private String letterContent;
 	private String letterCategory;
 	private String letterReplier;
-	private Clob ReplyContent;
+	private String ReplyContent;
 	private String status;
 	private String feedBack;
 	
 	
 	
-	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Timestamp sendTime, Clob letterContent,
-			String letterCategory, String letterReplier, Clob replyContent, String status, String feedBack) {
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Timestamp sendTime, String letterContent,
+			String letterCategory, String letterReplier, String replyContent, String status, String feedBack) {
 		super();
 		this.letterId = letterId;
 		this.letterTitle = letterTitle;
@@ -57,8 +57,8 @@ public class LetterBean implements Serializable{
 	
 	
 
-	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Clob letterContent,
-			Clob replyContent) {
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, String letterContent,
+			String replyContent) {
 		super();
 		this.letterId = letterId;
 		this.letterTitle = letterTitle;
@@ -71,7 +71,7 @@ public class LetterBean implements Serializable{
 
 
 
-	public LetterBean(Integer letterId,String letterReplier, Clob replyContent, String status) {
+	public LetterBean(Integer letterId,String letterReplier, String replyContent, String status) {
 		super();
 		this.letterId = letterId;
 		this.letterReplier = letterReplier;
@@ -116,10 +116,10 @@ public class LetterBean implements Serializable{
 	public void setSendTime(Timestamp sendTime) {
 		this.sendTime = sendTime;
 	}
-	public Clob getLetterContent() {
+	public String getLetterContent() {
 		return letterContent;
 	}
-	public void setLetterContent(Clob letterContent) {
+	public void setLetterContent(String letterContent) {
 		this.letterContent = letterContent;
 	}
 	public String getLetterCategory() {
@@ -134,10 +134,10 @@ public class LetterBean implements Serializable{
 	public void setLetterReplier(String letterReplier) {
 		this.letterReplier = letterReplier;
 	}
-	public Clob getReplyContent() {
+	public String getReplyContent() {
 		return ReplyContent;
 	}
-	public void setReplyContent(Clob replyContent) {
+	public void setReplyContent(String replyContent) {
 		ReplyContent = replyContent;
 	}
 	public String getStatus() {

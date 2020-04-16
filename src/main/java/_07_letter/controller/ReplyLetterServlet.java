@@ -85,9 +85,7 @@ public class ReplyLetterServlet extends HttpServlet {
 				
 				System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
 				lb = letterService.getLetter(letterId);
-				Clob clob = lb.getLetterContent();
-				String content="";
-				content = GlobalService.clobToString(clob);
+				String content = lb.getLetterContent();
 				String title = lb.getLetterTitle();
 				
 				session.setAttribute("letter", lb);
@@ -121,9 +119,7 @@ public class ReplyLetterServlet extends HttpServlet {
 					Integer letterId = (Integer)letterNo.toArray()[randomNo];
 					System.out.println("隨機index值:" + randomNo + "隨機數的key:" + letterId);
 					lb = letterService.getLetter(letterId);
-					Clob clob = lb.getLetterContent();
-					String content="";
-					content = GlobalService.clobToString(clob);
+					String content= lb.getLetterContent();
 					String title = lb.getLetterTitle();
 					
 					session.setAttribute("lb", lb.getLetterId());

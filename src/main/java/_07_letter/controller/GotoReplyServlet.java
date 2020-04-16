@@ -55,8 +55,8 @@ public class GotoReplyServlet extends HttpServlet {
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			LetterService letterService = ctx.getBean(LetterService.class);
 			MemberService memberService = ctx.getBean(MemberService.class);
-			Clob clobContent = GlobalService.stringToClob(replyContent);
-			lb = new LetterBean(letterId,memberId,clobContent,"y");
+			
+			lb = new LetterBean(letterId,memberId,replyContent,"y");
 			letterService.updateReply(lb);
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String replyToday = simpleDateFormat.format(new java.util.Date());
