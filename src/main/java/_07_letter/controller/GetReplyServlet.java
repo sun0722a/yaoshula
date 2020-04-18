@@ -58,8 +58,7 @@ public class GetReplyServlet extends HttpServlet {
 			System.out.println("信件id的SET" + allLetterId);
 			Integer letterId ;
 			String title = "";
-			Clob clobContent = null;
-			Clob clobReplyContent = null ;
+			
 			String content = "";
 			String replyContent="";
 			
@@ -70,14 +69,10 @@ public class GetReplyServlet extends HttpServlet {
 				System.out.println("id" + lb.getLetterId() + ",title:" + lb.getLetterTitle());
 				letterId = lb.getLetterId();
 				title = lb.getLetterTitle();
-				clobContent = lb.getLetterContent();
-				clobReplyContent = lb.getReplyContent();
-				content = GlobalService.clobToString(clobContent);
-				replyContent = GlobalService.clobToString(clobReplyContent);
+				content = lb.getLetterContent();
+				replyContent = lb.getReplyContent();
 				
 			}
-			
-				
 				System.out.println(content);
 				System.out.println(replyContent);
 				

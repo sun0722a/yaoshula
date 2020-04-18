@@ -59,9 +59,23 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public List<OrderBean> getAllOrders(String searchStr) {
 		List<OrderBean> list = null;
-		String hql = "FROM OrderBean ob WHERE ob.orderNo LIKE :searchStr";
 		Session session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%").getResultList();
+		String hql = "FROM OrderBean ob WHERE ob.orderNo= :searchStr";
+
+		if (searchStr.equals("")) {
+			hql = "FROM OrderBean ob";
+			list = session.createQuery(hql).getResultList();
+		} else {
+			hql = "FROM OrderBean ob WHERE ob.orderNo= :search";
+			int search = 0;
+			try {
+				search = Integer.parseInt(searchStr);
+			} catch (NumberFormatException e) {
+				;
+			}
+			list = session.createQuery(hql).setParameter("search", search).getResultList();
+		}
+
 		return list;
 	}
 

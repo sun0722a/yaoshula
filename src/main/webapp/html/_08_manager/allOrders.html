@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <script src="../../js/_08_manager/allOrders.js"></script>
+    <style>
+      .orderItems {
+        background: rgba(80, 189, 138, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="w-75 my-5 mx-auto">
+      <form action="">
+        <div class="input-group my-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><img src="../../image/_05_product/search.png"
+            /></span>
+          </div>
+          <input
+            type="search"
+            class="form-control"
+            placeholder="搜尋：文章標題"
+            name="search"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" id="button-addon2">
+              搜尋
+            </button>
+          </div>
+        </div>
+      </form>
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item nav-link" id="all">全部</li>
+        <li class="nav-item nav-link" id="waitShip">待出貨</li>
+        <li class="nav-item nav-link" id="alreadyShip">已出貨</li>
+        <li class="nav-item nav-link" id="finish">完成</li>
+      </ul>
+
+      <div
+        class="container-fluid p-0"
+        style="border: 1px solid rgba(0, 0, 0, 0.575);"
+      >
+        <div class="row m-0 border-bottom">
+          <div
+            class="col-1 d-flex justify-content-center align-items-centertext-center my-2"
+          ></div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            訂單編號
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            訂購日期
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            出貨日期
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            到貨日期
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            訂單狀態
+          </div>
+          <div
+            class="col-1 d-flex justify-content-center align-items-center text-center my-2"
+          ></div>
+        </div>
+
+        <div class="row m-0 完成">
+          <div
+            class="col-1 d-flex justify-content-center align-items-center text-center my-2"
+          ></div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            1
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center text-center my-2"
+          >
+            2020-03-26
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center my-2"
+          >
+            <a href="" style="text-decoration: none; color: black;"
+              ><i class="fa fa-plus-circle" style="font-size: 30px;"></i
+            ></a>
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            <a href="" style="text-decoration: none; color: black;"
+              ><i class="fa fa-plus-circle" style="font-size: 30px;"></i
+            ></a>
+          </div>
+          <div
+            class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+          >
+            完成
+          </div>
+          <div
+            class="col-1 m-0 p-0 d-flex justify-content-center align-items-center orderRow"
+            data-toggle="collapse"
+            data-target="#collapse1"
+            aria-expanded="false"
+            aria-controls="collapse1"
+            style="background-color: lightblue;"
+          >
+            <i class="fas fa-angle-down" style="font-size: 30px;"></i>
+          </div>
+        </div>
+
+        <!-- orderItems======================================================================= -->
+        <div class="collapse" id="collapse1">
+          <div class="card card-body w-100 p-0" style="border-width: 0px;">
+            <div class="row m-0 orderItems">
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              ></div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              >
+                商品名稱
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              >
+                規格
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              >
+                單價
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              >
+                數量
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+              >
+                總價
+              </div>
+
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                <img
+                  src="../../image/_05_product/香精油.jpg"
+                  alt=""
+                  style="max-width: 100px;"
+                />
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                香精油
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                薰衣草 50ml
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                $ 5000
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                2
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2"
+              >
+                $ 10000
+              </div>
+
+              <div
+                class="col-12 d-flex justify-content-end align-items-center text-center border-top border-light my-2"
+              >
+                <span style="font-size: 20px;">總金額: $10000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 更改日期 浮動視窗========== -->
+    <div
+      class="modal fade"
+      id="reportModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="reportModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            確認訂單編號1<br />
+            於2020-04-16到貨?
+          </div>
+          <input type="hidden" id="commentIdInput" value="" />
+          <div class="modal-footer">
+            <input
+              type="button"
+              class="btn btn-primary"
+              value="確認"
+              id="sendReport"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </body>
+</html>

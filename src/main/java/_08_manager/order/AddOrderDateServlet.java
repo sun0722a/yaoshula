@@ -39,7 +39,7 @@ public class AddOrderDateServlet extends HttpServlet {
 		}
 
 		// 必須是空字串
-		String searchStr = request.getParameter("searchStr") == null ? "" : request.getParameter("searchStr");
+		String searchStr = request.getParameter("searchStr").equals("undefined") ? "" : request.getParameter("searchStr");
 		String cmd = request.getParameter("cmd");
 		String idStr = request.getParameter("id");
 		int id = 0;
