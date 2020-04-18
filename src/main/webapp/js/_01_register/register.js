@@ -38,7 +38,7 @@ function checkPW() {
 }
 function checkPassword() {
   if (password.value != passwordCheck.value) {
-    password.value = "";
+	password.value="";
     passwordCheck.value = "";
     passwordError.style.display = "contents";
   } else {

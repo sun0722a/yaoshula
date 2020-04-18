@@ -101,10 +101,10 @@ public class SendLetterServlet extends HttpServlet {
 			LetterService letterService = ctx.getBean(LetterService.class);
 			
 			MemberService memberService = ctx.getBean(MemberService.class);
-			Clob clobContent = GlobalService.stringToClob(letterContent);
+			
 								
 			//儲存信件
-			LetterBean lb = new LetterBean(null, letterTitle, memberId, ts, clobContent, letterCategory, null, null, Letterstatus, null);
+			LetterBean lb = new LetterBean(null, letterTitle, memberId, ts, letterContent, letterCategory, null, null, Letterstatus, null);
 			letterService.saveLetter(lb);
 			
 			//更新寄信日期
@@ -121,8 +121,6 @@ public class SendLetterServlet extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		} catch (IOException e) {	
-			e.printStackTrace();
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		

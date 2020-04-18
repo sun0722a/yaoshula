@@ -171,33 +171,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		
 	}
 
-	@Override
-	public boolean checkSendable(String memberId,  String today) {
-		boolean isSendOK = true;
-		Session session = factory.getCurrentSession();
-		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastSendDate = :lastSendDate";
-		try {
-			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastSendDate", today).getResultList();
-			isSendOK = false;
-		} catch (NoResultException ex) {
-			isSendOK = true;
-		}
-		return isSendOK;
-	}
 
-	@Override
-	public boolean checkReplyable(String memberId, String today) {
-		boolean isReplyOK = true;
-		Session session = factory.getCurrentSession();
-		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastReplyDate = :lastReplyDate";
-		try {
-			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastReplyDate", today).getResultList();
-			isReplyOK = false;
-		} catch (NoResultException ex) {
-			isReplyOK = true;
-		}
-		return isReplyOK;
-	}
 	// 取得會員資料
 	@Override
 	public MemberBean getMember(int id) {

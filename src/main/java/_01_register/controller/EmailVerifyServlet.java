@@ -45,16 +45,16 @@ public class EmailVerifyServlet extends HttpServlet {
 		mb =  memberService.getEmailValid(emailVerifyCode);
 //		Integer memberId = mb.getId();
 //		System.out.println("memberId = " + memberId);
-		System.out.println(mb.getCheckAuthSuccess());
+		
 		
 		//如果有取得mb物件，就要把資料庫內的表格CheckAuthSuccess(是否驗證成功)改為y(yes)
 		if(mb != null) {
-			if(mb.getCheckAuthSuccess().trim().equals("n")) {
-			mb.setCheckAuthSuccess("y");
+			if(mb.getStatus().trim().equals("未驗證")) {
+			mb.setStatus("正常");;
 			}
 		memberService.updateMember(mb);
 		session.setAttribute("LoginOK", mb);
-		System.out.println(mb.getCheckAuthSuccess());
+		System.out.println(mb.getStatus());
 			
 		} else {
 			content.append("<li>"+ "資料發生異常，請再試一次" + "</li>");

@@ -111,7 +111,7 @@ public class UpdatePersonPageServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			MemberBean mem = new MemberBean(id, null, null, null, null, email, phone, city, area, address, fileName,
-					blob, null, null, null, null, null, null,null,null);
+					blob, null, null, null, null, null,null,null);
 
 			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			MemberService service = ctx.getBean(MemberService.class);

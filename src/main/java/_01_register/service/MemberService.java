@@ -24,10 +24,6 @@ public interface MemberService {
 	
 	public void updateReplyDate(String memberId,String replyDate);
 	
-	public boolean checkSendable(String memberId,String today);
-	
-	public boolean checkReplyable(String memberId,String today);
-
 
 	public int updateMemberPassword(String memberId, String passwordNew);
 
