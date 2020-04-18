@@ -67,14 +67,20 @@ public class ModifyPswdServlet extends HttpServlet {
 		
 		MemberBean mb = (MemberBean) session.getAttribute("mb");
 		String memberId = mb.getMemberId();
+		String passwordOld = mb.getPassword();
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		MemberService memberService = ctx.getBean(MemberService.class);
 		
 		String passwordNew = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
+		if(passwordOld.equals(passwordNew)) {
+			System.out.println("密碼與上次相同");
+		}
 		int n = memberService.updateMemberPassword(memberId, passwordNew);
 		System.out.println(n);
 		if(n == 1) {
 			System.out.println("修改成功");
+			
+			
 		}else {
 			System.out.println("修改失敗");
 		}

@@ -36,7 +36,6 @@ public class MemberBean implements Serializable{
 	private String permission;
 	private String likeArticles;
 	private String authToken;
-	private String checkAuthSuccess;
 	private String lastSendDate;
 	private String lastReplyDate;
 
@@ -44,7 +43,7 @@ public class MemberBean implements Serializable{
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
-			String status, String permission, String likeArticles, String authToken, String checkAuthSuccess,
+			String status, String permission, String likeArticles, String authToken,
 			String lastSendDate, String lastReplyDate) {
 		super();
 		this.id = id;
@@ -64,7 +63,6 @@ public class MemberBean implements Serializable{
 		this.permission = permission;
 		this.likeArticles = likeArticles;
 		this.authToken = authToken;
-		this.checkAuthSuccess = checkAuthSuccess;
 		this.lastSendDate = lastSendDate;
 		this.lastReplyDate = lastReplyDate;
 	}
@@ -210,13 +208,6 @@ public class MemberBean implements Serializable{
 		this.authToken = authToken;
 	}
 
-	public String getCheckAuthSuccess() {
-		return checkAuthSuccess;
-	}
-
-	public void setCheckAuthSuccess(String checkAuthSuccess) {
-		this.checkAuthSuccess = checkAuthSuccess;
-	}
 
 	public String getLastSendDate() {
 		return lastSendDate;
