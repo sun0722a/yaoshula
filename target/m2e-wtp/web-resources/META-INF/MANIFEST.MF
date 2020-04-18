@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: Student
 Build-Jdk: 1.8.0_232
-=======
-Built-By: Jay Liu
-Build-Jdk: 1.8.0_92
->>>>>>> 2b876396ff959669254ec649a5f9e745cc70f611
 Created-By: Maven Integration for Eclipse
 
