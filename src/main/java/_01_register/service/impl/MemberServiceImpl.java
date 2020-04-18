@@ -100,22 +100,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	@Override
-	public boolean checkSendable(String memberId, String today) {
-		boolean isSendOK = true;
-		isSendOK = dao.checkSendable(memberId, today);
-		return isSendOK;
-	}
-
-
-	@Override
-	public boolean checkReplyable(String memberId, String today) {
-		boolean isReplyOK = true;
-		isReplyOK = dao.checkReplyable(memberId, today);
-		return isReplyOK;
-	}
-
-
 	@Transactional
 	@Override
 	public MemberBean getMember(int id) {
