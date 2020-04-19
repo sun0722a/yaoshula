@@ -36,15 +36,15 @@ public class MemberBean implements Serializable{
 	private String permission;
 	private String likeArticles;
 	private String authToken;
-	private String lastSendDate;
-	private String lastReplyDate;
+	private String sendOfTheDay;
+	private String replyOfTheDay;
 
 	
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
 			String status, String permission, String likeArticles, String authToken,
-			String lastSendDate, String lastReplyDate) {
+			String sendOfTheDay, String replyOfTheDay) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -63,8 +63,8 @@ public class MemberBean implements Serializable{
 		this.permission = permission;
 		this.likeArticles = likeArticles;
 		this.authToken = authToken;
-		this.lastSendDate = lastSendDate;
-		this.lastReplyDate = lastReplyDate;
+		this.sendOfTheDay = sendOfTheDay;
+		this.replyOfTheDay = replyOfTheDay;
 	}
 
 	public MemberBean() {
@@ -209,20 +209,20 @@ public class MemberBean implements Serializable{
 	}
 
 
-	public String getLastSendDate() {
-		return lastSendDate;
+	public String getSendOfTheDay() {
+		return sendOfTheDay;
 	}
 
-	public void setLastSendDate(String lastSendDate) {
-		this.lastSendDate = lastSendDate;
+	public void setSendOfTheDay(String sendOfTheDay) {
+		this.sendOfTheDay = sendOfTheDay;
 	}
 
-	public String getLastReplyDate() {
-		return lastReplyDate;
+	public String getReplyOfTheDay() {
+		return replyOfTheDay;
 	}
 
-	public void setLastReplyDate(String lastReplyDate) {
-		this.lastReplyDate = lastReplyDate;
+	public void setReplyOfTheDay(String replyOfTheDay) {
+		this.replyOfTheDay = replyOfTheDay;
 	}
 	
 	
