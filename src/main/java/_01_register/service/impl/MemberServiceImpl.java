@@ -89,14 +89,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void updateSendLetter(String memberId, String letterForSend) {
-		dao.updateSendDate(memberId, letterForSend);
+	public void updateSendDate(String memberId, String sendDate) {
+		dao.updateSendDate(memberId, sendDate);
 		
 	}
 	
 	@Override
-	public void updateReplyLetter(String memberId, String letterForReply) {
-		dao.updateReplyDate(memberId, letterForReply);
+	public void updateReplyDate(String memberId, String replyDate) {
+		dao.updateReplyDate(memberId, replyDate);
 	}
 
 

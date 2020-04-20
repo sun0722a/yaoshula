@@ -20,9 +20,9 @@ public interface MemberService {
 
 	public MemberBean getEmailValid(String emailCode);
 	
-	public void updateSendLetter(String memberId,String letterForSend);
+	public void updateSendDate(String memberId,String sendDate);
 	
-	public void updateReplyLetter(String memberId,String letterForReply);
+	public void updateReplyDate(String memberId,String replyDate);
 	
 
 	public int updateMemberPassword(String memberId, String passwordNew);
