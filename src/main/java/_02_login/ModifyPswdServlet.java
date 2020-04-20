@@ -28,18 +28,15 @@ public class ModifyPswdServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-//		StringBuilder content = new StringBuilder();
-		//取得信件內連結的queryString
-		String queryString = request.getQueryString();
 		
-		//把搜尋字串前面的字拿掉，取得後面的字串方便與資料庫進行比對
-		String emailVerifyCode = queryString.replaceAll("emailCode=", "");
+		//取得搜尋字串
+		String emailVerifyCode = request.getParameter("emailCode");
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		//利用getBean取得MemberService 型別的物件
 		MemberService memberService = ctx.getBean(MemberService.class);
 		
 		MemberBean mb = null;
-		System.out.println(emailVerifyCode);
+		System.out.println("驗證碼為" + emailVerifyCode);
 		//透過service的方法得到與驗證碼相同的MemberBean物件
 		mb =  memberService.getEmailValid(emailVerifyCode);
 		session.setAttribute("mb",mb);

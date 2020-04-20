@@ -50,7 +50,7 @@
 			href="<c:url value='/order/showHistoryOrder' />">歷史訂單</a>
 		</span>
 		<span class="option"> <a
-			href="<c:url value='/_07_letter/driftLetter.jsp' />">漂流信</a>
+			href="<c:url value='/_07_letter/letterInfo.jsp' />">漂流信</a>
 		</span>
 		<span class="option"> <a
 			href="<c:url value='/manager/showReports' />">管理員_檢舉專區</a>

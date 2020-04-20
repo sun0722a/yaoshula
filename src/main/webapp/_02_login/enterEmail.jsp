@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
   <!-- my css -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="<c:url value='/css/style.css' /> " />
+  <script src="<c:url value='/js/_02_login/enterEmail.js'  /> "></script>
     <title>Forget Password</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
             <!-- logo和標題 -->
             <nav class="navbar navbar-light bg-danger">
                 <a class="navbar-brand text-white" href="#">
-                  <img src="https://github.com/sun0722a/yaoshula/blob/master/src/logo/logo_trans_250px.png?raw=true" width="50" height="50" class="d-inline-block align-top" alt="">
+<!--                   <img src="https://github.com/sun0722a/yaoshula/blob/master/src/logo/logo_trans_250px.png?raw=true" width="50" height="50" class="d-inline-block align-top" alt=""> -->
                   要抒啦！
                 </a>
               </nav>
@@ -92,9 +93,10 @@
                   </div>
                   <form class="user" action="<c:url value='/findPassword' />" method="POST">
                     <div class="form-group">
-                      <input type="email" name="email" class="form-control form-control-user"  placeholder="請輸入您註冊時的email">
+                      <input type="email" name="email" class="form-control form-control-user"  id="emailInput" placeholder="請輸入您註冊時的email">
                     </div>
-                    <input type="submit" class="btn btn-primary btn-user btn-block" role="button" >
+                    <div  id="emailError" style="display: none;" class="errorText mb-3 ml-3">Email格式不符</div>
+                    <input type="submit" class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" disabled>
                   </form>
                   <hr>
                   <div class="text-center">
@@ -114,7 +116,6 @@
     </div>
 
   </div>
-
         <!--========= footer================= -->
         <!-- Footer -->
 <footer class="page-footer font-small stylish-color-dark pt-5">
@@ -232,6 +233,5 @@
           crossorigin="anonymous"
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
-
-        <script src="template_main.js"></script>
+<!--         <script src="template_main.js"></script> -->
 </html>

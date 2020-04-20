@@ -1,22 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="info.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="<c:url value='/css/_07_letter/info.css' /> ">
+<title>歡迎來到漂流瓶專區</title>
 </head>
 <body>
-    <div class="container">
+	<div class="container">
         <div class="info_img">
-            <img src="../img/undraw_delivery_address_03n0.svg" >
+            <img src="<c:url value='/image/_07_letter/undraw_delivery_address_03n0.svg '/> " >
         </div>
 
         <div class="intro-container">
-                <div>
-                <div class="formTop">
-                <img  class="letterImg" src="../img/undraw_blog_anyj.svg">
+                <div>					
+                <div class="formTop">	
+                <img  class="letterImg" src="<c:url value='/image/_07_letter/undraw_blog_anyj.svg' /> ">
                     <h1>漂流信專區</h1>
                 </div>
                 <ul>
@@ -29,13 +32,11 @@
                     <li>也可從會員信箱看到自己曾經寄過及回過的完整信件。</li>
                 </ul>
             <div class="btnGroup">
-                <div class="btn"><a  href="send.html">我想寄信</a></div>
-                <div class="btn"><a  href="reply.html">我想回信</a></div>
-                <div class="btn"><a  href="letters.html">我的信箱</a></div>
+                <div class="btn"><a  href="<c:url value='/_07_letter/send.jsp' /> ">我想寄信</a></div>
+                <div class="btn"><a  href="<c:url value='/_07_letter/reply.jsp' /> ">我想回信</a></div>
+                <div class="btn"><a  href="<c:url value='/_07_letter/letters.jsp' /> ">我的信箱</a></div>
             </div>
-            <!-- <input class="btn" type="submit" value="我想寄信" name="send"> -->
-            <!-- <input class="btn" type="submit" value="我想回信" name="reply">
-            <input class="btn" type="submit" value="我的信箱" name="mailBox"> -->
+           
         </div>
         </div>
     </div>

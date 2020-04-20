@@ -26,7 +26,7 @@ import _01_register.model.MemberBean;
 		@WebInitParam(name = "url_4", value = "/article/AddComment"),
 		@WebInitParam(name = "url_5", value = "/article/LikeArticle"),
 		@WebInitParam(name = "url_6", value = "/article/Report"),
-		@WebInitParam(name = "url_7", value = "/_07_letter/driftLetter.jsp"),
+		@WebInitParam(name = "url_7", value = "/_07_letter/letterInfo.jsp"),
 		@WebInitParam(name = "url_8", value = "/letter/*")})
 public class LoginFilter implements Filter {
 

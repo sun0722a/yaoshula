@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import _00_init.util.GlobalService;
 import _00_init.util.SendEmail;
 import _01_register.model.MemberBean;
+import _01_register.service.MemberService;
 
 
 
@@ -33,11 +37,7 @@ public class SendEmailServlet extends HttpServlet {
 		}
 				String memberEmailStr = request.getParameter("email");
 		
-				MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-				System.out.println(mb.getMemberId());
-		
-					
-				System.out.println(memberEmailStr);
+				MemberBean mb = (MemberBean) session.getAttribute("LoginOK");				
 				String authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(memberEmailStr));
 				
 				String subject = null;
@@ -65,33 +65,39 @@ public class SendEmailServlet extends HttpServlet {
 	
 			request.setCharacterEncoding("UTF-8");
 			HttpSession session = request.getSession(false);
+			
 			if(session == null) {
 				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 				return;
 			}	
-					String memberEmailStr = request.getParameter("email");
-					System.out.println(memberEmailStr);
-					
+			
+			String memberEmailStr = request.getParameter("email");
+			System.out.println(memberEmailStr);
+			
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			MemberService memberService = ctx.getBean(MemberService.class);
+			
+			if(memberService.emailExists(memberEmailStr) == true) {
+				
 					String[] memberEmail = {memberEmailStr};
 					String authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(memberEmailStr));
 					String subject = null;
 					StringBuilder content = new StringBuilder();
-					
 					subject = "請點選連結修改密碼";
 					content.setLength(0);
 					content.append("<p>" + "請點選以下連結修改密碼" + "</p>" + "<br>" + 
 					GlobalService.DOMAIN_PATTERN + "/changepswd" + "?" + "emailCode=" + authToken  +"<br>"
 					+"<p>" + "下次不要再弄丟密碼了啦" + "</p>");
-								
 					Thread sendEmail = new SendEmail(memberEmail, subject,content.toString(),"");
 					System.out.println(memberEmail[0]);
 					sendEmail.start();
+					}else {
+						System.out.println("假裝有寄啦，但其實沒寄");
+					}
 					
 					response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 					return;
 				
 	}
 			
-	
-
 }

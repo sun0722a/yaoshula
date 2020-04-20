@@ -6,7 +6,7 @@ $(document).ready(function () {
         $(this).parent().next().css('opacity','1');
         
     });
-
+    
     $('.replyContent').click(function (e) { 
         e.preventDefault();
         if($(this).prev().css('opacity') == '0'){
