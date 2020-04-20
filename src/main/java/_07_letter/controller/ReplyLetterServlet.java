@@ -45,24 +45,25 @@ public class ReplyLetterServlet extends HttpServlet {
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
 		String memberId = mb.getMemberId();
 		//一樣檢查當日有沒有回過信
-		String lastReplyDate = mb.getLastReplyDate();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String today = simpleDateFormat.format(new java.util.Date());
-		System.out.println(memberId);
-		System.out.println("今天日期:" + today);
-		System.out.println("上次回信日期:" + lastReplyDate);
-		if(lastReplyDate == null) {
-			System.out.println("還沒回過");
-		}
-		if(lastReplyDate != null && lastReplyDate.equals(today)) {
-			System.out.println("已經回過信了，無法再回");
-			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
-			rd.forward(request, response);
-			return;
-
-		}else {
-			System.out.println("還沒回過");
-		}
+//		String lastReplyDate = mb.getLastReplyDate();
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		String today = simpleDateFormat.format(new java.util.Date());
+//		System.out.println(memberId);
+//		System.out.println("今天日期:" + today);
+//		System.out.println("上次回信日期:" + lastReplyDate);
+//		if(lastReplyDate == null) {
+//			System.out.println("還沒回過");
+//		}
+//		if(lastReplyDate != null && lastReplyDate.equals(today)) {
+//			System.out.println("已經回過信了，無法再回");
+//			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
+//			rd.forward(request, response);
+//			return;
+//
+//		}else {
+//			System.out.println("還沒回過");
+//		}
 		
 		
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

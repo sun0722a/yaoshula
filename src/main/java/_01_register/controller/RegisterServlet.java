@@ -138,16 +138,15 @@ public class RegisterServlet extends HttpServlet {
 			// 為了配合Hibernate的版本。要在此加密，不要在 dao.saveMember(mem)進行加密
 			password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 			Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
-			
+
 			String authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(email));
-			String checkAuthSuccess = "n";
 			Blob blob = null;
 			if (is != null) {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "正常", "一般會員", null, authToken,checkAuthSuccess,null,null);
+					address, fileName, blob, ts, "未驗證", "一般會員", null, authToken, null, null);
 
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {
@@ -159,24 +158,22 @@ public class RegisterServlet extends HttpServlet {
 			}
 			// 呼叫MemberDao的saveMember方法
 			int n = service.saveMember(mb);
-			
+
 			if (n == 1) {
 				String subject = null;
 				StringBuilder content = new StringBuilder();
-				String[] memberEmail = {mb.getEmail()};
+				String[] memberEmail = { mb.getEmail() };
 				subject = "歡迎你加入要抒啦的會員";
 				content.setLength(0);
-				content.append("<p>" + "請點選以下連結" + "</p>" + "<br>" + 
-				GlobalService.DOMAIN_PATTERN + "/EmailVerify" + "?" + "emailCode=" + authToken  +"<br>"
-				+"<p>" + "進入連結後即認證成功，可以去抒發一下了!" + "</p>");
-							
-				Thread sendEmail = new SendEmail(memberEmail, subject,content.toString(),"");
+				content.append("<p>" + "請點選以下連結" + "</p>" + "<br>" + GlobalService.DOMAIN_PATTERN + "/EmailVerify" + "?"
+						+ "emailCode=" + authToken + "<br>" + "<p>" + "進入連結後即認證成功，可以去抒發一下了!" + "</p>");
+
+				Thread sendEmail = new SendEmail(memberEmail, subject, content.toString(), "");
 				System.out.println(memberEmail[0]);
 				sendEmail.start();
-				
-//				response.getWriter().append("請前往信箱查看認證訊息");
-//				response.setHeader("即將跳轉首頁", 5 + ";URL=/index.jsp");
-				
+
+				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+
 			} else {
 				System.out.println(n);
 				System.out.println("更新此筆資料有誤(RegisterServlet)");

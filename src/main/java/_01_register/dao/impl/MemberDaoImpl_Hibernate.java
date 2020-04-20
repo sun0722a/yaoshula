@@ -99,13 +99,13 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		Session session = factory.getCurrentSession();
 		String hql0 = "UPDATE MemberBean m SET m.email = :email, m.phone = :phone, m.city = :city, "
 				+ "m.area = :area, m.address = :address, m.fileName = :fileName, "
-				+ "m.picture = :picture ,m.lastSendDate = :sendDate,"
-				+ "m.lastReplyDate = :replyDate  WHERE m.id = :id";
+				+ "m.picture = :picture ,m.sendOfTheDay = :sendDate,"
+				+ "m.replyOfTheDay = :replyDate  WHERE m.id = :id";
 		session.createQuery(hql0).setParameter("email", mb.getEmail()).setParameter("phone", mb.getPhone())
 				.setParameter("city", mb.getCity()).setParameter("area", mb.getArea())
 				.setParameter("address", mb.getAddress()).setParameter("fileName", mb.getFileName())
 				.setParameter("picture", mb.getPicture()).setParameter("id", mb.getId())
-				.setParameter("sendDate", mb.getLastSendDate()).setParameter("replyDate", mb.getLastReplyDate())
+				.setParameter("sendDate", mb.getSendOfTheDay()).setParameter("replyDate", mb.getReplyOfTheDay())
 				.executeUpdate();
 		n++;
 		return n;
@@ -171,33 +171,7 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 		
 	}
 
-	@Override
-	public boolean checkSendable(String memberId,  String today) {
-		boolean isSendOK = true;
-		Session session = factory.getCurrentSession();
-		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastSendDate = :lastSendDate";
-		try {
-			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastSendDate", today).getResultList();
-			isSendOK = false;
-		} catch (NoResultException ex) {
-			isSendOK = true;
-		}
-		return isSendOK;
-	}
 
-	@Override
-	public boolean checkReplyable(String memberId, String today) {
-		boolean isReplyOK = true;
-		Session session = factory.getCurrentSession();
-		String hql = "FROM MemberBean m WHERE m.memberId = :memberId AND m.lastReplyDate = :lastReplyDate";
-		try {
-			session.createQuery(hql).setParameter("memberId", memberId).setParameter("lastReplyDate", today).getResultList();
-			isReplyOK = false;
-		} catch (NoResultException ex) {
-			isReplyOK = true;
-		}
-		return isReplyOK;
-	}
 	// 取得會員資料
 	@Override
 	public MemberBean getMember(int id) {
