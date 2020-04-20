@@ -12,6 +12,13 @@ function doFirst() {
       headPicture.style.maxHeight = "200px";
     });
   });
+  angel = document.getElementById("angel");
+  evil = document.getElementById("evil");
+  angelCategory = document.getElementById("angelCategory");
+  evilCategory = document.getElementById("evilCategory");
+  angel.addEventListener("click", checkClassName);
+  evil.addEventListener("click", checkClassName);
+
   formatItemsBox = document.getElementsByClassName("formatItemsBox");
   addProductFormatItemDiv = document.getElementsByClassName(
     "addProductFormatItemDiv"
@@ -45,10 +52,17 @@ function doFirst() {
   modalBody = document.getElementById("modalBody");
   checkChangeFormat = document.getElementById("checkChangeFormat");
   checkChangeFormat.addEventListener("click", checkOrChangeFormat);
-  // checkFormatBtn.addEventListener("click", checkFormat);
-  // changeFormatBtn.addEventListener("click", changeFormat);
   checkFormatBtn.addEventListener("click", checkModel);
   changeFormatBtn.addEventListener("click", changeModel);
+}
+function checkClassName(e) {
+  if (e.target.id == "angel") {
+    angelCategory.style.display = "";
+    evilCategory.style.display = "none";
+  } else {
+    angelCategory.style.display = "none";
+    evilCategory.style.display = "";
+  }
 }
 function checkOrChangeFormat(e) {
   $("#checkChangeFormatModal").modal("hide");

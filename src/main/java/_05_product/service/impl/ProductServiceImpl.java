@@ -1,13 +1,14 @@
 package _05_product.service.impl;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import _05_product.dao.ProductDao;
-
+import _05_product.model.CategoryBean;
 import _05_product.model.ProductBean;
 import _05_product.service.ProductService;
 
@@ -18,6 +19,12 @@ public class ProductServiceImpl implements ProductService {
 	ProductDao dao;
 
 	public ProductServiceImpl() {
+	}
+
+	@Transactional
+	@Override
+	public void insertProduct(ProductBean pb) {
+		dao.insertProduct(pb);
 	}
 
 	@Transactional
@@ -50,23 +57,21 @@ public class ProductServiceImpl implements ProductService {
 		return map;
 	}
 
-//	@Override
-//	public List<String> getCategory() {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		List<String> list = null;
-//		try {
-//			tx = session.beginTransaction();
-//			list = dao.getCategory();
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
-//		return list;
-//	}
+	@Transactional
+	@Override
+	public Map<Integer, ProductBean> getProducts(String searchStr, String categoryTitle) {
+		Map<Integer, ProductBean> map = null;
+		map = dao.getProducts(searchStr, categoryTitle);
+		return map;
+	}
+
+	@Transactional
+	@Override
+	public Set<CategoryBean> getCategorys(String categoryTitle) {
+		Set<CategoryBean> set = null;
+		set = dao.getCategorys(categoryTitle);
+		return set;
+	}
 
 //	@Override
 //	public String getCategoryTag() {
@@ -104,23 +109,19 @@ public class ProductServiceImpl implements ProductService {
 //		return n;
 //	}
 
-//	@Override
-//	public int deleteBook(int no) {
-//		Session session = factory.getCurrentSession();
-//		Transaction tx = null;
-//		int n = 0;
-//		try {
-//			tx = session.beginTransaction();
-//			n = dao.deleteBook(no);
-//			tx.commit();
-//		} catch (Exception ex) {
-//			if (tx != null)
-//				tx.rollback();
-//			ex.printStackTrace();
-//			throw new RuntimeException(ex);
-//		}
-//		return n;
-//	}
+	@Override
+	public int deleteProduct(int productId) {
+		int n = 0;
+		n = dao.deleteProduct(productId);
+		return n;
+	}
+
+	@Override
+	public int deleteProductFormat(ProductBean pb) {
+		int n = 0;
+		n = dao.deleteProductFormat(pb);
+		return n;
+	}
 
 //	@Override
 //	public int saveBook(BookBean bean) {
@@ -145,6 +146,14 @@ public class ProductServiceImpl implements ProductService {
 	public ProductBean getProduct(int productId) {
 		ProductBean bean = null;
 		bean = dao.getProduct(productId);
+		return bean;
+	}
+
+	@Transactional
+	@Override
+	public CategoryBean getCategory(int categoryId) {
+		CategoryBean bean = null;
+		bean = dao.getCategory(categoryId);
 		return bean;
 	}
 

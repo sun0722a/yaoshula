@@ -46,9 +46,9 @@ public class ShowOrdersServlet extends HttpServlet {
 		String searchStr = request.getParameter("searchStr") == null ? "" : request.getParameter("searchStr");
 
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		OrderService service = ctx.getBean(OrderService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
 
-		List<OrderBean> orders = service.getAllOrders(searchStr);
+		List<OrderBean> orders = orderService.getAllOrders(searchStr);
 		// 取出訂單詳細資料(OrderItemBean)
 		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
 		for (OrderBean ob : orders) {

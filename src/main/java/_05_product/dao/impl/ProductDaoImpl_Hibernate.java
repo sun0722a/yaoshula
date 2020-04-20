@@ -2,6 +2,7 @@ package _05_product.dao.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,7 @@ import _00_init.util.GlobalService;
 import _04_order.model.OrderBean;
 import _04_order.model.OrderItemBean;
 import _05_product.dao.ProductDao;
+import _05_product.model.CategoryBean;
 import _05_product.model.ProductBean;
 
 /* 問問問: hql使用count + join 會報錯 */
@@ -32,6 +34,13 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	SessionFactory factory;
 
 	public ProductDaoImpl_Hibernate() {
+	}
+
+	// 新增文章資料
+	@Override
+	public void insertProduct(ProductBean pb) {
+		Session session = factory.getCurrentSession();
+		session.save(pb);
 	}
 
 	// 計算搜尋的商品總共有幾頁
@@ -124,15 +133,38 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		return map;
 	}
 
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public List<String> getCategory() {
-//		String hql = "SELECT DISTINCT category FROM ProductBean";
-//		Session session = factory.getCurrentSession();
-//		List<String> list = null;
-//		list = session.createQuery(hql).getResultList();
-//		return list;
-//	}
+	// 取得所有商品
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, ProductBean> getProducts(String searchStr, String categoryTitle) {
+		String hql = "SELECT pb FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
+				+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle LIKE :categoryTitle "
+				+ "ORDER BY pb.productId";
+		Session session = factory.getCurrentSession();
+		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
+		List<ProductBean> list = new ArrayList<ProductBean>();
+		list = session.createQuery(hql).setParameter("searchStr", searchStr)
+				.setParameter("categoryTitle", categoryTitle).getResultList();
+		for (ProductBean bean : list) {
+			map.put(bean.getProductId(), bean);
+		}
+		return map;
+	}
+
+	// 查詢商品副類別(天使or惡魔)
+	@SuppressWarnings("unchecked")
+	@Override
+	public Set<CategoryBean> getCategorys(String categoryTitle) {
+		String hql = "FROM CategoryBean cb WHERE cb.categoryTitle= :categoryTitle ";
+		Session session = factory.getCurrentSession();
+		List<CategoryBean> beans = null;
+		Set<CategoryBean> categorySet = new LinkedHashSet<>();
+		beans = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).getResultList();
+		for (CategoryBean bean : beans) {
+			categorySet.add(bean);
+		}
+		return categorySet;
+	}
 
 //	@Override
 //	public String getCategoryTag() {
@@ -186,17 +218,28 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 //		return n;
 //	}
 
-	// 依bookId來刪除單筆記錄
-//	@Override
-//	public int deleteBook(int no) {
-//		int n = 0;
-//		Session session = factory.getCurrentSession();
-//		BookBean bb = new BookBean();
-//		bb.setBookId(no);
-//		session.delete(bb);
-//		n++;
-//		return n;
-//	}
+	// 刪除商品
+	@Override
+	public int deleteProduct(int productId) {
+		int n = 0;
+		Session session = factory.getCurrentSession();
+//		ProductBean pb = getProduct(productId);
+		ProductBean pb = new ProductBean();
+		pb.setProductId(productId);
+		session.delete(pb);
+		n++;
+		return n;
+	}
+
+	// 刪除某商品的所有規格
+	@Override
+	public int deleteProductFormat(ProductBean pb) {
+		String hql = "DELETE FROM ProductFormatBean pfb WHERE pfb.product= :ProductBean ";
+		Session session = factory.getCurrentSession();
+		int n = 0;
+		n = session.createQuery(hql).setParameter("ProductBean", pb).executeUpdate();
+		return n;
+	}
 
 	// 新增一筆記錄---
 //	@Override
@@ -236,6 +279,15 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 		Session session = factory.getCurrentSession();
 		ProductBean bean = null;
 		bean = session.get(ProductBean.class, productId);
+		return bean;
+	}
+
+	// 取得分類資料
+	@Override
+	public CategoryBean getCategory(int categoryId) {
+		Session session = factory.getCurrentSession();
+		CategoryBean bean = null;
+		bean = session.get(CategoryBean.class, categoryId);
 		return bean;
 	}
 

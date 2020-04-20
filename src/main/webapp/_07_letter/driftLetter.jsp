@@ -12,7 +12,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
-
+	<script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/js/_07_letter/sendReply.js"></script>
 </head>
 <style>
 @import
@@ -23,13 +27,7 @@ body {
 	font-family: 'Noto Sans TC', sans-serif;
 }
 </style>
-<script>
-	$(document).ready(function () {
-	    $('.toReply').click(
-	   $('#content').modal('show')
-	);
-	});
-</script>
+
 <body class="bg-light">
 	<div class="row justify-content-center content">
 		
@@ -37,11 +35,12 @@ body {
 		<div class="heaven col-5">
 			<p id="send" class="text-center">我要寄信</p>
 
-			<a type="button" class="btn btn-primary btn-lg btn-block"
-				id="buttonSend" href='<c:url value="/letter/sendLetter"  />'>Send</a>
-				
-			<a type="button" class="btn btn-primary btn-lg btn-block"
-				id="buttonSend" href='<c:url value="/letter/getReply"  />'>查看信件回覆</a>
+			<a type="button" class="btn btn-primary btn-lg btn-block mb-3"
+				id="buttonSend">Send</a>
+				<div style="display: none ; color: white;" id="donotSend"
+										class="errorText  ">今天已經寄過信囉!</div>
+			<a type="button" class="btn btn-primary btn-lg btn-block mt-5"
+				id="buttonSend">查看信件回覆</a>
 			
 		</div>
 		
@@ -51,10 +50,12 @@ body {
 				<%-- 	            <a type="button" name="天使" class="btn btn-primary btn-lg col-5 ml-4" id="buttonReplyAngel" href='<c:url value="/_07_letter/replyLetter"  />'>Reply(天使區)</a> --%>
 				<%-- 	            <a type="button" name="惡魔" class="btn btn-secondary btn-lg col-5" id="buttonReplyDemon" href='<c:url value="/_07_letter/replyLetter"  />'>Reply(惡魔區)</a> --%>
 				<input type="submit" name="type"
-					class="btn btn-primary btn-lg col-5 ml-5 toReply" id="buttonReplyAngel"
-					value="天使"> <input type="submit" name="type"
-					class="btn btn-secondary btn-lg col-5 toReply" id="buttonReplyDemon"
-					value="惡魔">
+					class="btn btn-primary btn-lg col-5 ml-5 toReply" class="buttonReply"
+					value="天使" > <input type="submit" name="type"
+					class="btn btn-secondary btn-lg col-5 toReply" class="buttonReply"
+					value="惡魔" >
+				<div style="display: none;" id="donotReply"
+										class="errorText">今天已經回過信囉!</div>
 			</form>
 		</div>
 		

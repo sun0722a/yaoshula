@@ -52,7 +52,12 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                   </div>
-                  <input type="text" name="" class="form-control" required="required"/>
+                  <input
+                    type="text"
+                    name=""
+                    class="form-control"
+                    required="required"
+                  />
                 </div>
               </div>
             </div>
@@ -63,7 +68,7 @@
                   class="btn-group-horizontal btn-group-toggle mb-5"
                   data-toggle="buttons"
                 >
-                  <div class="btn btn-outline-secondary">
+                  <div class="btn btn-outline-secondary active" id="angel">
                     <input
                       type="radio"
                       name="category"
@@ -71,7 +76,7 @@
                       value="天使"
                     />天使
                   </div>
-                  <div class="btn btn-outline-secondary">
+                  <div class="btn btn-outline-secondary" id="evil">
                     <input
                       type="radio"
                       name="category"
@@ -82,8 +87,11 @@
                 </div>
               </div>
               <div class="col-4 p-0">
-                <select class="form-control">
-                  <option>紓壓小物</option>
+                <select class="form-control" id="angelCategory">
+                  <option value="">天使</option>
+                </select>
+                <select class="form-control" id="evilCategory" style="display: none;">
+                  <option value="">紓壓小物</option>
                 </select>
               </div>
             </div>
@@ -337,56 +345,64 @@
           <h3>產品介紹：</h3>
         </div>
         <div class="row m-0 bor">
-          <textarea name="" id="" rows="10" style="width: 100%;" required="required"></textarea>
+          <textarea
+            name=""
+            id=""
+            rows="10"
+            style="width: 100%;"
+            required="required"
+          ></textarea>
         </div>
         <div class="text-center">
           <input
             class="btn btn-primary mt-3"
             type="submit"
             id="submitBtn"
-            disabled = "disabled"
+            disabled="disabled"
             value="確認"
           />
         </div>
       </div>
     </form>
 
-        <!-- 確認要修改/確認規格 浮動視窗========== -->
-        <div
-        class="modal fade"
-        id="checkChangeFormatModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="checkChangeFormatModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h6 id="modalBody">如要修改規格<br>
-                庫存需重新輸入喔~</h6>
-            </div>
-            <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-primary"
-                value="仍要修改"
-                id="checkChangeFormat"
-              />
-            </div>
+    <!-- 確認要修改/確認規格 浮動視窗========== -->
+    <div
+      class="modal fade"
+      id="checkChangeFormatModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="checkChangeFormatModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h6 id="modalBody">
+              如要修改規格<br />
+              庫存需重新輸入喔~
+            </h6>
+          </div>
+          <div class="modal-footer">
+            <input
+              type="button"
+              class="btn btn-primary"
+              value="仍要修改"
+              id="checkChangeFormat"
+            />
           </div>
         </div>
       </div>
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -40,7 +40,6 @@ public class CreditCard extends HttpServlet {
 		}
 
 		String orderNo = session.getAttribute("orderNo").toString();
-		System.out.println("有拿到orderNo值嗎" + orderNo);
 		int number = (int) (Math.random() * 1000);
 
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
@@ -55,8 +54,17 @@ public class CreditCard extends HttpServlet {
 		aioCheck.setMerchantTradeDate(
 				ob.getOrderDate().toString().replace("-", "/").substring(0, ob.getOrderDate().toString().length() - 2));
 		aioCheck.setTotalAmount(ob.getTotalPrice().toString());
-		aioCheck.setItemName("哈哈");
+		aioCheck.setItemName("哈哈20元x1#西西20元x2");
 
+		aioCheck.setMerchantTradeNo("testCompany0007");
+		aioCheck.setMerchantTradeDate("2017/01/01 08:05:23");
+		aioCheck.setTotalAmount("50");
+		aioCheck.setTradeDesc("test Description");
+		aioCheck.setItemName("TestItem");
+		aioCheck.setReturnURL("http://211.23.128.214:5000");
+		aioCheck.setNeedExtraPaidInfo("N");
+		aioCheck.setCreditInstallment("3,6");
+		aioCheck.setInstallmentAmount("10");
 		// 輸出畫面
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");

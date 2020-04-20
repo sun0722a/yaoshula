@@ -48,25 +48,25 @@ public class SendLetterServlet extends HttpServlet {
 //			rd.forward(request, response);
 //			return;
 //		}
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String today = simpleDateFormat.format(new java.util.Date());
-		String memberId = mb.getMemberId();
-		System.out.println(today);
-		if(lastSendDate != null && lastSendDate.equals(today)) {
-			System.out.println("已經寄過信了，無法再寄");
-			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
-			rd.forward(request, response);
-			return;
-			
-		}else {
-			System.out.println("可寄");
-//			String contextPath = getServletContext().getContextPath();
-//			response.sendRedirect(response.encodeRedirectURL(contextPath + "/_07_letter/sendLetter.jsp"));
-			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/sendLetter.jsp");
-			rd.forward(request, response);
-			return;
-		}
-	
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		String today = simpleDateFormat.format(new java.util.Date());
+//		String memberId = mb.getMemberId();
+//		System.out.println(today);
+//		if(lastSendDate != null && lastSendDate.equals(today)) {
+//			System.out.println("已經寄過信了，無法再寄");
+//			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/driftLetter.jsp");
+//			rd.forward(request, response);
+//			return;
+//			
+//		}else {
+//			System.out.println("可寄");
+////			String contextPath = getServletContext().getContextPath();
+////			response.sendRedirect(response.encodeRedirectURL(contextPath + "/_07_letter/sendLetter.jsp"));
+//			RequestDispatcher rd = request.getRequestDispatcher("/_07_letter/sendLetter.jsp");
+//			rd.forward(request, response);
+//			return;
+//		}
+//	
 	}
 
 
