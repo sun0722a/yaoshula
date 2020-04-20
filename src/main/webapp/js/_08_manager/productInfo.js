@@ -12,6 +12,13 @@ function doFirst() {
       headPicture.style.maxHeight = "200px";
     });
   });
+  angel = document.getElementById("angel");
+  evil = document.getElementById("evil");
+  angelCategory = document.getElementById("angelCategory");
+  evilCategory = document.getElementById("evilCategory");
+  angel.addEventListener("click", checkClassName);
+  evil.addEventListener("click", checkClassName);
+
   formatItemsBox = document.getElementsByClassName("formatItemsBox");
   addProductFormatItemDiv = document.getElementsByClassName(
     "addProductFormatItemDiv"
@@ -40,14 +47,45 @@ function doFirst() {
   formatContent1 = document.getElementsByName("formatContent1");
   formatContent2 = document.getElementsByName("formatContent2");
   nullInputError = document.getElementById("nullInputError");
-
-  checkFormatBtn.addEventListener("click", checkFormat);
-  changeFormatBtn.addEventListener("click", changeFormat);
+  stocks = document.getElementById("stocks");
+  submitBtn = document.getElementById("submitBtn");
+  modalBody = document.getElementById("modalBody");
+  checkChangeFormat = document.getElementById("checkChangeFormat");
+  checkChangeFormat.addEventListener("click", checkOrChangeFormat);
+  checkFormatBtn.addEventListener("click", checkModel);
+  changeFormatBtn.addEventListener("click", changeModel);
+}
+function checkClassName(e) {
+  if (e.target.id == "angel") {
+    angelCategory.style.display = "";
+    evilCategory.style.display = "none";
+  } else {
+    angelCategory.style.display = "none";
+    evilCategory.style.display = "";
+  }
+}
+function checkOrChangeFormat(e) {
+  $("#checkChangeFormatModal").modal("hide");
+  if (e.target.value == "確認規格") {
+    checkFormat();
+  } else if (e.target.value == "仍要修改") {
+    changeFormat();
+  }
+}
+function checkModel() {
+  modalBody.innerHTML = `如未來要修改規格，則庫存將需重新輸入喔~<br>是否確認規格`;
+  checkChangeFormat.value = "確認規格";
+  $("#checkChangeFormatModal").modal("show");
+}
+function changeModel() {
+  modalBody.innerHTML = `如要修改規格
+  則庫存將需重新輸入喔~<br>是否仍要修改規格`;
+  checkChangeFormat.value = "仍要修改";
+  $("#checkChangeFormatModal").modal("show");
 }
 // 確認規格
 function checkFormat() {
   emptyInput = false;
-
   if (productFomat[0].style.display == "") {
     if (formatTitle1.value != "") {
       for (let i = 0; i < formatContent1.length; i++) {
@@ -98,26 +136,115 @@ function checkFormat() {
     checkFormatBtn.style.display = "none";
     changeFormatBtn.style.display = "";
 
-    顯示規格庫存
-    
+    submitBtn.disabled = false;
 
+    // 顯示規格庫存
+    if (formatTitle1.value != "" && formatTitle2.value != "") {
+      for (let i = 0; i < formatContent1.length; i++) {
+        formatText = document.createElement("th");
+        formatText.setAttribute("scope", "col");
+        formatText.innerText = "規格";
+        stockText = document.createElement("th");
+        stockText.setAttribute("scope", "col");
+        stockText.innerText = "庫存";
+        titleTr = document.createElement("tr");
+        thead = document.createElement("thead");
+        thead.setAttribute("class", "thead-light");
+        titleTr.appendChild(formatText);
+        titleTr.appendChild(stockText);
+        thead.appendChild(titleTr);
 
+        tbody = document.createElement("tbody");
+        for (let j = 0; j < formatContent2.length; j++) {
+          formatTh = document.createElement("th");
+          formatTh.setAttribute("scope", "row");
+          formatTh.innerText =
+            formatContent1[i].value + " - " + formatContent2[j].value;
+          stockInput = document.createElement("input");
+          stockInput.setAttribute("class", "text-center");
+          stockInput.type = "number";
+          stockInput.name = "stock";
+          stockInput.min = "0";
+          stockInput.required = "required";
+          stockTd = document.createElement("td");
+          stockTd.appendChild(stockInput);
+          stockTr = document.createElement("tr");
+          stockTr.appendChild(formatTh);
+          stockTr.appendChild(stockTd);
+          tbody.appendChild(stockTr);
+        }
+        stockTable = document.createElement("table");
+        stockTable.setAttribute("class", "table text-center");
+        stockTable.appendChild(thead);
+        stockTable.appendChild(tbody);
+        stockDiv = document.createElement("div");
+        stockDiv.setAttribute(
+          "class",
+          "border border-dark col-md-12 col-lg-6 p-0 mb-1"
+        );
+        stockDiv.appendChild(stockTable);
+        stocks.appendChild(stockDiv);
+      }
+    } else {
+      formatText = document.createElement("th");
+      formatText.setAttribute("scope", "col");
+      formatText.innerText = "規格";
+      stockText = document.createElement("th");
+      stockText.setAttribute("scope", "col");
+      stockText.innerText = "庫存";
+      titleTr = document.createElement("tr");
+      thead = document.createElement("thead");
+      thead.setAttribute("class", "thead-light");
+      titleTr.appendChild(formatText);
+      titleTr.appendChild(stockText);
+      thead.appendChild(titleTr);
+      tbody = document.createElement("tbody");
+      if (formatTitle1.value == "" && formatTitle2.value == "") {
+        formatNum = ["無"];
+      } else if (formatTitle1.value != "") {
+        formatNum = formatContent1;
+      } else {
+        formatNum = formatContent2;
+      }
+      for (let j = 0; j < formatNum.length; j++) {
+        formatTh = document.createElement("th");
+        formatTh.setAttribute("scope", "row");
+        if (formatTitle1.value == "" && formatTitle2.value == "") {
+          formatTh.innerText = formatNum[j];
+        } else {
+          formatTh.innerText = formatNum[j].value;
+        }
+        stockInput = document.createElement("input");
+        stockInput.setAttribute("class", "text-center");
+        stockInput.type = "number";
+        stockInput.name = "stock";
+        stockInput.min = "0";
+        stockInput.required = "required";
+        stockTd = document.createElement("td");
+        stockTd.appendChild(stockInput);
+        stockTr = document.createElement("tr");
+        stockTr.appendChild(formatTh);
+        stockTr.appendChild(stockTd);
+        tbody.appendChild(stockTr);
+      }
 
-
-
-
-
-
-
-
-
-
-
+      stockTable = document.createElement("table");
+      stockTable.setAttribute("class", "table text-center");
+      stockTable.appendChild(thead);
+      stockTable.appendChild(tbody);
+      stockDiv = document.createElement("div");
+      stockDiv.setAttribute(
+        "class",
+        "border border-dark col-md-12 col-lg-6 p-0 mb-1"
+      );
+      stockDiv.appendChild(stockTable);
+      stocks.appendChild(stockDiv);
+    }
   } else {
     nullInputError.style.display = "";
   }
 }
-// 更改規格
+// 修改規格
 function changeFormat() {
   formatTitle1.readOnly = false;
   for (let n = 0; n < formatContent1.length; n++) {
@@ -145,6 +272,10 @@ function changeFormat() {
   }
   checkFormatBtn.style.display = "";
   changeFormatBtn.style.display = "none";
+
+  submitBtn.setAttribute("disabled", "disabled");
+
+  stocks.innerText = "";
 }
 //刪除規格
 function deleteProductFormat(n) {

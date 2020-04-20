@@ -11,8 +11,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous" />
-<script
-	src="${pageContext.request.contextPath}/js/_08_manager/allOrders.js"></script>
+
 <script type="text/javascript">
 	function checkDelete(productId, productName, searchStr) {
 		$("#deleteProductModal").modal("show");
