@@ -198,12 +198,11 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<String> getCategorys(String categoryTitle) {
-		String hql = "FROM ArticleCategoryBean acb WHERE acb.categoryTitle like :categoryTitle ";
+		String hql = "FROM ArticleCategoryBean acb WHERE acb.categoryTitle= :categoryTitle ";
 		Session session = factory.getCurrentSession();
 		List<ArticleCategoryBean> beans = null;
 		Set<String> categorySet = new LinkedHashSet<>();
-		beans = (List<ArticleCategoryBean>) session.createQuery(hql).setParameter("categoryTitle", categoryTitle)
-				.getResultList();
+		beans = session.createQuery(hql).setParameter("categoryTitle", categoryTitle).getResultList();
 		for (ArticleCategoryBean bean : beans) {
 			categorySet.add(bean.getCategoryName());
 		}

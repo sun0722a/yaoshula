@@ -146,7 +146,6 @@ public class RegisterServlet extends HttpServlet {
 				blob = GlobalService.fileToBlob(is, sizeInBytes);
 			}
 			// 將所有會員資料封裝到MemberBean(類別的)物件
-
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
 					address, fileName, blob, ts, "正常", "一般會員", null, authToken,checkAuthSuccess,null,null);
 

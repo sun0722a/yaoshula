@@ -1,10 +1,7 @@
-package _08_manager.order;
+package _08_manager.product;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,13 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _04_order.model.OrderBean;
-import _04_order.model.OrderItemBean;
-import _04_order.service.OrderService;
+import _05_product.model.ProductBean;
+import _05_product.service.ProductService;
 
-// 查詢訂單
-@WebServlet("/manager/showOrders")
-public class ShowOrdersServlet extends HttpServlet {
+// 查詢商品
+@WebServlet("/manager/showProducts")
+public class ShowProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,26 +38,19 @@ public class ShowOrdersServlet extends HttpServlet {
 			return;
 		}
 
-		// 必須是空字串
 		String searchStr = request.getParameter("searchStr") == null ? "" : request.getParameter("searchStr");
+		String categoryTitle = request.getParameter("categoryTitle") == null ? "天使"
+				: request.getParameter("categoryTitle");
 
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		OrderService orderService = ctx.getBean(OrderService.class);
-
-		List<OrderBean> orders = orderService.getAllOrders(searchStr);
-		// 取出訂單詳細資料(OrderItemBean)
-		Map<Integer, Set<OrderItemBean>> orderItemGroup = new HashMap<Integer, Set<OrderItemBean>>();
-		for (OrderBean ob : orders) {
-			int orderNo = ob.getOrderNo();
-			Set<OrderItemBean> OrderItemBeans = ob.getOrderItems();
-			orderItemGroup.put(orderNo, OrderItemBeans);
-		}
+		ProductService productService = ctx.getBean(ProductService.class);
+		Map<Integer, ProductBean> products = productService.getProducts(searchStr, categoryTitle);
 
 		request.setAttribute("searchStr", searchStr);
-		request.setAttribute("order_list", orders);
-		request.setAttribute("orderItem_map", orderItemGroup);
+		request.setAttribute("categoryTitle", categoryTitle);
+		request.setAttribute("product_map", products);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/order/allOrders.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/product/allProducts.jsp");
 		rd.forward(request, response);
 		return;
 	}
