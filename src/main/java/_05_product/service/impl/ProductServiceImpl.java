@@ -109,6 +109,7 @@ public class ProductServiceImpl implements ProductService {
 //		return n;
 //	}
 
+	@Transactional
 	@Override
 	public int deleteProduct(int productId) {
 		int n = 0;
@@ -116,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
 		return n;
 	}
 
+	@Transactional
 	@Override
 	public int deleteProductFormat(ProductBean pb) {
 		int n = 0;

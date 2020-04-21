@@ -11,7 +11,7 @@
 
 		<!-- 2. 其他與資料存取有關的設定 -->
 		<!-- 自動產生資料庫的Schema -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 		<!-- 顯示實際操作資料庫時的SQL -->
 		<property name="hibernate.show_sql">true</property>
 		<!-- 將顯示的SQL排版，方便觀看 -->

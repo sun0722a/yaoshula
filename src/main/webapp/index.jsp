@@ -61,6 +61,9 @@
 		<span class="option"> <a
 			href="<c:url value='/manager/showOrders' />">管理員_訂單管理</a>
 		</span>
+		<span class="option"> <a
+			href="<c:url value='/manager/showProducts' />">管理員_商品管理</a>
+		</span>
 		
 	</div>
 	<div class="main-menu">
