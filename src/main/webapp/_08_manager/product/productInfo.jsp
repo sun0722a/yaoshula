@@ -27,8 +27,10 @@
 				<div class="col-md-12 col-lg-6 border">
 					<div
 						class="form-group row mx-0 d-flex justify-content-center align-items-center text-center">
-						<img class="mb-3" src="" id="headPicture" style="max-width: 75%;" />
-						<input name="memberMultipartFile" type="file" id="fileSelect" />
+						<img class="mb-3"
+							src="${pageContext.request.contextPath}/init/getProductImage?id=${product.productId}"
+							id="headPicture" style="max-width: 75%;" /> <input
+							name="memberMultipartFile" type="file" id="fileSelect" />
 					</div>
 					<div class="form-group row mx-0">
 						<label class="col-4 col-form-label">商品名稱：</label>

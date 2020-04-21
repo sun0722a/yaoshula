@@ -24,7 +24,7 @@ public class ProductBean implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productId;
 	private String productName;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FK_CategoryBean_Category")
 	private CategoryBean category;
 	private Integer price;
@@ -32,7 +32,7 @@ public class ProductBean implements Serializable {
 	private Blob image;
 	private Clob detail;
 	private Integer sales;
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<ProductFormatBean> productFormat = new LinkedHashSet<>();
 
 	public ProductBean(Integer productId, String productName, CategoryBean category, Integer price, String fileName,

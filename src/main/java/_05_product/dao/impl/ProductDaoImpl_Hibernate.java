@@ -138,12 +138,12 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	@Override
 	public Map<Integer, ProductBean> getProducts(String searchStr, String categoryTitle) {
 		String hql = "SELECT pb FROM ProductBean pb, CategoryBean cb WHERE pb.category=cb.categoryId "
-				+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle LIKE :categoryTitle "
+				+ "AND pb.productName LIKE :searchStr " + "AND cb.categoryTitle= :categoryTitle "
 				+ "ORDER BY pb.productId";
 		Session session = factory.getCurrentSession();
 		Map<Integer, ProductBean> map = new LinkedHashMap<Integer, ProductBean>();
 		List<ProductBean> list = new ArrayList<ProductBean>();
-		list = session.createQuery(hql).setParameter("searchStr", searchStr)
+		list = session.createQuery(hql).setParameter("searchStr", "%" + searchStr + "%")
 				.setParameter("categoryTitle", categoryTitle).getResultList();
 		for (ProductBean bean : list) {
 			map.put(bean.getProductId(), bean);
@@ -221,11 +221,9 @@ public class ProductDaoImpl_Hibernate implements ProductDao {
 	// 刪除商品
 	@Override
 	public int deleteProduct(int productId) {
-		int n = 0;
 		Session session = factory.getCurrentSession();
-//		ProductBean pb = getProduct(productId);
-		ProductBean pb = new ProductBean();
-		pb.setProductId(productId);
+		int n = 0;
+		ProductBean pb = getProduct(productId);
 		session.delete(pb);
 		n++;
 		return n;

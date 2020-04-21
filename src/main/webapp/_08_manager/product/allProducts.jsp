@@ -13,46 +13,53 @@
 	crossorigin="anonymous" />
 
 <script type="text/javascript">
-	function checkDelete(productId, productName, searchStr) {
+	function checkDelete(productId, productName) {
 		$("#deleteProductModal").modal("show");
 		var aSend = document.getElementById('aSend');
 		modalBody = document.getElementById("modalBody");
 		modalBody.innerHTML = "確認是否刪除<br> 編號：" + productId + " 名稱："
 				+ productName + "之商品?";
-		aSend.href = "<c:url value='/manager/addOrderDate?cmd=" + cmd + "&id="
-				+ orderNo + "&searchStr=" + searchStr + "'/>"
+		aSend.href = "<c:url value='/manager/deleteProduct?id=" + productId
+				+ "'/>"
 		$("#deleteProductModal").modal("hide");
 	}
 </script>
 <style>
+.productRow:hover {
+	background-color: rgb(99, 185, 219);
+}
 </style>
 </head>
 <body>
 	<div class="w-75 my-5 mx-auto">
 		<form action="<c:url value='/manager/showProducts'/>">
+			<input type="hidden" value="${categoryTitle}" name="categoryTitle">
 			<div class="input-group my-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text"><img
-						src="../../image/_05_product/search.png" class="productImg" /></span>
+						src="${pageContext.request.contextPath}/image/_05_product/search.png"
+						class="productImg" /></span>
 				</div>
 				<input type="search" class="form-control" placeholder="關鍵字搜尋"
-					name="search" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" />
+					name="searchStr" aria-label="Sizing example input"
+					value="${searchStr}" aria-describedby="inputGroup-sizing-default" />
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button"
-						id="button-addon2">搜尋</button>
+					<button class="btn btn-outline-secondary" id="button-addon2">搜尋</button>
 				</div>
 			</div>
 		</form>
 		<div class="d-flex justify-content-end align-items-center">
-			<a href="<c:url value=''/>"><input type="button" value="新增商品" /></a>
+			<a href="<c:url value='/manager/showProductInfo'/>"><input
+				type="button" value="新增商品" /></a>
 		</div>
 
 
 		<ul class="nav nav-tabs nav-justified">
-			<li class="nav-item"><a class="nav-link" href=""
+			<li class="nav-item"><a class="nav-link"
+				href="<c:url value='/manager/showProducts?categoryTitle=天使'/>"
 				style="text-decoration: none; color: black;">天使</a></li>
-			<li class="nav-item"><a class="nav-link" href=""
+			<li class="nav-item"><a class="nav-link"
+				href="<c:url value='/manager/showProducts?categoryTitle=惡魔'/>"
 				style="text-decoration: none; color: black;">惡魔</a></li>
 		</ul>
 
@@ -73,42 +80,43 @@
 				價格</div>
 			<div
 				class="col-2 d-flex justify-content-center align-items-center text-center my-2"></div>
-
-			<c:choose>
-				<c:when test='${cmd=="angel"}'>
-					<c:set var="categoryName" value="${article_map}"></c:set>
-				</c:when>
-				<c:otherwise>
-					<c:set var="categoryName" value="${comment_map}"></c:set>
-				</c:otherwise>
-			</c:choose>
-			<c:forEach var="entry" items="${categoryName}">
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					<img src="../../image/_05_product/香精油.jpg" alt=""
-						style="max-width: 100px;" />
-				</div>
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					1</div>
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					香精油</div>
-
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					紓壓小物</div>
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					$ 5000</div>
-				<div
-					class="col-2 d-flex justify-content-center align-items-center text-center border-top border-light my-2">
-					<i class='far fa-times-circle' style='font-size: 30px'
-						onclick="checkDelete()"></i>
-				</div>
-			</c:forEach>
-
 		</div>
+
+		<c:forEach var="entry" items="${product_map}">
+			<div class="row productRow">
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+					onclick="location.href='<c:url value="/manager/showProductInfo?id=${entry.value.productId}"/>';">
+					<img
+						src="${pageContext.request.contextPath}/init/getProductImage?id=${entry.value.productId}"
+						alt="" style="max-width: 100px;" />
+				</div>
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+					onclick="location.href='<c:url value="/manager/showProductInfo?id=${entry.value.productId}"/>';">
+					${entry.value.productId}</div>
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+					onclick="location.href='<c:url value="/manager/showProductInfo?id=${entry.value.productId}"/>';">
+					${entry.value.productName}</div>
+
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+					onclick="location.href='<c:url value="/manager/showProductInfo?id=${entry.value.productId}"/>';">
+					${entry.value.category.categoryName}</div>
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2"
+					onclick="location.href='<c:url value="/manager/showProductInfo?id=${entry.value.productId}"/>';">
+					$ ${entry.value.price}</div>
+
+				<div
+					class="col-2 d-flex justify-content-center align-items-center text-center my-2">
+					<i class='far fa-times-circle' style='font-size: 30px'
+						onclick="checkDelete('${entry.value.productId}','${entry.value.productName}')"></i>
+				</div>
+			</div>
+
+		</c:forEach>
 	</div>
 
 
@@ -124,12 +132,14 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" id="modalBody">
 					確認是否刪除<br /> 編號：名稱：之商品?
 				</div>
 				<div class="modal-footer">
-					<input type="button" class="btn btn-primary" value="刪除"
+					<a href="" style="text-decoration: none; color: black;" id="aSend">
+						<input type="button" class="btn btn-primary" value="刪除"
 						id="deleteProduct" />
+					</a>
 				</div>
 			</div>
 		</div>
