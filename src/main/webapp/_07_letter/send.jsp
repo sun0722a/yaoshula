@@ -28,7 +28,7 @@
                         直到有人接到此漂流信。
                     </p>
 
-                    <a class="angelA" href="<c:url value='/angelSend.jsp' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
+                    <a class="angelA" href="<c:url value='sendAngel.jsp' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
 			                        的回覆能使您對挑戰一笑置之，給予當頭棒喝讓您能繼續向前，得到回覆後也可以依照對方的內容給予評價，
 			                        讓我們能更致力於維護惡魔區所帶來的負能量，讓你重拾信心或是失去信心(?)，繼續面對下一個跳戰
                     </p>
-                    <a class="darkA" href="<c:url value='/devilSend.jsp' /> ">點擊進入<i class="fas fa-sign-in-alt"></i></a>
+                    <a class="darkA" href="<c:url value='sendDevil.jsp' /> ">點擊進入<i class="fas fa-sign-in-alt"></i></a>
                 </div>
                 
             </div>
