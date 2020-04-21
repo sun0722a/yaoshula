@@ -22,7 +22,7 @@ import _07_letter.Service.LetterService;
 import _07_letter.model.LetterBean;
 
 @WebServlet("/letter/goToReply")
-public class GotoReplyServlet extends HttpServlet {
+public class GotoReplyServletOld extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
    

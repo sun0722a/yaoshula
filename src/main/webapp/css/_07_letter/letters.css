@@ -53,6 +53,7 @@ body{
 }
 
 .box:hover .content h2{
+	position: absolute;
     top: -250px;
     color: #0e2640;
 }

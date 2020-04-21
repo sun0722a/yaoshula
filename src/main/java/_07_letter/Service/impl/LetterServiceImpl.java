@@ -1,6 +1,8 @@
 package _07_letter.Service.impl;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -51,11 +53,13 @@ public class LetterServiceImpl implements LetterService{
 
 
 
+//	@Override
+//	public Map<String,LetterBean> getAllLettersByMemberSend(String memberId,String status) {
+//		return dao.getAllLettersByMemberSend(memberId,status);
+//	}
+	
 	@Override
-	public Map<Integer, LetterBean> getAllLettersByMember(String memberId,String status) {
-		Map<Integer,LetterBean> letters = null;
-		letters = dao.getAllLettersByMember(memberId,status);
-		return letters;
+	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status) {
+		return dao.getAllLettersByMemberSend(memberId,status);
 	}
-
 }

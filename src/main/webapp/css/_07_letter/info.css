@@ -10,13 +10,8 @@ body{
     
 }
 
-ul{
-    font-size: 1.2rem;
-}
-
-
 .container{
-    width: 100vw;
+    width: 90vw;
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -24,6 +19,7 @@ ul{
 }
 
 .info_img{
+	width:50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,6 +35,13 @@ ul{
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+
+
+/*簡介文字大小*/
+ul{
+	font-size:1.3rem;
 }
 
 .letterImg{
@@ -50,6 +53,8 @@ ul{
 
 }
 
+
+/*三個按鈕那邊*/
 .btn{
     width: 28%;
     height: 50px;
@@ -57,7 +62,7 @@ ul{
     font-size: 1.2rem;
     margin: 1rem 5px;
     text-align: center;
-    padding-top: 3px;
+    padding-top: 10px;
     /*讓顏色從左到右*/
     background-image: linear-gradient(to right, #0e2640, #0b2a4b, #1d4570);
     cursor: pointer;
@@ -66,6 +71,20 @@ ul{
     transition: .5s;
 }
 
+.btnError{
+	width: 28%;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    margin: 1rem 5px;
+    text-align: center;
+    padding-top: 10px;
+	background :#ccc;
+	opacity:0.5;
+	cursor:pointer;
+}
+
+/*三個按鈕的裡的文字*/
 .btn a{
     text-decoration: none;
     color: #fff;
@@ -76,11 +95,14 @@ ul{
 }
 
 
+
 @media screen and (max-width:1200px){
     .info_img img{
+    	margin:10px;
         width: 400px;
     }
-
+	
+	
     ul{
         font-size: 1.1rem;
     }
@@ -90,11 +112,15 @@ ul{
 @media screen and (max-width:1000px){
 
     .info_img img{
-        width: 300px;
+        width: 350px;
     }
 
     ul{
         font-size: 0.9rem;
+    }
+    
+    .btn{
+   		 width: 35%;
     }
     
 }
@@ -127,7 +153,7 @@ ul{
     }
 
     .btn{
-        width: 25%;
+        width: 30%;
         margin: 20px auto 0 20px;
         
     }

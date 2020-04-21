@@ -104,7 +104,7 @@
 										<div class="form-group">
 											<input type="password" name="password"
 												class="form-control form-control-user" id="enterPassword"
-												placeholder="輸入新密碼" maxlength="15" minlength="8">
+												placeholder="輸入新密碼(8~15字元)" maxlength="15" minlength="8">
 										</div>
 									
 											<div class="checkPswd input-group mb-3">

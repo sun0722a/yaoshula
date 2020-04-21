@@ -1,6 +1,8 @@
 package _07_letter.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import _07_letter.model.LetterBean;
 
@@ -14,6 +16,7 @@ public interface LetterService {
 	
 	public void updateReply(LetterBean lb);
 	
-	public Map<Integer,LetterBean> getAllLettersByMember(String memberId,String status);
+//	public Map<String,LetterBean> getAllLettersByMemberSend(String memberId,String status);
+	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status);
 	
 }

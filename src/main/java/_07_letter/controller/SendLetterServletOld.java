@@ -26,7 +26,7 @@ import _07_letter.model.LetterBean;
 
 //寄信Servlet
 @WebServlet("/letter/sendLetter")
-public class SendLetterServlet extends HttpServlet {
+public class SendLetterServletOld extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Override

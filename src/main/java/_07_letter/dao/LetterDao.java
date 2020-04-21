@@ -1,5 +1,6 @@
 package _07_letter.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import _07_letter.model.LetterBean;
@@ -14,5 +15,6 @@ public interface LetterDao {
 	
 	public void updateReply(LetterBean lb);
 	
-	public Map<Integer,LetterBean> getAllLettersByMember(String memberId,String status);
+//	public Map<String,LetterBean> getAllLettersByMemberSend(String memberId,String status);
+	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status);
 }

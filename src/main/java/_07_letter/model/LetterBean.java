@@ -32,7 +32,7 @@ public class LetterBean implements Serializable{
 	private String letterContent;
 	private String letterCategory;
 	private String letterReplier;
-	private String ReplyContent;
+	private String replyContent;
 	private String status;
 	private String feedBack;
 	
@@ -48,7 +48,7 @@ public class LetterBean implements Serializable{
 		this.letterContent = letterContent;
 		this.letterCategory = letterCategory;
 		this.letterReplier = letterReplier;
-		this.ReplyContent = replyContent;
+		this.replyContent = replyContent;
 		this.status = status;
 		this.feedBack = feedBack;
 	}
@@ -64,7 +64,7 @@ public class LetterBean implements Serializable{
 		this.letterTitle = letterTitle;
 		this.letterWriter = letterWriter;
 		this.letterContent = letterContent;
-		ReplyContent = replyContent;
+		this.replyContent = replyContent;
 	}
 
 
@@ -75,7 +75,7 @@ public class LetterBean implements Serializable{
 		super();
 		this.letterId = letterId;
 		this.letterReplier = letterReplier;
-		this.ReplyContent = replyContent;
+		this.replyContent = replyContent;
 		this.status = status;
 	}
 
@@ -135,10 +135,10 @@ public class LetterBean implements Serializable{
 		this.letterReplier = letterReplier;
 	}
 	public String getReplyContent() {
-		return ReplyContent;
+		return replyContent;
 	}
 	public void setReplyContent(String replyContent) {
-		ReplyContent = replyContent;
+		this.replyContent = replyContent;
 	}
 	public String getStatus() {
 		return status;

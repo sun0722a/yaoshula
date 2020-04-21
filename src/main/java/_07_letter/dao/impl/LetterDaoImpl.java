@@ -1,9 +1,12 @@
 package _07_letter.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -68,18 +71,25 @@ public class LetterDaoImpl implements LetterDao {
 		
 	}
 
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public Map<String,LetterBean> getAllLettersByMemberSend(String memberId,String status) {
+//		Map<String,LetterBean> letterMap = new LinkedHashMap<String, LetterBean>();
+//		Session session = factory.getCurrentSession();
+//		String hql = "FROM LetterBean l WHERE l.letterWriter = :memberId AND l.status = :status";
+//		List<LetterBean> list = session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
+//		for(LetterBean lb : list) {
+//			letterMap.put(lb.getLetterCategory(), lb);
+//		}
+//		return letterMap;
+//	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<Integer, LetterBean> getAllLettersByMember(String memberId,String status) {
+	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status) {
 		Session session = factory.getCurrentSession();
-		Map<Integer, LetterBean> beanMap = new LinkedHashMap<Integer, LetterBean>();
-		List<LetterBean> list = null;
 		String hql = "FROM LetterBean l WHERE l.letterWriter = :memberId AND l.status = :status";
-		list = session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
-		for(LetterBean lb : list) {
-			beanMap.put(lb.getLetterId(), lb);
-		}
-		return beanMap;
+		return session.createQuery(hql).setParameter("memberId", memberId).setParameter("status", status).getResultList();
 	}
 	
 }

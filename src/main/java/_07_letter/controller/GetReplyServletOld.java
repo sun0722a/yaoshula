@@ -24,7 +24,7 @@ import _07_letter.model.LetterBean;
 
 
 @WebServlet("/letter/getReply")
-public class GetReplyServlet extends HttpServlet {
+public class GetReplyServletOld extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
@@ -52,7 +52,7 @@ public class GetReplyServlet extends HttpServlet {
 			LetterService letterService = ctx.getBean(LetterService.class);
 			
 			Map<Integer,LetterBean> letterMap = new  LinkedHashMap<Integer, LetterBean>();
-			letterMap = letterService.getAllLettersByMember(memberId,"y");
+//			letterMap = letterService.getAllLettersByMemberSend(memberId,"y");
 			System.out.println("有幾封完整信件:" + letterMap.size());
 			Set<Integer> allLetterId = letterMap.keySet();
 			System.out.println("信件id的SET" + allLetterId);

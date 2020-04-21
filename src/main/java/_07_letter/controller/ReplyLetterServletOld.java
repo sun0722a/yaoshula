@@ -25,7 +25,7 @@ import _07_letter.model.LetterBean;
 
 
 @WebServlet("/letter/replyLetter")
-public class ReplyLetterServlet extends HttpServlet {
+public class ReplyLetterServletOld extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	
