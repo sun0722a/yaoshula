@@ -32,6 +32,7 @@ public class letterInfoServlet extends HttpServlet {
 		
 		
 		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
+		
 		System.out.println("memberId : " + mb.getMemberId());
 		
 		String lastSendDate = mb.getLastSendDate();

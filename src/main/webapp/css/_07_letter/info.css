@@ -56,10 +56,10 @@ ul{
 
 /*三個按鈕那邊*/
 .btn{
-    width: 28%;
+    width: 40%;
     height: 50px;
     border-radius: 25px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 1rem 5px;
     text-align: center;
     padding-top: 10px;
@@ -72,10 +72,10 @@ ul{
 }
 
 .btnError{
-	width: 28%;
+	width: 40%;
     height: 50px;
     border-radius: 25px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 1rem 5px;
     text-align: center;
     padding-top: 10px;
@@ -120,9 +120,11 @@ ul{
     }
     
     .btn{
-   		 width: 35%;
+   		 width: 40%;
     }
-    
+    .btn a {
+    font-size:0.8rem;
+    }
 }
 
 @media screen and (max-width:900px){
@@ -153,11 +155,13 @@ ul{
     }
 
     .btn{
-        width: 30%;
-        margin: 20px auto 0 20px;
-        
+        width: 40%;
+       	
     }
     
+    .btn a {
+    font-size:1rem;
+    }
 }
 
 @media screen and (max-width:400px){
@@ -172,7 +176,7 @@ ul{
 
 
     ul{
-        font-size: 0.8rem;
+        font-size: 1.2rem;
         margin: 10px;
     }
 }
