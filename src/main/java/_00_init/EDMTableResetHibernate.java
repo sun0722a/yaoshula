@@ -367,10 +367,10 @@ public class EDMTableResetHibernate {
 					Timestamp createTime = Timestamp.valueOf(token[10].trim());
 					String status = token[11];
 					String permission = token[12];
-					String authToken = token[13];
-					authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(email));
+					String authToken = GlobalService.getMD5Endocing(GlobalService.encryptString(email));
 					MemberBean memberBean = new MemberBean(null, memberId, password, gender, birthday, email, phone,
-							city, area, address, fileName, picture, createTime, status, permission, null, authToken,null,null);
+							city, area, address, fileName, picture, createTime, status, permission, null, authToken,
+							null, null);
 
 					session.save(memberBean);
 					session.flush();

@@ -3,20 +3,23 @@ function doFirst(){
 	enterPassword = document.getElementById("enterPassword");
 	checkPassword = document.getElementById("checkPassword");
 	checkbtn = document.getElementById("checkbtn");
-	
+
 	enterPassword.addEventListener("blur",check)
 	checkPassword.addEventListener("blur",checkpswd);
+	checkbtn.addEventListener("click",btncheckpswd);
 	
-	enterPassword.addEventListener("focus",forbidden);
-	checkPassword.addEventListener("focus",forbidden);
+	enterPassword.addEventListener("change",hideText)
+	checkPassword.addEventListener("change",hideText);
+	
+	
 	
 }
 
 function check(){
 	if (enterPassword.value != checkPassword.value && checkPassword.value != "") {
-		checkPassword.value = "";
 	    passwordError.style.display = "block";
 	    passwordError.style.color = "red";
+	    checkPassword.value = "";
 	    
 	  } else {
 	    passwordError.style.display = "none";
@@ -26,18 +29,31 @@ function check(){
 
 function checkpswd(){
 	if(enterPassword.value != checkPassword.value){
-		enterPassword.value = "";
-		checkPassword.value = "";
 		passwordError.style.display = "block";
 		passwordError.style.color = "red";
+		checkPassword.value = "";
 	}else {
 	    passwordError.style.display = "none";
 	    checkbtn.disabled = false;
 	  }
 }
 
-function forbidden(){
-	checkbtn.disabled = true;
+
+function btncheckpswd(){
+	if (enterPassword.value == checkPassword.value && checkPassword.value != ""){
+		passwordError.style.display = "none";
+		checkbtn.disabled = false; 
+		
+	}else{
+		checkbtn.disabled = true;
+		 	passwordError.style.display = "block";
+		    passwordError.style.color = "red";
+	}
+}
+
+function hideText(){
+	passwordError.style.display = "none";
+	checkbtn.disabled = false;
 }
 
 window.addEventListener("load",doFirst);

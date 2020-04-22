@@ -118,9 +118,10 @@
 														<i class='bx bxs-lock-open'></i>
 													</button>
 												</div>
-												<div  id="passwordError" style="display: none;"
-														class="errorText">密碼不相符</div>
+												
 											</div>
+											<div  id="passwordError" style="display: none;"
+														class="errorText">密碼不相符</div>
 											<button type="submit" id="checkbtn"
 												class="btn btn-primary btn-user btn-block" disabled>確認</button>
 									</form>
@@ -240,13 +241,21 @@
 
 	<script>
 		$(document).ready(function() {
-			$('#button-addon').click(function() {
+			
+			
+			
+			$('#button-addon').mousedown(function() {
 				let changeType = $('.checked').attr('type')
-				if (changeType == 'password') {
+				
 					$('.checked').attr('type', 'text')
-				} else {
+				
+			})
+			
+			$('body').mouseup(function() {
+				let changeType = $('.checked').attr('type')
+
 					$('.checked').attr('type', 'password')
-				}
+
 			})
 		});
 	</script>

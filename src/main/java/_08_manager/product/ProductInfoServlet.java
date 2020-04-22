@@ -86,7 +86,7 @@ public class ProductInfoServlet extends HttpServlet {
 				try {
 					Clob clob = pb.getDetail();
 					if (clob != null) {
-						detail = GlobalService.clobToString(clob);
+						detail = GlobalService.clobToString(clob).replace("<br>", "\n");
 					}
 				} catch (SQLException ex) {
 					ex.printStackTrace();

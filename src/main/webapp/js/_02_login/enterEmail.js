@@ -3,7 +3,7 @@ function doFirst(){
 	emailInput = document.getElementById('emailInput');
 	emailError = document.getElementById('emailError');
 	
-	emailInput.addEventListener('blur',checkEmail);
+	submitbtn.addEventListener('click',checkEmail);
 	emailInput.addEventListener('focus',disabledBtn)
 }
 
@@ -15,11 +15,12 @@ function checkEmail(){
 	}else{
 		emailError.style.display = 'none';
 		submitbtn.disabled = false;
+		alert("請前往信箱確認信件");
 	}
 }
 
 function disabledBtn(){
-	submitbtn.disabled = true;
+	submitbtn.disabled = false;
 }
 
 window.addEventListener('load',doFirst);
