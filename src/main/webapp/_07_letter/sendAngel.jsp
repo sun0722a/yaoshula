@@ -40,9 +40,8 @@
                         <div class="form-group">
                           <textarea cols="35" rows="10" id="letterContent" maxlength="250"></textarea>
                         </div>
-                        <input type="submit" class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" value="寄出" disabled>
+                        <a  class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" href="<c:url value='/sendAngel' /> ">寄出</a>
                      
-            
                       <div class="text-center">
                        
                       </div>

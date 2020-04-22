@@ -11,7 +11,8 @@ function doFirst() {
   emailText = document.getElementById("emailText");
   userName = document.getElementById("userName");
   email = document.getElementById("email");
-
+  btSubmit = document.getElementById("btSubmit");
+  
   // 在更動畫面裡，選擇照片後改變上面顯示的照片
   fileSelect.addEventListener("change", function() {
     readFile = new FileReader();
@@ -23,10 +24,14 @@ function doFirst() {
       headPicture.style.maxHeight = "200px";
     });
   });
+  
   btUserName.addEventListener("click", check);
   btEmail.addEventListener("click", check);
   password.addEventListener("blur", checkPW);
   passwordCheck.addEventListener("blur", checkPassword);
+  btSubmit.addEventListener('click',registerOK);
+  
+
 }
 function checkPW() {
   if (password.value != passwordCheck.value && passwordCheck.value != "") {
@@ -75,5 +80,7 @@ function check() {
     emailText.innerHTML = xhr.responseText;
   }
 }
+
+
 
 window.addEventListener("load", doFirst);

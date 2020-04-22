@@ -15,6 +15,7 @@ function checkEmail(){
 	}else{
 		emailError.style.display = 'none';
 		submitbtn.disabled = false;
+		alert("請前往信箱確認信件");
 	}
 }
 
