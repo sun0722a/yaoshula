@@ -114,7 +114,11 @@
 			</div>
 		</div>
 
-		<div class="main-post"></div>
+		<div class="main-post">
+			<c:if test="${not empty register}" >
+				
+			</c:if>
+		</div>
 
 		<div class="right-menu">
 			<div class="post">

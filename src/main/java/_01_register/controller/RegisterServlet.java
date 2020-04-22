@@ -174,6 +174,7 @@ public class RegisterServlet extends HttpServlet {
 				System.out.println(memberEmail[0]);
 				sendEmail.start();
 				
+				request.setAttribute("registerOK", "registerOK");
 				response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 				
 			} else {
