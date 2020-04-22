@@ -3,7 +3,7 @@ function doFirst(){
 	emailInput = document.getElementById('emailInput');
 	emailError = document.getElementById('emailError');
 	
-	emailInput.addEventListener('blur',checkEmail);
+	submitbtn.addEventListener('click',checkEmail);
 	emailInput.addEventListener('focus',disabledBtn)
 }
 
@@ -19,7 +19,7 @@ function checkEmail(){
 }
 
 function disabledBtn(){
-	submitbtn.disabled = true;
+	submitbtn.disabled = false;
 }
 
 window.addEventListener('load',doFirst);
