@@ -21,7 +21,8 @@
 </head>
 <body>
 	<div class="w-75 my-5 mx-auto border p-5">
-		<form action="">
+		<form method="post" enctype="multipart/form-data"
+			action="<c:url value='/manager/addProduct'/>">
 			<div class="row m-0 mb-5">
 				<!-- 左基本資料======================= -->
 				<div class="col-md-12 col-lg-6 border">
@@ -65,12 +66,13 @@
 							</div>
 						</div>
 						<div class="col-4 p-0">
-							<select class="form-control" id="angelCategory">
+							<select class="form-control" id="angelCategory" name="categoryId">
 								<c:forEach var="entry" items="${angel_set}">
 									<option value="${entry.categoryId}">${entry.categoryName}</option>
 								</c:forEach>
-							</select> <select class="form-control" id="evilCategory"
-								style="display: none;">
+							</select> 
+							<select class="form-control" id="evilCategory"
+								style="display: none;" name="categoryId" disabled >
 								<c:forEach var="entry" items="${evil_set}">
 									<option value="${entry.categoryId}">${entry.categoryName}</option>
 								</c:forEach>
@@ -83,95 +85,76 @@
 					<div
 						class="d-flex justify-content-start align-items-center text-center my-2">
 						<h3>規格：</h3>
-						<c:choose>
-							<c:when test="${product==null}">
-								<i class="material-icons" style="font-size: 30px;"
-									id="addProductFormat">add_circle</i>
-							</c:when>
-							<c:otherwise>
-								<i class="material-icons"
-									style="font-size: 30px; display: none;" id="addProductFormat">add_circle</i>
-							</c:otherwise>
-						</c:choose>
+						<i class="material-icons"
+							style="font-size: 30px; <c:if test='${product!=null}'> display: none;</c:if>"
+							id="addProductFormat">add_circle</i>
+
+
 					</div>
 
 					<!-- format1============================ -->
-					<div class="productFomat row mx-0 mb-3" style="display: none;">
+					<div class="productFomat row mx-0 mb-3"
+						<c:if test="${product==null}"> style="display: none;"</c:if>>
 						<div class="col-10 p-3 border border-dark formatItemsBox">
 							<c:choose>
 								<c:when test="${product==null||title1==''}">
-									<div class="productFomat row mx-0 mb-3" style="display: none;">
-										<div class="col-10 p-3 border border-dark formatItemsBox">
-											<!-- 規格細項1=============== -->
-											<div class="form-group row mx-0 firstFormatItem">
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatTitle1"
-														class="form-control p-0" placeholder="規格標題" />
-													<h5>：</h5>
-												</div>
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatContent1"
-														class="form-control" placeholder="規格細項" />
-												</div>
-
-												<div
-													class="col-2 d-flex justify-content-center align-items-center text-center"></div>
-											</div>
-
-											<!-- 規格細項2=============== -->
-											<div class="form-group row mx-0 secondFormatItem">
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center"></div>
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatContent1"
-														class="form-control" />
-												</div>
-
-												<div
-													class="col-2 d-flex justify-content-center align-items-center text-center"></div>
-											</div>
-
-											<div
-												class="d-flex justify-content-center align-items-center text-center my-2 addProductFormatItemDiv">
-												<i class="material-icons addProductFormatItem"
-													style="font-size: 30px;">add_circle</i>
-											</div>
+									<!-- 規格細項1=============== -->
+									<div class="form-group row mx-0 firstFormatItem">
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatTitle1"
+												class="form-control p-0" placeholder="規格標題" />
+											<h5>：</h5>
+										</div>
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatContent1" class="form-control"
+												placeholder="規格細項" />
 										</div>
 
-										<div class="col-2">
-											<i class="material-icons deleteProductFomat"
-												style="font-size: 36px;">remove_circle_outline</i>
+										<div
+											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
+									</div>
+
+									<!-- 規格細項2=============== -->
+									<div class="form-group row mx-0 secondFormatItem">
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center"></div>
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatContent1" class="form-control" />
 										</div>
+
+										<div
+											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="entry" varStatus="count"
 										items="${content1_set}">
 										<c:choose>
-											<c:when test="${count.index==1}">
+											<c:when test="${count.first}">
 												<!-- 規格細項1=============== -->
 												<div class="form-group row mx-0 firstFormatItem">
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatTitle1"
 															class="form-control p-0" placeholder="規格標題"
-															value="${title1}" />
+															value="${title1}" readonly />
 														<h5>：</h5>
 													</div>
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent1"
-															class="form-control" placeholder="規格細項" value="${entry}" />
+															class="form-control" placeholder="規格細項" value="${entry}"
+															readonly />
 													</div>
 
 													<div
 														class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 												</div>
 											</c:when>
-											<c:when test="${count.index==2}">
+											<c:when test="${count.index==1}">
 												<!-- 規格細項2=============== -->
 												<div class="form-group row mx-0 secondFormatItem">
 													<div
@@ -179,7 +162,7 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent1"
-															class="form-control" value="${entry}" />
+															class="form-control" value="${entry}" readonly />
 													</div>
 
 													<div
@@ -195,12 +178,12 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent1"
-															class="form-control" value="${entry}">
+															class="form-control" value="${entry}" readonly>
 													</div>
 													<div
 														class="col-2 d-flex justify-content-center align-items-center text-center">
-														<i class="material-icons deleteProductFormatItem"
-															style="font-size: 36px">remove_circle_outline</i>
+														<i class="material-icons deleteProductFormatItem "
+															style="font-size: 36px; display: none;">remove_circle_outline</i>
 													</div>
 												</div>
 											</c:otherwise>
@@ -211,110 +194,80 @@
 
 							<div
 								class="d-flex justify-content-center align-items-center text-center my-2 addProductFormatItemDiv">
-								<c:choose>
-									<c:when test="${product==null}">
-										<i class="material-icons addProductFormatItem"
-											style="font-size: 30px;">add_circle</i>
-									</c:when>
-									<c:otherwise>
-										<i class="material-icons addProductFormatItem"
-											style="font-size: 30px; display: none;">add_circle</i>
-									</c:otherwise>
-								</c:choose>
+								<i class="material-icons addProductFormatItem"
+									style="font-size: 30px; <c:if test='${product!=null}'> display: none;</c:if>">add_circle</i>
 							</div>
 						</div>
 
 						<div class="col-2">
-							<c:choose>
-								<c:when test="${product==null}">
-									<i class="material-icons deleteProductFomat"
-										style="font-size: 36px;">remove_circle_outline</i>
-								</c:when>
-								<c:otherwise>
-									<i class="material-icons deleteProductFomat"
-										style="font-size: 36px; display: none;">remove_circle_outline</i>
-								</c:otherwise>
-							</c:choose>
+							<i class="material-icons deleteProductFomat"
+								style="font-size: 36px; <c:if test='${product!=null}'> display: none;</c:if>">remove_circle_outline</i>
 						</div>
 					</div>
 
 					<!-- format2============================ -->
-					<div class="productFomat row mx-0 mb-3" style="display: none;">
+					<div class="productFomat row mx-0 mb-3"
+						<c:if test="${product==null}"> style="display: none;"</c:if>>
 						<div class="col-10 p-3 border border-dark formatItemsBox">
 							<c:choose>
 								<c:when test="${product==null||title2==''}">
-									<div class="productFomat row mx-0 mb-3" style="display: none;">
-										<div class="col-10 p-3 border border-dark formatItemsBox">
-											<!-- 規格細項1=============== -->
-											<div class="form-group row mx-0 firstFormatItem">
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatTitle2"
-														class="form-control p-0" placeholder="規格標題" />
-													<h5>：</h5>
-												</div>
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatContent2"
-														class="form-control" placeholder="規格細項" />
-												</div>
-
-												<div
-													class="col-2 d-flex justify-content-center align-items-center text-center"></div>
-											</div>
-
-											<!-- 規格細項2=============== -->
-											<div class="form-group row mx-0 secondFormatItem">
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center"></div>
-												<div
-													class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-													<input type="text" name="formatContent2"
-														class="form-control" />
-												</div>
-
-												<div
-													class="col-2 d-flex justify-content-center align-items-center text-center"></div>
-											</div>
-
-											<div
-												class="d-flex justify-content-center align-items-center text-center my-2 addProductFormatItemDiv">
-												<i class="material-icons addProductFormatItem"
-													style="font-size: 30px;">add_circle</i>
-											</div>
+									<!-- 規格細項1=============== -->
+									<div class="form-group row mx-0 firstFormatItem">
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatTitle2"
+												class="form-control p-0" placeholder="規格標題" />
+											<h5>：</h5>
+										</div>
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatContent2" class="form-control"
+												placeholder="規格細項" />
 										</div>
 
-										<div class="col-2">
-											<i class="material-icons deleteProductFomat"
-												style="font-size: 36px;">remove_circle_outline</i>
+										<div
+											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
+									</div>
+
+									<!-- 規格細項2=============== -->
+									<div class="form-group row mx-0 secondFormatItem">
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center"></div>
+										<div
+											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
+											<input type="text" name="formatContent2" class="form-control" />
 										</div>
+
+										<div
+											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="entry" varStatus="count"
 										items="${content2_set}">
 										<c:choose>
-											<c:when test="${count.index==1}">
+											<c:when test="${count.first}">
 												<!-- 規格細項1=============== -->
 												<div class="form-group row mx-0 firstFormatItem">
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatTitle2"
 															class="form-control p-0" placeholder="規格標題"
-															value="${title2}" />
+															value="${title2}" readonly />
 														<h5>：</h5>
 													</div>
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent2"
-															class="form-control" placeholder="規格細項" value="${entry}" />
+															class="form-control" placeholder="規格細項" value="${entry}"
+															readonly />
 													</div>
 
 													<div
 														class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 												</div>
 											</c:when>
-											<c:when test="${count.index==2}">
+											<c:when test="${count.index==1}">
 												<!-- 規格細項2=============== -->
 												<div class="form-group row mx-0 secondFormatItem">
 													<div
@@ -322,7 +275,7 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent2"
-															class="form-control" value="${entry}" />
+															class="form-control" value="${entry}" readonly />
 													</div>
 
 													<div
@@ -338,12 +291,12 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatContent2"
-															class="form-control" value="${entry}">
+															class="form-control" value="${entry}" readonly>
 													</div>
 													<div
 														class="col-2 d-flex justify-content-center align-items-center text-center">
 														<i class="material-icons deleteProductFormatItem"
-															style="font-size: 36px">remove_circle_outline</i>
+															style="font-size: 36px; display: none;">remove_circle_outline</i>
 													</div>
 												</div>
 											</c:otherwise>
@@ -354,32 +307,18 @@
 
 							<div
 								class="d-flex justify-content-center align-items-center text-center my-2 addProductFormatItemDiv">
-								<c:choose>
-									<c:when test="${product==null}">
-										<i class="material-icons addProductFormatItem"
-											style="font-size: 30px;">add_circle</i>
-									</c:when>
-									<c:otherwise>
-										<i class="material-icons addProductFormatItem"
-											style="font-size: 30px; display: none;">add_circle</i>
-									</c:otherwise>
-								</c:choose>
+								<i class="material-icons addProductFormatItem"
+									style="font-size: 30px; <c:if test='${product!=null}'> display: none;</c:if>">add_circle</i>
 							</div>
 						</div>
 
 						<div class="col-2">
-							<c:choose>
-								<c:when test="${product==null}">
-									<i class="material-icons deleteProductFomat"
-										style="font-size: 36px;">remove_circle_outline</i>
-								</c:when>
-								<c:otherwise>
-									<i class="material-icons deleteProductFomat"
-										style="font-size: 36px; display: none;">remove_circle_outline</i>
-								</c:otherwise>
-							</c:choose>
+							<i class="material-icons deleteProductFomat"
+								style="font-size: 36px; <c:if test='${product!=null}'> display: none;</c:if>">remove_circle_outline</i>
 						</div>
 					</div>
+
+
 
 					<div class="text-center my-2" style="color: red; display: none;"
 						id="nullInputError">規格欄位不能為空</div>
@@ -409,11 +348,11 @@
 			<div>
 				<h3>填寫庫存：</h3>
 			</div>
-			<div class="row m-0 mb-5" id="stocks">
+			<div class="row m-0 mb-5 p-1" id="stocks">
 				<c:if test="${product!=null}">
-					<c:forEach var="entry" items="${product.productFormat}">
-						<c:forEach var="content1" items="${entry.formatContent1}">
-							<div class="border border-dark col-md-12 col-lg-6 p-0 mb-1">
+					<c:forEach var="content1" items="${content1_set}">
+						<div class="col-md-12 col-lg-6 p-0 mb-1">
+							<div class="border border-dark m-2">
 								<table class="table text-center">
 									<thead class="thead-light">
 										<tr>
@@ -422,17 +361,22 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="content2" items="${entry.formatContent2}">
-											<tr>
-												<th scope="row">${content1}-${content2}</th>
-												<td><input class="text-center" type="number"
-													name="${stock}" value="${entry.stock}" /></td>
-											</tr>
+										<c:forEach var="content2" items="${content2_set}">
+											<c:forEach var="entry" items="${product.productFormat}">
+												<c:if
+													test="${entry.formatContent1==content1&&entry.formatContent2==content2}">
+													<tr>
+														<th scope="row">${content1}-${content2}</th>
+														<td><input class="text-center" type="number"
+															name="stock" value="${entry.stock}" /></td>
+													</tr>
+												</c:if>
+											</c:forEach>
 										</c:forEach>
 									</tbody>
 								</table>
 							</div>
-						</c:forEach>
+						</div>
 					</c:forEach>
 				</c:if>
 			</div>

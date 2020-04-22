@@ -31,6 +31,15 @@ function doFirst() {
       addFormatItem(n);
     });
   }
+  deleteProductFormatItem = document.getElementsByClassName(
+    "deleteProductFormatItem"
+  );
+  for (let n = 0; n < deleteProductFormatItem.length; n++) {
+    deleteProductFormatItem[n].addEventListener("click",function(){
+      dad = this.parentNode.parentNode.parentNode;
+      dad.removeChild(this.parentNode.parentNode);
+    })
+  }
   deleteProductFomat = document.getElementsByClassName("deleteProductFomat");
   productFomat = document.getElementsByClassName("productFomat");
   addProductFormat = document.getElementById("addProductFormat");
@@ -59,9 +68,13 @@ function checkClassName(e) {
   if (e.target.id == "angel") {
     angelCategory.style.display = "";
     evilCategory.style.display = "none";
+    angelCategory.disabled = false;
+    evilCategory.disabled = true;
   } else {
     angelCategory.style.display = "none";
     evilCategory.style.display = "";
+    angelCategory.disabled = true;
+    evilCategory.disabled = false;
   }
 }
 function checkOrChangeFormat(e) {
@@ -178,12 +191,13 @@ function checkFormat() {
         stockTable.appendChild(thead);
         stockTable.appendChild(tbody);
         stockDiv = document.createElement("div");
-        stockDiv.setAttribute(
-          "class",
-          "border border-dark col-md-12 col-lg-6 p-0 mb-1"
-        );
+        stockDiv.setAttribute("class", "border border-dark m-2");
+        stockDivDad = document.createElement("div");
+        stockDivDad.setAttribute("class", "col-md-12 col-lg-6 p-0 mb-1");
         stockDiv.appendChild(stockTable);
-        stocks.appendChild(stockDiv);
+        stockDivDad.appendChild(stockDiv);
+        stocks.appendChild(stockDivDad);
+        console.log(stocks);
       }
     } else {
       formatText = document.createElement("th");
@@ -233,12 +247,12 @@ function checkFormat() {
       stockTable.appendChild(thead);
       stockTable.appendChild(tbody);
       stockDiv = document.createElement("div");
-      stockDiv.setAttribute(
-        "class",
-        "border border-dark col-md-12 col-lg-6 p-0 mb-1"
-      );
+      stockDiv.setAttribute("class", "border border-dark m-2");
+      stockDivDad = document.createElement("div");
+      stockDivDad.setAttribute("class", "col-md-12 col-lg-6 p-0 mb-1");
       stockDiv.appendChild(stockTable);
-      stocks.appendChild(stockDiv);
+      stockDivDad.appendChild(stockDiv);
+      stocks.appendChild(stockDivDad);
     }
   } else {
     nullInputError.style.display = "";
@@ -277,7 +291,7 @@ function changeFormat() {
 
   stocks.innerText = "";
 }
-//刪除規格
+// 刪除規格
 function deleteProductFormat(n) {
   addTimes -= 1;
   if (addTimes != 2) {
@@ -308,7 +322,7 @@ function deleteProductFormat(n) {
     }
   }
 }
-//新增規格
+// 新增規格
 function addProductFormatFunction() {
   addTimes += 1;
   if (addTimes == 2) {
@@ -319,7 +333,7 @@ function addProductFormatFunction() {
     productFomat[0].style.display = "";
   }
 }
-//新增規格細項
+// 新增規格細項
 function addFormatItem(n) {
   formatTitle = document.createElement("div");
   formatTitle.setAttribute(
@@ -360,7 +374,7 @@ function addFormatItem(n) {
   );
   formatItemsBox[n].insertBefore(formatItemsRow, addProductFormatItemDiv[n]);
 
-  //刪除規格細項
+  // 刪除規格細項
   removeIcon.onclick = function () {
     formatItemsBox[n].removeChild(this.parentNode.parentNode);
   };
