@@ -6,8 +6,8 @@ body{
     background: #3A405A;
 }
 
-#contentLength h4{
-    color: green;
+#contentLength {
+    color: #7E6B8F;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -19,6 +19,7 @@ h4{
     display: flex;
     box-sizing: border-box;
     height: 200px;
+    margin : 0 auto;
 }
 
 #cardBody{

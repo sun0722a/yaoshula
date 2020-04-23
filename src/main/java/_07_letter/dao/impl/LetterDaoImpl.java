@@ -28,20 +28,15 @@ public class LetterDaoImpl implements LetterDao {
 
 	@Override
 	public void saveLetter(LetterBean lb) {
-		
-		Session session = factory.getCurrentSession();
-		session.save(lb);
+		factory.getCurrentSession().save(lb);
 		
 	}
 
 	@Override
 	public LetterBean getLetter(int letterId) {
-		LetterBean lb = null;
-//		String hql = "FROM LetterBean l WHERE l.letterId = :letterId";
-		Session session = factory.getCurrentSession(); 
-//		lb = session.createQuery(hql).setParameter("letterId", letterId).getSingleResult();
-		lb = session.get(LetterBean.class, letterId);
-		return lb;
+
+		return factory.getCurrentSession().get(LetterBean.class, letterId);
+		
 	}
 
 	@SuppressWarnings("unchecked")

@@ -28,7 +28,7 @@ public class LetterBean implements Serializable{
 	private Integer letterId;
 	private String 	letterTitle;
 	private String 	letterWriter;
-	private Timestamp sendTime;
+	private String sendTime;
 	private String letterContent;
 	private String letterCategory;
 	private String letterReplier;
@@ -38,7 +38,7 @@ public class LetterBean implements Serializable{
 	
 	
 	
-	public LetterBean(Integer letterId, String letterTitle, String letterWriter, Timestamp sendTime, String letterContent,
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, String sendTime, String letterContent,
 			String letterCategory, String letterReplier, String replyContent, String status, String feedBack) {
 		super();
 		this.letterId = letterId;
@@ -57,14 +57,15 @@ public class LetterBean implements Serializable{
 	
 	
 
-	public LetterBean(Integer letterId, String letterTitle, String letterWriter, String letterContent,
-			String replyContent) {
+	public LetterBean(Integer letterId, String letterTitle, String letterWriter, String letterContent,String sendTime,
+			String letterCategory) {
 		super();
 		this.letterId = letterId;
 		this.letterTitle = letterTitle;
 		this.letterWriter = letterWriter;
 		this.letterContent = letterContent;
-		this.replyContent = replyContent;
+		this.sendTime = sendTime;
+		this.letterCategory = letterCategory;
 	}
 
 
@@ -110,10 +111,10 @@ public class LetterBean implements Serializable{
 	public void setLetterWriter(String letterWriter) {
 		this.letterWriter = letterWriter;
 	}
-	public Timestamp getSendTime() {
+	public String getSendTime() {
 		return sendTime;
 	}
-	public void setSendTime(Timestamp sendTime) {
+	public void setSendTime(String sendTime) {
 		this.sendTime = sendTime;
 	}
 	public String getLetterContent() {
