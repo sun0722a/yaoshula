@@ -40,7 +40,8 @@
                     <div class="pl-5 pt-4 pb-5 pr-5 ml-2" id="borderdiv">
                       <div class="text-center">
                         <h4 class=" text-gray-900 mb-2">惡魔信件<img src="<c:url value='/image/_07_letter/devil.png' />" class="animated  fadeInUp"></h4>
-                        	<input type="text" name="title" >
+                        	<div class="text-center">標題</div>
+                        	<input type="text" name="title" id="titleInput2" >
                         	<br>
                         <span id="contentLength" style="font-size: 12px;">250</span>
                       </div>

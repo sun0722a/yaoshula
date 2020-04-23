@@ -1,16 +1,11 @@
 package _07_letter.model;
 
 import java.io.Serializable;
-import java.sql.Clob;
-import java.sql.Timestamp;
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 

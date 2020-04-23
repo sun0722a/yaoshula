@@ -38,7 +38,8 @@
                       
                       <div class="text-center">
                         <h4 class=" text-gray-900 mb-2">天使信件<img src="<c:url value='/image/_07_letter/angel.png' /> " class="animated  fadeInDown"></h4>
-                        <input type="text" name="title" >
+                        <div class="text-center">標題</div>    
+                        <input type="text" name="title" id="titleInput">
                         	<br>
                         <span id="contentLength" style="font-size: 12px;">250</span>
                       </div>
@@ -47,7 +48,7 @@
                           <textarea cols="30" rows="10" id="letterContent" maxlength="250" name="content"></textarea>
                         </div>
                        <div class="text-center">                      
-                        <input type="submit"  class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" value="寄出" disabled>
+                        <input type="submit"  class="btn btn-primary  btn-block" role="button" id="submitbtn" value="寄出" disabled>
                       </div>                     
 
                     

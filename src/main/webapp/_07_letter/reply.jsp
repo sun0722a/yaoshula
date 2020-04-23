@@ -12,6 +12,7 @@
     <script src="<c:url value='/js/_07_letter/sendReply.js' /> " ></script>
 <title>回信</title>
 </head>
+
 <body>
 	 <div class="container">
         <div class="box">
