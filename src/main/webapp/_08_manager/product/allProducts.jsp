@@ -136,9 +136,8 @@
 					確認是否刪除<br /> 編號：名稱：之商品?
 				</div>
 				<div class="modal-footer">
-					<a href="" style="text-decoration: none; color: black;" id="aSend">
-						<input type="button" class="btn btn-primary" value="刪除"
-						id="deleteProduct" />
+					<a style="text-decoration: none; color: black;" id="aSend">
+						<input type="button" class="btn btn-primary" value="刪除" />
 					</a>
 				</div>
 			</div>

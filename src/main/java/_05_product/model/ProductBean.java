@@ -32,7 +32,7 @@ public class ProductBean implements Serializable {
 	private Blob image;
 	private Clob detail;
 	private Integer sales;
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	Set<ProductFormatBean> productFormat = new LinkedHashSet<>();
 
 	public ProductBean(Integer productId, String productName, CategoryBean category, Integer price, String fileName,

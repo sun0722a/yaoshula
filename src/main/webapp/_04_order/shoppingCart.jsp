@@ -136,26 +136,26 @@ a {
 			<!-- <hr style="background: black;" /> -->
 			<div class="row p-2">
 				<div
-					class="col-1 h4 m-0 d-flex justify-content-center align-items-center ">
+					class="col-1 h4 m-0 d-flex justify-content-center align-items-center text-center">
 					<input type="checkbox" id="allCheck" onchange="changeAll()" />
 				</div>
 				<div
-					class="col-2 h6 m-0 d-flex justify-content-start align-items-center">
+					class="col-2 h6 m-0 d-flex justify-content-start align-items-center text-center">
 					全選</div>
 				<div
-					class="col-2 h5 m-0 d-flex justify-content-center align-items-center">
+					class="col-2 h5 m-0 d-flex justify-content-center align-items-center text-center">
 					商品名稱</div>
 				<div
-					class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+					class="col-3 h5 m-0 d-flex justify-content-center align-items-center text-center">
 					規格</div>
 				<div
-					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center">
 					單價</div>
 				<div
-					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center">
 					數量</div>
 				<div
-					class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+					class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center">
 					總價</div>
 				<div class="col-1 d-flex justify-content-center align-items-center"></div>
 			</div>
@@ -175,21 +175,20 @@ a {
 										<input type="checkbox" class="choose"
 											<c:if test="${checkedMap.value=='y'}"> checked </c:if>
 											onchange="changeChoose('${checkedMap.key}',${vs.index})" />
-
 									</c:if>
 								</c:forEach>
 							</div>
 							<div
-								class="col-2 d-flex justify-content-center align-items-center">
+								class="col-2 d-flex justify-content-center align-items-center text-center">
 								<img
 									src="${pageContext.request.contextPath}/init/getProductImage?id=${orderMap.key.productId}"
 									style="max-width: 80%; max-height: 150px;" />
 							</div>
 							<div
-								class="col-2 h4 m-0 d-flex justify-content-center align-items-center">
+								class="col-2 h4 m-0 d-flex justify-content-center align-items-center text-center">
 								${orderMap.key.productName}</div>
 							<div
-								class="col-3 h5 m-0 d-flex justify-content-center align-items-center">
+								class="col-3 h5 m-0 d-flex justify-content-center align-items-center text-center">
 								<c:choose>
 									<c:when
 										test="${(orderMap.key.formatContent1=='')&&(orderMap.key.formatContent2=='')}">無 </c:when>
@@ -217,23 +216,23 @@ a {
 								</c:choose>
 							</div>
 							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center">
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center">
 								$ <span class="singlePrice">${orderMap.key.unitPrice}</span>
 							</div>
 							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center"
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center"
 								style="padding: 0px;">
 								<input type="number" name="count" id="newQty${vs.index}"
 									style="max-width: 100%;"
 									onchange="modifyQuantity('${cartMap.key}',${vs.index})"
-									value="${orderMap.key.quantity}" min="1" class="ml-6 mt-2">
+									value="${orderMap.key.quantity}" min="1" class="ml-6 mt-2 text-center">
 							</div>
 							<div
-								class="col-1 h5 m-0 d-flex justify-content-center align-items-center ">
+								class="col-1 h5 m-0 d-flex justify-content-center align-items-center text-center">
 								$ <span class="singleTotal">${orderMap.key.unitPrice*orderMap.key.quantity}</span>
 							</div>
 							<div
-								class="col-1 d-flex justify-content-center align-items-center">
+								class="col-1 d-flex justify-content-center align-items-center text-center">
 								<button class="cancel p-0"
 									onclick="deleteCart('${cartMap.key}')">
 									<img

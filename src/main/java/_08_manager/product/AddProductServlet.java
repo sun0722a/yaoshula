@@ -51,7 +51,13 @@ public class AddProductServlet extends HttpServlet {
 			return;
 		}
 
+		String idStr = request.getParameter("productId");
 		Integer productId = 0;
+		try {
+			productId = Integer.parseInt(idStr);
+		} catch (NumberFormatException e) {
+			;
+		}
 		String productName = "";
 		Integer categoryId = 0;
 		Integer price = 0;
@@ -81,9 +87,7 @@ public class AddProductServlet extends HttpServlet {
 				String value = request.getParameter(fldName);
 				// 逐項讀取使用者輸入資料
 				if (p.getContentType() == null) {
-					if (fldName.equals("productId")) {
-						productId = Integer.parseInt(value.trim());
-					} else if (fldName.equals("productName")) {
+					if (fldName.equals("productName")) {
 						productName = value;
 					} else if (fldName.equals("categoryId")) {
 						categoryId = Integer.parseInt(value.trim());
@@ -110,7 +114,6 @@ public class AddProductServlet extends HttpServlet {
 		} else {
 			System.out.println("此表單不是上傳檔案的表單(RegisterServlet)");
 		}
-		System.out.println("categoryId=" + categoryId);
 
 		try {
 			Blob blob = null;

@@ -46,24 +46,25 @@
 					帳號狀態</div>
 			</div>
 			<c:forEach var="entry" items="${member_map}">
-				<a href="<c:url value='/manager/showMemberInfo?id=${entry.key.id}&reportTimes=${entry.value}'/>" style="text-decoration: none; color: black;">
-				<div class="row">
-					<div
-						class="col-4 d-flex justify-content-center align-items-center my-2">
-						${entry.key.memberId}</div>
-					<div
-						class="col-2 d-flex justify-content-center align-items-center my-2">
-						${entry.key.permission}</div>
-					<div
-						class="col-3 d-flex justify-content-center align-items-center my-2">
-						${entry.value}</div>
-					<div
-						class="col-3 d-flex justify-content-center align-items-center my-2">
-						${entry.key.status}</div>
-				</div>
-			</a>
+				<a
+					href="<c:url value='/manager/showMemberInfo?id=${entry.key.id}&reportTimes=${entry.value}'/>"
+					style="text-decoration: none; color: black;">
+					<div class="row">
+						<div
+							class="col-4 d-flex justify-content-center align-items-center my-2">
+							${entry.key.memberId}</div>
+						<div
+							class="col-2 d-flex justify-content-center align-items-center my-2">
+							${entry.key.permission}</div>
+						<div
+							class="col-3 d-flex justify-content-center align-items-center my-2">
+							${entry.value}</div>
+						<div
+							class="col-3 d-flex justify-content-center align-items-center my-2">
+							${entry.key.status}</div>
+					</div>
+				</a>
 			</c:forEach>
-
 		</div>
 	</div>
 

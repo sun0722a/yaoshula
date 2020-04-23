@@ -22,7 +22,7 @@
 <body>
 	<div class="w-75 my-5 mx-auto border p-5">
 		<form method="post" enctype="multipart/form-data"
-			action="<c:url value='/manager/addProduct'/>">
+			action="<c:url value='/manager/addProduct?productId=${productId}'/>">
 			<div class="row m-0 mb-5">
 				<!-- 左基本資料======================= -->
 				<div class="col-md-12 col-lg-6 border">
@@ -48,7 +48,7 @@
 									<div class="input-group-text">$</div>
 								</div>
 								<input type="text" name="price" class="form-control"
-									required="required" value="${product.price}" />
+									required="required" value="${product.price}" onkeyup="value=value.replace(/[^\d]/g,'')" />
 							</div>
 						</div>
 					</div>
@@ -70,9 +70,8 @@
 								<c:forEach var="entry" items="${angel_set}">
 									<option value="${entry.categoryId}">${entry.categoryName}</option>
 								</c:forEach>
-							</select> 
-							<select class="form-control" id="evilCategory"
-								style="display: none;" name="categoryId" disabled >
+							</select> <select class="form-control" id="evilCategory"
+								style="display: none;" name="categoryId" disabled>
 								<c:forEach var="entry" items="${evil_set}">
 									<option value="${entry.categoryId}">${entry.categoryName}</option>
 								</c:forEach>
@@ -88,8 +87,6 @@
 						<i class="material-icons"
 							style="font-size: 30px; <c:if test='${product!=null}'> display: none;</c:if>"
 							id="addProductFormat">add_circle</i>
-
-
 					</div>
 
 					<!-- format1============================ -->
@@ -111,7 +108,6 @@
 											<input type="text" name="formatContent1" class="form-control"
 												placeholder="規格細項" />
 										</div>
-
 										<div
 											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
@@ -124,7 +120,6 @@
 											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 											<input type="text" name="formatContent1" class="form-control" />
 										</div>
-
 										<div
 											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
@@ -224,7 +219,6 @@
 											<input type="text" name="formatContent2" class="form-control"
 												placeholder="規格細項" />
 										</div>
-
 										<div
 											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
@@ -237,7 +231,6 @@
 											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 											<input type="text" name="formatContent2" class="form-control" />
 										</div>
-
 										<div
 											class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 									</div>
@@ -262,7 +255,6 @@
 															class="form-control" placeholder="規格細項" value="${entry}"
 															readonly />
 													</div>
-
 													<div
 														class="col-2 d-flex justify-content-center align-items-center text-center"></div>
 												</div>
@@ -318,8 +310,6 @@
 						</div>
 					</div>
 
-
-
 					<div class="text-center my-2" style="color: red; display: none;"
 						id="nullInputError">規格欄位不能為空</div>
 
@@ -340,7 +330,6 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
-
 				</div>
 			</div>
 
@@ -389,7 +378,6 @@
 				<textarea name="detail" rows="10" style="width: 100%;"
 					required="required">${detail}</textarea>
 			</div>
-
 
 			<div class="text-center">
 				<c:choose>

@@ -29,7 +29,7 @@
 		modalBody.innerHTML = "確認訂單編號"+orderNo+"<br>於"+now+"到貨?";
 		}
 		aSend.href = "<c:url value='/manager/addOrderDate?cmd="+cmd+"&id="+orderNo+"&searchStr="+searchStr+"'/>"
-		$("#reportModal").modal("hide");
+		$("#checkOrderDateModal").modal("hide");
 	}
 </script>
 <style>
@@ -68,32 +68,32 @@
 
 			<div class="row m-0 border-bottom">
 				<div
-					class="col-1 text-center d-flex justify-content-center align-items-centertext-center my-2"></div>
+					class="col-1 text-center d-flex justify-content-center align-items-center my-2"></div>
 				<div
-					class="col-2 text-center d-flex justify-content-center align-items-centertext-center my-2">訂單編號</div>
+					class="col-2 text-center d-flex justify-content-center align-items-center my-2">訂單編號</div>
 				<div
-					class="col-2 text-center d-flex justify-content-center align-items-centertext-center my-2">訂購日期</div>
+					class="col-2 text-center d-flex justify-content-center align-items-center my-2">訂購日期</div>
 				<div
-					class="col-2 text-center d-flex justify-content-center align-items-centertext-center my-2">出貨日期</div>
+					class="col-2 text-center d-flex justify-content-center align-items-center my-2">出貨日期</div>
 				<div
-					class="col-2 text-center d-flex justify-content-center align-items-centertext-center my-2">到貨日期</div>
+					class="col-2 text-center d-flex justify-content-center align-items-center my-2">到貨日期</div>
 				<div
-					class="col-2 text-center d-flex justify-content-center align-items-centertext-center my-2">訂單狀態</div>
+					class="col-2 text-center d-flex justify-content-center align-items-center my-2">訂單狀態</div>
 				<div
-					class="col-1 text-center d-flex justify-content-center align-items-centertext-center my-2"></div>
+					class="col-1 text-center d-flex justify-content-center align-items-center my-2"></div>
 			</div>
 
 			<c:forEach var="entry" varStatus="num" items="${order_list}">
 				<div class="row m-0 ${entry.status}" style="min-height: 80px;">
 					<div class="col-1 text-center my-2"></div>
 					<div
-						class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">${entry.orderNo}</div>
+						class="col-2 text-center d-flex justify-content-center align-items-center my-2">${entry.orderNo}</div>
 					<div
-						class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">
+						class="col-2 text-center d-flex justify-content-center align-items-center my-2">
 						<fmt:formatDate value="${entry.orderDate}" pattern="yyyy-MM-dd" />
 					</div>
 					<div
-						class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">
+						class="col-2 text-center d-flex justify-content-center align-items-center my-2">
 						<c:choose>
 							<c:when test="${entry.shippingDate==null}">
 								<i class="fa fa-plus-circle" style="font-size: 30px;"
@@ -106,7 +106,7 @@
 						</c:choose>
 					</div>
 					<div
-						class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">
+						class="col-2 text-center d-flex justify-content-center align-items-center my-2">
 						<c:choose>
 							<c:when test="${entry.arriveDate==null}">
 								<i class="fa fa-plus-circle" style="font-size: 30px;"
@@ -133,17 +133,17 @@
 					<div class="card card-body w-100 p-0" style="border-width: 0px;">
 						<div class="row m-0 orderItems">
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2"></div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2"></div>
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">商品名稱</div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2">商品名稱</div>
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">規格</div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2">規格</div>
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">單價</div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2">單價</div>
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">數量</div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2">數量</div>
 							<div
-								class="col-2 text-center d-flex justify-content-center align-items-center text-center my-2">總價</div>
+								class="col-2 text-center d-flex justify-content-center align-items-center my-2">總價</div>
 
 							<c:forEach var="detailMap" items="${orderItem_map}">
 								<c:if test="${detailMap.key==entry.orderNo}">
@@ -181,7 +181,6 @@
 								class="col-12 d-flex justify-content-end align-items-center text-center border-top border-light my-2">
 								<span style="font-size: 20px;">總金額: $ ${entry.totalPrice}</span>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -208,7 +207,7 @@
 					<a
 						href="<c:url value='/manager/addOrderDate?cmd=${cmd}&id=${entry.orderNo}&searchStr=${searchStr}'/>"
 						style="text-decoration: none; color: black;" id="aSend"> <input
-						type="button" class="btn btn-primary" value="確認" id="sendReport" />
+						type="button" class="btn btn-primary" value="確認" />
 					</a>
 				</div>
 			</div>

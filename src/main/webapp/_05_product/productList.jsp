@@ -30,7 +30,7 @@
 			<!-- 搜尋選擇列=================================== -->
 			<form action="<c:url value='/product/ShowPageProducts' />"
 				id="searchForm">
-				<div id="searchTop" class="row">
+				<div class="row">
 					<div class="input-group my-3 col-9 ">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img

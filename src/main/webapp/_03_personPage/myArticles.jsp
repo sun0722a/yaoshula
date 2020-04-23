@@ -20,7 +20,7 @@
 		<!-- 		搜尋======================================== -->
 		<form action="<c:url value='/personPage/showMyArticles' />"
 			id="searchForm">
-			<div id="searchTop" class="row">
+			<div class="row">
 				<div class="input-group my-3 col-9 ">
 					<div class="input-group-prepend">
 						<span class="input-group-text"><img

@@ -105,7 +105,7 @@ public class ProductInfoServlet extends HttpServlet {
 
 		request.setAttribute("angel_set", angelProductCategorys);
 		request.setAttribute("evil_set", evilProductCategorys);
-//		request.setAttribute("productId", id);
+		request.setAttribute("productId", id);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/_08_manager/product/productInfo.jsp");
 		rd.forward(request, response);
