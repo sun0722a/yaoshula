@@ -58,10 +58,19 @@ public class AddProductServlet extends HttpServlet {
 		String fileName = "";
 		String detail = "";
 		String formatTitle1 = "";
-		String[] formatContents1 = null;
+		Set<String> formatContents1 = new LinkedHashSet<String>();
+		for (String formatContent : request.getParameterValues("formatContent1")) {
+			formatContents1.add(formatContent.trim());
+		}
 		String formatTitle2 = "";
-		String[] formatContents2 = null;
+		Set<String> formatContents2 = new LinkedHashSet<String>();
+		for (String formatContent : request.getParameterValues("formatContent2")) {
+			formatContents2.add(formatContent.trim());
+		}
 		List<Integer> stocks = new ArrayList<>();
+		for (String stockStr : request.getParameterValues("stock")) {
+			stocks.add(Integer.parseInt(stockStr.trim()));
+		}
 		long sizeInBytes = 0;
 		InputStream is = null;
 
@@ -84,16 +93,8 @@ public class AddProductServlet extends HttpServlet {
 						detail = value;
 					} else if (fldName.equals("formatTitle1")) {
 						formatTitle1 = value;
-					} else if (fldName.equals("formatContent1")) {
-						formatContents1 = value.split(",");
 					} else if (fldName.equals("formatTitle2")) {
 						formatTitle2 = value;
-					} else if (fldName.equals("formatContent2")) {
-						formatContents2 = value.split(",");
-					} else if (fldName.equals("stock")) {
-						for (String stockStr : value.split(",")) {
-							stocks.add(Integer.parseInt(stockStr.trim()));
-						}
 					}
 				} else {
 					// 取出圖片檔的檔名
@@ -109,6 +110,7 @@ public class AddProductServlet extends HttpServlet {
 		} else {
 			System.out.println("此表單不是上傳檔案的表單(RegisterServlet)");
 		}
+		System.out.println("categoryId=" + categoryId);
 
 		try {
 			Blob blob = null;
@@ -167,7 +169,7 @@ public class AddProductServlet extends HttpServlet {
 				productService.insertProduct(pb);
 			}
 
-			response.sendRedirect("/manager/showProducts");
+			response.sendRedirect(getServletContext().getContextPath() + "/manager/showProducts");
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
