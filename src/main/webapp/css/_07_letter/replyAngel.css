@@ -4,13 +4,13 @@
 	box-sizing: border-box;
 }
 
-
 body{
-    background: #3A405A;
+    background: #E9AFA3;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 #contentLength {
-    color: #7E6B8F;
+    color: green;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -21,8 +21,9 @@ h4{
 #letterContent{
     display: flex;
     box-sizing: border-box;
-    height: 200px;
     margin : 0 auto;
+    height: 200px;
+    background:transparent;
     outline:none;
     border:none;
     border-bottom:1px solid #3D5E8D;
@@ -30,11 +31,36 @@ h4{
     resize:none;
 }
 
+
+
 #cardBody{
     border-radius: 20px 20px 20px 20px;
 }
 
-#titleInput2
+#submitbtn{
+	font-family: 'Noto Sans TC', sans-serif;
+	color:#fff;
+	
+}
+
+#leftImg{
+	position:absolute;
+	box-sizing : border-box;
+	z-index:1;
+}
+
+#writeMode{
+	z-index:999;
+	position:absolute;
+	width:450px;
+	height:314px;
+/* 	top:118px; */
+/* 	left:8px; */
+	background: #FCF7F8;
+	opacity : 0.8;
+}
+
+#titleInput
 {
 	background:transparent;
 	border:none;

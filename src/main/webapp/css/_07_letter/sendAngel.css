@@ -1,5 +1,12 @@
+*{
+	margin :0;
+	padding:0;
+	box-sizing: border-box;
+}
+
 body{
     background: #E9AFA3;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 #contentLength {
@@ -14,7 +21,14 @@ h4{
 #letterContent{
     display: flex;
     box-sizing: border-box;
+    margin : 0 auto;
     height: 200px;
+    background:transparent;
+    outline:none;
+    border:none;
+    border-bottom:1px solid #3D5E8D;
+    letter-spacing:1px;
+    resize:none;
 }
 
 
@@ -26,4 +40,31 @@ h4{
 #submitbtn{
 	font-family: 'Noto Sans TC', sans-serif;
 	color:#fff;
+	
 }
+
+#leftImg{
+	position:absolute;
+	box-sizing : border-box;
+	z-index:1;
+}
+
+#writeMode{
+	z-index:999;
+	position:absolute;
+	width:450px;
+	height:314px;
+/* 	top:118px; */
+/* 	left:8px; */
+	background: #FCF7F8;
+	opacity : 0.8;
+}
+
+#titleInput
+{
+	background:transparent;
+	border:none;
+	outline:none;
+	border-bottom:1px solid #3D5E8D;
+}
+

@@ -23,6 +23,7 @@
 <title>寄個惡魔信</title>
 </head>
 <body>
+<form action = "<c:url value='/sendDevil' />" method="POST">
 	 <div class="container">
 
         <!-- Outer Row -->
@@ -39,15 +40,17 @@
                     <div class="pl-5 pt-4 pb-5 pr-5 ml-2" id="borderdiv">
                       <div class="text-center">
                         <h4 class=" text-gray-900 mb-2">惡魔信件<img src="<c:url value='/image/_07_letter/devil.png' />" class="animated  fadeInUp"></h4>
-                        <p class="mb-1" style="font-size: small;"></p>
-                        <span id="contentLength">250</span>
+                        	<div class="text-center">標題</div>
+                        	<input type="text" name="title" id="titleInput2" >
+                        	<br>
+                        <span id="contentLength" style="font-size: 12px;">250</span>
                       </div>
                         
                         <div class="form-group">
-                          <textarea cols="35" rows="10" id="letterContent" maxlength="250"></textarea>
+                          <textarea cols="30" rows="10" id="letterContent" maxlength="250" name="content"></textarea>
                         </div>
-                        <input type="submit" class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" value="寄出" disabled>
-                      </form>
+                        <input type="submit" name="devil" class="btn btn-primary btn-user btn-block" role="button" id="submitbtn" value="寄出" disabled>
+                      
                    
                       <div class="text-center">
                        
@@ -66,5 +69,6 @@
         </div>
     
       </div>
+      </form>
 </body>
 </html>

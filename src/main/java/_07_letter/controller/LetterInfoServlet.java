@@ -14,7 +14,7 @@ import _01_register.model.MemberBean;
 
 //漂流信的首頁 先檢查有沒有寄過信
 @WebServlet("/_07_letter/letterInfo")
-public class letterInfoServlet extends HttpServlet {
+public class LetterInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
  
@@ -36,10 +36,10 @@ public class letterInfoServlet extends HttpServlet {
 		System.out.println("memberId : " + mb.getMemberId());
 		
 		String lastSendDate = mb.getLastSendDate();
-//		System.out.println("上次寄信日期:" + lastSendDate);
+		System.out.println("上次寄信日期:" + lastSendDate);
 		
 		String lastReplyDate = mb.getLastReplyDate();
-//		System.out.println("上次回信日期:" + lastReplyDate);
+		System.out.println("上次回信日期:" + lastReplyDate);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String today = simpleDateFormat.format(new java.util.Date());
 //		System.out.println("今天日期" + today);

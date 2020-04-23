@@ -3,7 +3,6 @@ package _07_letter.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,21 +19,22 @@ import _01_register.service.MemberService;
 import _07_letter.Service.LetterService;
 import _07_letter.model.LetterBean;
 
-@WebServlet("/sendAngel")
-public class SendAngelServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+@WebServlet("/sendDevil")
+public class SendDevilServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-
+		
 		HttpSession session = request.getSession(false);
-
-		if (session == null) {
+		
+		if(session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 		}
-		
+				
 		MemberBean mb = (MemberBean)session.getAttribute("LoginOK");
 		String memberId = mb.getMemberId();
 		
@@ -51,16 +51,13 @@ public class SendAngelServlet extends HttpServlet {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String sendDay = simpleDateFormat.format(new java.util.Date());
 		
-		LetterBean lb = new LetterBean(null,title,memberId,content,sendDay,GlobalService.LETTER_TYPE_ANGEL);
+		LetterBean lb = new LetterBean(null,title,memberId,content,sendDay,GlobalService.LETTER_TYPE_DEVIL);
 		letterService.saveLetter(lb);
 		
 		mb.setLastSendDate(sendDay);
 		memberService.updateMember(mb);
 		
-	
-		
 		response.sendRedirect(response.encodeRedirectURL(getServletContext().getContextPath() + "/_07_letter/letterInfo") );
-		
 	}
 
 }
