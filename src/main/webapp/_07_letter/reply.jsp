@@ -29,7 +29,7 @@
                         所以請依照興趣慎選想要的幫助的人!
                     </p>
 
-                    <a class="angelA" href="<c:url value='/reply?type=angel' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
+                    <a class="angelA" href="<c:url value='/replyAngel' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
 			                        的回覆能使您對挑戰一笑置之，給予當頭棒喝讓您能繼續向前，得到回覆後也可以依照對方的內容給予評價，
 			                        讓我們能更致力於維護惡魔區所帶來的負能量，讓你重拾信心或是失去信心(?)，繼續面對下一個跳戰
                     </p>
-                    <a class="darkA" href="<c:url value='/reply?type=devil' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
+                    <a class="darkA" href="<c:url value='/replyDevil' /> " >點擊進入<i class="fas fa-sign-in-alt"></i></a>
                 </div>
                 
                 

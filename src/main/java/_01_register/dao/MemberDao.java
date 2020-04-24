@@ -24,6 +24,8 @@ public interface MemberDao {
 	
 	public void updateReplyDate(String memberId,String replyDate);
 
+	public void updateLetterOftheDay(String memberId,int letterId);
+	
 	public int updateMemberPassword(String memberId, String passwordNew);
 
 	public MemberBean getMember(int id);

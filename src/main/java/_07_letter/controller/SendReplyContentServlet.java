@@ -3,7 +3,6 @@ package _07_letter.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,52 +13,56 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _00_init.util.GlobalService;
 import _01_register.model.MemberBean;
 import _01_register.service.MemberService;
 import _07_letter.Service.LetterService;
 import _07_letter.model.LetterBean;
 
-@WebServlet("/sendAngel")
-public class SendAngelServlet extends HttpServlet {
+
+@WebServlet("/sendReplyContent")
+public class SendReplyContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
+ 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		
 		HttpSession session = request.getSession(false);
-
+		
 		if (session == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 		}
 		
+		//取得回覆者的memberId
 		MemberBean mb = (MemberBean)session.getAttribute("LoginOK");
-		String memberId = mb.getMemberId();
 		
-		String title = request.getParameter("title");
-		System.out.println("title: " + title);
-		String content = request.getParameter("content");
-		System.out.println("內容: " + content);
+		String replyierId = mb.getMemberId();
+		String letterIdStr = request.getParameter("id");
+		String replyContent = request.getParameter("replyContent");
+		Integer letterId = Integer.parseInt(letterIdStr);
 		
+		
+		System.out.println("letterId" +letterId);
+		System.out.println("content" + replyContent);
+		
+		try {
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		LetterService letterService = ctx.getBean(LetterService.class);
-		
 		MemberService memberService = ctx.getBean(MemberService.class);
-		//取得現在日期  擺入信件資訊
+		LetterBean lb = letterService.getLetter(letterId);
+		//把資訊存入原本的信件裡
+		lb = new LetterBean(letterId,replyierId,replyContent,"y");
+		letterService.updateReply(lb);
+		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String sendDay = simpleDateFormat.format(new java.util.Date());
-		
-		LetterBean lb = new LetterBean(null,title,memberId,content,sendDay,GlobalService.LETTER_TYPE_ANGEL,"n");
-		letterService.saveLetter(lb);
-		
-		mb.setLastSendDate(sendDay);
+		String replyDay = simpleDateFormat.format(new java.util.Date());
+		mb.setLastReplyDate(replyDay);
 		memberService.updateMember(mb);
-		
-	
-		
 		response.sendRedirect(response.encodeRedirectURL(getServletContext().getContextPath() + "/_07_letter/letterInfo") );
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 

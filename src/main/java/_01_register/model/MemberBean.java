@@ -38,13 +38,13 @@ public class MemberBean implements Serializable{
 	private String authToken;
 	private String lastSendDate;
 	private String lastReplyDate;
-
+	private Integer letterOftheDay;
 	
 
 	public MemberBean(Integer id, String memberId, String password, String gender, Date birthday, String email,
 			String phone, String city, String area, String address, String fileName, Blob picture, Timestamp createTime,
 			String status, String permission, String likeArticles, String authToken,
-			String lastSendDate, String lastReplyDate) {
+			String lastSendDate, String lastReplyDate,Integer letterOftheDay) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -65,6 +65,7 @@ public class MemberBean implements Serializable{
 		this.authToken = authToken;
 		this.lastSendDate = lastSendDate;
 		this.lastReplyDate = lastReplyDate;
+		this.setLetterOftheDay(letterOftheDay);
 	}
 
 	public MemberBean() {
@@ -223,6 +224,14 @@ public class MemberBean implements Serializable{
 
 	public void setLastReplyDate(String lastReplyDate) {
 		this.lastReplyDate = lastReplyDate;
+	}
+
+	public Integer getLetterOftheDay() {
+		return letterOftheDay;
+	}
+
+	public void setLetterOftheDay(Integer letterOftheDay) {
+		this.letterOftheDay = letterOftheDay;
 	}
 	
 	

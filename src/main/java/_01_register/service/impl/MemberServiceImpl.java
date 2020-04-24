@@ -109,4 +109,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public void updateLetterOftheDay(String memberId, int letterId) {
+		dao.updateLetterOftheDay(memberId, letterId);
+	}
+
+
 }

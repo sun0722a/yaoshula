@@ -12,9 +12,11 @@ public interface LetterService {
 	
 	public LetterBean getLetter(int letterId);
 	
-	public Map<Integer,LetterBean> getUnfinishedLetter(String category,String status);
+	public Map<Integer,LetterBean> getUnfinishedLetter(String memberId,String category,String status);
 	
 	public void updateReply(LetterBean lb);
+	
+	public void updateLetterOccupied(int letterId,String status);
 	
 //	public Map<String,LetterBean> getAllLettersByMemberSend(String memberId,String status);
 	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status);

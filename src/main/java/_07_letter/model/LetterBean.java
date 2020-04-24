@@ -51,9 +51,9 @@ public class LetterBean implements Serializable{
 	
 	
 	
-
+	//寄信用
 	public LetterBean(Integer letterId, String letterTitle, String letterWriter, String letterContent,String sendTime,
-			String letterCategory) {
+			String letterCategory,String status) {
 		super();
 		this.letterId = letterId;
 		this.letterTitle = letterTitle;
@@ -61,12 +61,13 @@ public class LetterBean implements Serializable{
 		this.letterContent = letterContent;
 		this.sendTime = sendTime;
 		this.letterCategory = letterCategory;
+		this.status = status;
 	}
 
 
 
 
-
+	//回信用
 	public LetterBean(Integer letterId,String letterReplier, String replyContent, String status) {
 		super();
 		this.letterId = letterId;
@@ -74,11 +75,6 @@ public class LetterBean implements Serializable{
 		this.replyContent = replyContent;
 		this.status = status;
 	}
-
-
-
-
-
 
 
 	public LetterBean() {

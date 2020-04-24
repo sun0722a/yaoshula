@@ -38,9 +38,9 @@ public class LetterServiceImpl implements LetterService{
 	
 	
 	@Override
-	public Map<Integer,LetterBean> getUnfinishedLetter(String category,String status) {
+	public Map<Integer,LetterBean> getUnfinishedLetter(String memberId,String category,String status) {
 		Map<Integer,LetterBean> letters = null;
-		letters = dao.getUnfinishedLetter(category,status);
+		letters = dao.getUnfinishedLetter(memberId,category,status);
 		return letters;
 	}
 
@@ -61,5 +61,13 @@ public class LetterServiceImpl implements LetterService{
 	@Override
 	public List<LetterBean> getAllLettersByMemberSend(String memberId,String status) {
 		return dao.getAllLettersByMemberSend(memberId,status);
+	}
+
+
+
+	@Override
+	public void updateLetterOccupied(int letterId, String status) {
+		dao.updateLetterOccupied(letterId, status);
+		
 	}
 }

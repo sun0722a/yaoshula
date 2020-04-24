@@ -46,6 +46,7 @@ public class GlobalService {
 	public static final String NOREPLY_EMAIL_PASSWORD = "Do!ng123";
 	public static final String LETTER_STATUS_DONE = "y";
 	public static final String LETTER_STATUS_UNDONE = "n";
+	public static final String LETTER_STATUS_OCCUPIED = "o";	
 	public static final String LETTER_TYPE_ANGEL = "天使";
 	public static final String LETTER_TYPE_DEVIL = "惡魔";
 

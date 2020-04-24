@@ -51,7 +51,7 @@ public class SendDevilServlet extends HttpServlet {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String sendDay = simpleDateFormat.format(new java.util.Date());
 		
-		LetterBean lb = new LetterBean(null,title,memberId,content,sendDay,GlobalService.LETTER_TYPE_DEVIL);
+		LetterBean lb = new LetterBean(null,title,memberId,content,sendDay,GlobalService.LETTER_TYPE_DEVIL,"n");
 		letterService.saveLetter(lb);
 		
 		mb.setLastSendDate(sendDay);

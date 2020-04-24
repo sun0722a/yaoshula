@@ -147,7 +147,7 @@ public class RegisterServlet extends HttpServlet {
 			// 將所有會員資料封裝到MemberBean(類別的)物件
 
 			MemberBean mb = new MemberBean(null, memberId, password, gender, birthday, email, phone, city, area,
-					address, fileName, blob, ts, "未驗證", "一般會員", null, authToken,null,null);
+					address, fileName, blob, ts, "未驗證", "一般會員", null, authToken,null,null,null);
 
 			// 如果有錯誤
 			if (!errorMsg.isEmpty()) {

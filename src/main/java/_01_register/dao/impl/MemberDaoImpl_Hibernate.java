@@ -182,4 +182,12 @@ public class MemberDaoImpl_Hibernate implements MemberDao {
 
 	}
 
+	@Override
+	public void updateLetterOftheDay(String memberId, int letterId) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean m SET m.letterOftheDay = :letterIdOftheDay WHERE m.memberId = :memberId" ;
+		session.createQuery(hql).setParameter("letterIdOftheDay", letterId).setParameter("memberId", memberId).executeUpdate();
+		
+	}
+
 }

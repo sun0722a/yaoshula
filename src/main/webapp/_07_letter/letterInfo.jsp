@@ -50,7 +50,7 @@
             	
            		<c:choose>
             		<c:when test="${! empty replyError}">
-            			<div class="btnError">我想寄信</div>
+            			<div class="btnError">我想回信</div>
             		</c:when>
             		<c:otherwise>
             			<div class="btn" ><a  href="<c:url value='/_07_letter/reply.jsp' /> ">我想回信</a></div>
@@ -59,6 +59,7 @@
 <%--             	<div class="btn" ><a  href="<c:url value='/_07_letter/send.jsp' /> ">我想寄信</a></div> --%>
 <%--             	<div class="btn" ><a  href="<c:url value='/_07_letter/reply.jsp' /> ">我想回信</a></div> --%>
                	<div class="btn" ><a  href="<c:url value='/_07_letter/myletters' /> ">我的信箱</a></div>
+               	<div class="btn" ><a  href="<c:url value='/index.jsp' /> ">回到首頁</a></div>
             </div>
            
         </div>
