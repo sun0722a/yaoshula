@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<td class="personalTitle">E-mail：&nbsp&nbsp</td>
-					<td class="personalUpdate">${LoginOK.email}</td>
+					<td class="personal">${LoginOK.email}</td>
 				</tr>
 				<tr>
 					<td class="personalTitle">手機：&nbsp&nbsp</td>

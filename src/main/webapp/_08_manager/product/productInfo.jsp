@@ -28,7 +28,7 @@
 				<div class="col-md-12 col-lg-6 border">
 					<div
 						class="form-group row mx-0 d-flex justify-content-center align-items-center text-center">
-						<img class="mb-3"
+						<img class="m-3"
 							src="${pageContext.request.contextPath}/init/getProductImage?id=${product.productId}"
 							id="headPicture" style="max-width: 75%;" /> <input
 							name="memberMultipartFile" type="file" id="fileSelect" />
@@ -48,7 +48,8 @@
 									<div class="input-group-text">$</div>
 								</div>
 								<input type="text" name="price" class="form-control"
-									required="required" value="${product.price}" onkeyup="value=value.replace(/[^\d]/g,'')" />
+									required="required" value="${product.price}"
+									onkeyup="value=value.replace(/[^\d]/g,'')" />
 							</div>
 						</div>
 					</div>
@@ -91,7 +92,7 @@
 
 					<!-- format1============================ -->
 					<div class="productFomat row mx-0 mb-3"
-						<c:if test="${product==null}"> style="display: none;"</c:if>>
+						<c:if test="${product==null||title1==''}"> style="display: none;"</c:if>>
 						<div class="col-10 p-3 border border-dark formatItemsBox">
 							<c:choose>
 								<c:when test="${product==null||title1==''}">
@@ -99,8 +100,8 @@
 									<div class="form-group row mx-0 firstFormatItem">
 										<div
 											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-											<input type="text" name="formatTitle1"
-												class="form-control p-0" placeholder="規格標題" />
+											<input type="text" name="formatTitle1" class="form-control"
+												placeholder="規格標題" />
 											<h5>：</h5>
 										</div>
 										<div
@@ -134,8 +135,8 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatTitle1"
-															class="form-control p-0" placeholder="規格標題"
-															value="${title1}" readonly />
+															class="form-control" placeholder="規格標題" value="${title1}"
+															readonly />
 														<h5>：</h5>
 													</div>
 													<div
@@ -202,7 +203,7 @@
 
 					<!-- format2============================ -->
 					<div class="productFomat row mx-0 mb-3"
-						<c:if test="${product==null}"> style="display: none;"</c:if>>
+						<c:if test="${product==null||title2==''}"> style="display: none;"</c:if>>
 						<div class="col-10 p-3 border border-dark formatItemsBox">
 							<c:choose>
 								<c:when test="${product==null||title2==''}">
@@ -210,8 +211,8 @@
 									<div class="form-group row mx-0 firstFormatItem">
 										<div
 											class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
-											<input type="text" name="formatTitle2"
-												class="form-control p-0" placeholder="規格標題" />
+											<input type="text" name="formatTitle2" class="form-control"
+												placeholder="規格標題" />
 											<h5>：</h5>
 										</div>
 										<div
@@ -245,8 +246,8 @@
 													<div
 														class="col-5 px-0 d-flex justify-content-center align-items-center text-center">
 														<input type="text" name="formatTitle2"
-															class="form-control p-0" placeholder="規格標題"
-															value="${title2}" readonly />
+															class="form-control" placeholder="規格標題" value="${title2}"
+															readonly />
 														<h5>：</h5>
 													</div>
 													<div
@@ -339,34 +340,95 @@
 			</div>
 			<div class="row m-0 mb-5 p-1" id="stocks">
 				<c:if test="${product!=null}">
-					<c:forEach var="content1" items="${content1_set}">
-						<div class="col-md-12 col-lg-6 p-0 mb-1">
-							<div class="border border-dark m-2">
-								<table class="table text-center">
-									<thead class="thead-light">
-										<tr>
-											<th scope="col">規格</th>
-											<th scope="col">庫存</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="content2" items="${content2_set}">
-											<c:forEach var="entry" items="${product.productFormat}">
-												<c:if
-													test="${entry.formatContent1==content1&&entry.formatContent2==content2}">
-													<tr>
-														<th scope="row">${content1}-${content2}</th>
-														<td><input class="text-center" type="number"
-															name="stock" value="${entry.stock}" /></td>
-													</tr>
-												</c:if>
-											</c:forEach>
-										</c:forEach>
-									</tbody>
-								</table>
+					<c:choose>
+						<c:when test="${title1==''||title2==''}">
+							<div class="col-md-12 col-lg-6 p-0 mb-1">
+								<div class="border border-dark m-2">
+									<table class="table text-center m-0">
+										<thead class="thead-light">
+											<tr>
+												<th scope="col"><div
+														class="d-flex align-items-center justify-content-center">規格</div></th>
+												<th scope="col"><div
+														class="d-flex align-items-center justify-content-center">庫存</div></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:choose>
+												<c:when test="${title1==''&&title2==''}">
+													<c:forEach var="entry" items="${product.productFormat}">
+														<tr>
+															<th scope="row">無</th>
+															<td><input class="text-center" type="number"
+																name="stock" value="${entry.stock}" /></td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:when test="${title1==''}">
+													<c:forEach var="content2" items="${content2_set}">
+														<c:forEach var="entry" items="${product.productFormat}">
+															<c:if test="${entry.formatContent2==content2}">
+																<tr>
+																	<th scope="row">${content2}</th>
+																	<td><input class="text-center" type="number"
+																		name="stock" value="${entry.stock}" /></td>
+																</tr>
+															</c:if>
+														</c:forEach>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="content1" items="${content1_set}">
+														<c:forEach var="entry" items="${product.productFormat}">
+															<c:if test="${entry.formatContent1==content1}">
+																<tr>
+																	<th scope="row">${content1}</th>
+																	<td><input class="text-center" type="number"
+																		name="stock" value="${entry.stock}" /></td>
+																</tr>
+															</c:if>
+														</c:forEach>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										</tbody>
+									</table>
+								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="content1" items="${content1_set}">
+								<div class="col-md-12 col-lg-6 p-0 mb-1">
+									<div class="border border-dark m-2">
+										<table class="table text-center m-0">
+											<thead class="thead-light">
+												<tr>
+													<th scope="col"><div
+															class="d-flex align-items-center justify-content-center">規格</div></th>
+													<th scope="col"><div
+															class="d-flex align-items-center justify-content-center">庫存</div></th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="content2" items="${content2_set}">
+													<c:forEach var="entry" items="${product.productFormat}">
+														<c:if
+															test="${entry.formatContent1==content1&&entry.formatContent2==content2}">
+															<tr>
+																<th scope="row">${content1}-${content2}</th>
+																<td><input class="text-center" type="number"
+																	name="stock" value="${entry.stock}" /></td>
+															</tr>
+														</c:if>
+													</c:forEach>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</div>
 
@@ -376,7 +438,7 @@
 			</div>
 			<div class="row m-0 bor">
 				<textarea name="detail" rows="10" style="width: 100%;"
-					required="required">${detail}</textarea>
+					required="required" class="p-3">${detail}</textarea>
 			</div>
 
 			<div class="text-center">
